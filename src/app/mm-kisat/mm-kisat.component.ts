@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class MmKisatComponent {
 
+  predictions = {
+    player: 'Aapo',
+    matchWinners: {
+      matchOne: '',
+      matchTwo: '',
+      matchThree: '',
+      matchFour: '',
+      matchFive: '',
+      matchSix: '',
+      matchSeven: ''
+    }
+  }
 }

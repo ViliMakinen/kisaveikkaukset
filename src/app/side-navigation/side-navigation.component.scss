@@ -1,0 +1,17 @@
+.main-sidenav-container {
+  background: white;
+  border: 1px solid white;
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  .route {
+    font-weight: lighter;
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+}

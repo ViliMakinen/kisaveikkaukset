@@ -1,14 +1,8 @@
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-}
-
 .main-content {
-  margin: 5%;
+  padding: 5%;
 
   .title {
     text-align: center;
-    font-weight: bold;
     font-size: 2rem;
   }
 
@@ -34,5 +28,4 @@
       }
     }
   }
-
 }

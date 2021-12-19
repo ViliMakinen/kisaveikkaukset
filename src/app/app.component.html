@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<mat-toolbar class="toolbar" color="primary">
+  <div class="title clickable" routerLink="">Kisaveikkaukset</div>
+</mat-toolbar>
+<div class="content">
+  <div class="sidenav">
+    <app-side-navigation></app-side-navigation>
+  </div>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+

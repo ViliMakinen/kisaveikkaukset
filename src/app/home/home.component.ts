@@ -6,7 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  logToConsole(): void {
-    console.log("Jee")
-  }
 }

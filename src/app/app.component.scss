@@ -1,0 +1,17 @@
+.toolbar {
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  height: calc(100% - 64px);
+  display: flex;
+
+  .main-content {
+    flex-basis: 92%;
+  }
+
+  .sidenav {
+    flex-basis: 8%;
+  }
+}

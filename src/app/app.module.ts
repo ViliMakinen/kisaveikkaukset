@@ -11,6 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MmKisatComponent } from './mm-kisat/mm-kisat.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,7 +24,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    MmKisatComponent
+    MmKisatComponent,
+    SideNavigationComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,9 @@ const routes: Routes = [
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
