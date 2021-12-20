@@ -14,6 +14,7 @@ import { MmKisatComponent } from './mm-kisat/mm-kisat.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
+import { BracketComponent } from './bracket/bracket.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
     HomeComponent,
     MmKisatComponent,
     SideNavigationComponent,
+    BracketComponent,
   ],
   imports: [
     BrowserModule,

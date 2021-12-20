@@ -7,16 +7,26 @@ import { Component } from '@angular/core';
 })
 export class MmKisatComponent {
 
-  predictions = {
-    player: 'Aapo',
-    matchWinners: {
-      matchOne: '',
-      matchTwo: '',
-      matchThree: '',
-      matchFour: '',
-      matchFive: '',
-      matchSix: '',
-      matchSeven: ''
-    }
+  competition = {
+    name: 'MM-kisat',
+    dates: '27.12.2021-4.1.2022',
+    pairs: [
+      {
+        teams: ['Suomi', 'Ruotsi'],
+        seed: 1
+      },
+      {
+        teams: ['Kanada', 'Venäjä'],
+        seed: 2
+      },
+      {
+        teams: ['Ranska', 'Italia'],
+        seed: 3
+      },
+      {
+        teams: ['Norja', 'Viro'],
+        seed: 4
+      },
+    ]
   }
 }

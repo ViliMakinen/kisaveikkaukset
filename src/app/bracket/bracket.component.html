@@ -1,0 +1,41 @@
+<mat-card>
+  <button (click)="clearAll()" mat-raised-button>Clear all</button>
+  <div class="bracket-container">
+    <div class="column">
+      <div *ngFor="let pair of pairs" class="pair">
+        <span>Quarterfinal {{pair.seed}}</span>
+        <div (click)="setMatchWinner(pair, team)" *ngFor="let team of pair.teams" class="team clickable">
+          {{team}}
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="pair">
+        <div class="team clickable">
+          {{winners.matchOneWinner}}
+        </div>
+        <div class="team clickable">
+          {{winners.matchTwoWinner}}
+        </div>
+      </div>
+      <div class="pair">
+        <div class="team clickable">
+          {{winners.matchThreeWinner}}
+        </div>
+        <div class="team clickable">
+          {{winners.matchFourWinner}}
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="pair">
+        <div class="team clickable">
+          Winner of match 5
+        </div>
+        <div class="team clickable">
+          Winner of match 6
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>
