@@ -1,22 +1,26 @@
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { Component, Input } from '@angular/core';
 
 export interface Bracket {
-  semiFinalists: {
-    QF1winner: null | string,
-    QF2winner: null | string,
-    QF3winner: null | string,
-    QF4winner: null | string
-  },
-  finalists: {
-    SF1winner: null | string,
-    SF2winner: null | string
-  },
-  winner: {
-    finalWinner: null | string
-  }
+  semiFinalists: Semifinalist
+  finalists: Finalist
+  winner: Winner
 }
 
+export interface Winner {
+  finalWinner: null | string;
+}
+
+export interface Semifinalist {
+  QF1winner: null | string,
+  QF2winner: null | string,
+  QF3winner: null | string,
+  QF4winner: null | string
+}
+
+export interface Finalist {
+  SF1winner: null | string,
+  SF2winner: null | string
+}
 
 @Component({
   selector: 'app-bracket',
@@ -27,8 +31,7 @@ export class BracketComponent {
   @Input()
   pairs!: any;
 
-
-  bracketInfo:  Bracket = {
+  bracketInfo: Bracket = {
     semiFinalists: {
       QF1winner: null,
       QF2winner: null,
@@ -43,7 +46,6 @@ export class BracketComponent {
       finalWinner: null
     }
   }
-
 
   areQuarterFinalistsNotSelected(): boolean {
     const keyValues = Object.entries(this.bracketInfo.semiFinalists)
@@ -90,8 +92,8 @@ export class BracketComponent {
   }
 
   clearAll(): void {
-    const SFkeyValues = Object.entries(this.bracketInfo.semiFinalists)
-    const QFkeyValues = Object.entries(this.bracketInfo.finalists)
-    const FkeyValues = Object.entries(this.bracketInfo.winner)
+    Object.entries(this.bracketInfo.winner).forEach(keyValue => this.bracketInfo.winner[keyValue[0] as keyof Winner] = null)
+    Object.entries(this.bracketInfo.finalists).forEach(keyValue => this.bracketInfo.finalists[keyValue[0] as keyof Finalist] = null)
+    Object.entries(this.bracketInfo.semiFinalists).forEach(keyValue => this.bracketInfo.semiFinalists[keyValue[0] as keyof Semifinalist] = null)
   }
 }
