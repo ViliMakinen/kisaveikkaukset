@@ -28,6 +28,15 @@
         height: 100%;
         justify-content: center;
         align-items: center;
+        
+      }
+
+      .selected {
+        background: gray;
+      }
+
+      .locked {
+        pointer-events: none;
       }
     }
   }
