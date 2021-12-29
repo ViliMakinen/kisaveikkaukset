@@ -1,6 +1,6 @@
 <mat-card>
+  <button (click)="clearAll()" mat-raised-button>Clear selections</button>
   <div class="bracket-container">
-    <button (click)="clearAll()">hep</button>
     <div class="column">
       <div *ngFor="let pair of pairs" class="pair">
         <span>Quarterfinal {{pair.seed}}</span>

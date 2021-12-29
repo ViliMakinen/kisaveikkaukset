@@ -22,9 +22,11 @@
         padding: 3%;
         display: flex;
         justify-content: space-between;
-      }
 
-      .list-item-score {
+        .tournament {
+          color: black;
+          text-decoration: none;
+        }
       }
     }
   }
