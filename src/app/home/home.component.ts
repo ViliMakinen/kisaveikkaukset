@@ -50,7 +50,7 @@ export const tournaments: Tournament[] = [
 ]
 
 export const players: Players[] = [
-  { name: 'Viltsu', score: 10 },
+  { name: 'Viltsu', score: 11 },
   { name: 'Aapo', score: 10 },
   { name: 'Elmo', score: 10 },
   { name: 'Osku', score: 10 },
