@@ -48,15 +48,13 @@ export class BracketComponent {
   }
 
   areQuarterFinalistsNotSelected(): boolean {
-    const keyValues = Object.entries(this.bracketInfo.semiFinalists)
-    const values = keyValues.map(keyValue => keyValue[1])
-    return values.includes(null)
+    const values = Object.values(this.bracketInfo.semiFinalists);
+    return values.includes(null);
   }
 
   areSemiFinalistsNotSelected(): boolean {
-    const keyValues = Object.entries(this.bracketInfo.finalists)
-    const values = keyValues.map(keyValue => keyValue[1])
-    return values.includes(null)
+    const values = Object.values(this.bracketInfo.finalists);
+    return values.includes(null);
   }
 
   setQuarterFinalWinners(pair: any, team: string): void {
@@ -73,27 +71,21 @@ export class BracketComponent {
 
   isQuarterFinalist(team: string | null): boolean {
     if (team === null) {
-      return false
+      return false;
     }
-    if (team === this.bracketInfo.semiFinalists.QF1winner || team === this.bracketInfo.semiFinalists.QF2winner || team === this.bracketInfo.semiFinalists.QF3winner || team === this.bracketInfo.semiFinalists.QF4winner) {
-      return true
-    }
-    return false
+    return team === this.bracketInfo.semiFinalists.QF1winner || team === this.bracketInfo.semiFinalists.QF2winner || team === this.bracketInfo.semiFinalists.QF3winner || team === this.bracketInfo.semiFinalists.QF4winner;
   }
 
   isSemiFinalist(team: string | null): boolean {
     if (team === null) {
-      return false
+      return false;
     }
-    if (team === this.bracketInfo.finalists.SF1winner || team === this.bracketInfo.finalists.SF2winner) {
-      return true
-    }
-    return false
+    return team === this.bracketInfo.finalists.SF1winner || team === this.bracketInfo.finalists.SF2winner;
   }
 
   clearAll(): void {
-    Object.entries(this.bracketInfo.winner).forEach(keyValue => this.bracketInfo.winner[keyValue[0] as keyof Winner] = null)
-    Object.entries(this.bracketInfo.finalists).forEach(keyValue => this.bracketInfo.finalists[keyValue[0] as keyof Finalist] = null)
-    Object.entries(this.bracketInfo.semiFinalists).forEach(keyValue => this.bracketInfo.semiFinalists[keyValue[0] as keyof Semifinalist] = null)
+    Object.keys(this.bracketInfo.winner).forEach(key => this.bracketInfo.winner[key as keyof Winner] = null);
+    Object.keys(this.bracketInfo.finalists).forEach(key => this.bracketInfo.finalists[key as keyof Finalist] = null);
+    Object.keys(this.bracketInfo.semiFinalists).forEach(key => this.bracketInfo.semiFinalists[key as keyof Semifinalist] = null);
   }
 }
