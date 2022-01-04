@@ -65,4 +65,22 @@ export const players: Players[] = [
 export class HomeComponent {
   players = players;
   tournaments = tournaments;
+  loginCodes = {
+    xyz: 'viltsu',
+    abc: 'aapo',
+    opl: 'elmo'
+  }
+  code: string = '';
+  user: string | null = null;
+
+
+
+  tryLogIn() {
+    Object.entries(this.loginCodes).forEach(keyValue => {
+      if (keyValue[0] === this.code) {
+        this.user = keyValue[1]
+      }
+    })
+  }
+
 }

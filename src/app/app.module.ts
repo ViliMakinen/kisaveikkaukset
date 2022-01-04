@@ -15,10 +15,14 @@ import { MatListModule } from '@angular/material/list';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { BracketComponent } from './bracket/bracket.component';
 import { OlympialaisetComponent } from './olympialaiset/olympialaiset.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule} from '@angular/material/input'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'olympialaiset', component: OlympialaisetComponent }
+  { path: 'olympialaiset', component: OlympialaisetComponent },
+  { path: 'olympialaiset/:user', component: OlympialaisetComponent}
 ];
 
 @NgModule({
@@ -39,7 +43,10 @@ const routes: Routes = [
     MatCardModule,
     MatDividerModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

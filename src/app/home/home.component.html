@@ -1,13 +1,16 @@
 <div class="main-content">
+  <mat-form-field><input matInput placeholder="Anna koodisi" [(ngModel)]='code'>
+  </mat-form-field>
+  <button mat-raised-button (click)="tryLogIn()">Kirjaudu sisään</button>
   <div class="title">
-    Tervetuloa kisaveikkauksien pyhättöön!
+    Tervetuloa kisaveikkauksien pyhättöön {{user}}!
   </div>
   <mat-card class="current-results">
     Tämän hetken tilanne:
     <div class="list">
       <mat-divider></mat-divider>
       <li *ngFor="let player of players" class="list-item">{{player.name}}<span>{{player.score}}
-        pistettä</span></li>
+          pistettä</span></li>
     </div>
   </mat-card>
   <mat-card class="current-results">
@@ -15,9 +18,9 @@
     <div class="list">
       <mat-divider></mat-divider>
       <li *ngFor="let tournament of tournaments" class="list-item">
-        <a [href]="tournament.url" class="tournament"
-           target="_blank">{{tournament.name}}</a>
-        <span>{{tournament.dates}}</span></li>
+        <a [href]="tournament.url" class="tournament" target="_blank">{{tournament.name}}</a>
+        <span>{{tournament.dates}}</span>
+      </li>
     </div>
   </mat-card>
 </div>
