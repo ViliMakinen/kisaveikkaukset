@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from '../user.service';
 
 export interface Pair {
   teams: string[],
@@ -71,16 +72,22 @@ export class HomeComponent {
     opl: 'elmo'
   }
   code: string = '';
-  user: string | null = null;
+  user: string | null;
 
-
+  constructor(private userService: UserService) {
+    // oikeampi tapa tehdä tämä on käyttämällä Observableja (niin, että user olisi Observable), koska silloin
+    // käyttäjän muuttuessa myös arvo päivittyy automaattisesti. Muutetaan Observable -maailmaan myöhemmin.
+    this.user = userService.getUser();
+  }
 
   tryLogIn() {
     Object.entries(this.loginCodes).forEach(keyValue => {
       if (keyValue[0] === this.code) {
-        this.user = keyValue[1]
+        this.userService.setUser(keyValue[1]);
+        // nyt joudutaan asettamaan tämä user myös tälle home-komponentille tässä, koska muuten se ei tiedä, että
+        // user on muuttunut
+        this.user = keyValue[1];
       }
     })
   }
-
 }

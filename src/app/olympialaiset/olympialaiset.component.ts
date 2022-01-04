@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { tournaments } from '../home/home.component';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-olympialaiset',
@@ -8,4 +9,9 @@ import { tournaments } from '../home/home.component';
 })
 export class OlympialaisetComponent {
   competition = tournaments[0];
+  user: string | null;
+
+  constructor(private userService: UserService) {
+    this.user = userService.getUser();
+  }
 }
