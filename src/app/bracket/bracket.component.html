@@ -3,63 +3,72 @@
   <div class="bracket-container">
     <div class="column">
       <div *ngFor="let pair of pairs" class="pair">
-        <span>Quarterfinal {{pair.seed}}</span>
+        <span *ngIf="pair.seed !== null">Quarterfinal {{pair.seed}}</span>
+        <span *ngIf="pair.seed === null">Playoff 1. round</span>
         <div (click)="setQuarterFinalWinners(pair, team)" *ngFor="let team of pair.teams" class="team clickable"
-          [class.selected]="isQuarterFinalist(team)">
+             [class.selected]="isQuarterFinalist(team)">
           {{team}}
         </div>
       </div>
     </div>
-    <div class="column">
-      <div class="pair">
-        <span> Semifinal 1</span>
-        <div class="team clickable" (click)="bracketInfo.finalists.SF1winner = bracketInfo.semiFinalists.QF1winner"
-          [class.selected]="isSemiFinalist(bracketInfo.semiFinalists.QF1winner)"
-          [class.locked]="areQuarterFinalistsNotSelected()">
-          {{bracketInfo.semiFinalists.QF1winner}}
+    <ng-container *ngIf="!checkIfSeedsAreNull()">
+      <div class="column">
+        <div class="pair">
+          <span> Semifinal 1</span>
+          <div (click)="bracketInfo.finalists.SF1winner = bracketInfo.semiFinalists.QF1winner"
+               [class.locked]="areQuarterFinalistsNotSelected()"
+               [class.selected]="isSemiFinalist(bracketInfo.semiFinalists.QF1winner)"
+               class="team clickable">
+            {{bracketInfo.semiFinalists.QF1winner}}
+          </div>
+          <div (click)="bracketInfo.finalists.SF1winner = bracketInfo.semiFinalists.QF2winner"
+               [class.locked]="areQuarterFinalistsNotSelected()"
+               [class.selected]="isSemiFinalist(bracketInfo.semiFinalists.QF2winner)"
+               class="team clickable">
+            {{bracketInfo.semiFinalists.QF2winner}}
+          </div>
         </div>
-        <div class="team clickable" (click)="bracketInfo.finalists.SF1winner = bracketInfo.semiFinalists.QF2winner"
-          [class.selected]="isSemiFinalist(bracketInfo.semiFinalists.QF2winner)"
-          [class.locked]="areQuarterFinalistsNotSelected()">
-          {{bracketInfo.semiFinalists.QF2winner}}
-        </div>
-      </div>
-      <div class="pair">
-        <span>Semifinal 2</span>
-        <div class="team clickable" (click)="bracketInfo.finalists.SF2winner = bracketInfo.semiFinalists.QF3winner"
-          [class.selected]="isSemiFinalist(bracketInfo.semiFinalists.QF3winner)"
-          [class.locked]="areQuarterFinalistsNotSelected()">
-          {{bracketInfo.semiFinalists.QF3winner}}
-        </div>
-        <div class="team clickable" (click)="bracketInfo.finalists.SF2winner = bracketInfo.semiFinalists.QF4winner"
-          [class.selected]="isSemiFinalist(bracketInfo.semiFinalists.QF4winner)"
-          [class.locked]="areQuarterFinalistsNotSelected()">
-          {{bracketInfo.semiFinalists.QF4winner}}
-        </div>
-      </div>
-    </div>
-    <div class="column">
-      <div class="pair">
-        <span>Final</span>
-        <div class="team clickable" (click)="bracketInfo.winner.finalWinner = bracketInfo.finalists.SF1winner"
-          [class.selected]="bracketInfo.finalists.SF1winner === bracketInfo.winner.finalWinner && bracketInfo.finalists.SF1winner !== null"
-          [class.locked]="areSemiFinalistsNotSelected()">
-          {{bracketInfo.finalists.SF1winner}}
-        </div>
-        <div class="team clickable" (click)="bracketInfo.winner.finalWinner = bracketInfo.finalists.SF2winner"
-          [class.selected]="bracketInfo.finalists.SF2winner === bracketInfo.winner.finalWinner && bracketInfo.finalists.SF2winner !== null"
-          [class.locked]="areSemiFinalistsNotSelected()">
-          {{bracketInfo.finalists.SF2winner}}
+        <div class="pair">
+          <span>Semifinal 2</span>
+          <div (click)="bracketInfo.finalists.SF2winner = bracketInfo.semiFinalists.QF3winner"
+               [class.locked]="areQuarterFinalistsNotSelected()"
+               [class.selected]="isSemiFinalist(bracketInfo.semiFinalists.QF3winner)"
+               class="team clickable">
+            {{bracketInfo.semiFinalists.QF3winner}}
+          </div>
+          <div (click)="bracketInfo.finalists.SF2winner = bracketInfo.semiFinalists.QF4winner"
+               [class.locked]="areQuarterFinalistsNotSelected()"
+               [class.selected]="isSemiFinalist(bracketInfo.semiFinalists.QF4winner)"
+               class="team clickable">
+            {{bracketInfo.semiFinalists.QF4winner}}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="column">
-      <div class="pair">
-        <span>Champion</span>
-        <div class="team" [class.selected]="bracketInfo.winner.finalWinner !== null">
-          {{bracketInfo.winner.finalWinner}}
+      <div class="column">
+        <div class="pair">
+          <span>Final</span>
+          <div (click)="bracketInfo.winner.finalWinner = bracketInfo.finalists.SF1winner"
+               [class.locked]="areSemiFinalistsNotSelected()"
+               [class.selected]="bracketInfo.finalists.SF1winner === bracketInfo.winner.finalWinner && bracketInfo.finalists.SF1winner !== null"
+               class="team clickable">
+            {{bracketInfo.finalists.SF1winner}}
+          </div>
+          <div (click)="bracketInfo.winner.finalWinner = bracketInfo.finalists.SF2winner"
+               [class.locked]="areSemiFinalistsNotSelected()"
+               [class.selected]="bracketInfo.finalists.SF2winner === bracketInfo.winner.finalWinner && bracketInfo.finalists.SF2winner !== null"
+               class="team clickable">
+            {{bracketInfo.finalists.SF2winner}}
+          </div>
         </div>
       </div>
-    </div>
+      <div class="column">
+        <div class="pair">
+          <span>Champion</span>
+          <div [class.selected]="bracketInfo.winner.finalWinner !== null" class="team">
+            {{bracketInfo.winner.finalWinner}}
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </mat-card>

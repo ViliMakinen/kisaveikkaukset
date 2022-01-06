@@ -3,7 +3,7 @@ import { UserService } from '../user.service';
 
 export interface Pair {
   teams: string[],
-  seed: number
+  seed: number | null
 }
 
 export interface Tournament {
@@ -49,35 +49,35 @@ export const tournaments: Tournament[] = [
     pairs: [
       {
         teams: ['Salzburg', 'Munchen'],
-        seed: 0
+        seed: null
       },
       {
         teams:['Sporting CP', 'Man. City'],
-        seed:0
+        seed: null
       },
       {
         teams:['Benfica', 'Ajax'],
-        seed:0
+        seed: null
       },
       {
         teams:['Chelsea', 'LOSC'],
-        seed:0
+        seed: null
       },
       {
         teams:['Atletico', 'Man. United'],
-        seed:0
+        seed: null
       },
       {
         teams:['Villareal', 'Juventus'],
-        seed:0
+        seed: null
       },
       {
         teams:['Inter', 'Liverpool'],
-        seed:0
+        seed: null
       },
       {
         teams:['Paris', 'Real Madrid'],
-        seed:0
+        seed: null
       },
     ]
   },

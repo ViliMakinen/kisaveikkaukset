@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Pair } from '../home/home.component';
 
 export interface Bracket {
   semiFinalists: Semifinalist
@@ -29,7 +30,7 @@ export interface Finalist {
 })
 export class BracketComponent {
   @Input()
-  pairs!: any;
+  pairs!: Pair[];
 
   bracketInfo: Bracket = {
     semiFinalists: {
@@ -87,5 +88,9 @@ export class BracketComponent {
     Object.keys(this.bracketInfo.winner).forEach(key => this.bracketInfo.winner[key as keyof Winner] = null);
     Object.keys(this.bracketInfo.finalists).forEach(key => this.bracketInfo.finalists[key as keyof Finalist] = null);
     Object.keys(this.bracketInfo.semiFinalists).forEach(key => this.bracketInfo.semiFinalists[key as keyof Semifinalist] = null);
+  }
+
+  checkIfSeedsAreNull(): boolean {
+    return this.pairs[0].seed === null;
   }
 }
