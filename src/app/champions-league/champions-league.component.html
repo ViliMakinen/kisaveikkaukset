@@ -1,0 +1,11 @@
+<div class="main-content-container">
+    <div><span *ngIf="user !== null">Hello {{user}}!</span>
+        <span *ngIf="user === null">Et ole kirjautuneena! </span>
+        <div><button *ngIf="user === null" mat-raised-button class="button clickable" routerLink="">
+                Tästä takaisin </button></div>
+    </div>
+    <div class="title-container">
+        <h1>{{competition.name}} veikkauskaavio</h1>
+    </div>
+    <app-bracket [pairs]="competition.pairs"></app-bracket>
+</div>

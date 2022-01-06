@@ -46,13 +46,46 @@ export const tournaments: Tournament[] = [
     name: 'Champions League playoffs (jalkapallo)',
     url: 'https://www.uefa.com/uefachampionsleague/news/0265-115e77805e06-3dbc1740a323-1000--2021-22-champions-league',
     dates: 'Helmikuu 2022',
-    pairs: []
+    pairs: [
+      {
+        teams: ['Salzburg', 'Munchen'],
+        seed: 0
+      },
+      {
+        teams:['Sporting CP', 'Man. City'],
+        seed:0
+      },
+      {
+        teams:['Benfica', 'Ajax'],
+        seed:0
+      },
+      {
+        teams:['Chelsea', 'LOSC'],
+        seed:0
+      },
+      {
+        teams:['Atletico', 'Man. United'],
+        seed:0
+      },
+      {
+        teams:['Villareal', 'Juventus'],
+        seed:0
+      },
+      {
+        teams:['Inter', 'Liverpool'],
+        seed:0
+      },
+      {
+        teams:['Paris', 'Real Madrid'],
+        seed:0
+      },
+    ]
   },
 ]
 
 export const players: Players[] = [
-  { name: 'Viltsu', score: 11 },
-  { name: 'Aapo', score: 10 },
+  { name: 'Viltsu', score: 10 },
+  { name: 'Aapo', score: 11 },
   { name: 'Elmo', score: 10 },
   { name: 'Osku', score: 10 },
   { name: 'Eetu-Matti', score: 10 }
@@ -69,7 +102,13 @@ export class HomeComponent {
   loginCodes = {
     xyz: 'viltsu',
     abc: 'aapo',
-    opl: 'elmo'
+    opl: 'elmo',
+    zzz : 'EM',
+    zzy: 'emmi',
+    zzk: 'aikku',
+    zzl: 'petra',
+    zzm: 'jukka',
+    zzr: 'osku'
   }
   code: string = '';
   user: string | null;

@@ -17,12 +17,13 @@ import { BracketComponent } from './bracket/bracket.component';
 import { OlympialaisetComponent } from './olympialaiset/olympialaiset.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule} from '@angular/material/input'
+import { MatInputModule} from '@angular/material/input';
+import { ChampionsLeagueComponent } from './champions-league/champions-league.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'olympialaiset', component: OlympialaisetComponent },
-  { path: 'olympialaiset/:user', component: OlympialaisetComponent}
+  { path: 'champions-league', component: ChampionsLeagueComponent}
 ];
 
 @NgModule({
@@ -31,7 +32,8 @@ const routes: Routes = [
     HomeComponent,
     SideNavigationComponent,
     BracketComponent,
-    OlympialaisetComponent
+    OlympialaisetComponent,
+    ChampionsLeagueComponent
   ],
   imports: [
     BrowserModule,
