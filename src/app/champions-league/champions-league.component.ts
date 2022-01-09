@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { tournaments } from '../home/home.component';
+import { tournaments, User } from '../home/home.component';
 import { UserService } from '../user.service';
 
 @Component({
@@ -10,10 +10,13 @@ import { UserService } from '../user.service';
 export class ChampionsLeagueComponent {
 
   competition = tournaments[1];
-  user: string | null;
+  user: User | null = null;
 
   constructor(private userService: UserService) {
-    this.user = userService.getUser();
+    userService.getUser('Aapo').then(user => this.user = user);
   }
 
+  submitUserSelections(user: User) {
+    this.userService.updateUser(user);
+  }
 }

@@ -1,0 +1,15 @@
+<mat-card>
+  <button (click)="clearAll()" class="button clickable" mat-raised-button>Clear selections</button>
+  <button (click)="submitSelections()" class="button clickable" mat-raised-button>Submit selections</button>
+  <div class="bracket-container-no-seeds">
+    <div class="column">
+      <div *ngFor="let pair of pairs" class="pair">
+        <span>Playoff 1. round</span>
+        <div (click)="setMatchWinner(pair, team)" *ngFor="let team of pair.teams" [class.selected]="isMatchWinner(team)"
+             class="team clickable">
+          {{team}}
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

@@ -17,14 +17,17 @@ import { BracketComponent } from './bracket/bracket.component';
 import { OlympialaisetComponent } from './olympialaiset/olympialaiset.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule} from '@angular/material/input';
-import { ChampionsLeagueComponent } from './champions-league/champions-league.component'
+import { MatInputModule } from '@angular/material/input';
+import { ChampionsLeagueComponent } from './champions-league/champions-league.component';
+import { OneRoundBracketComponent } from './one-round-bracket/one-round-bracket.component'
+import { MatTabsModule } from '@angular/material/tabs';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'olympialaiset', component: OlympialaisetComponent },
-  { path: 'champions-league', component: ChampionsLeagueComponent}
+  { path: 'champions-league', component: ChampionsLeagueComponent }
 ];
+
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ const routes: Routes = [
     SideNavigationComponent,
     BracketComponent,
     OlympialaisetComponent,
-    ChampionsLeagueComponent
+    ChampionsLeagueComponent,
+    OneRoundBracketComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,8 @@ const routes: Routes = [
     MatListModule,
     MatFormFieldModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

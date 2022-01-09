@@ -1,9 +1,10 @@
 <div class="main-content">
-  <mat-form-field><input matInput placeholder="Anna koodisi" [(ngModel)]='code'>
+  <mat-form-field class="input-container"><input [(ngModel)]='code' autocomplete="off" matInput
+                                                 placeholder="Anna koodisi">
   </mat-form-field>
   <button mat-raised-button class="button clickable" (click)="tryLogIn()">Kirjaudu sisään</button>
   <div class="title">
-    Tervetuloa kisaveikkauksien pyhättöön {{user}}!
+    Tervetuloa kisaveikkauksien pyhättöön {{user !== null ? user.name : ''}}!
   </div>
   <mat-card class="current-results">
     Tämän hetken tilanne:

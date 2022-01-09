@@ -18,6 +18,11 @@ export interface Players {
   score: number
 }
 
+export interface User {
+  name: string,
+  predictions: string[],
+}
+
 export const tournaments: Tournament[] = [
   {
     name: 'Olympialaiset',
@@ -52,31 +57,31 @@ export const tournaments: Tournament[] = [
         seed: null
       },
       {
-        teams:['Sporting CP', 'Man. City'],
+        teams: ['Sporting CP', 'Man. City'],
         seed: null
       },
       {
-        teams:['Benfica', 'Ajax'],
+        teams: ['Benfica', 'Ajax'],
         seed: null
       },
       {
-        teams:['Chelsea', 'LOSC'],
+        teams: ['Chelsea', 'LOSC'],
         seed: null
       },
       {
-        teams:['Atletico', 'Man. United'],
+        teams: ['Atletico', 'Man. United'],
         seed: null
       },
       {
-        teams:['Villareal', 'Juventus'],
+        teams: ['Villareal', 'Juventus'],
         seed: null
       },
       {
-        teams:['Inter', 'Liverpool'],
+        teams: ['Inter', 'Liverpool'],
         seed: null
       },
       {
-        teams:['Paris', 'Real Madrid'],
+        teams: ['Paris', 'Real Madrid'],
         seed: null
       },
     ]
@@ -100,10 +105,10 @@ export class HomeComponent {
   players = players;
   tournaments = tournaments;
   loginCodes = {
-    xyz: 'viltsu',
-    abc: 'aapo',
-    opl: 'elmo',
-    zzz : 'EM',
+    xyz: 'Viltsu',
+    abc: 'Aapo',
+    opl: 'Elmo',
+    zzz: 'EM',
     zzy: 'emmi',
     zzk: 'aikku',
     zzl: 'petra',
@@ -111,21 +116,15 @@ export class HomeComponent {
     zzr: 'osku'
   }
   code: string = '';
-  user: string | null;
+  user: User | null = null;
 
-  constructor(private userService: UserService) {
-    // oikeampi tapa tehdä tämä on käyttämällä Observableja (niin, että user olisi Observable), koska silloin
-    // käyttäjän muuttuessa myös arvo päivittyy automaattisesti. Muutetaan Observable -maailmaan myöhemmin.
-    this.user = userService.getUser();
+  constructor(public userService: UserService) {
   }
 
   tryLogIn() {
     Object.entries(this.loginCodes).forEach(keyValue => {
       if (keyValue[0] === this.code) {
-        this.userService.setUser(keyValue[1]);
-        // nyt joudutaan asettamaan tämä user myös tälle home-komponentille tässä, koska muuten se ei tiedä, että
-        // user on muuttunut
-        this.user = keyValue[1];
+        this.userService.getUser(keyValue[1]).then(user => this.user = user)
       }
     })
   }
