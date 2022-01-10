@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { tournaments, User } from '../home/home.component';
 import { UserService } from '../user.service';
+import { tournaments, User } from '../constants';
 
 @Component({
   selector: 'app-olympialaiset',
@@ -12,6 +12,6 @@ export class OlympialaisetComponent {
   user: User | null = null;
 
   constructor(private userService: UserService) {
-    userService.getUser('Aapo').then(user => this.user = user);
+    this.user = userService.getCurrentUser();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Pair, User } from '../home/home.component';
+import { OneRoundPredictions, Pair, User } from '../constants';
 
 @Component({
   selector: 'app-one-round-bracket',
@@ -14,37 +14,32 @@ export class OneRoundBracketComponent {
   user!: User;
 
   @Output()
-  submitUserSelections = new EventEmitter<User>();
+  submitUserSelections = new EventEmitter<OneRoundPredictions>();
 
-  winners: string[] = [];
+  winners: OneRoundPredictions = { oneRoundPredictions: [] };
 
   constructor() {
-    setTimeout(() => {
-      this.winners = this.user.predictions;
-    }, 0);
+    setTimeout(() => this.winners = this.user.predictions[0].predictions as OneRoundPredictions, 0)
   }
 
   setMatchWinner(pair: Pair, team: string) {
-    if (this.winners.includes(team)) {
-      this.winners = this.winners.filter((team) => !pair.teams.includes(team));
+    if (this.winners.oneRoundPredictions.includes(team)) {
+      this.winners.oneRoundPredictions = this.winners.oneRoundPredictions.filter((team) => !pair.teams.includes(team));
     } else {
-      this.winners = this.winners.filter((team) => !pair.teams.includes(team));
-      this.winners.push(team);
+      this.winners.oneRoundPredictions = this.winners.oneRoundPredictions.filter((team) => !pair.teams.includes(team));
+      this.winners.oneRoundPredictions.push(team);
     }
   }
 
   isMatchWinner(team: string): boolean {
-    return this.winners.includes(team);
+    return this.winners.oneRoundPredictions.includes(team);
   }
 
   clearAll() {
-    this.winners = [];
+    this.winners.oneRoundPredictions = [];
   }
 
   submitSelections() {
-    this.submitUserSelections.emit({
-      name: this.user.name,
-      predictions: this.winners
-    })
+    this.submitUserSelections.emit({ oneRoundPredictions: this.winners.oneRoundPredictions });
   }
 }

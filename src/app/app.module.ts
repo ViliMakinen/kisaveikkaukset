@@ -21,13 +21,16 @@ import { MatInputModule } from '@angular/material/input';
 import { ChampionsLeagueComponent } from './champions-league/champions-league.component';
 import { OneRoundBracketComponent } from './one-round-bracket/one-round-bracket.component'
 import { MatTabsModule } from '@angular/material/tabs';
+import { AuthGuard } from './auth.guard';
+import { LogInComponent } from './log-in/log-in.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'olympialaiset', component: OlympialaisetComponent },
-  { path: 'champions-league', component: ChampionsLeagueComponent }
+  { path: '', component: LogInComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'olympialaiset', component: OlympialaisetComponent, canActivate: [AuthGuard] },
+  { path: 'champions-league', component: ChampionsLeagueComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '' }
 ];
-
 
 @NgModule({
   declarations: [
@@ -37,7 +40,8 @@ const routes: Routes = [
     BracketComponent,
     OlympialaisetComponent,
     ChampionsLeagueComponent,
-    OneRoundBracketComponent
+    OneRoundBracketComponent,
+    LogInComponent
   ],
   imports: [
     BrowserModule,

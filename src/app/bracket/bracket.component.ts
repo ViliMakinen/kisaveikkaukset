@@ -1,27 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Pair } from '../home/home.component';
-
-export interface Bracket {
-  semiFinalists: Semifinalist
-  finalists: Finalist
-  winner: Winner
-}
-
-export interface Winner {
-  finalWinner: null | string;
-}
-
-export interface Semifinalist {
-  QF1winner: null | string,
-  QF2winner: null | string,
-  QF3winner: null | string,
-  QF4winner: null | string
-}
-
-export interface Finalist {
-  SF1winner: null | string,
-  SF2winner: null | string
-}
+import { Bracket, Finalist, Pair, Semifinalist, Winner } from '../constants';
 
 @Component({
   selector: 'app-bracket',

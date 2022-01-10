@@ -1,17 +1,16 @@
-<div class="main-content">
-  <mat-form-field class="input-container"><input [(ngModel)]='code' autocomplete="off" matInput
-                                                 placeholder="Anna koodisi">
-  </mat-form-field>
-  <button mat-raised-button class="button clickable" (click)="tryLogIn()">Kirjaudu sisään</button>
+<div *ngIf="user !== null" class="main-content">
   <div class="title">
-    Tervetuloa kisaveikkauksien pyhättöön {{user !== null ? user.name : ''}}!
+    Tervetuloa kisaveikkauksien pyhättöön {{user.name}}!
   </div>
   <mat-card class="current-results">
     Tämän hetken tilanne:
     <div class="list">
       <mat-divider></mat-divider>
-      <li *ngFor="let player of players" class="list-item">{{player.name}}<span>{{player.score}}
-          pistettä</span></li>
+      <li *ngFor="let player of users" [class.logged-user]="user?.name === player.name"
+          class="list-item">{{player.name}}
+        <span>{{player.points}} pistettä
+        </span>
+      </li>
     </div>
   </mat-card>
   <mat-card class="current-results">
