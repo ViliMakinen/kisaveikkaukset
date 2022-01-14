@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user.service';
-import { players, tournaments, User } from '../constants';
+import {  tournaments, User } from '../constants';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,6 @@ import { players, tournaments, User } from '../constants';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  players = players;
   tournaments = tournaments;
 
   user: User | null;

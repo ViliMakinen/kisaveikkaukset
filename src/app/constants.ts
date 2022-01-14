@@ -75,13 +75,6 @@ export const tournaments: Tournament[] = [
   },
 ]
 
-export const players: Players[] = [
-  { name: 'Viltsu', score: 10 },
-  { name: 'Aapo', score: 11 },
-  { name: 'Elmo', score: 10 },
-  { name: 'Osku', score: 10 },
-  { name: 'Eetu-Matti', score: 10 }
-];
 
 export interface Pair {
   teams: string[],

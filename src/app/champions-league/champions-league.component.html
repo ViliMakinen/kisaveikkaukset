@@ -6,7 +6,7 @@
   <mat-tab-group *ngIf="user !== null" [(selectedIndex)]="userIndex">
     <mat-tab *ngFor="let player of users" [disabled]="user.predictions[0].locked" [label]="player.name | uppercase">
       <app-one-round-bracket (submitUserSelections)="submitUserSelections($event)" [pairs]="competition.pairs"
-                             [user]="player"></app-one-round-bracket>
+        [user]="player"></app-one-round-bracket>
     </mat-tab>
   </mat-tab-group>
 </div>
