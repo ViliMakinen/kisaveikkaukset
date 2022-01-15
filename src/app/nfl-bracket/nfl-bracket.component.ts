@@ -107,7 +107,6 @@ export class NflBracketComponent implements OnInit {
 
   constructor() {
     setTimeout(() => {
-      console.log(this.user.predictions)
       this.bracketPredictions = this.player.predictions.find(prediction => prediction.tournament === 'NFL-playoffs')!.predictions as NFLBracket
     }, 0)
   }
@@ -141,10 +140,6 @@ export class NflBracketComponent implements OnInit {
     return pairs;
   }
 
-  clearAll() {
-    // this.winners.oneRoundPredictions = [];
-  }
-
   submitSelections() {
     this.submitUserSelections.emit(this.bracketPredictions);
   }
@@ -176,13 +171,92 @@ export class NflBracketComponent implements OnInit {
     }
   }
 
-
-  isAFCDivisional(team: SeededTeam) {
-    return this.tempAFCdivisionals.map(tempTeam => tempTeam.team).includes(team.team);
+  clearAll() {
+    this.bracketPredictions.nflBracket = {
+      AFCdivisionals: [
+        {
+          teams: [{
+            team: 'Titans',
+            seed: 1
+          },
+            {
+              team: '',
+              seed: 0
+            },
+          ]
+        }, {
+          teams: [{
+            team: '',
+            seed: 0,
+          },
+            {
+              team: '',
+              seed: 0
+            }]
+        }],
+      NFCdivisionals: [
+        {
+          teams: [{
+            team: 'Packers',
+            seed: 1
+          },
+            {
+              team: '',
+              seed: 0
+            },
+          ]
+        }, {
+          teams: [{
+            team: '',
+            seed: 0,
+          },
+            {
+              team: '',
+              seed: 0
+            }]
+        }
+      ],
+      AFCchampionship: {
+        teams: [{
+          team: '',
+          seed: 0,
+        },
+          {
+            team: '',
+            seed: 0
+          }]
+      },
+      NFCchampionship: {
+        teams: [{
+          team: '',
+          seed: 0,
+        },
+          {
+            team: '',
+            seed: 0
+          }]
+      },
+      superbowlists: [{
+        team: '',
+        seed: 0
+      }, {
+        team: '',
+        seed: 0
+      }],
+      winner: { team: '', seed: 0 }
+    }
+    this.tempAFCdivisionals = [{ team: 'Titans', seed: 1 }];
+    this.tempNFCdivisionals = [{ team: 'Packers', seed: 1 }];
   }
 
+
+  isAFCDivisional(team: SeededTeam) {
+    return this.tempAFCdivisionals.map(tempTeam => tempTeam.team).includes(team.team) || this.bracketPredictions.nflBracket.AFCdivisionals.flatMap(pair => pair.teams).map(team => team.team).includes(team.team);
+  }
+
+
   isNFCDivisional(team: SeededTeam) {
-    return this.tempNFCdivisionals.map(tempTeam => tempTeam.team).includes(team.team);
+    return this.tempNFCdivisionals.map(tempTeam => tempTeam.team).includes(team.team) || this.bracketPredictions.nflBracket.NFCdivisionals.flatMap(pair => pair.teams).map(team => team.team).includes(team.team);
   }
 
   isAFCChampionship(team: SeededTeam) {

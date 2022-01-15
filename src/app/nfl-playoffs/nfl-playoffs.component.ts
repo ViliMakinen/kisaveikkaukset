@@ -22,7 +22,7 @@ export class NFLPlayoffsComponent {
   }
 
   get arePredictionsLocked(): boolean {
-    return this.user!.predictions.find(prediction => prediction.tournament === 'Champions League')!.locked;
+    return this.user!.predictions.find(prediction => prediction.tournament === 'NFL-playoffs')!.locked;
   }
 
   submitUserSelections(nflBracket: NFLBracket) {
@@ -72,7 +72,7 @@ export class NFLPlayoffsComponent {
     if (player.name === this.user!.name) {
       return false;
     }
-    return !this.user?.predictions.find(prediction => prediction.tournament === 'Champions League')!.locked;
+    return !this.user?.predictions.find(prediction => prediction.tournament === 'NFL-playoffs')!.locked;
   }
 }
 

@@ -7,7 +7,8 @@
           class="button clickable"
           mat-raised-button>Submit selections
   </button>
-  <div class="NFL-container">
+  <div [style.pointer-events]="this.player.name !== this.user.name || this.arePredictionsLocked ? 'none' : 'auto'"
+       class="NFL-container">
     <div class="AFC-container">
       <div class="nfl-bracket-container afc">
         <div class="column">
