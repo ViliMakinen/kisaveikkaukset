@@ -76,68 +76,68 @@ export const tournaments: Tournament[] = [
 ]
 
 export const seededTournaments: SeededTournament[] = [
-  
+
   {
     name: 'NFL-playoffs',
     url: 'https://www.nfl.com/standings/playoff-picture',
     dates: 'Tammikuu 2022',
-    AFCteams: [  
+    AFCteams: [
       {
-        team:'Titans',
+        team: 'Titans',
         seed: 1
       },
       {
-        team:'Chiefs',
+        team: 'Chiefs',
         seed: 2
       },
       {
-        team:'Bengals',
-        seed: 4
-      },
-      {
-        team:'Bills',
+        team: 'Bills',
         seed: 3
       },
       {
-        team:'Patriots',
-        seed: 6
+        team: 'Bengals',
+        seed: 4
       },
       {
-        team:'Raiders',
+        team: 'Raiders',
         seed: 5
       },
       {
-        team:'Steelers',
+        team: 'Patriots',
+        seed: 6
+      },
+      {
+        team: 'Steelers',
         seed: 7
       }],
 
-      NFCteams:[
+    NFCteams: [
       {
-        team:'Packers',
+        team: 'Packers',
         seed: 1
       },
       {
-        team:'Bucs',
+        team: 'Bucs',
         seed: 2
       },
       {
-        team:'Cowboys',
+        team: 'Cowboys',
         seed: 3
       },
       {
-        team:'Rams',
+        team: 'Rams',
         seed: 4
       },
       {
-        team:'Cardinals',
+        team: 'Cardinals',
         seed: 5
       },
       {
-        team:'49ers',
+        team: '49ers',
         seed: 6
       },
       {
-        team:'Eagles',
+        team: 'Eagles',
         seed: 7
       },
     ]
@@ -153,7 +153,7 @@ export interface SeededPair {
   teams: SeededTeam[]
 }
 
-export interface SeededTeam{
+export interface SeededTeam {
   team: string,
   seed: number
 }
@@ -188,9 +188,18 @@ export interface User {
   points: number,
   predictions: {
     tournament: string,
-    predictions: OneRoundPredictions | Bracket
+    predictions: OneRoundPredictions | Bracket | NFLBracket
     locked: boolean
   }[],
+}
+
+export interface NFLBracket {
+  AFCdivisionals: SeededPair[];
+  NFCdivisionals: SeededPair[];
+  AFCchampionship: SeededPair;
+  NFCchampionship: SeededPair;
+  superbowlists: SeededTeam[];
+  winner: SeededTeam;
 }
 
 export interface Bracket {

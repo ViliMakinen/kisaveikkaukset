@@ -1,11 +1,45 @@
-.column {
+.NFL-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  .AFC-container {
+    height: 1000px;
+    flex-basis: 45%;
+  }
+
+  .NFC-container {
+    height: 1000px;
+    flex-basis: 45%;
+  }
+
+  .superbowl-container {
+    background: lightgray;
+    height: 1000px;
+    flex-basis: 10%;
+  }
+}
+
+.nfl-bracket-container {
+  display: flex;
+  justify-content: space-around;
+
+  &.afc {
+    flex-direction: row;
+  }
+
+  &.nfc {
+    flex-direction: row-reverse;
+  }
+
+  .column {
     height: 1000px;
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: space-around;
     align-items: center;
-  
+
     .pair {
       width: 250px;
       height: 100px;
@@ -13,7 +47,8 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-  
+      background: white;
+
       .team {
         border: 1px solid black;
         border-radius: 5%;
@@ -24,7 +59,7 @@
         justify-content: center;
         align-items: center;
         background: ghostwhite;
-  
+
         &.selected {
           background: white;
           font-weight: bold;
@@ -33,4 +68,4 @@
       }
     }
   }
-  
+}

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Bracket, Finalist, SeededPair, Semifinalist, Winner, SeededTeam, seededTournaments, OneRoundPredictions, tournaments, User } from '../constants';
+import { Component } from '@angular/core';
+import { NFLBracket, seededTournaments, User } from '../constants';
 import { UserService } from '../user.service';
 
 @Component({
@@ -25,18 +25,19 @@ export class NFLPlayoffsComponent {
     return this.user!.predictions.find(prediction => prediction.tournament === 'Champions League')!.locked;
   }
 
-  submitUserSelections(oneRoundPrediction: OneRoundPredictions) {
+  submitUserSelections(nflBracket: NFLBracket) {
     const newPredictions = this.user!.predictions.map(prediction => {
       if (prediction.tournament === this.competition.name) {
         return {
           tournament: this.competition.name,
-          predictions: oneRoundPrediction,
+          predictions: nflBracket,
           locked: true,
         }
       } else {
         return prediction
       }
     })
+    console.log(newPredictions)
     this.userService.updateUserPredictions({
       ...this.user!,
       predictions: newPredictions

@@ -64,6 +64,86 @@ export class UserService {
             oneRoundPredictions: ['Chelsea, Liverpool']
           },
           locked: false
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }],
+              NFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }
+              ],
+              AFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              NFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              superbowlists: [{
+                team: '',
+                seed: 0
+              }, {
+                team: '',
+                seed: 0
+              }],
+              winner: { team: '', seed: 0 }
+
+            }
+          },
+          locked: false
         }
       ]
     })
@@ -75,6 +155,86 @@ export class UserService {
           tournament: 'Champions League',
           predictions: {
             oneRoundPredictions: ['Liverpool']
+          },
+          locked: false
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }],
+              NFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }
+              ],
+              AFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              NFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              superbowlists: [{
+                team: '',
+                seed: 0
+              }, {
+                team: '',
+                seed: 0
+              }],
+              winner: { team: '', seed: 0 }
+
+            }
           },
           locked: false
         }
@@ -90,6 +250,86 @@ export class UserService {
             oneRoundPredictions: ['Chelsea']
           },
           locked: false
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }],
+              NFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }
+              ],
+              AFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              NFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              superbowlists: [{
+                team: '',
+                seed: 0
+              }, {
+                team: '',
+                seed: 0
+              }],
+              winner: { team: '', seed: 0 }
+
+            }
+          },
+          locked: false
         }
       ]
     })
@@ -101,6 +341,86 @@ export class UserService {
           tournament: 'Champions League',
           predictions: {
             oneRoundPredictions: []
+          },
+          locked: false
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }],
+              NFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }
+              ],
+              AFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              NFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              superbowlists: [{
+                team: '',
+                seed: 0
+              }, {
+                team: '',
+                seed: 0
+              }],
+              winner: { team: '', seed: 0 }
+
+            }
           },
           locked: false
         }
@@ -116,6 +436,86 @@ export class UserService {
             oneRoundPredictions: []
           },
           locked: false
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }],
+              NFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }
+              ],
+              AFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              NFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              superbowlists: [{
+                team: '',
+                seed: 0
+              }, {
+                team: '',
+                seed: 0
+              }],
+              winner: { team: '', seed: 0 }
+
+            }
+          },
+          locked: false
         }
       ]
     })
@@ -127,6 +527,86 @@ export class UserService {
           tournament: 'Champions League',
           predictions: {
             oneRoundPredictions: []
+          },
+          locked: false
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }],
+              NFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }
+              ],
+              AFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              NFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              superbowlists: [{
+                team: '',
+                seed: 0
+              }, {
+                team: '',
+                seed: 0
+              }],
+              winner: { team: '', seed: 0 }
+
+            }
           },
           locked: false
         }
@@ -142,6 +622,86 @@ export class UserService {
             oneRoundPredictions: []
           },
           locked: false
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }],
+              NFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }
+              ],
+              AFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              NFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              superbowlists: [{
+                team: '',
+                seed: 0
+              }, {
+                team: '',
+                seed: 0
+              }],
+              winner: { team: '', seed: 0 }
+
+            }
+          },
+          locked: false
         }
       ]
     })
@@ -155,6 +715,86 @@ export class UserService {
             oneRoundPredictions: []
           },
           locked: false
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }],
+              NFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }
+              ],
+              AFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              NFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              superbowlists: [{
+                team: '',
+                seed: 0
+              }, {
+                team: '',
+                seed: 0
+              }],
+              winner: { team: '', seed: 0 }
+
+            }
+          },
+          locked: false
         }
       ]
     })
@@ -166,6 +806,86 @@ export class UserService {
           tournament: 'Champions League',
           predictions: {
             oneRoundPredictions: []
+          },
+          locked: false
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }],
+              NFCdivisionals: [
+                {
+                  teams: [{
+                    team: '',
+                    seed: 0
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    },
+                  ]
+                }, {
+                  teams: [{
+                    team: '',
+                    seed: 0,
+                  },
+                    {
+                      team: '',
+                      seed: 0
+                    }]
+                }
+              ],
+              AFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              NFCchampionship: {
+                teams: [{
+                  team: '',
+                  seed: 0,
+                },
+                  {
+                    team: '',
+                    seed: 0
+                  }]
+              },
+              superbowlists: [{
+                team: '',
+                seed: 0
+              }, {
+                team: '',
+                seed: 0
+              }],
+              winner: { team: '', seed: 0 }
+
+            }
           },
           locked: false
         }

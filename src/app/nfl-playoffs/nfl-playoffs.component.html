@@ -1,11 +1,15 @@
 <div class="main-content-container">
-    <div class="title-container">
-      <h1>{{competition.name}} veikkauskaavio</h1>
-    </div>
-    <button (click)="unlockPredictionsForUser()" mat-raised-button>Unlock predictions for user</button>
-    <mat-tab-group *ngIf="user !== null" [selectedIndex]="userIndex">
-      <mat-tab *ngFor="let player of users" [disabled]="isTabLocked(player)" [label]="player.name | uppercase">
-      <app-nfl-bracket></app-nfl-bracket>
-      </mat-tab>
-    </mat-tab-group>
+  <div class="title-container">
+    <h1>{{competition.name}} veikkauskaavio</h1>
   </div>
+  <button (click)="unlockPredictionsForUser()" mat-raised-button>Unlock predictions for user</button>
+  <mat-tab-group *ngIf="user !== null" [selectedIndex]="userIndex">
+    <mat-tab *ngFor="let player of users" [disabled]="isTabLocked(player)" [label]="player.name | uppercase">
+      <app-nfl-bracket (submitUserSelections)="submitUserSelections($event)"
+                       [arePredictionsLocked]="false"
+                       [competition]="competition"
+                       [player]="player"
+                       [user]="user"></app-nfl-bracket>
+    </mat-tab>
+  </mat-tab-group>
+</div>
