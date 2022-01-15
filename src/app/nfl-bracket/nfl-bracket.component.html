@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="column">
-          <div *ngFor="let pair of bracketPredictions.AFCdivisionals" class="pair">
+          <div *ngFor="let pair of bracketPredictions.nflBracket.AFCdivisionals" class="pair">
             <div (click)="selectAFCchampionships(team, pair)" *ngFor="let team of pair.teams"
                  [class.selected]="isAFCChampionship(team)"
                  class="team clickable">
@@ -30,8 +30,9 @@
         </div>
         <div class="column">
           <div class="pair">
-            <div (click)="bracketPredictions.superbowlists[0] = team"
-                 *ngFor="let team of bracketPredictions.AFCchampionship.teams" [class.selected]="isSuperbowlist(team)"
+            <div (click)="bracketPredictions.nflBracket.superbowlists[0] = team"
+                 *ngFor="let team of bracketPredictions.nflBracket.AFCchampionship.teams"
+                 [class.selected]="isSuperbowlist(team)"
                  class="team clickable">
               {{team!.team}} ({{team!.seed !== 0 ? team!.seed : ''}})
             </div>
@@ -43,7 +44,7 @@
       <div class="nfl-bracket-container">
         <div class="column">
           <div class="pair">
-            <div (click)="selectWinner(team)" *ngFor="let team of bracketPredictions.superbowlists"
+            <div (click)="selectWinner(team)" *ngFor="let team of bracketPredictions.nflBracket.superbowlists"
                  [class.selected]="isWinner(team)"
                  class="team clickable">
               {{team!.team}} ({{team!.seed !== 0 ? team!.seed : ''}})
@@ -64,7 +65,7 @@
           </div>
         </div>
         <div class="column">
-          <div *ngFor="let pair of bracketPredictions.NFCdivisionals" class="pair">
+          <div *ngFor="let pair of bracketPredictions.nflBracket.NFCdivisionals" class="pair">
             <div (click)="selectNFCchampionships(team, pair)" *ngFor="let team of pair.teams"
                  [class.selected]="isNFCChampionship(team)"
                  class="team clickable">
@@ -74,8 +75,9 @@
         </div>
         <div class="column">
           <div class="pair">
-            <div (click)="bracketPredictions.superbowlists[1] = team"
-                 *ngFor="let team of bracketPredictions.NFCchampionship.teams" [class.selected]="isSuperbowlist(team)"
+            <div (click)="bracketPredictions.nflBracket.superbowlists[1] = team"
+                 *ngFor="let team of bracketPredictions.nflBracket.NFCchampionship.teams"
+                 [class.selected]="isSuperbowlist(team)"
                  class="team clickable">
               {{team!.team}} ({{team!.seed !== 0 ? team!.seed : ''}})
             </div>

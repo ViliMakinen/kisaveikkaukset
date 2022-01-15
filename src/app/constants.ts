@@ -194,12 +194,14 @@ export interface User {
 }
 
 export interface NFLBracket {
-  AFCdivisionals: SeededPair[];
-  NFCdivisionals: SeededPair[];
-  AFCchampionship: SeededPair;
-  NFCchampionship: SeededPair;
-  superbowlists: SeededTeam[];
-  winner: SeededTeam;
+  nflBracket: {
+    AFCdivisionals: SeededPair[];
+    NFCdivisionals: SeededPair[];
+    AFCchampionship: SeededPair;
+    NFCchampionship: SeededPair;
+    superbowlists: SeededTeam[];
+    winner: SeededTeam;
+  }
 }
 
 export interface Bracket {
