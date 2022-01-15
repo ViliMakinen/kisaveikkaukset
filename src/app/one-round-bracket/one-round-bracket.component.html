@@ -1,7 +1,14 @@
-<mat-card>
-  <button (click)="clearAll()" class="button clickable" mat-raised-button>Clear selections</button>
-  <button (click)="submitSelections()" class="button clickable" mat-raised-button>Submit selections</button>
-  <div class="bracket-container-no-seeds">
+<mat-card [style.background]="player.name !== user.name || arePredictionsLocked ? 'lightgray' : 'white'">
+  <button (click)="clearAll()" [disabled]="player.name !== user.name || arePredictionsLocked"
+          class="button clickable"
+          mat-raised-button>Clear selections
+  </button>
+  <button (click)="submitSelections()" [disabled]="this.player.name !== this.user.name || this.arePredictionsLocked"
+          class="button clickable"
+          mat-raised-button>Submit selections
+  </button>
+  <div [style.pointer-events]="this.player.name !== this.user.name || this.arePredictionsLocked ? 'none' : 'auto'"
+       class="bracket-container-no-seeds">
     <div class="column">
       <div *ngFor="let pair of pairs" class="pair">
         <span>Playoff 1. round</span>

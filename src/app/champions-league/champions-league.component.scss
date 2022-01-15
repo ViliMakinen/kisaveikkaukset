@@ -1,11 +1,10 @@
 .main-content-container {
-    max-height: calc(100% - 64px);
-    padding: 2%;
-  
-    .title-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  max-height: calc(100% - 64px);
+  padding: 1%;
+
+  .title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  
+}

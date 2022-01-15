@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./side-navigation.component.scss']
 })
 export class SideNavigationComponent {
-
 }

@@ -3,10 +3,14 @@
     <h1>{{competition.name}} veikkauskaavio</h1>
   </div>
   <button (click)="unlockPredictionsForUser()" mat-raised-button>Unlock predictions for user</button>
-  <mat-tab-group *ngIf="user !== null" [(selectedIndex)]="userIndex">
-    <mat-tab *ngFor="let player of users" [disabled]="user.predictions[0].locked" [label]="player.name | uppercase">
-      <app-one-round-bracket (submitUserSelections)="submitUserSelections($event)" [pairs]="competition.pairs"
-        [user]="player"></app-one-round-bracket>
+  <mat-tab-group *ngIf="user !== null" [selectedIndex]="userIndex">
+    <mat-tab *ngFor="let player of users" [disabled]="isTabLocked(player)" [label]="player.name | uppercase">
+      <app-one-round-bracket
+        (submitUserSelections)="submitUserSelections($event)"
+        [arePredictionsLocked]="arePredictionsLocked"
+        [pairs]="competition.pairs"
+        [player]="player"
+        [user]="user"></app-one-round-bracket>
     </mat-tab>
   </mat-tab-group>
 </div>

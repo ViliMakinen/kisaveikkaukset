@@ -22,6 +22,10 @@ export class ChampionsLeagueComponent {
     });
   }
 
+  get arePredictionsLocked(): boolean {
+    return this.user!.predictions.find(prediction => prediction.tournament === 'Champions League')!.locked;
+  }
+
   submitUserSelections(oneRoundPrediction: OneRoundPredictions) {
     const newPredictions = this.user!.predictions.map(prediction => {
       if (prediction.tournament === this.competition.name) {
@@ -62,5 +66,12 @@ export class ChampionsLeagueComponent {
       console.log('Unlocked successfully!');
       this.userService.getUser(this.user!.name).then(user => this.user = user);
     })
+  }
+
+  isTabLocked(player: User): boolean {
+    if (player.name === this.user!.name) {
+      return false;
+    }
+    return !this.user?.predictions.find(prediction => prediction.tournament === 'Champions League')!.locked;
   }
 }

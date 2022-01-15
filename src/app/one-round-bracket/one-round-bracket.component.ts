@@ -11,7 +11,13 @@ export class OneRoundBracketComponent {
   pairs!: Pair[];
 
   @Input()
+  player!: User;
+
+  @Input()
   user!: User;
+
+  @Input()
+  arePredictionsLocked!: boolean;
 
   @Output()
   submitUserSelections = new EventEmitter<OneRoundPredictions>();
@@ -19,7 +25,7 @@ export class OneRoundBracketComponent {
   winners: OneRoundPredictions = { oneRoundPredictions: [] };
 
   constructor() {
-    setTimeout(() => this.winners = this.user.predictions[0].predictions as OneRoundPredictions, 0)
+    setTimeout(() => this.winners = this.player.predictions[0].predictions as OneRoundPredictions, 0)
   }
 
   setMatchWinner(pair: Pair, team: string) {
