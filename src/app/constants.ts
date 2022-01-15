@@ -75,10 +75,87 @@ export const tournaments: Tournament[] = [
   },
 ]
 
+export const seededTournaments: SeededTournament[] = [
+  
+  {
+    name: 'NFL-playoffs',
+    url: 'https://www.nfl.com/standings/playoff-picture',
+    dates: 'Tammikuu 2022',
+    AFCteams: [  
+      {
+        team:'Titans',
+        seed: 1
+      },
+      {
+        team:'Chiefs',
+        seed: 2
+      },
+      {
+        team:'Bengals',
+        seed: 4
+      },
+      {
+        team:'Bills',
+        seed: 3
+      },
+      {
+        team:'Patriots',
+        seed: 6
+      },
+      {
+        team:'Raiders',
+        seed: 5
+      },
+      {
+        team:'Steelers',
+        seed: 7
+      }],
+
+      NFCteams:[
+      {
+        team:'Packers',
+        seed: 1
+      },
+      {
+        team:'Bucs',
+        seed: 2
+      },
+      {
+        team:'Cowboys',
+        seed: 3
+      },
+      {
+        team:'Rams',
+        seed: 4
+      },
+      {
+        team:'Cardinals',
+        seed: 5
+      },
+      {
+        team:'49ers',
+        seed: 6
+      },
+      {
+        team:'Eagles',
+        seed: 7
+      },
+    ]
+  }
+]
 
 export interface Pair {
   teams: string[],
   seed: number | null
+}
+
+export interface SeededPair {
+  teams: SeededTeam[]
+}
+
+export interface SeededTeam{
+  team: string,
+  seed: number
 }
 
 export interface Tournament {
@@ -87,6 +164,15 @@ export interface Tournament {
   dates: string,
   pairs: Pair[]
 }
+
+export interface SeededTournament {
+  name: string,
+  url: string,
+  dates: string,
+  AFCteams: SeededTeam[],
+  NFCteams: SeededTeam[]
+}
+
 
 export interface Players {
   name: string,

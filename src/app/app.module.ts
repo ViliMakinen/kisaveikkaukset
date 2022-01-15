@@ -23,12 +23,15 @@ import { OneRoundBracketComponent } from './one-round-bracket/one-round-bracket.
 import { MatTabsModule } from '@angular/material/tabs';
 import { AuthGuard } from './auth.guard';
 import { LogInComponent } from './log-in/log-in.component';
+import { NFLPlayoffsComponent } from './nfl-playoffs/nfl-playoffs.component';
+import { NflBracketComponent } from './nfl-bracket/nfl-bracket.component';
 
 const routes: Routes = [
   { path: '', component: LogInComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'olympialaiset', component: OlympialaisetComponent, canActivate: [AuthGuard] },
   { path: 'champions-league', component: ChampionsLeagueComponent, canActivate: [AuthGuard] },
+  { path: 'NFL-playoffs', component: NFLPlayoffsComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];
 
@@ -41,7 +44,9 @@ const routes: Routes = [
     OlympialaisetComponent,
     ChampionsLeagueComponent,
     OneRoundBracketComponent,
-    LogInComponent
+    LogInComponent,
+    NFLPlayoffsComponent,
+    NflBracketComponent
   ],
   imports: [
     BrowserModule,
