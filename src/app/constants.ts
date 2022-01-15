@@ -2,7 +2,7 @@ export const loginCodes = {
   xyz: 'Viltsu',
   abc: 'Aapo',
   opl: 'Elmo',
-  zzz: 'EM',
+  zzz: 'Eetu-Matti',
   zzy: 'Emmi',
   zzk: 'Aikku',
   zzl: 'Petra',
