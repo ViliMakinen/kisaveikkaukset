@@ -74,6 +74,10 @@ export class NFLPlayoffsComponent {
     }
     return !this.user?.predictions.find(prediction => prediction.tournament === 'NFL-playoffs')!.locked;
   }
+
+  getResults() : NFLBracket {
+    return this.users?.find(user => user.name === 'results')?.predictions.find(prediction => prediction.tournament === 'NFL-playoffs')?.predictions as NFLBracket
+  }
 }
 
 

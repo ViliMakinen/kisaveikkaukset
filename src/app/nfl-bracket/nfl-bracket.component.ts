@@ -16,6 +16,9 @@ export class NflBracketComponent implements OnInit {
   user!: User;
 
   @Input()
+  results!: NFLBracket;
+
+  @Input()
   arePredictionsLocked!: boolean;
 
   @Input()
@@ -305,4 +308,9 @@ export class NflBracketComponent implements OnInit {
       this.bracketPredictions.nflBracket.NFCdivisionals = this.pairTeamsBySeed(this.tempNFCdivisionals);
     }
   }
+
+  isAFCwinner(team: SeededTeam) : boolean {
+    return false
+  }
 }
+

@@ -7,7 +7,8 @@ export const loginCodes = {
   zzk: 'Aikku',
   zzl: 'Petra',
   zzm: 'Jukka',
-  zzr: 'Osku'
+  zzr: 'Osku',
+  results: 'results'
 }
 
 export const tournaments: Tournament[] = [

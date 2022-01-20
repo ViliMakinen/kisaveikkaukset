@@ -7,6 +7,7 @@
     <mat-tab *ngFor="let player of users" [disabled]="isTabLocked(player)" [label]="player.name | uppercase">
       <app-nfl-bracket (submitUserSelections)="submitUserSelections($event)"
                        [arePredictionsLocked]="arePredictionsLocked"
+                       [results]="getResults()"
                        [competition]="competition"
                        [player]="player"
                        [user]="user"></app-nfl-bracket>
