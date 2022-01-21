@@ -309,8 +309,14 @@ export class NflBracketComponent implements OnInit {
     }
   }
 
-  isAFCwinner(team: SeededTeam) : boolean {
-    return false
+  isAFCDivisonalWinner(team: SeededTeam) {
+    const AFCDivisionalWinners = this.results.nflBracket.AFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
+    const playerAFCDivisionalPredictions = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.AFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
+    return AFCDivisionalWinners.includes(team.team) && playerAFCDivisionalPredictions.includes(team.team);
+  }
+
+  isNFCDivisionalWinner(team: SeededTeam) {
+    return false;
   }
 }
 

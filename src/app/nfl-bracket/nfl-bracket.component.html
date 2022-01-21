@@ -15,7 +15,7 @@
           <div *ngFor="let pair of AFCpairs" class="pair">
             <div (click)="selectAFCDivisionals(team, pair)" *ngFor="let team of pair.teams"
                  [class.selected]="isAFCDivisional(team)"
-                 [style.background]="isAFCwinner(team) ? 'green' : 'red' "
+                 [style.background]="isAFCDivisonalWinner(team) ? 'green' : '' "
                  class="team clickable">
               {{team!.team}} ({{team!.seed}})
             </div>
@@ -61,6 +61,7 @@
           <div *ngFor="let pair of NFCpairs" class="pair">
             <div (click)="selectNFCDivisionals(team, pair)" *ngFor="let team of pair.teams"
                  [class.selected]="isNFCDivisional(team)"
+                 [style.background]="isNFCDivisionalWinner(team) ? 'green' : '' "
                  class="team clickable">
               {{team!.team}} ({{team!.seed}})
             </div>
