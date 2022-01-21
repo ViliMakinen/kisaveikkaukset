@@ -15,7 +15,7 @@
           <div *ngFor="let pair of AFCpairs" class="pair">
             <div (click)="selectAFCDivisionals(team, pair)" *ngFor="let team of pair.teams"
                  [class.selected]="isAFCDivisional(team)"
-                 [style.background]="isAFCDivisonalWinner(team) ? 'green' : '' "
+                 [style.background]="getResult(team,'AFCdiv')"
                  class="team clickable">
               {{team!.team}} ({{team!.seed}})
             </div>
@@ -25,6 +25,7 @@
           <div *ngFor="let pair of bracketPredictions.nflBracket.AFCdivisionals" class="pair">
             <div (click)="selectAFCchampionships(team, pair)" *ngFor="let team of pair.teams"
                  [class.selected]="isAFCChampionship(team)"
+                 [style.background]="getResult(team,'AFCchamp')"
                  class="team clickable">
               {{team!.team}} ({{team!.seed !== 0 ? team!.seed : ''}})
             </div>
@@ -35,6 +36,7 @@
             <div (click)="bracketPredictions.nflBracket.superbowlists[0] = team"
                  *ngFor="let team of bracketPredictions.nflBracket.AFCchampionship.teams"
                  [class.selected]="isSuperbowlist(team)"
+                 [style.background]="getResult(team,'SuperBowl')"
                  class="team clickable">
               {{team!.team}} ({{team!.seed !== 0 ? team!.seed : ''}})
             </div>
@@ -48,6 +50,7 @@
           <div class="pair">
             <div (click)="selectWinner(team)" *ngFor="let team of bracketPredictions.nflBracket.superbowlists"
                  [class.selected]="isWinner(team)"
+                 [style.background]="getResult(team,'')"
                  class="team clickable">
               {{team!.team}} ({{team!.seed !== 0 ? team!.seed : ''}})
             </div>
@@ -61,7 +64,7 @@
           <div *ngFor="let pair of NFCpairs" class="pair">
             <div (click)="selectNFCDivisionals(team, pair)" *ngFor="let team of pair.teams"
                  [class.selected]="isNFCDivisional(team)"
-                 [style.background]="isNFCDivisionalWinner(team) ? 'green' : '' "
+                 [style.background]="getResult(team, 'NFCdiv')"
                  class="team clickable">
               {{team!.team}} ({{team!.seed}})
             </div>
@@ -71,6 +74,7 @@
           <div *ngFor="let pair of bracketPredictions.nflBracket.NFCdivisionals" class="pair">
             <div (click)="selectNFCchampionships(team, pair)" *ngFor="let team of pair.teams"
                  [class.selected]="isNFCChampionship(team)"
+                 [style.background]="getResult(team,'NFCchamp')"
                  class="team clickable">
               {{team!.team}} ({{team!.seed !== 0 ? team!.seed : ''}})
             </div>
@@ -81,6 +85,7 @@
             <div (click)="bracketPredictions.nflBracket.superbowlists[1] = team"
                  *ngFor="let team of bracketPredictions.nflBracket.NFCchampionship.teams"
                  [class.selected]="isSuperbowlist(team)"
+                 [style.background]="getResult(team,'SuperBowl')"
                  class="team clickable">
               {{team!.team}} ({{team!.seed !== 0 ? team!.seed : ''}})
             </div>

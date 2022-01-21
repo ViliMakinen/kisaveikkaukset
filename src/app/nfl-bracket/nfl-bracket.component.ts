@@ -35,20 +35,20 @@ export class NflBracketComponent implements OnInit {
             team: '',
             seed: 0
           },
-            {
-              team: '',
-              seed: 0
-            },
+          {
+            team: '',
+            seed: 0
+          },
           ]
         }, {
           teams: [{
             team: '',
             seed: 0,
           },
-            {
-              team: '',
-              seed: 0
-            }]
+          {
+            team: '',
+            seed: 0
+          }]
         }],
       NFCdivisionals: [
         {
@@ -56,20 +56,20 @@ export class NflBracketComponent implements OnInit {
             team: '',
             seed: 0
           },
-            {
-              team: '',
-              seed: 0
-            },
+          {
+            team: '',
+            seed: 0
+          },
           ]
         }, {
           teams: [{
             team: '',
             seed: 0,
           },
-            {
-              team: '',
-              seed: 0
-            }]
+          {
+            team: '',
+            seed: 0
+          }]
         }
       ],
       AFCchampionship: {
@@ -77,20 +77,20 @@ export class NflBracketComponent implements OnInit {
           team: '',
           seed: 0,
         },
-          {
-            team: '',
-            seed: 0
-          }]
+        {
+          team: '',
+          seed: 0
+        }]
       },
       NFCchampionship: {
         teams: [{
           team: '',
           seed: 0,
         },
-          {
-            team: '',
-            seed: 0
-          }]
+        {
+          team: '',
+          seed: 0
+        }]
       },
       superbowlists: [{
         team: '',
@@ -182,20 +182,20 @@ export class NflBracketComponent implements OnInit {
             team: 'Titans',
             seed: 1
           },
-            {
-              team: '',
-              seed: 0
-            },
+          {
+            team: '',
+            seed: 0
+          },
           ]
         }, {
           teams: [{
             team: '',
             seed: 0,
           },
-            {
-              team: '',
-              seed: 0
-            }]
+          {
+            team: '',
+            seed: 0
+          }]
         }],
       NFCdivisionals: [
         {
@@ -203,20 +203,20 @@ export class NflBracketComponent implements OnInit {
             team: 'Packers',
             seed: 1
           },
-            {
-              team: '',
-              seed: 0
-            },
+          {
+            team: '',
+            seed: 0
+          },
           ]
         }, {
           teams: [{
             team: '',
             seed: 0,
           },
-            {
-              team: '',
-              seed: 0
-            }]
+          {
+            team: '',
+            seed: 0
+          }]
         }
       ],
       AFCchampionship: {
@@ -224,20 +224,20 @@ export class NflBracketComponent implements OnInit {
           team: '',
           seed: 0,
         },
-          {
-            team: '',
-            seed: 0
-          }]
+        {
+          team: '',
+          seed: 0
+        }]
       },
       NFCchampionship: {
         teams: [{
           team: '',
           seed: 0,
         },
-          {
-            team: '',
-            seed: 0
-          }]
+        {
+          team: '',
+          seed: 0
+        }]
       },
       superbowlists: [{
         team: '',
@@ -309,14 +309,112 @@ export class NflBracketComponent implements OnInit {
     }
   }
 
-  isAFCDivisonalWinner(team: SeededTeam) {
-    const AFCDivisionalWinners = this.results.nflBracket.AFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
-    const playerAFCDivisionalPredictions = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.AFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
-    return AFCDivisionalWinners.includes(team.team) && playerAFCDivisionalPredictions.includes(team.team);
+  // winnerCheck(team: SeededTeam, code: string): boolean {
+  //   if (code === 'AFCdiv') {
+  //     const AFCDivisionalWinners = this.results.nflBracket.AFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
+  //     const playerAFCDivisionalPredictions = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.AFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
+  //     return AFCDivisionalWinners.includes(team.team) && playerAFCDivisionalPredictions.includes(team.team);
+  //   } else if (code === 'NFCdiv') {
+  //     const NFCDivisionalWinners = this.results.nflBracket.NFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
+  //     const playerNFCDivisionalPredictions = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.NFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
+  //     return NFCDivisionalWinners.includes(team.team) && playerNFCDivisionalPredictions.includes(team.team);
+  //   } else if (code === 'AFCchamp') {
+  //     const AFCchampWinners = this.results.nflBracket.AFCchampionship.teams.flatMap(team => team.team);
+  //     const playerAFCchampPredictions = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.AFCchampionship.teams.flatMap(team => team.team);
+  //     return AFCchampWinners.includes(team.team) && playerAFCchampPredictions.includes(team.team);
+  //   } else if (code === 'NFCchamp') {
+  //     const NFCchampWinners = this.results.nflBracket.NFCchampionship.teams.flatMap(team => team.team);
+  //     const playerNFCchampPredictions = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.NFCchampionship.teams.flatMap(team => team.team);
+  //     return NFCchampWinners.includes(team.team) && playerNFCchampPredictions.includes(team.team);
+  //   } else if (code === 'SuperBowl') {
+  //     const SuperBowlists = this.results.nflBracket.superbowlists.flatMap(team => team.team);
+  //     const playerSuperBowlists = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.superbowlists.flatMap(team => team.team);
+  //     return SuperBowlists.includes(team.team) && playerSuperBowlists.includes(team.team)
+  //   } else {
+  //     return (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.winner.team === this.results.nflBracket.winner.team
+  //   }
+  // }
+
+  haveGamesBeenPlayed(code: string): boolean {
+    if (code === 'AFCdiv') {
+      return this.results.nflBracket.AFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team)).includes('')
+    } else if (code === 'NFCdiv') {
+      return this.results.nflBracket.NFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team)).includes('')
+    } else if (code === 'AFCchamp') {
+      return this.results.nflBracket.AFCchampionship.teams.flatMap(team => team.team).includes('')
+    } else if (code === 'NFCchamp') {
+      return this.results.nflBracket.NFCchampionship.teams.flatMap(team => team.team).includes('')
+    } else if (code === 'SuperBowl') {
+      return this.results.nflBracket.superbowlists.map(team => team.team).includes('')
+    } else {
+      return this.results.nflBracket.winner.team.includes('')
+    }
   }
 
-  isNFCDivisionalWinner(team: SeededTeam) {
-    return false;
+  getResult(team: SeededTeam, code: string) {
+    if (code === 'AFCdiv') {
+      const AFCDivisionalWinners = this.results.nflBracket.AFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
+      const playerAFCDivisionalPredictions = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.AFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
+      if (playerAFCDivisionalPredictions.includes('')) {
+        return 'white'
+      } else if (!AFCDivisionalWinners.includes(team.team) && playerAFCDivisionalPredictions.includes(team.team)) {
+        return 'red'
+      } else if (AFCDivisionalWinners.includes(team.team) && playerAFCDivisionalPredictions.includes(team.team)) {
+        return 'green'
+      } return 'white'
+    } else if (code === 'NFCdiv') {
+      const NFCDivisionalWinners = this.results.nflBracket.NFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
+      const playerNFCDivisionalPredictions = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.NFCdivisionals.flatMap(seededPair => seededPair.teams.map(team => team.team));
+      if (playerNFCDivisionalPredictions.includes('')){
+        return 'white'
+      }else if (!NFCDivisionalWinners.includes(team.team) && playerNFCDivisionalPredictions.includes(team.team)){
+        return 'red'
+      }else if (NFCDivisionalWinners.includes(team.team) && playerNFCDivisionalPredictions.includes(team.team)){
+        return 'green'
+      } return 'white'
+    } else if (code === 'AFCchamp') {
+      const AFCchampWinners = this.results.nflBracket.AFCchampionship.teams.flatMap(team => team.team);
+      const playerAFCchampPredictions = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.AFCchampionship.teams.flatMap(team => team.team);
+      if (this.haveGamesBeenPlayed('AFCchamp') || playerAFCchampPredictions.includes('')) {
+        return 'white'
+      } else if (!AFCchampWinners.includes(team.team) && playerAFCchampPredictions.includes(team.team)){
+        return 'red' 
+      } else if (AFCchampWinners.includes(team.team) && playerAFCchampPredictions.includes(team.team)){
+        return 'green'
+      } return 'white'
+    } else if (code === 'NFCchamp') {
+      const NFCchampWinners = this.results.nflBracket.NFCchampionship.teams.flatMap(team => team.team);
+      const playerNFCchampPredictions = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.NFCchampionship.teams.flatMap(team => team.team);
+      if (this.haveGamesBeenPlayed('NFCchamp') || playerNFCchampPredictions.includes('')){
+        return 'white'
+      }else if (!NFCchampWinners.includes(team.team) && playerNFCchampPredictions.includes(team.team)){
+        return 'red'
+      } else if (NFCchampWinners.includes(team.team) && playerNFCchampPredictions.includes(team.team)){
+        return 'green'
+      } return 'white'
+    } else if (code === 'SuperBowl') {
+      const SuperBowlists = this.results.nflBracket.superbowlists.map(team => team.team);
+      const playerSuperBowlists = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.superbowlists.flatMap(team => team.team);
+      if (this.haveGamesBeenPlayed('SuperBowl') || playerSuperBowlists.includes('')) {
+        return 'white'
+      } else if (!SuperBowlists.includes(team.team) && playerSuperBowlists.includes(team.team)){
+        return 'blue'
+      } else if (SuperBowlists.includes(team.team) && playerSuperBowlists.includes(team.team)){
+        return 'green'
+      } return 'white'
+    } else {
+      const SuperBowlWinner =  this.results.nflBracket.winner.team;
+      const PlayerWinnerPick = (this.player.predictions.find(tournament => tournament.tournament === 'NFL-playoffs')!.predictions as NFLBracket).nflBracket.winner.team;
+      if (this.haveGamesBeenPlayed('winner') || PlayerWinnerPick === ''){
+        return 'white'
+      } else if (SuperBowlWinner === PlayerWinnerPick){
+        return 'green'
+      } else if (SuperBowlWinner !== PlayerWinnerPick){
+        return 'red'
+      }
+      return 'white'
+    }
   }
+
 }
 

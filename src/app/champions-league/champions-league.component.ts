@@ -74,4 +74,8 @@ export class ChampionsLeagueComponent {
     }
     return !this.user?.predictions.find(prediction => prediction.tournament === 'Champions League')!.locked;
   }
+
+  getResults() : OneRoundPredictions {
+    return this.users?.find(user => user.name === 'results')?.predictions.find(prediction => prediction.tournament === 'Champions League')?.predictions as OneRoundPredictions
+  }
 }
