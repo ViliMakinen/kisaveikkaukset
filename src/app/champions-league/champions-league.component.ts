@@ -29,10 +29,17 @@ export class ChampionsLeagueComponent {
   submitUserSelections(oneRoundPrediction: OneRoundPredictions) {
     const newPredictions = this.user!.predictions.map(prediction => {
       if (prediction.tournament === this.competition.name) {
-        return {
-          tournament: this.competition.name,
-          predictions: oneRoundPrediction,
-          locked: true,
+        if (this.user!.name === 'results'){
+          return {
+            tournament: this.competition.name,
+            predictions: oneRoundPrediction,
+            locked: false,
+        }} else {
+          return {
+            tournament: this.competition.name,
+            predictions: oneRoundPrediction,
+            locked: true,
+        }
         }
       } else {
         return prediction

@@ -28,10 +28,18 @@ export class NFLPlayoffsComponent {
   submitUserSelections(nflBracket: NFLBracket) {
     const newPredictions = this.user!.predictions.map(prediction => {
       if (prediction.tournament === this.competition.name) {
-        return {
-          tournament: this.competition.name,
-          predictions: nflBracket,
-          locked: true,
+        if (this.user!.name === 'results') {
+          return {
+            tournament: this.competition.name,
+            predictions: nflBracket,
+            locked: false,
+          }
+        } else {
+          return {
+            tournament: this.competition.name,
+            predictions: nflBracket,
+            locked: true,
+          }
         }
       } else {
         return prediction
@@ -75,7 +83,7 @@ export class NFLPlayoffsComponent {
     return !this.user?.predictions.find(prediction => prediction.tournament === 'NFL-playoffs')!.locked;
   }
 
-  getResults() : NFLBracket {
+  getResults(): NFLBracket {
     return this.users?.find(user => user.name === 'results')?.predictions.find(prediction => prediction.tournament === 'NFL-playoffs')?.predictions as NFLBracket
   }
 }
