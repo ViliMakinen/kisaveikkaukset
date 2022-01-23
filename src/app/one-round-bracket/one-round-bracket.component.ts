@@ -48,12 +48,13 @@ export class OneRoundBracketComponent {
     return this.winners.oneRoundPredictions.includes(team) && this.results.oneRoundPredictions.includes(team)
   }
 
-  checkResult(pair: Pair , team: string): string{
-   if (!this.results.oneRoundPredictions.includes(team) && this.winners.oneRoundPredictions.includes(team)){
-     return 'red'
-   } else if (this.winners.oneRoundPredictions.includes(team) && this.results.oneRoundPredictions.includes(team)){
-     return 'green'
-   } return 'white'
+  checkResult(pair: Pair, team: string): string {
+    if (!this.results.oneRoundPredictions.includes(team) && this.winners.oneRoundPredictions.includes(team)) {
+      return 'red'
+    } else if (this.winners.oneRoundPredictions.includes(team) && this.results.oneRoundPredictions.includes(team)) {
+      return 'green'
+    }
+    return 'white'
   }
 
   clearAll() {

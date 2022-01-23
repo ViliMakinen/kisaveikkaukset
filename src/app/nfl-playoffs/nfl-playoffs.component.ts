@@ -28,18 +28,14 @@ export class NFLPlayoffsComponent {
   submitUserSelections(nflBracket: NFLBracket) {
     const newPredictions = this.user!.predictions.map(prediction => {
       if (prediction.tournament === this.competition.name) {
-        if (this.user!.name === 'results') {
-          return {
-            tournament: this.competition.name,
-            predictions: nflBracket,
-            locked: false,
-          }
-        } else {
-          return {
-            tournament: this.competition.name,
-            predictions: nflBracket,
-            locked: true,
-          }
+        return this.user!.name === 'results' ? {
+          tournament: this.competition.name,
+          predictions: nflBracket,
+          locked: false
+        } : {
+          tournament: this.competition.name,
+          predictions: nflBracket,
+          locked: true,
         }
       } else {
         return prediction

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user.service';
-import {  tournaments, User } from '../constants';
+import { tournaments, User } from '../constants';
 
 @Component({
   selector: 'app-home',
@@ -16,5 +16,9 @@ export class HomeComponent {
   constructor(public userService: UserService) {
     userService.getUsers().then(users => this.users = users);
     this.user = userService.getCurrentUser();
+  }
+
+  get realPlayers(): User[] | null {
+    return this.users !== null ? this.users!.filter(user => user.name !== 'results') : [];
   }
 }
