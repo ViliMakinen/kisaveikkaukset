@@ -7,7 +7,7 @@
     Tämän hetken tilanne:
     <div class="list">
       <mat-divider></mat-divider>
-      <li *ngFor="let player of users" [class.logged-user]="user?.name === player.name"
+      <li *ngFor="let player of realPlayers" [class.logged-user]="user?.name === player.name"
           class="list-item">{{player.name}}
         <span>{{player.points}} pistettä
         </span>

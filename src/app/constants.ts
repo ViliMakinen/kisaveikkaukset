@@ -84,61 +84,61 @@ export const seededTournaments: SeededTournament[] = [
     dates: 'Tammikuu 2022',
     AFCteams: [
       {
-        team: 'Titans',
+        name: 'Titans',
         seed: 1
       },
       {
-        team: 'Chiefs',
+        name: 'Chiefs',
         seed: 2
       },
       {
-        team: 'Bills',
+        name: 'Bills',
         seed: 3
       },
       {
-        team: 'Bengals',
+        name: 'Bengals',
         seed: 4
       },
       {
-        team: 'Raiders',
+        name: 'Raiders',
         seed: 5
       },
       {
-        team: 'Patriots',
+        name: 'Patriots',
         seed: 6
       },
       {
-        team: 'Steelers',
+        name: 'Steelers',
         seed: 7
       }],
 
     NFCteams: [
       {
-        team: 'Packers',
+        name: 'Packers',
         seed: 1
       },
       {
-        team: 'Bucs',
+        name: 'Bucs',
         seed: 2
       },
       {
-        team: 'Cowboys',
+        name: 'Cowboys',
         seed: 3
       },
       {
-        team: 'Rams',
+        name: 'Rams',
         seed: 4
       },
       {
-        team: 'Cardinals',
+        name: 'Cardinals',
         seed: 5
       },
       {
-        team: '49ers',
+        name: '49ers',
         seed: 6
       },
       {
-        team: 'Eagles',
+        name: 'Eagles',
         seed: 7
       },
     ]
@@ -155,7 +155,7 @@ export interface SeededPair {
 }
 
 export interface SeededTeam {
-  team: string,
+  name: string,
   seed: number
 }
 
@@ -173,7 +173,6 @@ export interface SeededTournament {
   AFCteams: SeededTeam[],
   NFCteams: SeededTeam[]
 }
-
 
 export interface Players {
   name: string,
