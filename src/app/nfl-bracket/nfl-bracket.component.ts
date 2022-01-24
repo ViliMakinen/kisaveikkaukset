@@ -321,7 +321,7 @@ export class NflBracketComponent implements OnInit {
     } else if (code === 'SuperBowl') {
       return this.results.nflBracket.superbowlists.map(team => team.name).includes('')
     } else {
-      return this.results.nflBracket.winner.name.includes('')
+      return this.results.nflBracket.winner.name === '';
     }
   }
 
