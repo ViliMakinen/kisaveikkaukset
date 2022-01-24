@@ -27,6 +27,9 @@ export class NflBracketComponent implements OnInit {
   @Output()
   submitUserSelections = new EventEmitter<NFLBracket>();
 
+  @Output()
+  submitUserSelectionsBackUp = new EventEmitter<NFLBracket>();
+
   bracketPredictions: NFLBracket = {
     nflBracket: {
       AFCdivisionals: [
@@ -145,6 +148,10 @@ export class NflBracketComponent implements OnInit {
 
   submitSelections() {
     this.submitUserSelections.emit(this.bracketPredictions);
+  }
+
+  submitSelectionsBackUp() {
+    this.submitUserSelectionsBackUp.emit(this.bracketPredictions);
   }
 
   selectAFCDivisionals(team: SeededTeam, pair: SeededPair) {

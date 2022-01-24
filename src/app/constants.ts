@@ -189,7 +189,8 @@ export interface User {
   predictions: {
     tournament: string,
     predictions: OneRoundPredictions | Bracket | NFLBracket
-    locked: boolean
+    locked: boolean,
+    tournamentPoints?: number
   }[],
 }
 
