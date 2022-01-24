@@ -51,6 +51,34 @@ export class NFLPlayoffsComponent {
     });
   }
 
+
+  submitUserSelectionsBackUp(nflBracket: NFLBracket) {
+    const newPredictions = this.user!.predictions.map(prediction => {
+      if (prediction.tournament === this.competition.name) {
+        return this.user!.name === 'results' ? {
+          tournament: this.competition.name,
+          predictions: this.users?.find(user => user.name === 'results')?.predictions.find(prediction => prediction.tournament === 'NFL-playoffs')?.predictions as NFLBracket,
+          locked: false,
+          tournamentPoints: 0
+        } : {
+          tournament: this.competition.name,
+          predictions: this.users?.find(user => user.name === 'results')?.predictions.find(prediction => prediction.tournament === 'NFL-playoffs')?.predictions as NFLBracket,
+          locked: true,
+        }
+      } else {
+        return prediction
+      }
+    })
+    console.log(newPredictions)
+    this.userService.updateUserPredictionsBackUp({
+      ...this.user!,
+      predictions: newPredictions
+    }).then(() => {
+      console.log('Updated successfully!');
+      this.userService.getUser(this.user!.name).then(user => this.user = user);
+    });
+  }
+
   unlockPredictionsForUser() {
     const unlockedPredictions = this.user!.predictions.map(prediction => {
       if (prediction.tournament === this.competition.name) {

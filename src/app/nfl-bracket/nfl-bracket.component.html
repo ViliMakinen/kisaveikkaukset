@@ -7,6 +7,9 @@
           class="button clickable"
           mat-raised-button>Submit selections
   </button>
+<button (click)="submitSelectionsBackUp()" class="button clickable"
+ mat-raised-button>submit backup
+</button>
   <div [style.pointer-events]="this.player.name !== this.user.name || this.arePredictionsLocked ? 'none' : 'auto'"
        class="NFL-container">
     <div class="AFC-container">

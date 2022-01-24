@@ -53,8 +53,13 @@ export class UserService {
     return updateDoc(docRef, { predictions: user.predictions })
   }
 
+  async updateUserPredictionsBackUp(user: User): Promise<void> {
+    const docRef = doc(this.db, 'usersBackUp', user.name)
+    return updateDoc(docRef, { predictions: user.predictions })
+  }
+
   async createUsers() {
-    // await setDoc(doc(this.db, 'users', 'results'), {
+    // await setDoc(doc(this.db, 'usersBackUp', 'results'), {
     //   name: 'results',
     //   points: 0,
     //   predictions: [
@@ -63,7 +68,8 @@ export class UserService {
     //       predictions: {
     //         oneRoundPredictions: []
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     },
     //     {
     //       tournament: 'NFL-playoffs',
@@ -143,20 +149,22 @@ export class UserService {
 
     //         }
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     }
     //   ]
     //  })
-    // await setDoc(doc(this.db, 'users', 'Aapo'), {
+    // await setDoc(doc(this.db, 'usersBackUp', 'Aapo'), {
     //   name: 'Aapo',
     //   points: 0,
     //   predictions: [
     //     {
     //       tournament: 'Champions League',
     //       predictions: {
-    //         oneRoundPredictions: ['Chelsea, Liverpool']
+    //         oneRoundPredictions: []
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     },
     //     {
     //       tournament: 'NFL-playoffs',
@@ -236,11 +244,12 @@ export class UserService {
 
     //         }
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     }
     //   ]
     // })
-    // await setDoc(doc(this.db, 'users', 'Viltsu'), {
+    // await setDoc(doc(this.db, 'usersBackUp', 'Viltsu'), {
     //   name: 'Viltsu',
     //   points: 0,
     //   predictions: [
@@ -249,7 +258,8 @@ export class UserService {
     //       predictions: {
     //         oneRoundPredictions: ['Liverpool']
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     },
     //     {
     //       tournament: 'NFL-playoffs',
@@ -329,11 +339,12 @@ export class UserService {
 
     //         }
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     }
     //   ]
     // })
-    // await setDoc(doc(this.db, 'users', 'Elmo'), {
+    // await setDoc(doc(this.db, 'usersBackUp', 'Elmo'), {
     //   name: 'Elmo',
     //   points: 0,
     //   predictions: [
@@ -342,7 +353,8 @@ export class UserService {
     //       predictions: {
     //         oneRoundPredictions: ['Chelsea']
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     },
     //     {
     //       tournament: 'NFL-playoffs',
@@ -422,11 +434,12 @@ export class UserService {
 
     //         }
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     }
     //   ]
     // })
-    // await setDoc(doc(this.db, 'users', 'Osku'), {
+    // await setDoc(doc(this.db, 'usersBackUp', 'Osku'), {
     //   name: 'Osku',
     //   points: 0,
     //   predictions: [
@@ -435,7 +448,8 @@ export class UserService {
     //       predictions: {
     //         oneRoundPredictions: []
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     },
     //     {
     //       tournament: 'NFL-playoffs',
@@ -515,11 +529,12 @@ export class UserService {
 
     //         }
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     }
     //   ]
     // })
-    // await setDoc(doc(this.db, 'users', 'Eetu-Matti'), {
+    // await setDoc(doc(this.db, 'usersBackUp', 'Eetu-Matti'), {
     //   name: 'Eetu-Matti',
     //   points: 0,
     //   predictions: [
@@ -528,7 +543,8 @@ export class UserService {
     //       predictions: {
     //         oneRoundPredictions: []
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     },
     //     {
     //       tournament: 'NFL-playoffs',
@@ -608,11 +624,12 @@ export class UserService {
 
     //         }
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     }
     //   ]
     // })
-    // await setDoc(doc(this.db, 'users', 'Jukka'), {
+    // await setDoc(doc(this.db, 'usersBackUp', 'Jukka'), {
     //   name: 'Jukka',
     //   points: 0,
     //   predictions: [
@@ -621,7 +638,8 @@ export class UserService {
     //       predictions: {
     //         oneRoundPredictions: []
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     },
     //     {
     //       tournament: 'NFL-playoffs',
@@ -701,11 +719,12 @@ export class UserService {
 
     //         }
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     }
     //   ]
     // })
-    // await setDoc(doc(this.db, 'users', 'Petra'), {
+    // await setDoc(doc(this.db, 'usersBackUp', 'Petra'), {
     //   name: 'Petra',
     //   points: 0,
     //   predictions: [
@@ -714,7 +733,8 @@ export class UserService {
     //       predictions: {
     //         oneRoundPredictions: []
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     },
     //     {
     //       tournament: 'NFL-playoffs',
@@ -794,11 +814,12 @@ export class UserService {
 
     //         }
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     }
     //   ]
     // })
-    // await setDoc(doc(this.db, 'users', 'Emmi'), {
+    // await setDoc(doc(this.db, 'usersBackUp', 'Emmi'), {
     //   name: 'Emmi',
     //   points: 0,
     //   predictions: [
@@ -807,7 +828,8 @@ export class UserService {
     //       predictions: {
     //         oneRoundPredictions: []
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     },
     //     {
     //       tournament: 'NFL-playoffs',
@@ -887,11 +909,12 @@ export class UserService {
 
     //         }
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     }
     //   ]
     // })
-    // await setDoc(doc(this.db, 'users', 'Aikku'), {
+    // await setDoc(doc(this.db, 'usersBackUp', 'Aikku'), {
     //   name: 'Aikku',
     //   points: 0,
     //   predictions: [
@@ -900,7 +923,8 @@ export class UserService {
     //       predictions: {
     //         oneRoundPredictions: []
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     },
     //     {
     //       tournament: 'NFL-playoffs',
@@ -980,7 +1004,8 @@ export class UserService {
 
     //         }
     //       },
-    //       locked: false
+    //       locked: false,
+    //       tournamentPoints: 0
     //     }
     //   ]
     // })
