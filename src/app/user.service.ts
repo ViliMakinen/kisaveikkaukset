@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { initializeApp } from 'firebase/app'
-import { collection, doc, getDoc, getDocs, getFirestore, setDoc, updateDoc } from 'firebase/firestore'
+import { initializeApp } from 'firebase/app';
+import { collection, doc, getDoc, getDocs, getFirestore, setDoc, updateDoc } from 'firebase/firestore';
 import { User } from './constants';
-
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCaOwTsRzFIqNESTzdxOYiVY62KEUTWm_E',
@@ -10,17 +9,16 @@ const firebaseConfig = {
   projectId: 'kisaveikkaukset-7e8a6',
   storageBucket: 'kisaveikkaukset-7e8a6.appspot.com',
   messagingSenderId: '794325472687',
-  appId: '1:794325472687:web:a0dc37725c45b7f9170b5a'
+  appId: '1:794325472687:web:a0dc37725c45b7f9170b5a',
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class UserService {
   app = initializeApp(firebaseConfig);
   db = getFirestore();
-  currentUser: User | null = null
+  currentUser: User | null = null;
   loggedIn: boolean = false;
 
   getCurrentUser(): User | null {
@@ -41,974 +39,1122 @@ export class UserService {
   }
 
   async getUsers(): Promise<User[]> {
-    return getDocs(collection(this.db, 'users'))
-      .then((querySnapshot) => {
-        return querySnapshot.docs
-          .map((doc) => doc.data() as User);
-      })
+    return getDocs(collection(this.db, 'users')).then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => doc.data() as User);
+    });
   }
 
   async updateUserPredictions(user: User): Promise<void> {
-    const docRef = doc(this.db, 'users', user.name)
-    return updateDoc(docRef, { predictions: user.predictions })
+    const docRef = doc(this.db, 'users', user.name);
+    return updateDoc(docRef, { predictions: user.predictions });
   }
 
   async updateUserPredictionsBackUp(user: User): Promise<void> {
-    const docRef = doc(this.db, 'usersBackUp', user.name)
-    return updateDoc(docRef, { predictions: user.predictions })
+    const docRef = doc(this.db, 'usersBackUp', user.name);
+    return updateDoc(docRef, { predictions: user.predictions });
   }
 
   async createUsers() {
-    // await setDoc(doc(this.db, 'usersBackUp', 'results'), {
-    //   name: 'results',
-    //   points: 0,
-    //   predictions: [
-    //     {
-    //       tournament: 'Champions League',
-    //       predictions: {
-    //         oneRoundPredictions: []
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     },
-    //     {
-    //       tournament: 'NFL-playoffs',
-    //       predictions: {
-    //         nflBracket: {
-    //           AFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }],
-    //           NFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }
-    //           ],
-    //           AFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           NFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           superbowlists: [{
-    //             team: '',
-    //             seed: 0
-    //           }, {
-    //             team: '',
-    //             seed: 0
-    //           }],
-    //           winner: { team: '', seed: 0 }
-
-    //         }
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     }
-    //   ]
-    //  })
-    // await setDoc(doc(this.db, 'usersBackUp', 'Aapo'), {
-    //   name: 'Aapo',
-    //   points: 0,
-    //   predictions: [
-    //     {
-    //       tournament: 'Champions League',
-    //       predictions: {
-    //         oneRoundPredictions: []
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     },
-    //     {
-    //       tournament: 'NFL-playoffs',
-    //       predictions: {
-    //         nflBracket: {
-    //           AFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }],
-    //           NFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }
-    //           ],
-    //           AFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           NFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           superbowlists: [{
-    //             team: '',
-    //             seed: 0
-    //           }, {
-    //             team: '',
-    //             seed: 0
-    //           }],
-    //           winner: { team: '', seed: 0 }
-
-    //         }
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     }
-    //   ]
-    // })
-    // await setDoc(doc(this.db, 'usersBackUp', 'Viltsu'), {
-    //   name: 'Viltsu',
-    //   points: 0,
-    //   predictions: [
-    //     {
-    //       tournament: 'Champions League',
-    //       predictions: {
-    //         oneRoundPredictions: ['Liverpool']
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     },
-    //     {
-    //       tournament: 'NFL-playoffs',
-    //       predictions: {
-    //         nflBracket: {
-    //           AFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }],
-    //           NFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }
-    //           ],
-    //           AFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           NFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           superbowlists: [{
-    //             team: '',
-    //             seed: 0
-    //           }, {
-    //             team: '',
-    //             seed: 0
-    //           }],
-    //           winner: { team: '', seed: 0 }
-
-    //         }
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     }
-    //   ]
-    // })
-    // await setDoc(doc(this.db, 'usersBackUp', 'Elmo'), {
-    //   name: 'Elmo',
-    //   points: 0,
-    //   predictions: [
-    //     {
-    //       tournament: 'Champions League',
-    //       predictions: {
-    //         oneRoundPredictions: ['Chelsea']
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     },
-    //     {
-    //       tournament: 'NFL-playoffs',
-    //       predictions: {
-    //         nflBracket: {
-    //           AFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }],
-    //           NFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }
-    //           ],
-    //           AFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           NFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           superbowlists: [{
-    //             team: '',
-    //             seed: 0
-    //           }, {
-    //             team: '',
-    //             seed: 0
-    //           }],
-    //           winner: { team: '', seed: 0 }
-
-    //         }
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     }
-    //   ]
-    // })
-    // await setDoc(doc(this.db, 'usersBackUp', 'Osku'), {
-    //   name: 'Osku',
-    //   points: 0,
-    //   predictions: [
-    //     {
-    //       tournament: 'Champions League',
-    //       predictions: {
-    //         oneRoundPredictions: []
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     },
-    //     {
-    //       tournament: 'NFL-playoffs',
-    //       predictions: {
-    //         nflBracket: {
-    //           AFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }],
-    //           NFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }
-    //           ],
-    //           AFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           NFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           superbowlists: [{
-    //             team: '',
-    //             seed: 0
-    //           }, {
-    //             team: '',
-    //             seed: 0
-    //           }],
-    //           winner: { team: '', seed: 0 }
-
-    //         }
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     }
-    //   ]
-    // })
-    // await setDoc(doc(this.db, 'usersBackUp', 'Eetu-Matti'), {
-    //   name: 'Eetu-Matti',
-    //   points: 0,
-    //   predictions: [
-    //     {
-    //       tournament: 'Champions League',
-    //       predictions: {
-    //         oneRoundPredictions: []
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     },
-    //     {
-    //       tournament: 'NFL-playoffs',
-    //       predictions: {
-    //         nflBracket: {
-    //           AFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }],
-    //           NFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }
-    //           ],
-    //           AFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           NFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           superbowlists: [{
-    //             team: '',
-    //             seed: 0
-    //           }, {
-    //             team: '',
-    //             seed: 0
-    //           }],
-    //           winner: { team: '', seed: 0 }
-
-    //         }
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     }
-    //   ]
-    // })
-    // await setDoc(doc(this.db, 'usersBackUp', 'Jukka'), {
-    //   name: 'Jukka',
-    //   points: 0,
-    //   predictions: [
-    //     {
-    //       tournament: 'Champions League',
-    //       predictions: {
-    //         oneRoundPredictions: []
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     },
-    //     {
-    //       tournament: 'NFL-playoffs',
-    //       predictions: {
-    //         nflBracket: {
-    //           AFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }],
-    //           NFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }
-    //           ],
-    //           AFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           NFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           superbowlists: [{
-    //             team: '',
-    //             seed: 0
-    //           }, {
-    //             team: '',
-    //             seed: 0
-    //           }],
-    //           winner: { team: '', seed: 0 }
-
-    //         }
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     }
-    //   ]
-    // })
-    // await setDoc(doc(this.db, 'usersBackUp', 'Petra'), {
-    //   name: 'Petra',
-    //   points: 0,
-    //   predictions: [
-    //     {
-    //       tournament: 'Champions League',
-    //       predictions: {
-    //         oneRoundPredictions: []
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     },
-    //     {
-    //       tournament: 'NFL-playoffs',
-    //       predictions: {
-    //         nflBracket: {
-    //           AFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }],
-    //           NFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }
-    //           ],
-    //           AFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           NFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           superbowlists: [{
-    //             team: '',
-    //             seed: 0
-    //           }, {
-    //             team: '',
-    //             seed: 0
-    //           }],
-    //           winner: { team: '', seed: 0 }
-
-    //         }
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     }
-    //   ]
-    // })
-    // await setDoc(doc(this.db, 'usersBackUp', 'Emmi'), {
-    //   name: 'Emmi',
-    //   points: 0,
-    //   predictions: [
-    //     {
-    //       tournament: 'Champions League',
-    //       predictions: {
-    //         oneRoundPredictions: []
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     },
-    //     {
-    //       tournament: 'NFL-playoffs',
-    //       predictions: {
-    //         nflBracket: {
-    //           AFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }],
-    //           NFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }
-    //           ],
-    //           AFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           NFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           superbowlists: [{
-    //             team: '',
-    //             seed: 0
-    //           }, {
-    //             team: '',
-    //             seed: 0
-    //           }],
-    //           winner: { team: '', seed: 0 }
-
-    //         }
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     }
-    //   ]
-    // })
-    // await setDoc(doc(this.db, 'usersBackUp', 'Aikku'), {
-    //   name: 'Aikku',
-    //   points: 0,
-    //   predictions: [
-    //     {
-    //       tournament: 'Champions League',
-    //       predictions: {
-    //         oneRoundPredictions: []
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     },
-    //     {
-    //       tournament: 'NFL-playoffs',
-    //       predictions: {
-    //         nflBracket: {
-    //           AFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }],
-    //           NFCdivisionals: [
-    //             {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 },
-    //               ]
-    //             }, {
-    //               teams: [{
-    //                 team: '',
-    //                 seed: 0,
-    //               },
-    //                 {
-    //                   team: '',
-    //                   seed: 0
-    //                 }]
-    //             }
-    //           ],
-    //           AFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           NFCchampionship: {
-    //             teams: [{
-    //               team: '',
-    //               seed: 0,
-    //             },
-    //               {
-    //                 team: '',
-    //                 seed: 0
-    //               }]
-    //           },
-    //           superbowlists: [{
-    //             team: '',
-    //             seed: 0
-    //           }, {
-    //             team: '',
-    //             seed: 0
-    //           }],
-    //           winner: { team: '', seed: 0 }
-
-    //         }
-    //       },
-    //       locked: false,
-    //       tournamentPoints: 0
-    //     }
-    //   ]
-    // })
+    await setDoc(doc(this.db, 'users', 'results'), {
+      name: 'results',
+      points: 0,
+      predictions: [
+        {
+          tournament: 'Champions League',
+          predictions: {
+            oneRoundPredictions: [],
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              NFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              AFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              NFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              superbowlists: [
+                {
+                  name: '',
+                  seed: 0,
+                },
+                {
+                  name: '',
+                  seed: 0,
+                },
+              ],
+              winner: { name: '', seed: 0 },
+            },
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+      ],
+    });
+    await setDoc(doc(this.db, 'users', 'Aapo'), {
+      name: 'Aapo',
+      points: 0,
+      predictions: [
+        {
+          tournament: 'Champions League',
+          predictions: {
+            oneRoundPredictions: [],
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              NFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              AFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              NFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              superbowlists: [
+                {
+                  name: '',
+                  seed: 0,
+                },
+                {
+                  name: '',
+                  seed: 0,
+                },
+              ],
+              winner: { name: '', seed: 0 },
+            },
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+      ],
+    });
+    await setDoc(doc(this.db, 'users', 'Viltsu'), {
+      name: 'Viltsu',
+      points: 0,
+      predictions: [
+        {
+          tournament: 'Champions League',
+          predictions: {
+            oneRoundPredictions: ['Liverpool'],
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              NFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              AFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              NFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              superbowlists: [
+                {
+                  name: '',
+                  seed: 0,
+                },
+                {
+                  name: '',
+                  seed: 0,
+                },
+              ],
+              winner: { name: '', seed: 0 },
+            },
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+      ],
+    });
+    await setDoc(doc(this.db, 'users', 'Elmo'), {
+      name: 'Elmo',
+      points: 0,
+      predictions: [
+        {
+          tournament: 'Champions League',
+          predictions: {
+            oneRoundPredictions: ['Chelsea'],
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              NFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              AFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              NFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              superbowlists: [
+                {
+                  name: '',
+                  seed: 0,
+                },
+                {
+                  name: '',
+                  seed: 0,
+                },
+              ],
+              winner: { name: '', seed: 0 },
+            },
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+      ],
+    });
+    await setDoc(doc(this.db, 'users', 'Osku'), {
+      name: 'Osku',
+      points: 0,
+      predictions: [
+        {
+          tournament: 'Champions League',
+          predictions: {
+            oneRoundPredictions: [],
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              NFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              AFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              NFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              superbowlists: [
+                {
+                  name: '',
+                  seed: 0,
+                },
+                {
+                  name: '',
+                  seed: 0,
+                },
+              ],
+              winner: { name: '', seed: 0 },
+            },
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+      ],
+    });
+    await setDoc(doc(this.db, 'users', 'Eetu-Matti'), {
+      name: 'Eetu-Matti',
+      points: 0,
+      predictions: [
+        {
+          tournament: 'Champions League',
+          predictions: {
+            oneRoundPredictions: [],
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              NFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              AFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              NFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              superbowlists: [
+                {
+                  name: '',
+                  seed: 0,
+                },
+                {
+                  name: '',
+                  seed: 0,
+                },
+              ],
+              winner: { name: '', seed: 0 },
+            },
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+      ],
+    });
+    await setDoc(doc(this.db, 'users', 'Jukka'), {
+      name: 'Jukka',
+      points: 0,
+      predictions: [
+        {
+          tournament: 'Champions League',
+          predictions: {
+            oneRoundPredictions: [],
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              NFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              AFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              NFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              superbowlists: [
+                {
+                  name: '',
+                  seed: 0,
+                },
+                {
+                  name: '',
+                  seed: 0,
+                },
+              ],
+              winner: { name: '', seed: 0 },
+            },
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+      ],
+    });
+    await setDoc(doc(this.db, 'users', 'Petra'), {
+      name: 'Petra',
+      points: 0,
+      predictions: [
+        {
+          tournament: 'Champions League',
+          predictions: {
+            oneRoundPredictions: [],
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              NFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              AFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              NFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              superbowlists: [
+                {
+                  name: '',
+                  seed: 0,
+                },
+                {
+                  name: '',
+                  seed: 0,
+                },
+              ],
+              winner: { name: '', seed: 0 },
+            },
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+      ],
+    });
+    await setDoc(doc(this.db, 'users', 'Emmi'), {
+      name: 'Emmi',
+      points: 0,
+      predictions: [
+        {
+          tournament: 'Champions League',
+          predictions: {
+            oneRoundPredictions: [],
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              NFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              AFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              NFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              superbowlists: [
+                {
+                  name: '',
+                  seed: 0,
+                },
+                {
+                  name: '',
+                  seed: 0,
+                },
+              ],
+              winner: { name: '', seed: 0 },
+            },
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+      ],
+    });
+    await setDoc(doc(this.db, 'users', 'Aikku'), {
+      name: 'Aikku',
+      points: 0,
+      predictions: [
+        {
+          tournament: 'Champions League',
+          predictions: {
+            oneRoundPredictions: [],
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+        {
+          tournament: 'NFL-playoffs',
+          predictions: {
+            nflBracket: {
+              AFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              NFCdivisionals: [
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+                {
+                  teams: [
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                    {
+                      name: '',
+                      seed: 0,
+                    },
+                  ],
+                },
+              ],
+              AFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              NFCchampionship: {
+                teams: [
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                  {
+                    name: '',
+                    seed: 0,
+                  },
+                ],
+              },
+              superbowlists: [
+                {
+                  name: '',
+                  seed: 0,
+                },
+                {
+                  name: '',
+                  seed: 0,
+                },
+              ],
+              winner: { name: '', seed: 0 },
+            },
+          },
+          locked: false,
+          tournamentPoints: 0,
+        },
+      ],
+    });
   }
 
   isLoggedIn(): boolean {
