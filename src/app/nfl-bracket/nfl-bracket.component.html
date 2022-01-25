@@ -1,17 +1,14 @@
-<mat-card [style.background]="player.name !== user.name || arePredictionsLocked ? 'lightgray' : 'white'">
-  <button (click)="clearAll()" [disabled]="player.name !== user.name || arePredictionsLocked"
-          class="button clickable"
+<mat-card [style.background]="player.name !== user.name || arePredictionsLocked ? 'whitesmoke' : 'white'">
+  <button (click)='clearAll()' [disabled]='player.name !== user.name || arePredictionsLocked'
+          class='button clickable'
           mat-raised-button>Clear selections
   </button>
-  <button (click)="submitSelections()" [disabled]="this.player.name !== this.user.name || this.arePredictionsLocked"
-          class="button clickable"
+  <button (click)='submitSelections()' [disabled]='this.player.name !== this.user.name || this.arePredictionsLocked'
+          class='button clickable'
           mat-raised-button>Submit selections
   </button>
-<button (click)="submitSelectionsBackUp()" class="button clickable"
- mat-raised-button>submit backup
-</button>
   <div [style.pointer-events]="this.player.name !== this.user.name || this.arePredictionsLocked ? 'none' : 'auto'"
-       class="NFL-container">
+       class='NFL-container'>
     <div class="AFC-container">
       <div class="nfl-bracket-container afc">
         <div class="column">

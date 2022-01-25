@@ -22,37 +22,88 @@ export class NFLPlayoffsComponent {
   }
 
   get arePredictionsLocked(): boolean {
-    return this.user!.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')!
-      .locked;
+    return this.user!.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')!.locked;
+  }
+
+  playerTournamentPoints(player: User): number {
+    return player.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')!.tournamentPoints!;
   }
 
   submitUserSelections(nflBracket: NFLBracket) {
     const newPredictions = this.user!.predictions.map((prediction) => {
       if (prediction.tournament === this.competition.name) {
-        return this.user!.name === 'results'
-          ? {
+        if (this.user!.name === 'results') {
+          this.updateTournamentPoints(prediction.tournament);
+          return {
             tournament: this.competition.name,
             predictions: nflBracket,
             locked: false,
-          }
-          : {
+            tournamentPoints: 0,
+          };
+        } else {
+          return {
             tournament: this.competition.name,
             predictions: nflBracket,
             locked: true,
+            tournamentPoints: this.user?.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')!.tournamentPoints!,
           };
+        }
       } else {
         return prediction;
       }
     });
     console.log(newPredictions);
-    this.userService.updateUserPredictions({
-      ...this.user!,
-      predictions: newPredictions,
-    })
+    this.userService
+      .updateUserPredictions({
+        ...this.user!,
+        predictions: newPredictions,
+      })
       .then(() => {
         console.log('Updated successfully!');
         this.userService.getUser(this.user!.name).then((user) => (this.user = user));
       });
+  }
+
+  updateTournamentPoints(tournament: string): void {
+    this.users?.forEach((user) => {
+      const predictionsWithUpdatedPoints = user.predictions.map((prediction) => {
+        if (prediction.tournament === tournament) {
+          return {
+            tournament: prediction.tournament,
+            predictions: prediction.predictions,
+            locked: prediction.locked,
+            tournamentPoints: this.calculateTournamentPoints(prediction.predictions as NFLBracket),
+          };
+        } else {
+          return prediction;
+        }
+      });
+      this.userService
+        .updateUserPredictions({
+          ...user,
+          predictions: predictionsWithUpdatedPoints,
+        })
+        .then(() => {
+          console.log('Updated successfully!');
+          this.userService.getUser(this.user!.name).then((user) => (this.user = user));
+        });
+    });
+  }
+
+  calculateTournamentPoints(predictions: NFLBracket) {
+    const results = this.user!.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')!.predictions as NFLBracket;
+    const AFCdivisionalPredictions = predictions.nflBracket.AFCdivisionals.flatMap((seededPair) => seededPair.teams.map((seededTeam) => seededTeam.name));
+    const NFCdivisionalPredictions = predictions.nflBracket.NFCdivisionals.flatMap((seededPair) => seededPair.teams.map((seededTeam) => seededTeam.name));
+    const divisionalPredictions = [...AFCdivisionalPredictions, ...NFCdivisionalPredictions];
+    const AFCdivisionalResults = results.nflBracket.AFCdivisionals.flatMap((seededPair) => seededPair.teams.map((seededTeam) => seededTeam.name));
+    const NFCdivisionalResults = results.nflBracket.NFCdivisionals.flatMap((seededPair) => seededPair.teams.map((seededTeam) => seededTeam.name));
+    const divisionalResults = [...AFCdivisionalResults, ...NFCdivisionalResults];
+
+    const correctDivisionalPredictions = divisionalPredictions.filter((team) => divisionalResults.includes(team));
+    console.log(correctDivisionalPredictions);
+
+    // return the points combined from divisionals, championship etc.
+    return 1;
   }
 
   submitUserSelectionsBackUp(nflBracket: NFLBracket) {
@@ -60,23 +111,17 @@ export class NFLPlayoffsComponent {
       if (prediction.tournament === this.competition.name) {
         return this.user!.name === 'results'
           ? {
-            tournament: this.competition.name,
-            predictions: this.users
-              ?.find((user) => user.name === 'results')
-              ?.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')
-              ?.predictions as NFLBracket,
-            locked: false,
-            tournamentPoints: 0,
-          }
+              tournament: this.competition.name,
+              predictions: this.users?.find((user) => user.name === 'results')?.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')?.predictions as NFLBracket,
+              locked: false,
+              tournamentPoints: 0,
+            }
           : {
-            tournament: this.competition.name,
-            predictions: this.users
-              ?.find((user) => user.name === 'results')
-              ?.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')
-              ?.predictions as NFLBracket,
-            locked: true,
-            tournamentPoints: 0,
-          };
+              tournament: this.competition.name,
+              predictions: this.users?.find((user) => user.name === 'results')?.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')?.predictions as NFLBracket,
+              locked: true,
+              tournamentPoints: 0,
+            };
       } else {
         return prediction;
       }
@@ -120,14 +165,10 @@ export class NFLPlayoffsComponent {
     if (player.name === this.user!.name) {
       return false;
     }
-    return !this.user?.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')!
-      .locked;
+    return !this.user?.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')!.locked;
   }
 
   getResults(): NFLBracket {
-    return this.users
-      ?.find((user) => user.name === 'results')
-      ?.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')
-      ?.predictions as NFLBracket;
+    return this.users?.find((user) => user.name === 'results')?.predictions.find((prediction) => prediction.tournament === 'NFL-playoffs')?.predictions as NFLBracket;
   }
 }
