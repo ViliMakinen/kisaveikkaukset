@@ -4,16 +4,19 @@
     Tervetuloa kisaveikkauksien pyhättöön {{user.name}}!
   </div>
   <mat-card class="current-results">
-    Tämän hetken tilanne:
-    <div class="list">
-      <mat-divider></mat-divider>
-      <li *ngFor="let player of realPlayers" [class.logged-user]="user?.name === player.name"
-          class="list-item">{{player.name}}
-        <span>{{player.points}} pistettä
-        </span>
-      </li>
-    </div>
+    <mat-tab-group>
+      <mat-tab *ngFor="let tournament of tournaments"
+               [label]="tournament.name">
+        <div class="list">
+          <li *ngFor="let player of realPlayers(tournament)" [class.logged-user]="user?.name === player.name"
+              class="list-item">{{player.name}}
+            <span>{{getPlayerTournamentPoints(player, tournament)}} pistettä</span>
+          </li>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </mat-card>
+
   <mat-card class="current-results">
     Tulevat kilpailut:
     <div class="list">

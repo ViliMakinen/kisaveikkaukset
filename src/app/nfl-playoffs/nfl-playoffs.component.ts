@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NFLBracket, seededTournaments, User } from '../constants';
+import { NFLBracket, SeededTournament, tournaments, User } from '../constants';
 import { UserService } from '../user.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { UserService } from '../user.service';
   styleUrls: ['./nfl-playoffs.component.scss'],
 })
 export class NFLPlayoffsComponent {
-  competition = seededTournaments[0];
+  competition = tournaments[1] as SeededTournament;
   user: User | null = null;
   users: User[] | null = null;
   userIndex: number = 0;
@@ -99,11 +99,24 @@ export class NFLPlayoffsComponent {
     const NFCdivisionalResults = results.nflBracket.NFCdivisionals.flatMap((seededPair) => seededPair.teams.map((seededTeam) => seededTeam.name));
     const divisionalResults = [...AFCdivisionalResults, ...NFCdivisionalResults];
 
-    const correctDivisionalPredictions = divisionalPredictions.filter((team) => divisionalResults.includes(team));
-    console.log(correctDivisionalPredictions);
+    // we subtract two from the score to compensate for the fact that two teams are automatically advanced to the championship games, awarding each player two points automatically
+    const correctDivisionalPredictions = divisionalPredictions.filter((team) => divisionalResults.includes(team)).length - 2;
 
-    // return the points combined from divisionals, championship etc.
-    return 1;
+    const AFCchampionshipPredictions = predictions.nflBracket.AFCchampionship.teams.map((pair) => pair.name);
+    const NFCchampionshipPredictions = predictions.nflBracket.NFCchampionship.teams.map((pair) => pair.name);
+    const championshipPredictions = [...AFCchampionshipPredictions, ...NFCchampionshipPredictions];
+    const AFCchampionshipResults = results.nflBracket.AFCchampionship.teams.map((pair) => pair.name);
+    const NFCchampionshipResults = results.nflBracket.NFCchampionship.teams.map((pair) => pair.name);
+    const championshipResults = [...AFCchampionshipResults, ...NFCchampionshipResults];
+    const correctChampionshipPredictions = championshipPredictions.filter((team) => championshipResults.includes(team)).length;
+
+    const superbowlistsPredictions = predictions.nflBracket.superbowlists.map((seededTeam) => seededTeam.name);
+    const superbowlistsResults = results.nflBracket.superbowlists.map((seededTeam) => seededTeam.name);
+    const correctSuperbowlistsPredictions = superbowlistsPredictions.filter((team) => superbowlistsResults.includes(team)).length;
+
+    const correctWinnerPrediction = predictions.nflBracket.winner === results.nflBracket.winner ? 1 : 0;
+
+    return correctDivisionalPredictions + correctChampionshipPredictions + correctSuperbowlistsPredictions + correctWinnerPrediction;
   }
 
   submitUserSelectionsBackUp(nflBracket: NFLBracket) {

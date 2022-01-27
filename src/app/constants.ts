@@ -8,33 +8,10 @@ export const loginCodes = {
   zzl: 'Petra',
   zzm: 'Jukka',
   zzr: 'Osku',
-  results: 'results'
-}
+  results: 'results',
+};
 
-export const tournaments: Tournament[] = [
-  {
-    name: 'Olympialaiset',
-    url: 'https://www.suomikiekko.com/talviolympialaiset-jaakiekko-2022/',
-    dates: 'Helmikuu 2022',
-    pairs: [
-      {
-        teams: ['Suomi', 'Ruotsi'],
-        seed: 1
-      },
-      {
-        teams: ['Kanada', 'Venäjä'],
-        seed: 2
-      },
-      {
-        teams: ['Ranska', 'Italia'],
-        seed: 3
-      },
-      {
-        teams: ['Norja', 'Viro'],
-        seed: 4
-      },
-    ]
-  },
+export const tournaments: (Tournament | SeededTournament)[] = [
   {
     name: 'Champions League',
     url: 'https://www.uefa.com/uefachampionsleague/news/0265-115e77805e06-3dbc1740a323-1000--2021-22-champions-league',
@@ -42,42 +19,38 @@ export const tournaments: Tournament[] = [
     pairs: [
       {
         teams: ['Salzburg', 'Munchen'],
-        seed: null
+        seed: null,
       },
       {
         teams: ['Sporting CP', 'Man. City'],
-        seed: null
+        seed: null,
       },
       {
         teams: ['Benfica', 'Ajax'],
-        seed: null
+        seed: null,
       },
       {
         teams: ['Chelsea', 'LOSC'],
-        seed: null
+        seed: null,
       },
       {
         teams: ['Atletico', 'Man. United'],
-        seed: null
+        seed: null,
       },
       {
         teams: ['Villareal', 'Juventus'],
-        seed: null
+        seed: null,
       },
       {
         teams: ['Inter', 'Liverpool'],
-        seed: null
+        seed: null,
       },
       {
         teams: ['Paris', 'Real Madrid'],
-        seed: null
+        seed: null,
       },
-    ]
+    ],
   },
-]
-
-export const seededTournaments: SeededTournament[] = [
-
   {
     name: 'NFL-playoffs',
     url: 'https://www.nfl.com/standings/playoff-picture',
@@ -85,65 +58,66 @@ export const seededTournaments: SeededTournament[] = [
     AFCteams: [
       {
         name: 'Titans',
-        seed: 1
+        seed: 1,
       },
       {
         name: 'Chiefs',
-        seed: 2
+        seed: 2,
       },
       {
         name: 'Bills',
-        seed: 3
+        seed: 3,
       },
       {
         name: 'Bengals',
-        seed: 4
+        seed: 4,
       },
       {
         name: 'Raiders',
-        seed: 5
+        seed: 5,
       },
       {
         name: 'Patriots',
-        seed: 6
+        seed: 6,
       },
       {
         name: 'Steelers',
-        seed: 7
-      }],
+        seed: 7,
+      },
+    ],
 
     NFCteams: [
       {
         name: 'Packers',
-        seed: 1
+        seed: 1,
       },
       {
         name: 'Bucs',
-        seed: 2
+        seed: 2,
       },
       {
         name: 'Cowboys',
-        seed: 3
+        seed: 3,
       },
       {
         name: 'Rams',
-        seed: 4
+        seed: 4,
       },
       {
         name: 'Cardinals',
-        seed: 5
+        seed: 5,
       },
       {
         name: '49ers',
-        seed: 6
+        seed: 6,
       },
       {
         name: 'Eagles',
-        seed: 7
+        seed: 7,
       },
-    ]
-  }
-]
+    ],
+  },
+];
 
 export interface Pair {
   teams: string[],
