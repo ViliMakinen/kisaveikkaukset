@@ -1,0 +1,19 @@
+<div class="main-content-container">
+  <div class="title-container">
+    <h1>{{ tournament.name }}</h1>
+  </div>
+  <mat-tab-group>
+    <mat-tab [label]="group.name" *ngFor="let group of tournament.groups">
+      <div *ngFor="let match of group.matches" class="match-row">
+        <span class="teams">{{ match.home }} - {{ match.away }} </span
+        ><span
+          ><mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle value="1">1</mat-button-toggle>
+            <mat-button-toggle value="X">X</mat-button-toggle>
+            <mat-button-toggle value="2">2</mat-button-toggle>
+          </mat-button-toggle-group>
+        </span>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,7 +1,27 @@
-.log-in-container {
-  margin: 5%;
+.main-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 
-  .log-in-button {
-    margin-left: 20px;
+  .log-in-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    margin-top: 8%;
+
+    .log-in-button {
+      margin-left: 20px;
+    }
+  }
+  .create-group-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    margin-top: 8%;
+
+    .group-info-container {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
