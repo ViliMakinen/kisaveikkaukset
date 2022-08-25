@@ -4,16 +4,26 @@
   </div>
   <mat-tab-group>
     <mat-tab [label]="group.name" *ngFor="let group of tournament.groups">
-      <div *ngFor="let match of group.matches" class="match-row">
-        <span class="teams">{{ match.home }} - {{ match.away }} </span
-        ><span
-          ><mat-button-toggle-group>
-            <mat-button-toggle value="1">1</mat-button-toggle>
-            <mat-button-toggle value="X">X</mat-button-toggle>
-            <mat-button-toggle value="2">2</mat-button-toggle>
-          </mat-button-toggle-group>
-        </span>
+      <div class="match-container">
+        <div *ngFor="let match of group.matches" class="match-row">
+          <span class="teams"
+            >{{ match.home }} - {{ match.away }} <span class="match-date"> {{ match.date | date: 'dd.MM.yyyy HH:mm' }} </span> </span
+          ><span
+            ><mat-button-toggle-group (change)="saveResult(match.id, $event.value)">
+              <mat-button-toggle value="1">1</mat-button-toggle>
+              <mat-button-toggle value="X">X</mat-button-toggle>
+              <mat-button-toggle value="2">2</mat-button-toggle>
+            </mat-button-toggle-group>
+          </span>
+        </div>
       </div>
-    </mat-tab>
+      <div class="group-container">
+        <div class="group-title-container">Lohko {{group.name}} </div>
+        <div *ngFor="let team of getGroup(group.name).teams" class="group-row">
+          <span class="row-box">{{ team.name }}</span
+          ><span class="row-box">{{ team.points }}</span>
+        </div>
+      </div></mat-tab
+    >
   </mat-tab-group>
 </div>
