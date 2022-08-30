@@ -1,16 +1,14 @@
 <!-- <button (click)= "userService.createUsers()">höps </button>-->
 <div *ngIf="user !== null" class="main-content">
-  <div class="title">
-    Tervetuloa kisaveikkauksien pyhättöön {{user.name}}!
-  </div>
+  <div class="title">Tervetuloa kisaveikkauksien pyhättöön {{ user.name }}!</div>
   <mat-card class="current-results">
     <mat-tab-group>
-      <mat-tab *ngFor="let tournament of tournaments"
-               [label]="tournament.name">
+      <mat-tab *ngFor="let tournament of tournaments" [label]="tournament.name">
         <div class="list">
-          <li *ngFor="let player of realPlayers(tournament)" [class.logged-user]="user?.name === player.name"
-              class="list-item">{{player.name}}
-            <span>{{getPlayerTournamentPoints(player, tournament)}} pistettä</span>
+          <li *ngFor="let player of realPlayers(tournament)" [class.logged-user]="user.name === player.name"
+              class="list-item">
+            {{ player.name }}
+            <span>{{ getPlayerTournamentPoints(player, tournament) }} pistettä</span>
           </li>
         </div>
       </mat-tab>
@@ -22,8 +20,8 @@
     <div class="list">
       <mat-divider></mat-divider>
       <li *ngFor="let tournament of tournaments" class="list-item">
-        <a [href]="tournament.url" class="tournament" target="_blank">{{tournament.name}}</a>
-        <span>{{tournament.dates}}</span>
+        <a [href]="tournament.url" class="tournament" target="_blank">{{ tournament.name }}</a>
+        <span>{{ tournament.dates }}</span>
       </li>
     </div>
   </mat-card>
