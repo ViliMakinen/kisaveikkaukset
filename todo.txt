@@ -20,3 +20,5 @@
 
  - Install docker.
 
+ - Configure renovate.
+
