@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -13,31 +12,20 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
-import { BracketComponent } from './bracket/bracket.component';
-import { OlympialaisetComponent } from './olympialaiset/olympialaiset.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { ChampionsLeagueComponent } from './champions-league/champions-league.component';
-import { OneRoundBracketComponent } from './one-round-bracket/one-round-bracket.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { AuthGuard } from './auth.guard';
 import { LogInComponent } from './log-in/log-in.component';
-import { NFLPlayoffsComponent } from './nfl-playoffs/nfl-playoffs.component';
-import { NflBracketComponent } from './nfl-bracket/nfl-bracket.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MmKisatComponent } from './mm-kisat/mm-kisat.component';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 const routes: Routes = [
   { path: '', component: LogInComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'olympialaiset', component: OlympialaisetComponent, canActivate: [AuthGuard] },
-  { path: 'champions-league', component: ChampionsLeagueComponent, canActivate: [AuthGuard] },
-  { path: 'NFL-playoffs', component: NFLPlayoffsComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent },
   { path: 'MM-kisat-2022', component: MmKisatComponent },
   { path: '**', redirectTo: '' },
-
 ];
 
 @NgModule({
@@ -45,13 +33,7 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     SideNavigationComponent,
-    BracketComponent,
-    OlympialaisetComponent,
-    ChampionsLeagueComponent,
-    OneRoundBracketComponent,
     LogInComponent,
-    NFLPlayoffsComponent,
-    NflBracketComponent,
     MmKisatComponent,
   ],
   imports: [

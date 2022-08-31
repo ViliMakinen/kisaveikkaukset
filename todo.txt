@@ -1,0 +1,22 @@
+ 1. Create a new landing page design (for mobile also).
+
+ 2. Move the 'create group' -stuff to its own page and create a small button on the landing page to access it.
+
+ 3. Align the starting date of matches to be consistent.
+
+ 4. Create a new login page and include google and facebook login.
+
+...
+...
+...
+
+ - Create a backend (NestJS).
+
+ - Create a database (Postgres + Prisma).
+
+ - Create frontend tests.
+
+ - Deploy to somewhere.
+
+ - Install docker.
+

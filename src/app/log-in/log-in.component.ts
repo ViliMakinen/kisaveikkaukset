@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { loginCodes } from '../constants';
-import { UserService } from '../user.service';
+import { loginCode } from '../constants';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,22 +14,11 @@ export class LogInComponent {
 
   availableTournaments: string[] = ['MM-kisat', 'Futsal-liiga', 'SM-liga'];
 
-  constructor(private userService: UserService, private router: Router) {
-    userService.logOut();
-  }
-
-  foo() {
-    console.log(this.groupName);
-    console.log(this.groupTournament)
-  }
+  constructor(private router: Router) {}
 
   tryLogIn() {
-    Object.entries(loginCodes).forEach((keyValue) => {
-      if (keyValue[0] === this.code) {
-        this.userService.getUser(keyValue[1]).then(() => {
-          this.router.navigateByUrl('/home');
-        });
-      }
-    });
+    if (this.code === loginCode) {
+      this.router.navigateByUrl('/home');
+    }
   }
 }

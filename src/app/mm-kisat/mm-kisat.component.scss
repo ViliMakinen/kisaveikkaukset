@@ -69,5 +69,30 @@
       }
     }
   }
+
+  ::ng-deep.mat-tab-labels {
+    justify-content: center;
+  }
 }
 
+@media only screen and (max-width: 768px) {
+  .main-content-container {
+    .group-container {
+      margin-top: 5px;
+
+      .group-title-container {
+        width: 100%;
+      }
+
+      .group-row {
+        width: 100%;
+      }
+    }
+
+    .match-container {
+      .match-row {
+        width: 100%;
+      }
+    }
+  }
+}
