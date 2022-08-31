@@ -1,6 +1,13 @@
 .toolbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+
+  .side-nav-button {
+    display: flex;
+    align-items: center;
+    width: 30px;
+  }
 }
 
 .content {
@@ -8,10 +15,6 @@
   display: flex;
 
   .main-content {
-    width: 80%;
-  }
-
-  .sidenav {
-    width: 200px;
+    width: 100%;
   }
 }
