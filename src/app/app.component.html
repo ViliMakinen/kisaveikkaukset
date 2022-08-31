@@ -1,11 +1,15 @@
 <mat-toolbar class="toolbar" color="primary">
+  <div class="side-nav-button"><mat-icon *ngIf="router.url !== '/'" class="clickable" (click)="sidenav.toggle()">menu</mat-icon></div>
   <div class="title clickable" routerLink="">Kisaveikkaukset</div>
+  <div></div>
 </mat-toolbar>
-<div class="content">
-  <div class="sidenav">
-    <app-side-navigation></app-side-navigation>
-  </div>
-  <div class="main-content">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+<mat-drawer-container class="example-container" hasBackdrop="false">
+  <mat-drawer mode="push" #sidenav><app-side-navigation></app-side-navigation></mat-drawer>
+  <mat-drawer-content>
+    <div class="content">
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
