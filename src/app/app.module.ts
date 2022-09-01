@@ -22,7 +22,7 @@ import { MmKisatComponent } from './mm-kisat/mm-kisat.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { AuthPageComponent } from './auth-page/auth-page.component';
-import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 
 const routes: Routes = [
   { path: '', component: LogInComponent },
@@ -62,19 +62,15 @@ const routes: Routes = [
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('clientId'),
-          ,},
-          {,
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('clientId'),
+            provider: new GoogleLoginProvider('290256958283-tebh5gso96b4c08s7jm78do2u3fmt4as.apps.googleusercontent.com'),
           },
-        ],,
-        onE,rror: (err) => {
+        ],
+        onError: (err) => {
           console.error(err);
         },
-      } as SocialAuth,ServiceConfig,
+      } as SocialAuthServiceConfig,
     },
   ],
-  bootstrap: [A,ppComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

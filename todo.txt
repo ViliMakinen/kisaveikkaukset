@@ -1,10 +1,24 @@
- 1. Create a new landing page design (for mobile also).
+// 1. Create a new landing page design (for mobile also).
 
- 2. Move the 'create group' -stuff to its own page and create a small button on the landing page to access it.
+// 2. Move the 'create group' -stuff to its own page and create a small button on the landing page to access it.
 
- 3. Align the starting date of matches to be consistent.
+// 3. Align the starting date of matches to be consistent.
 
- 4. Create a new login page and include google and facebook login.
+// 4. Create a new login page and include google.
+
+ 5. Create a AuthGuard that checks if userServices user is set or is null. This guard would prevent the user from accessing any routes except for / and /authorization.
+
+ 6. Create another guard that checks if the group code is valid.
+
+ 7. Create a 'final' data structure for users predictions and create it dynamically as the user changes the predictions.
+
+ 8. Add a 'save' button where users can ultimately submit the predictions (for now this can just console.log the predictions).
+     - when submitted, the predictions get locked
+     - userService would have a field called arePredictionsLocked and manipulate this variable
+     - create a 'unlock' button for development purposes
+
+ 9. Add a final date that the 'save' button can be pressed - this should probably come from the tournaments' info?
+     - How to programmatically disable a button
 
 ...
 ...
