@@ -21,17 +21,19 @@ import { MatSelectModule } from '@angular/material/select';
 import { MmKisatComponent } from './mm-kisat/mm-kisat.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CreateGroupComponent } from './create-group/create-group.component';
+import { AuthPageComponent } from './auth-page/auth-page.component';
 
 const routes: Routes = [
   { path: '', component: LogInComponent },
   { path: 'home', component: HomeComponent },
   { path: 'MM-kisat-2022', component: MmKisatComponent },
   { path: 'create-group', component: CreateGroupComponent },
+  { path: 'authorization', component:AuthPageComponent },
   { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SideNavigationComponent, LogInComponent, MmKisatComponent, CreateGroupComponent],
+  declarations: [AppComponent, HomeComponent, SideNavigationComponent, LogInComponent, MmKisatComponent, CreateGroupComponent, AuthPageComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
