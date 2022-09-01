@@ -4,12 +4,23 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  .google-login-container {
-    display: flex;
-    height: 60px;
+
+
+  .google-button, .fb-button {
+    padding: 2px;
+    width: 250px;
+    margin-bottom: 10px;
+
+    &:hover {
+      box-shadow: 1px 1px 4px #0a0a0a;
+    }
   }
-  .facebook-login-container {
-    display: flex;
-    height: 60px;
+
+  .google-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 2px;
   }
 }
+
+

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 interface TournamentWithGroups {
   name: string;
   groups: Group[];
+  startingDate: Date;
 }
 interface Group {
   name: string;
@@ -371,6 +372,7 @@ export class MmKisatComponent {
         ],
       },
     ],
+    startingDate: new Date('2022-11-19T19:00:00'),
   };
   constructor() {
     const matches = this.tournament.groups.flatMap((group) => group.matches);
