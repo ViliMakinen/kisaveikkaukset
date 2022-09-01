@@ -1,0 +1,11 @@
+.create-group-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  margin-top: 8%;
+
+  .group-info-container {
+    display: flex;
+    flex-direction: column;
+  }
+}

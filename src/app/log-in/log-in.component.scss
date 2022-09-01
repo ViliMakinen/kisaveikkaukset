@@ -1,27 +1,17 @@
 .main-container {
-  display: flex;
-  flex-direction: row;
   height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 
-  .log-in-container {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    margin-top: 8%;
-
-    .log-in-button {
-      margin-left: 20px;
-    }
+  .input-container {
+    width: 200px;
+    height: 100px;
   }
-  .create-group-container {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    margin-top: 8%;
-
-    .group-info-container {
-      display: flex;
-      flex-direction: column;
-    }
+  .log-in-button {
+    width: 200px;
+    height: 50px;
   }
 }
