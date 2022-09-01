@@ -1,6 +1,5 @@
 .main-content-container {
   max-height: calc(100% - 64px);
-  padding: 1%;
 
   .group-container {
     margin-top: 100px;
@@ -62,10 +61,12 @@
       .teams {
         display: flex;
         align-items: center;
-
-        .match-date {
-          margin-left: 20px;
-        }
+        width: 33%;
+      }
+      .match-date {
+        display: flex;
+        align-items: center;
+        width: 33%;
       }
     }
   }
