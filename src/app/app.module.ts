@@ -22,13 +22,14 @@ import { MmKisatComponent } from './mm-kisat/mm-kisat.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { AuthPageComponent } from './auth-page/auth-page.component';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 
 const routes: Routes = [
   { path: '', component: LogInComponent },
   { path: 'home', component: HomeComponent },
   { path: 'MM-kisat-2022', component: MmKisatComponent },
   { path: 'create-group', component: CreateGroupComponent },
-  { path: 'authorization', component:AuthPageComponent },
+  { path: 'authorization', component: AuthPageComponent },
   { path: '**', redirectTo: '' },
 ];
 
@@ -51,8 +52,29 @@ const routes: Routes = [
     MatTabsModule,
     MatSelectModule,
     MatButtonToggleModule,
+    SocialLoginModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('clientId'),
+          ,},
+          {,
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('clientId'),
+          },
+        ],,
+        onE,rror: (err) => {
+          console.error(err);
+        },
+      } as SocialAuth,ServiceConfig,
+    },
+  ],
+  bootstrap: [A,ppComponent],
 })
 export class AppModule {}

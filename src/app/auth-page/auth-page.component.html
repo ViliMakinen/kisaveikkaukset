@@ -1,5 +1,9 @@
 <div class="main-container">
-  <div class="google-login-container">google</div>
-  <div class="facebook-login-container">facebook</div>
+  <button (click)="authService.signInWithGoogle()" class="google-button" mat-raised-button><img class="google-icon"
+                                                                                                src="assets/images/google-icon.png">Login
+    with Google
+  </button>
+  <button (click)="authService.signInWithFacebook()" [innerHTML]="'Login with Facebook'" class="fb-button"
+          mat-raised-button></button>
   <button routerLink="/home" class="clickable" mat-raised-button>kotiin</button>
 </div>
