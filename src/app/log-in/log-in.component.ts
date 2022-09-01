@@ -18,7 +18,7 @@ export class LogInComponent {
 
   tryLogIn() {
     if (this.code === loginCode) {
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/authorization');
     }
   }
 }
