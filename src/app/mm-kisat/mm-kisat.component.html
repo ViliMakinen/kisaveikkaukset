@@ -6,8 +6,7 @@
     <mat-tab [label]="group.name" *ngFor="let group of tournament.groups">
       <div class="match-container">
         <div *ngFor="let match of group.matches" class="match-row">
-          <span class="teams"
-            >{{ match.home }} - {{ match.away }} <span class="match-date"> {{ match.date | date: 'dd.MM.yyyy HH:mm' }} </span> </span
+          <span class="teams">{{ match.home }} - {{ match.away }} </span> <span class="match-date"> {{ match.date | date: 'dd.MM.yyyy HH:mm' }} </span
           ><span
             ><mat-button-toggle-group (change)="saveResult(match.id, $event.value)">
               <mat-button-toggle value="1">1</mat-button-toggle>
