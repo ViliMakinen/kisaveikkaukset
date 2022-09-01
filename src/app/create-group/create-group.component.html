@@ -1,0 +1,17 @@
+<div class="create-group-container">
+  <div>
+    <div class="group-info-container">
+      <mat-form-field class="example-full-width" appearance="legacy">
+        <mat-label>Ryhmän nimi</mat-label>
+        <input matInput [(ngModel)]="groupName" />
+      </mat-form-field>
+      <mat-form-field appearance="legacy">
+        <mat-label>Turnaus</mat-label>
+        <mat-select [(value)]="groupTournament">
+          <mat-option *ngFor="let tournament of availableTournaments" [value]="tournament">{{ tournament }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button [disabled]="groupName === '' || groupTournament === ''" class="button clickable create-new-group" mat-raised-button>Luo uusi ryhmä</button>
+  </div>
+</div>
