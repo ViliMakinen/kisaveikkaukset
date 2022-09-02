@@ -6,9 +6,9 @@
 
 // 4. Create a new login page and include google.
 
- 5. Create a AuthGuard that checks if userServices user is set or is null. This guard would prevent the user from accessing any routes except for / and /authorization.
+// 5. Create a AuthGuard that checks if userServices user is set or is null. This guard would prevent the user from accessing any routes except for / and /authorization.
 
- 6. Create another guard that checks if the group code is valid.
+// 6. Create another guard that checks if the group code is valid.
 
  7. Create a 'final' data structure for users predictions and create it dynamically as the user changes the predictions.
 
