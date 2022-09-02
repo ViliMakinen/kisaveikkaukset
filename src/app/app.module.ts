@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth-guard.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -26,9 +27,9 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 
 
 const routes: Routes = [
   { path: '', component: LogInComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'MM-kisat-2022', component: MmKisatComponent },
-  { path: 'create-group', component: CreateGroupComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'MM-kisat-2022', component: MmKisatComponent, canActivate: [AuthGuard] },
+  { path: 'create-group', component: CreateGroupComponent, canActivate: [AuthGuard] },
   { path: 'authorization', component: AuthPageComponent },
   { path: '**', redirectTo: '' },
 ];
