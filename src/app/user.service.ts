@@ -6,4 +6,5 @@ import { SocialUser } from '@abacritt/angularx-social-login';
 })
 export class UserService {
   user: SocialUser | null = null;
+  codeValidity: boolean = false;
 }

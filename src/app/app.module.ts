@@ -1,3 +1,4 @@
+import { LoginGuard } from './log-in-guard.service';
 import { AuthGuard } from './auth-guard.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -30,7 +31,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'MM-kisat-2022', component: MmKisatComponent, canActivate: [AuthGuard] },
   { path: 'create-group', component: CreateGroupComponent, canActivate: [AuthGuard] },
-  { path: 'authorization', component: AuthPageComponent },
+  { path: 'authorization', component: AuthPageComponent, canActivate: [LoginGuard] },
   { path: '**', redirectTo: '' },
 ];
 
