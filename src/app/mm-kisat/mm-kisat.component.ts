@@ -55,6 +55,5 @@ export class MmKisatComponent {
     this.results.forEach(result => {
       result.result = '1';
     });
-    console.log(this.results)
   }
 }
