@@ -9,7 +9,7 @@ export class LoginGuard implements CanActivate {
   constructor(private router: Router, private userService: UserService) {}
 
   canActivate(): boolean {
-    if (this.userService.codeValidity === true) {
+    if (this.userService.codeValidity) {
       return true;
     } else {
       this.router.navigateByUrl('');
