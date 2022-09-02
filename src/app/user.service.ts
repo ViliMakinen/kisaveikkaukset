@@ -6,5 +6,6 @@ import { SocialUser } from '@abacritt/angularx-social-login';
 })
 export class UserService {
   user: SocialUser | null = null;
+  arePredictionsLocked: boolean = false;
   codeValidity: boolean = false;
 }
