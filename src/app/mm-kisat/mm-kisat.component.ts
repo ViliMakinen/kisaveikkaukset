@@ -46,6 +46,15 @@ export class MmKisatComponent {
 
   lockPredictions(): void {
     this.userService.arePredictionsLocked = true;
-    console.log(this.results);
+  }
+
+  UnlockPredictions(): void {
+    this.userService.arePredictionsLocked = false;
+  }
+  fillPredictions(): void {
+    this.results.forEach(result => {
+      result.result = '1';
+    });
+    console.log(this.results)
   }
 }

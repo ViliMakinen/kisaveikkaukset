@@ -1,9 +1,24 @@
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
 <div class="main-content-container">
   <div class="title-container">
     <h1>{{ tournament.name }}</h1>
   </div>
   <div>
-    <button [class.clickable]="!userService.arePredictionsLocked" mat-raised-button class="lock-button" (click)="lockPredictions()">Lukitse veikkaukset</button>
+    <button class="clickable" mat-raised-button (click)="fillPredictions()">Täytä veikkaukset</button>
+    <button class="clickable" mat-raised-button (click)="UnlockPredictions()">Avaa veikkaukset</button>
+    <button
+      *ngIf="!userService.arePredictionsLocked"
+      [class.clickable]="!userService.arePredictionsLocked"
+      mat-raised-button
+      class="lock-button"
+      (click)="lockPredictions()"
+      [disabled]="arePredictionsIncomplete()"
+    >
+      Lukitse veikkaukset
+    </button>
+    <span *ngIf="arePredictionsIncomplete()" matTooltip="Täytä kaikki veikkaukset!" class="material-symbols-outlined"> info </span>
   </div>
   <mat-tab-group>
     <mat-tab [label]="group.name" *ngFor="let group of tournament.groups">
