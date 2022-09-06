@@ -1,7 +1,12 @@
 .main-content-container {
   max-height: calc(100% - 64px);
 
-  
+  .icon{
+    font-size: large;
+    margin-left: 5px;
+  }
+
+
   .group-container {
     margin-top: 100px;
     align-items: center;

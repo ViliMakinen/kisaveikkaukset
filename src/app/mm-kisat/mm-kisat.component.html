@@ -1,9 +1,8 @@
-
 <div class="main-content-container">
   <div class="title-container">
     <h1>{{ tournament.name }}</h1>
   </div>
-  <div>
+  <div *ngIf="!hasTournamentStarted()">
     <button class="clickable" mat-raised-button (click)="fillPredictions()">Täytä veikkaukset</button>
     <button class="clickable" mat-raised-button (click)="unlockPredictions()">Avaa veikkaukset</button>
     <button
@@ -16,13 +15,14 @@
     >
       Lukitse veikkaukset
     </button>
-    <span *ngIf="arePredictionsIncomplete()" matTooltip="Täytä kaikki veikkaukset!" class="material-symbols-outlined"> <mat-icon>info</mat-icon> </span>
+    <span *ngIf="arePredictionsIncomplete()" matTooltip="Täytä kaikki veikkaukset!"> <mat-icon class="icon">info</mat-icon> </span>
   </div>
   <mat-tab-group>
     <mat-tab [label]="group.name" *ngFor="let group of tournament.groups">
       <div class="match-container">
         <div *ngFor="let match of group.matches" class="match-row">
-          <span class="teams">{{ match.home }} - {{ match.away }} </span> <span class="match-date"> {{ match.date | date: 'dd.MM.yyyy' }} <mat-icon class="icon">schedule</mat-icon> {{ match.date | date: 'HH:mm' }}  </span
+          <span class="teams">{{ match.home }} - {{ match.away }} </span>
+          <span class="match-date"> {{ match.date | date: 'dd.MM.yyyy' }} <mat-icon class="icon">schedule</mat-icon> {{ match.date | date: 'HH:mm' }} </span
           ><span
             ><mat-button-toggle-group [disabled]="userService.arePredictionsLocked" (change)="saveResult(match.id, $event.value)">
               <mat-button-toggle value="1">1</mat-button-toggle>
