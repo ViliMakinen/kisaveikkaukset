@@ -48,7 +48,7 @@ export class MmKisatComponent {
     this.userService.arePredictionsLocked = true;
   }
 
-  UnlockPredictions(): void {
+  unlockPredictions(): void {
     this.userService.arePredictionsLocked = false;
   }
   fillPredictions(): void {

@@ -19,7 +19,7 @@
  9. Add a final date that the 'save' button can be pressed - this should probably come from the tournaments' info?
      - How to programmatically disable a button
 
- 10. Create additional information ball for save button that disables after predictions are full.
+// 10. Create additional information ball for save button that disables after predictions are full.
     - - create a 'unlock' button for development purposes
 ...
 ...
