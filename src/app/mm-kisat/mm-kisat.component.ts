@@ -46,6 +46,18 @@ export class MmKisatComponent {
 
   lockPredictions(): void {
     this.userService.arePredictionsLocked = true;
-    console.log(this.results);
+  }
+
+  unlockPredictions(): void {
+    this.userService.arePredictionsLocked = false;
+  }
+  fillPredictions(): void {
+    this.results.forEach((result) => {
+      result.result = '1';
+    });
+  }
+  hasTournamentStarted(): boolean {
+    let now = new Date();
+    return now.getTime() > this.tournament.startingDate.getTime();
   }
 }
