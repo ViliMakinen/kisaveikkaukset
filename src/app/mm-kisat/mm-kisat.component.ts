@@ -1,9 +1,7 @@
-import { UserService } from './../user.service';
+import { UserService } from '../user.service';
 import { AfterViewInit, Component } from '@angular/core';
-import { MatchResult, tournament, TournamentWithGroups } from './../constants';
-import { GroupStanding } from './../constants';
-import { Result } from './../constants';
-import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from 'date-fns';
+import { GroupStanding, MatchResult, Result, tournament, TournamentWithGroups } from '../constants';
+import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter } from 'date-fns';
 
 @Component({
   selector: 'app-mm-kisat',
@@ -46,16 +44,10 @@ export class MmKisatComponent implements AfterViewInit {
 
     const calculateCountdownValues = (): void => {
       const now = new Date();
-
-      const days = Math.floor(differenceInDays(tournament.startingDate, now));
-      const hours = Math.floor(differenceInHours(tournament.startingDate, now) % 24);
-      const minutes = Math.floor(differenceInMinutes(tournament.startingDate, now) - days * 24 * 60 - hours * 60);
-      const seconds = Math.floor(differenceInSeconds(tournament.startingDate, now) - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60);
-
-      this.days = days;
-      this.hours = hours;
-      this.minutes = minutes;
-      this.seconds = seconds;
+      this.days = Math.floor(differenceInDays(tournament.startingDate, now));
+      this.hours = Math.floor(differenceInHours(tournament.startingDate, now) % 24);
+      this.minutes = Math.floor(differenceInMinutes(tournament.startingDate, now) - this.days * 24 * 60 - this.hours * 60);
+      this.seconds = Math.floor(differenceInSeconds(tournament.startingDate, now) - this.days * 24 * 60 * 60 - this.hours * 60 * 60 - this.minutes * 60);
     };
   }
 
@@ -87,7 +79,6 @@ export class MmKisatComponent implements AfterViewInit {
   }
 
   hasTournamentStarted(): boolean {
-    const now = new Date();
-    return now.getTime() > this.tournament.startingDate.getTime();
+    return isAfter(new Date(), this.tournament.startingDate);
   }
 }

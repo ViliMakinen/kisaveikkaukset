@@ -1,26 +1,33 @@
 .main-content-container {
   max-height: calc(100% - 64px);
 
-  .icon{
-    font-size: large;
-    margin-left: 5px;
-  }
-  
-  .countdown-row{
-    display:flex;
+  .countdown-container {
+    margin-top: 10px;
+    display: flex;
     align-items: center;
     justify-content: center;
+    column-gap: 20px;
 
-    
-  .countdown-container{
-    display:flex;
-    margin-left: 20px;
-    border: 1px solid;
-    height:30px;
-    font-size:large;
-    justify-content: center;
-    align-items: center;
-  }
+    .countdown-item {
+      display: flex;
+      font-size: 16px;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .value {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 60px;
+        width: 60px;
+        font-size: 24px;
+        border: 1px solid #3f51b5;
+        border-radius: 3px;
+        background: #3f51b5;
+        color: white;
+      }
+    }
   }
 
   .group-container {
@@ -68,6 +75,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 24px;
+    height: 40px;
+  }
+
+  .predictions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  .countdown-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 20px;
   }
 
   .match-container {
@@ -89,6 +116,10 @@
         display: flex;
         align-items: center;
         width: 33%;
+
+        .date {
+          margin-right: 20px;
+        }
       }
     }
   }
@@ -101,7 +132,7 @@
 @media only screen and (max-width: 768px) {
   .main-content-container {
     .group-container {
-      margin-top: 5px;
+      margin: 5px;
 
       .group-title-container {
         width: 100%;
@@ -113,8 +144,22 @@
     }
 
     .match-container {
+      margin: 5px;
+
       .match-row {
         width: 100%;
+
+        .teams {
+          width: 30%;
+        }
+
+        .match-date {
+          width: 40%;
+
+          .date {
+            margin-right: 0;
+          }
+        }
       }
     }
   }
