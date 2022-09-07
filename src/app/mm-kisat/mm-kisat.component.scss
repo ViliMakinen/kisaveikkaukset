@@ -5,7 +5,23 @@
     font-size: large;
     margin-left: 5px;
   }
+  
+  .countdown-row{
+    display:flex;
+    align-items: center;
+    justify-content: center;
 
+    
+  .countdown-container{
+    display:flex;
+    margin-left: 20px;
+    border: 1px solid;
+    height:30px;
+    font-size:large;
+    justify-content: center;
+    align-items: center;
+  }
+  }
 
   .group-container {
     margin-top: 100px;
