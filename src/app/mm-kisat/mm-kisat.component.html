@@ -3,19 +3,27 @@
     <h1>{{ tournament.name }}</h1>
   </div>
   <div *ngIf="!hasTournamentStarted()">
-    <button class="clickable" mat-raised-button (click)="fillPredictions()">Täytä veikkaukset</button>
-    <button class="clickable" mat-raised-button (click)="unlockPredictions()">Avaa veikkaukset</button>
-    <button
-      *ngIf="!userService.arePredictionsLocked"
-      [class.clickable]="!userService.arePredictionsLocked"
-      mat-raised-button
-      class="lock-button"
-      (click)="lockPredictions()"
-      [disabled]="arePredictionsIncomplete()"
-    >
-      Lukitse veikkaukset
-    </button>
+    <span>
+      <button class="clickable" mat-raised-button (click)="fillPredictions()">Täytä veikkaukset</button>
+      <button class="clickable" mat-raised-button (click)="unlockPredictions()">Avaa veikkaukset</button>
+      <button
+        *ngIf="!userService.arePredictionsLocked"
+        [class.clickable]="!userService.arePredictionsLocked"
+        mat-raised-button
+        class="lock-button"
+        (click)="lockPredictions()"
+        [disabled]="arePredictionsIncomplete()"
+      >
+        Lukitse veikkaukset
+      </button>
+    </span>
     <span *ngIf="arePredictionsIncomplete()" matTooltip="Täytä kaikki veikkaukset!"> <mat-icon class="icon">info</mat-icon> </span>
+    <span class="countdown-row">
+      <span class="countdown-container">Days: {{ days }}</span>
+      <span class="countdown-container">Hours: {{ hours }}</span>
+      <span class="countdown-container">Minutes: {{ minutes }}</span>
+      <span class="countdown-container">Seconds: {{ seconds }}</span></span
+    >
   </div>
   <mat-tab-group>
     <mat-tab [label]="group.name" *ngFor="let group of tournament.groups">

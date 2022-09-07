@@ -1,18 +1,24 @@
 import { UserService } from './../user.service';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { MatchResult, tournament, TournamentWithGroups } from './../constants';
 import { GroupStanding } from './../constants';
 import { Result } from './../constants';
+import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from 'date-fns';
 
 @Component({
   selector: 'app-mm-kisat',
   templateUrl: './mm-kisat.component.html',
   styleUrls: ['./mm-kisat.component.scss'],
 })
-export class MmKisatComponent {
+export class MmKisatComponent implements AfterViewInit {
   results: MatchResult[];
   groups: GroupStanding[];
   tournament: TournamentWithGroups = tournament;
+
+  days: number = 0;
+  hours: number = 0;
+  minutes: number = 0;
+  seconds: number = 0;
 
   constructor(public userService: UserService) {
     const matches = this.tournament.groups.flatMap((group) => group.matches);
@@ -29,6 +35,28 @@ export class MmKisatComponent {
         }),
       };
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.startCountdown();
+  }
+
+  startCountdown(): void {
+    setInterval(() => calculateCountdownValues(), 1000);
+
+    const calculateCountdownValues = (): void => {
+      const now = new Date();
+
+      const days = Math.floor(differenceInDays(tournament.startingDate, now));
+      const hours = Math.floor(differenceInHours(tournament.startingDate, now) % 24);
+      const minutes = Math.floor(differenceInMinutes(tournament.startingDate, now) - days * 24 * 60 - hours * 60);
+      const seconds = Math.floor(differenceInSeconds(tournament.startingDate, now) - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60);
+
+      this.days = days;
+      this.hours = hours;
+      this.minutes = minutes;
+      this.seconds = seconds;
+    };
   }
 
   arePredictionsIncomplete(): boolean {
@@ -51,13 +79,15 @@ export class MmKisatComponent {
   unlockPredictions(): void {
     this.userService.arePredictionsLocked = false;
   }
+
   fillPredictions(): void {
     this.results.forEach((result) => {
       result.result = '1';
     });
   }
+
   hasTournamentStarted(): boolean {
-    let now = new Date();
+    const now = new Date();
     return now.getTime() > this.tournament.startingDate.getTime();
   }
 }

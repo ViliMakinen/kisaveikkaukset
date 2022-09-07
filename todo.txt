@@ -16,11 +16,24 @@
      - when submitted, the predictions get locked
      - userService would have a field called arePredictionsLocked and manipulate this variable
 
- 9. Add a final date that the 'save' button can be pressed - this should probably come from the tournaments' info?
+//9. Add a final date that the 'save' button can be pressed - this should probably come from the tournaments' info?
      - How to programmatically disable a button
 
 // 10. Create additional information ball for save button that disables after predictions are full.
     - - create a 'unlock' button for development purposes
+
+//  11. Create a countdown timer for tournament starting day.
+
+   12. Create own system to replace mat-toggle-buttons.
+
+   13. Create admin user to set results.
+
+   14. Create a standings table on the front page with a button to link you to the predictions section.
+        -Today's matches with odd weightings based on predictions
+        -Update interval
+        
+
+
 ...
 ...
 ...
