@@ -1,5 +1,5 @@
 import { UserService } from '../user.service';
-import { AfterViewInit, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GroupStanding, MatchResult, Result, tournament, TournamentWithGroups } from '../constants';
 import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter } from 'date-fns';
 
@@ -8,7 +8,7 @@ import { differenceInDays, differenceInHours, differenceInMinutes, differenceInS
   templateUrl: './mm-kisat.component.html',
   styleUrls: ['./mm-kisat.component.scss'],
 })
-export class MmKisatComponent implements AfterViewInit {
+export class MmKisatComponent implements OnInit {
   results: MatchResult[];
   groups: GroupStanding[];
   tournament: TournamentWithGroups = tournament;
@@ -35,20 +35,21 @@ export class MmKisatComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.startCountdown();
+    this.calculateCountdownValues();
   }
 
   startCountdown(): void {
-    setInterval(() => calculateCountdownValues(), 1000);
+    setInterval(() => this.calculateCountdownValues(), 1000);
+  }
 
-    const calculateCountdownValues = (): void => {
-      const now = new Date();
-      this.days = Math.floor(differenceInDays(tournament.startingDate, now));
-      this.hours = Math.floor(differenceInHours(tournament.startingDate, now) % 24);
-      this.minutes = Math.floor(differenceInMinutes(tournament.startingDate, now) - this.days * 24 * 60 - this.hours * 60);
-      this.seconds = Math.floor(differenceInSeconds(tournament.startingDate, now) - this.days * 24 * 60 * 60 - this.hours * 60 * 60 - this.minutes * 60);
-    };
+  calculateCountdownValues(): void {
+    const now = new Date();
+    this.days = Math.floor(differenceInDays(tournament.startingDate, now));
+    this.hours = Math.floor(differenceInHours(tournament.startingDate, now) % 24);
+    this.minutes = Math.floor(differenceInMinutes(tournament.startingDate, now) - this.days * 24 * 60 - this.hours * 60);
+    this.seconds = Math.floor(differenceInSeconds(tournament.startingDate, now) - this.days * 24 * 60 * 60 - this.hours * 60 * 60 - this.minutes * 60);
   }
 
   arePredictionsIncomplete(): boolean {

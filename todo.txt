@@ -10,28 +10,32 @@
 
 // 6. Create another guard that checks if the group code is valid.
 
- 7. Create a 'final' data structure for users predictions and create it dynamically as the user changes the predictions.
-
-//8. Add a 'save' button where users can ultimately submit the predictions (for now this can just console.log the predictions).
+// 7. Add a 'save' button where users can ultimately submit the predictions (for now this can just console.log the predictions).
      - when submitted, the predictions get locked
      - userService would have a field called arePredictionsLocked and manipulate this variable
 
-//9. Add a final date that the 'save' button can be pressed - this should probably come from the tournaments' info?
+// 8. Add a final date that the 'save' button can be pressed - this should probably come from the tournaments' info?
      - How to programmatically disable a button
 
-// 10. Create additional information ball for save button that disables after predictions are full.
+// 9. Create additional information ball for save button that disables after predictions are full.
     - - create a 'unlock' button for development purposes
 
-//  11. Create a countdown timer for tournament starting day.
+// 10. Create a countdown timer for tournament starting day.
 
-   12. Create own system to replace mat-toggle-buttons.
+   11. Create a 'final' data structure for users predictions and create it dynamically as the user changes the predictions.
+
+   12. Create a system to change the toggle button border colors according to actual results.
 
    13. Create admin user to set results.
 
    14. Create a standings table on the front page with a button to link you to the predictions section.
         -Today's matches with odd weightings based on predictions
         -Update interval
-        
+
+   15. Change color theme to dark.
+
+   16. Update the team standing in groups according to actual results (either to front page or predictions page).
+
 
 
 ...
