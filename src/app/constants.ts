@@ -7,6 +7,12 @@ export interface Group {
   name: string;
   matches: Match[];
 }
+
+export interface MockUser {
+  name: string;
+  points: number;
+}
+
 export interface Match {
   home: string;
   away: string;
@@ -29,6 +35,67 @@ export interface Team {
   points: number;
 }
 
+export interface MockGame {
+  home: string;
+  away: string;
+  date: Date;
+}
+
+export const games: MockGame[] = [
+  {
+    home: 'suomi',
+    away: 'ruotsi',
+    date: new Date('2022-11-19T19:00:00'),
+  },
+  {
+    home: 'suomi',
+    away: 'ruotsi',
+    date: new Date('2022-11-19T19:00:00'),
+  },
+  {
+    home: 'suomi',
+    away: 'ruotsi',
+    date: new Date('2022-11-19T19:00:00'),
+  },
+  {
+    home: 'suomi',
+    away: 'ruotsi',
+    date: new Date('2022-11-19T19:00:00'),
+  },
+  {
+    home: 'suomi',
+    away: 'ruotsi',
+    date: new Date('2022-11-19T19:00:00'),
+  },
+  {
+    home: 'suomi',
+    away: 'ruotsi',
+    date: new Date('2022-11-19T19:00:00'),
+  },
+];
+
+export const users: MockUser[] = [
+  {
+    name: 'aapo',
+    points: 15,
+  },
+  {
+    name: 'viltsu',
+    points: 16,
+  },
+  {
+    name: 'osku',
+    points: 10,
+  },
+  {
+    name: 'elmo',
+    points: 9,
+  },
+  {
+    name: 'matti',
+    points: 6,
+  },
+];
 export const loginCode = 'a';
 export const tournament: TournamentWithGroups = {
   name: 'MM-kisat',
@@ -362,5 +429,5 @@ export const tournament: TournamentWithGroups = {
       ],
     },
   ],
-  startingDate: new Date('2022-11-19T19:00:00+03:00'),
+  startingDate: new Date('2022-11-19T19:00:00+02:00'),
 };

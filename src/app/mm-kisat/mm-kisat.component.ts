@@ -1,6 +1,6 @@
 import { UserService } from '../user.service';
 import { Component, OnInit } from '@angular/core';
-import { GroupStanding, MatchResult, Result, tournament, TournamentWithGroups } from '../constants';
+import { GroupStanding, MatchResult, Result, tournament, TournamentWithGroups} from '../constants';
 import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter } from 'date-fns';
 
 @Component({

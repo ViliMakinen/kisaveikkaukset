@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { games, MockUser, users, MockGame } from '../constants';
 import { UserService } from '../user.service';
 
 @Component({
@@ -7,5 +8,26 @@ import { UserService } from '../user.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(public userService: UserService) {}
+  mockUsers: MockUser[] = users;
+  mockGames: MockGame[] = games;
+
+  constructor(public userService: UserService) {
+    this.mockUsers = this.mockUsers.map((user) => {
+      return { name: user.name, points: user.points };
+    });
+    this.mockGames = this.mockGames.map((game) => {
+      return { home: game.home, away: game.away, date: game.date };
+    });
+  }
+
+  usersByPoints = this.mockUsers.sort((a,b) => a.points - b.points).reverse();
+
+  testData = {
+    match: 'Suomi - Ruotsi',
+    weightings: {
+      '1': 33,
+      'X': 33,
+      '2': 33,
+    },
+  };
 }
