@@ -28,13 +28,14 @@
 
    13. Create admin user to set results.
 
-   14. Create a standings table on the front page with a button to link you to the predictions section.
-        -Today's matches with odd weightings based on predictions
+// 14. Create a standings table on the front page with a button to link you to the predictions section.
         -Update interval
 
    15. Change color theme to dark.
 
    16. Update the team standing in groups according to actual results (either to front page or predictions page).
+
+   17.Today's matches with odd weightings based on predictions
 
 
 
