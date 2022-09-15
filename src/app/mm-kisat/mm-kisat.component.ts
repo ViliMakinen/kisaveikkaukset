@@ -1,6 +1,6 @@
 import { UserService } from '../user.service';
 import { Component, OnInit } from '@angular/core';
-import { GroupStanding, MatchResult, Result, tournament, TournamentWithGroups} from '../constants';
+import { GroupStanding, MatchResult, Result, tournament, TournamentWithGroups } from '../constants';
 import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter } from 'date-fns';
 
 @Component({
@@ -61,6 +61,7 @@ export class MmKisatComponent implements OnInit {
     this.results[index] = { id, result };
   }
 
+  //TODO:
   getGroup(groupName: string): GroupStanding {
     return this.groups.find((group) => group.name === groupName)!;
   }

@@ -10,20 +10,17 @@ import { UserService } from '../user.service';
 export class HomeComponent {
   mockUsers: MockUser[] = users;
   mockGames: MockGame[] = games;
+  today = new Date();
 
   constructor(public userService: UserService) {
     this.mockUsers = this.mockUsers.map((user) => {
       return { name: user.name, points: user.points };
     });
+    this.mockUsers.sort((a, b) => a.points - b.points).reverse();
     this.mockGames = this.mockGames.map((game) => {
       return { home: game.home, away: game.away, date: game.date };
     });
   }
-
-  todaysGames = Object.entries(this.mockGames);
-
-  usersByPoints = this.mockUsers.sort((a, b) => a.points - b.points).reverse();
-  today = new Date();
 
   //For later use. See 17. on todo
   testData = {
