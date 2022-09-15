@@ -30,7 +30,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 
 const routes: Routes = [
   { path: '', component: LogInComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent},
   { path: 'MM-kisat-2022', component: MmKisatComponent },
   { path: 'create-group', component: CreateGroupComponent, canActivate: [AuthGuard] },
   { path: 'authorization', component: AuthPageComponent, canActivate: [LoginGuard] },

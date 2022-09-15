@@ -61,6 +61,7 @@ export class MmKisatComponent implements OnInit {
     this.results[index] = { id, result };
   }
 
+  //TODO:
   getGroup(groupName: string): GroupStanding {
     return this.groups.find((group) => group.name === groupName)!;
   }
