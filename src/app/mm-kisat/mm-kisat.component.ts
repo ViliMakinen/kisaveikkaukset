@@ -9,7 +9,7 @@ import { differenceInDays, differenceInHours, differenceInMinutes, differenceInS
   styleUrls: ['./mm-kisat.component.scss'],
 })
 export class MmKisatComponent implements OnInit {
-  results: MatchResult[];
+  userPredictions: MatchResult[] = [];
   groups: GroupStanding[];
   tournament: TournamentWithGroups = tournament;
 
@@ -19,10 +19,6 @@ export class MmKisatComponent implements OnInit {
   seconds: number = 0;
 
   constructor(public userService: UserService) {
-    const matches = this.tournament.groups.flatMap((group) => group.matches);
-    this.results = matches.map((match) => {
-      return { id: match.id, result: null };
-    });
     this.groups = this.tournament.groups.map((group) => {
       const teams = group.matches.map((match) => match.away);
       const uniqueTeams = [...new Set(teams)];
@@ -33,11 +29,24 @@ export class MmKisatComponent implements OnInit {
         }),
       };
     });
+    this.initializeUserPredictions();
   }
 
   ngOnInit(): void {
     this.startCountdown();
     this.calculateCountdownValues();
+  }
+
+  initializeUserPredictions(): void {
+    if (localStorage.getItem(this.userService.user?.firstName + 'predictions')) {
+      this.userPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'predictions')!);
+    } else {
+      const matches = this.tournament.groups.flatMap((group) => group.matches);
+      this.userPredictions = matches.map((match) => {
+        return { id: match.id, result: null };
+      });
+    }
+    console.log(this.userPredictions);
   }
 
   startCountdown(): void {
@@ -53,15 +62,20 @@ export class MmKisatComponent implements OnInit {
   }
 
   arePredictionsIncomplete(): boolean {
-    return this.results.some((result) => result.result === null);
+    return this.userPredictions.some((result) => result.result === null);
   }
 
-  saveResult(id: number, result: Result): void {
-    const index = this.results.findIndex((result) => result.id === id);
-    this.results[index] = { id, result };
+  savePrediction(id: number, result: Result): void {
+    const index = this.userPredictions.findIndex((result) => result.id === id);
+    this.userPredictions[index] = { id, result };
+    localStorage.setItem(this.userService.user?.firstName + 'predictions', JSON.stringify(this.userPredictions));
   }
 
-  //TODO:
+  isSelected(id: number): Result {
+    const index = this.userPredictions.findIndex((result) => result.id === id);
+    return this.userPredictions[index].result;
+  }
+
   getGroup(groupName: string): GroupStanding {
     return this.groups.find((group) => group.name === groupName)!;
   }
@@ -75,7 +89,7 @@ export class MmKisatComponent implements OnInit {
   }
 
   fillPredictions(): void {
-    this.results.forEach((result) => {
+    this.userPredictions.forEach((result) => {
       result.result = '1';
     });
   }
