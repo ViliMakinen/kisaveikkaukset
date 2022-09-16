@@ -2,4 +2,5 @@
   <div class="route clickable" routerLink="/home">Aloitussivu</div>
   <div class="route clickable" routerLink="/MM-kisat-2022">Jalkapallon MM-kisat</div>
   <div class="route clickable" routerLink="/create-group">Luo ryhmä</div>
+  <div *ngIf="isAdmin()" class="route clickable" routerLink="/admin-view">Admin paneeli</div>
 </div>
