@@ -12,6 +12,7 @@ export class MmKisatComponent implements OnInit {
   userPredictions: MatchResult[] = [];
   groups: GroupStanding[];
   tournament: TournamentWithGroups = tournament;
+  results: MatchResult[] = [];
 
   days: number = 0;
   hours: number = 0;
@@ -30,6 +31,7 @@ export class MmKisatComponent implements OnInit {
       };
     });
     this.initializeUserPredictions();
+    this.initializeResults();
   }
 
   ngOnInit(): void {
@@ -46,7 +48,46 @@ export class MmKisatComponent implements OnInit {
         return { id: match.id, result: null };
       });
     }
-    console.log(this.userPredictions);
+  }
+
+  initializeResults(): void {
+    if (localStorage.getItem('result')) {
+      this.results = JSON.parse(localStorage.getItem('result')!);
+    } else {
+      const matches = this.tournament.groups.flatMap((group) => group.matches);
+      this.results = matches.map((match) => {
+        return { id: match.id, result: null };
+      });
+    }
+
+    const matches = this.tournament.groups.flatMap((group) => group.matches);
+
+    this.results.forEach((matchResult) => {
+      const match = matches.find((match) => match.id === matchResult.id)!;
+      if (matchResult.result === '1') {
+        this.modifyTeamPoints(match.home, 3);
+      } else if (matchResult.result === 'X') {
+        this.modifyTeamPoints(match.home, 1);
+        this.modifyTeamPoints(match.away, 1);
+      } else if (matchResult.result === '2') {
+        this.modifyTeamPoints(match.away, 3);
+      }
+    });
+    this.groups.forEach((group) => group.teams.sort((a, b) => a.points - b.points).reverse());
+  }
+
+  modifyTeamPoints(teamName: string, amount: number): void {
+    this.groups = this.groups.map((group) => {
+      return {
+        name: group.name,
+        teams: group.teams.map((team) => {
+          if (team.name === teamName) {
+            return { name: team.name, points: team.points + amount };
+          }
+          return { ...team };
+        }),
+      };
+    });
   }
 
   startCountdown(): void {
@@ -96,5 +137,18 @@ export class MmKisatComponent implements OnInit {
 
   hasTournamentStarted(): boolean {
     return isAfter(new Date(), this.tournament.startingDate);
+  }
+
+  arePredictionsCorrect(id: number, value: Result): string {
+    const index = this.userPredictions.findIndex((result) => result.id === id);
+    if (this.results[index].result === null) {
+      return '';
+    } else if (this.results[index].result === this.userPredictions[index].result && this.userPredictions[index].result === value) {
+      return '#42FF5A';
+    } else if (this.results[index].result !== this.userPredictions[index].result && this.userPredictions[index].result === value) {
+      return 'red';
+    } else {
+      return '';
+    }
   }
 }

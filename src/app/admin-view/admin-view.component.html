@@ -5,7 +5,8 @@
       <span class="date">{{ match.date | date: 'dd.MM.yyyy' }}</span> <mat-icon>schedule</mat-icon> <span>{{ match.date | date: 'HH:mm' }}</span>
     </span>
     <span>
-      <mat-button-toggle-group (change)="saveResult(match.id, $event.value)">
+      <mat-button-toggle-group (change)="saveResult(match.id, $event.value)"
+                               [value]="isSet(match.id)">
         <mat-button-toggle value="1">1</mat-button-toggle>
         <mat-button-toggle value="X">X</mat-button-toggle>
         <mat-button-toggle value="2">2</mat-button-toggle>

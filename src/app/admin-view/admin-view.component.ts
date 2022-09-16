@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Match, MatchResult, Result, tournament, TournamentWithGroups } from '../constants';
 import { UserService } from '../user.service';
 import { isBefore } from 'date-fns';
@@ -8,10 +8,11 @@ import { isBefore } from 'date-fns';
   templateUrl: './admin-view.component.html',
   styleUrls: ['./admin-view.component.scss'],
 })
-export class AdminViewComponent implements OnInit {
+export class AdminViewComponent {
   results: MatchResult[];
   tournament: TournamentWithGroups = tournament;
   matches: Match[];
+  userPredictions: MatchResult[] = [];
 
   constructor(public userService: UserService) {
     const matches = this.tournament.groups.flatMap((group) => group.matches);
@@ -26,12 +27,29 @@ export class AdminViewComponent implements OnInit {
         return 1;
       }
     });
+    this.initializeUserPredictions();
+  }
+
+  initializeUserPredictions(): void {
+    if (localStorage.getItem('result')) {
+      this.userPredictions = JSON.parse(localStorage.getItem('result')!);
+    } else {
+      const matches = this.tournament.groups.flatMap((group) => group.matches);
+      this.userPredictions = matches.map((match) => {
+        return { id: match.id, result: null };
+      });
+    }
   }
 
   saveResult(id: number, result: Result): void {
-    const index = this.results.findIndex((result) => result.id === id);
-    this.results[index] = { id, result };
+    const index = this.userPredictions.findIndex((result) => result.id === id);
+    this.userPredictions[index] = { id, result };
+    localStorage.setItem('result', JSON.stringify(this.userPredictions));
   }
 
-  ngOnInit(): void {}
+  isSet(id: number): Result {
+    const index = this.userPredictions.findIndex((result) => result.id === id);
+    console.log(index);
+    return this.userPredictions[index].result;
+  }
 }
