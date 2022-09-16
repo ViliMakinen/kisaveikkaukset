@@ -39,14 +39,14 @@ export class MmKisatComponent implements OnInit {
 
   initializeUserPredictions(): void {
     if (localStorage.getItem(this.userService.user?.firstName + 'predictions')) {
-      this.userPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'predictions')!);;
+      this.userPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'predictions')!);
     } else {
       const matches = this.tournament.groups.flatMap((group) => group.matches);
       this.userPredictions = matches.map((match) => {
         return { id: match.id, result: null };
       });
     }
-    console.log(this.userPredictions;);
+    console.log(this.userPredictions);
   }
 
   startCountdown(): void {
