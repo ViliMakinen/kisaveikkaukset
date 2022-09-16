@@ -49,7 +49,7 @@
             <span class="date">{{ match.date | date: 'dd.MM.yyyy' }}</span> <mat-icon>schedule</mat-icon> <span>{{ match.date | date: 'HH:mm' }}</span>
           </span>
           <span>
-            <mat-button-toggle-group (change)="saveResult(match.id, $event.value)"
+            <mat-button-toggle-group (change)="savePrediction(match.id, $event.value)" [value]="isSelected(match.id)"
                                      [disabled]="userService.arePredictionsLocked">
               <mat-button-toggle value="1">1</mat-button-toggle>
               <mat-button-toggle value="X">X</mat-button-toggle>
