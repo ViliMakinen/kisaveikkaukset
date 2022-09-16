@@ -11,6 +11,7 @@ export interface Group {
 export interface MockUser {
   name: string;
   points: number;
+  admin: boolean;
 }
 
 export interface Match {
@@ -78,22 +79,27 @@ export const users: MockUser[] = [
   {
     name: 'aapo',
     points: 15,
+    admin: true,
   },
   {
     name: 'viltsu',
     points: 16,
+    admin: true,
   },
   {
     name: 'osku',
     points: 10,
+    admin: true,
   },
   {
     name: 'elmo',
     points: 9,
+    admin: true,
   },
   {
     name: 'matti',
     points: 6,
+    admin: true,
   },
 ];
 export const loginCode = 'a';

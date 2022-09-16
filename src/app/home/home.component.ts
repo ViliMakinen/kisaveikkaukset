@@ -14,7 +14,7 @@ export class HomeComponent {
 
   constructor(public userService: UserService) {
     this.mockUsers = this.mockUsers.map((user) => {
-      return { name: user.name, points: user.points };
+      return { name: user.name, points: user.points, admin: user.admin };
     });
     this.mockUsers.sort((a, b) => a.points - b.points).reverse();
     this.mockGames = this.mockGames.map((game) => {

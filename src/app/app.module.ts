@@ -25,20 +25,21 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { AuthPageComponent } from './auth-page/auth-page.component';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
-import {MatTooltipModule} from '@angular/material/tooltip';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AdminViewComponent } from './admin-view/admin-view.component';
 
 const routes: Routes = [
   { path: '', component: LogInComponent },
-  { path: 'home', component: HomeComponent},
+  { path: 'home', component: HomeComponent },
   { path: 'MM-kisat-2022', component: MmKisatComponent },
   { path: 'create-group', component: CreateGroupComponent, canActivate: [AuthGuard] },
   { path: 'authorization', component: AuthPageComponent, canActivate: [LoginGuard] },
+  { path: 'admin-view', component: AdminViewComponent },
   { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SideNavigationComponent, LogInComponent, MmKisatComponent, CreateGroupComponent, AuthPageComponent],
+  declarations: [AppComponent, HomeComponent, SideNavigationComponent, LogInComponent, MmKisatComponent, CreateGroupComponent, AuthPageComponent, AdminViewComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
