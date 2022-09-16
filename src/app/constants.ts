@@ -36,41 +36,58 @@ export interface Team {
   points: number;
 }
 
+export interface Weighting {
+  homeWin: number;
+  tie: number;
+  awayWin: number;
+}
+
 export interface MockGame {
   home: string;
   away: string;
+  weightings: Weighting;
   date: Date;
 }
 
 export const games: MockGame[] = [
   {
-    home: 'suomi',
-    away: 'ruotsi',
+    home: 'Suomi',
+    away: 'Ruotsi',
+    weightings: {
+      homeWin: 30,
+      tie: 25,
+      awayWin: 45,
+    },
     date: new Date('2022-11-19T19:00:00'),
   },
   {
-    home: 'suomi',
-    away: 'ruotsi',
+    home: 'Suomi',
+    away: 'Ruotsi',
+    weightings: {
+      homeWin: 60,
+      tie: 30,
+      awayWin: 10,
+    },
     date: new Date('2022-11-19T19:00:00'),
   },
   {
-    home: 'suomi',
-    away: 'ruotsi',
+    home: 'Suomi',
+    away: 'Ruotsi',
+    weightings: {
+      homeWin: 55,
+      tie: 25,
+      awayWin: 20,
+    },
     date: new Date('2022-11-19T19:00:00'),
   },
   {
-    home: 'suomi',
-    away: 'ruotsi',
-    date: new Date('2022-11-19T19:00:00'),
-  },
-  {
-    home: 'suomi',
-    away: 'ruotsi',
-    date: new Date('2022-11-19T19:00:00'),
-  },
-  {
-    home: 'suomi',
-    away: 'ruotsi',
+    home: 'Suomi',
+    away: 'Ruotsi',
+    weightings: {
+      homeWin: 30,
+      tie: 35,
+      awayWin: 35,
+    },
     date: new Date('2022-11-19T19:00:00'),
   },
 ];
