@@ -26,7 +26,7 @@ export class MmKisatComponent implements OnInit {
       return {
         name: group.name,
         teams: uniqueTeams.map((team) => {
-          return { name: team, points: 0 };
+          return { name: team, points: 0, predictedPoints: 0 };
         }),
       };
     });
@@ -48,6 +48,24 @@ export class MmKisatComponent implements OnInit {
         return { id: match.id, result: null };
       });
     }
+    this.updateUserPredictions();
+  }
+
+  updateUserPredictions(): void {
+    const matches = this.tournament.groups.flatMap((group) => group.matches);
+
+    this.userPredictions.forEach((matchResult) => {
+      const match = matches.find((match) => match.id === matchResult.id)!;
+      if (matchResult.result === '1') {
+        this.modifyTeamPoints(match.home, 3);
+      } else if (matchResult.result === 'X') {
+        this.modifyTeamPoints(match.home, 1);
+        this.modifyTeamPoints(match.away, 1);
+      } else if (matchResult.result === '2') {
+        this.modifyTeamPoints(match.away, 3);
+      }
+    });
+    this.groups.forEach((group) => group.teams.sort((a, b) => a.predictedPoints - b.predictedPoints).reverse());
   }
 
   initializeResults(): void {
@@ -59,21 +77,6 @@ export class MmKisatComponent implements OnInit {
         return { id: match.id, result: null };
       });
     }
-
-    const matches = this.tournament.groups.flatMap((group) => group.matches);
-
-    this.results.forEach((matchResult) => {
-      const match = matches.find((match) => match.id === matchResult.id)!;
-      if (matchResult.result === '1') {
-        this.modifyTeamPoints(match.home, 3);
-      } else if (matchResult.result === 'X') {
-        this.modifyTeamPoints(match.home, 1);
-        this.modifyTeamPoints(match.away, 1);
-      } else if (matchResult.result === '2') {
-        this.modifyTeamPoints(match.away, 3);
-      }
-    });
-    this.groups.forEach((group) => group.teams.sort((a, b) => a.points - b.points).reverse());
   }
 
   modifyTeamPoints(teamName: string, amount: number): void {
@@ -82,7 +85,7 @@ export class MmKisatComponent implements OnInit {
         name: group.name,
         teams: group.teams.map((team) => {
           if (team.name === teamName) {
-            return { name: team.name, points: team.points + amount };
+            return { ...team, predictedPoints: team.predictedPoints + amount };
           }
           return { ...team };
         }),
@@ -110,6 +113,8 @@ export class MmKisatComponent implements OnInit {
     const index = this.userPredictions.findIndex((result) => result.id === id);
     this.userPredictions[index] = { id, result };
     localStorage.setItem(this.userService.user?.firstName + 'predictions', JSON.stringify(this.userPredictions));
+    this.resetUserPredictions();
+    this.updateUserPredictions();
   }
 
   isSelected(id: number): Result {
@@ -150,5 +155,16 @@ export class MmKisatComponent implements OnInit {
     } else {
       return '';
     }
+  }
+
+  private resetUserPredictions(): void {
+    this.groups = this.groups.map((group) => {
+      return {
+        ...group,
+        teams: group.teams.map((team) => {
+          return { ...team, predictedPoints: 0 };
+        }),
+      };
+    });
   }
 }

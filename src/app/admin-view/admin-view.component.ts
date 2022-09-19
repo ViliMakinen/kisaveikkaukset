@@ -49,7 +49,6 @@ export class AdminViewComponent {
 
   isSet(id: number): Result {
     const index = this.userPredictions.findIndex((result) => result.id === id);
-    console.log(index);
     return this.userPredictions[index].result;
   }
 }

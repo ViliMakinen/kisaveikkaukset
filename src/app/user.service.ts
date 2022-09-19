@@ -8,4 +8,5 @@ export class UserService {
   user: SocialUser | null = null;
   arePredictionsLocked: boolean = false;
   codeValidity: boolean = false;
+  points: number = 0;
 }

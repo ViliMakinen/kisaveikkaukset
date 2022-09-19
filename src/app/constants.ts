@@ -3,6 +3,7 @@ export interface TournamentWithGroups {
   groups: Group[];
   startingDate: Date;
 }
+
 export interface Group {
   name: string;
   matches: Match[];
@@ -20,10 +21,17 @@ export interface Match {
   date: Date;
   id: number;
 }
+
 export interface MatchResult {
   id: number;
   result: Result;
 }
+
+export interface MatchPrediction {
+  id: number;
+  result: Result;
+}
+
 export type Result = '1' | 'X' | '2' | null;
 
 export interface GroupStanding {
@@ -34,6 +42,7 @@ export interface GroupStanding {
 export interface Team {
   name: string;
   points: number;
+  predictedPoints: number;
 }
 
 export interface Weighting {

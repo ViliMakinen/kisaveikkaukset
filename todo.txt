@@ -22,20 +22,28 @@
 
 // 10. Create a countdown timer for tournament starting day.
 
-   11. Create a 'final' data structure for users predictions and create it dynamically as the user changes the predictions.
+//   11. Create a 'final' data structure for users predictions and create it dynamically as the user changes the predictions.
 
-   12. Create a system to change the toggle button border colors according to actual results.
+//   12. Create a system to change the toggle button background colors according to actual results.
 
-   13. Create admin user to set results.
+//   13. Create admin user to set results.
 
-// 14. Create a standings table on the front page with a button to link you to the predictions section.
+//   14. Create a standings table on the front page with a button to link you to the predictions section.
         -Update interval
 
    15. Change color theme to dark.
 
-   16. Update the team standing in groups according to actual results (either to front page or predictions page).
+//   16. Update the team standing in groups according to actual results (either to front page or predictions page).
 
-   17.Today's matches with odd weightings based on predictions
+     17. Get flags of countries to assets and show them in HTML
+
+//   18. Create system to update user points based on correct predictions.
+
+//   19. Change results standings to homepage.
+
+//   20. Change predictions page standings to reflect user predictions.
+
+     21. Configure renovate bot.
 
 
 
