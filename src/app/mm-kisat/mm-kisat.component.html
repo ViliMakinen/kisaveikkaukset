@@ -51,9 +51,12 @@
           <span>
             <mat-button-toggle-group (change)="savePrediction(match.id, $event.value)" [value]="isSelected(match.id)"
                                      [disabled]="userService.arePredictionsLocked">
-              <mat-button-toggle value="1">1</mat-button-toggle>
-              <mat-button-toggle value="X">X</mat-button-toggle>
-              <mat-button-toggle value="2">2</mat-button-toggle>
+              <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')"
+                                 value="1">1</mat-button-toggle>
+              <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')"
+                                 value="X">X</mat-button-toggle>
+              <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')"
+                                 value="2">2</mat-button-toggle>
             </mat-button-toggle-group>
           </span>
         </div>
