@@ -75,7 +75,8 @@
               "browserTarget": "kisaveikkaukset:build:production"
             },
             "development": {
-              "browserTarget": "kisaveikkaukset:build:development"
+              "browserTarget": "kisaveikkaukset:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

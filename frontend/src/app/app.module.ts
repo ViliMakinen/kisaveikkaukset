@@ -27,6 +27,7 @@ import { AuthPageComponent } from './auth-page/auth-page.component';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AdminViewComponent } from './admin-view/admin-view.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', component: LogInComponent },
@@ -59,6 +60,7 @@ const routes: Routes = [
     MatButtonToggleModule,
     SocialLoginModule,
     MatTooltipModule,
+    HttpClientModule,
   ],
   providers: [
     {

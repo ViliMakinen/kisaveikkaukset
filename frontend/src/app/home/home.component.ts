@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { isBefore, isSameDay } from 'date-fns';
-import { GroupStanding, Match, MatchResult, MockUser, tournament, TournamentWithGroups, users } from '../constants';
+import { GroupStanding, Match, MatchResult, MockUser, tournament, TournamentWithGroups } from '../constants';
 import { UserService } from '../user.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +14,10 @@ export class HomeComponent {
   groups: GroupStanding[];
   tournament: TournamentWithGroups = tournament;
   results: MatchResult[] = [];
-  mockUsers: MockUser[] = users;
+  mockUsers$: Observable<MockUser[]> = this.userService.getUsers();
   today = new Date();
   gamesToday: Match[] = [];
+  actualUsers: any = null;
 
   constructor(public userService: UserService) {
     this.groups = this.tournament.groups.map((group) => {
@@ -30,7 +32,6 @@ export class HomeComponent {
     });
     this.initializeUserPredictions();
     this.initializeResults();
-    this.mockUsers.sort((a, b) => a.points - b.points).reverse();
     this.getGamesToday();
     this.calculateUserPoints();
   }
@@ -110,5 +111,9 @@ export class HomeComponent {
         }),
       };
     });
+  }
+
+  sortUsers(mockUsers: MockUser[]): MockUser[] {
+    return mockUsers.sort((a, b) => a.points - b.points).reverse();
   }
 }
