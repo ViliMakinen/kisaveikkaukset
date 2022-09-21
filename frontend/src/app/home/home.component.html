@@ -12,12 +12,17 @@
         Pistetilanne
         <mat-icon matTooltip="Viimeksi päivitetty: x">update</mat-icon>
       </div>
-      <ng-container *ngIf="mockUsers$ | async as mockUsers">
+      <ng-container *ngIf="mockUsers$ | async as mockUsers ; else elseBlock">
         <div *ngFor="let user of sortUsers(mockUsers)" class="standings-row-container">
           <span class="standings-row-box">{{ user.name }}</span>
           <span class="standings-row-box">{{ user.points }}</span>
         </div>
       </ng-container>
+      <ng-template #elseBlock>
+        <div class="loading-container">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-template>
     </div>
     <div class="games-today-container">
       <div class="games-today-title-container">

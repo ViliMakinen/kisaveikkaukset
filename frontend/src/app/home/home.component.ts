@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { isBefore, isSameDay } from 'date-fns';
-import { GroupStanding, Match, MatchResult, MockUser, tournament, TournamentWithGroups } from '../constants';
-import { UserService } from '../user.service';
-import { Observable } from 'rxjs';
+import {Component} from '@angular/core';
+import {isBefore, isSameDay} from 'date-fns';
+import {GroupStanding, Match, MatchResult, MockUser, TournamentWithGroups} from '../constants';
+import {UserService} from '../user.service';
+import {Observable} from 'rxjs';
+import {TournamentService} from "../tournament.service";
 
 @Component({
   selector: 'app-home',
@@ -12,21 +13,21 @@ import { Observable } from 'rxjs';
 export class HomeComponent {
   userPredictions: MatchResult[] = [];
   groups: GroupStanding[];
-  tournament: TournamentWithGroups = tournament;
+  tournament: Observable<TournamentWithGroups> = this.tournamentService.getTournament();
   results: MatchResult[] = [];
   mockUsers$: Observable<MockUser[]> = this.userService.getUsers();
   today = new Date();
   gamesToday: Match[] = [];
   actualUsers: any = null;
 
-  constructor(public userService: UserService) {
+  constructor(public userService: UserService, private tournamentService: TournamentService) {
     this.groups = this.tournament.groups.map((group) => {
       const teams = group.matches.map((match) => match.away);
       const uniqueTeams = [...new Set(teams)];
       return {
         name: group.name,
         teams: uniqueTeams.map((team) => {
-          return { name: team, points: 0, predictedPoints: 0 };
+          return {name: team, points: 0, predictedPoints: 0};
         }),
       };
     });
