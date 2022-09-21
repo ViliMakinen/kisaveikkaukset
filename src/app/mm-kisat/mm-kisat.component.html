@@ -62,11 +62,12 @@
         </div>
       </div>
       <div class="group-container">
+        <h1>Lohkotilanne veikkauksiesi mukaan</h1>
         <div class="group-title-container"><span class="text-margin">Joukkue</span><span
           class="text-margin">Pisteet</span></div>
         <div *ngFor="let team of getGroup(group.name).teams" class="group-row">
           <span class="row-box">{{ team.name }}</span>
-          <span class="row-box">{{ team.points }}</span>
+          <span class="row-box">{{ team.predictedPoints }}</span>
         </div>
       </div>
     </mat-tab>
