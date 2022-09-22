@@ -1,7 +1,7 @@
-import { UserService } from '../user.service';
-import { Component, OnInit } from '@angular/core';
-import { GroupStanding, MatchResult, Result, tournament, TournamentWithGroups } from '../constants';
-import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter } from 'date-fns';
+import {UserService} from '../user.service';
+import {Component, OnInit} from '@angular/core';
+import {GroupStanding, MatchResult, Result, tournament, TournamentWithGroups} from '../constants';
+import {differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter} from 'date-fns';
 
 @Component({
   selector: 'app-mm-kisat',
@@ -26,7 +26,7 @@ export class MmKisatComponent implements OnInit {
       return {
         name: group.name,
         teams: uniqueTeams.map((team) => {
-          return { name: team, points: 0, predictedPoints: 0 };
+          return {name: team, points: 0, predictedPoints: 0, ID: ''};
         }),
       };
     });

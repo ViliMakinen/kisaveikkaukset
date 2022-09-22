@@ -5,6 +5,7 @@ import {UserService} from '../user.service';
 import {Observable} from 'rxjs';
 import {TournamentService} from "../tournament.service";
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,8 +13,9 @@ import {TournamentService} from "../tournament.service";
 })
 export class HomeComponent {
   userPredictions: MatchResult[] = [];
-  groups: GroupStanding[];
-  tournament: Observable<TournamentWithGroups> = this.tournamentService.getTournament();
+  groups: GroupStanding[] = [];
+  tournament$: Observable<TournamentWithGroups> = this.tournamentService.getTournament();
+  tournament: TournamentWithGroups | null = null;
   results: MatchResult[] = [];
   mockUsers$: Observable<MockUser[]> = this.userService.getUsers();
   today = new Date();
@@ -21,27 +23,17 @@ export class HomeComponent {
   actualUsers: any = null;
 
   constructor(public userService: UserService, private tournamentService: TournamentService) {
-    this.groups = this.tournament.groups.map((group) => {
-      const teams = group.matches.map((match) => match.away);
-      const uniqueTeams = [...new Set(teams)];
-      return {
-        name: group.name,
-        teams: uniqueTeams.map((team) => {
-          return {name: team, points: 0, predictedPoints: 0};
-        }),
-      };
-    });
-    this.initializeUserPredictions();
-    this.initializeResults();
-    this.getGamesToday();
-    this.calculateUserPoints();
+    this.tournament$.subscribe(tournament1 => {
+      this.tournament = tournament1;
+      this.initializeEVERYTHING()
+    })
   }
 
   initializeUserPredictions(): void {
     if (localStorage.getItem(this.userService.user?.firstName + 'predictions')) {
       this.userPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'predictions')!);
     } else {
-      const matches = this.tournament.groups.flatMap((group) => group.matches);
+      const matches = this.tournament!.groups.flatMap((group) => group.matches);
       this.userPredictions = matches.map((match) => {
         return { id: match.id, result: null };
       });
@@ -49,7 +41,7 @@ export class HomeComponent {
   }
 
   getGamesToday(): void {
-    this.gamesToday = this.tournament.groups.flatMap((group) => group.matches).filter((match) => isSameDay(match.date, new Date('2022-11-21T19:00:00')));
+    this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) => isSameDay(match.date, new Date('2022-11-21T19:00:00')));
     this.gamesToday.sort((a, b) => {
       if (isBefore(a.date, b.date)) {
         return -1;
@@ -66,7 +58,7 @@ export class HomeComponent {
   }
 
   calculateUserPoints(): void {
-    const matches = this.tournament.groups.flatMap((group) => group.matches);
+    const matches = this.tournament!.groups.flatMap((group) => group.matches);
     matches.forEach((match) => {
       if (this.results[match.id - 1].result === this.userPredictions[match.id - 1].result && this.userPredictions[match.id - 1].result !== null) {
         this.userService.points++;
@@ -78,13 +70,13 @@ export class HomeComponent {
     if (localStorage.getItem('result')) {
       this.results = JSON.parse(localStorage.getItem('result')!);
     } else {
-      const matches = this.tournament.groups.flatMap((group) => group.matches);
+      const matches = this.tournament!.groups.flatMap((group) => group.matches);
       this.results = matches.map((match) => {
         return { id: match.id, result: null };
       });
     }
 
-    const matches = this.tournament.groups.flatMap((group) => group.matches);
+    const matches = this.tournament!.groups.flatMap((group) => group.matches);
 
     this.results.forEach((matchResult) => {
       const match = matches.find((match) => match.id === matchResult.id)!;
@@ -108,7 +100,7 @@ export class HomeComponent {
           if (team.name === teamName) {
             return { ...team, points: team.points + amount };
           }
-          return { ...team };
+          return {...team};
         }),
       };
     });
@@ -116,5 +108,22 @@ export class HomeComponent {
 
   sortUsers(mockUsers: MockUser[]): MockUser[] {
     return mockUsers.sort((a, b) => a.points - b.points).reverse();
+  }
+
+  private initializeEVERYTHING() {
+    this.groups = this.tournament!.groups.map((group) => {
+      const teams = group.matches.map((match) => match.away);
+      const uniqueTeams = [...new Set(teams)];
+      return {
+        name: group.name,
+        teams: uniqueTeams.map((team) => {
+          return {name: team, points: 0, predictedPoints: 0, ID: ''};
+        }),
+      };
+    });
+    this.initializeUserPredictions();
+    this.initializeResults();
+    this.getGamesToday();
+    this.calculateUserPoints();
   }
 }

@@ -337,7 +337,7 @@ const tournament: TournamentWithGroups = {
     startingDate: new Date('2022-11-19T19:00:00+02:00'),
 };
 
-@Controller('tournaments')
+@Controller('tournament')
 export class TournamentsController {
 
     @Get()

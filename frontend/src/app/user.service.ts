@@ -16,7 +16,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<MockUser[]> {
-    return this.http.get<MockUser[]>('api').pipe(delay(1000));
+    return this.http.get<MockUser[]>('api/users').pipe(delay(1000));
   }
 
 

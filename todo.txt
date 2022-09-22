@@ -55,9 +55,9 @@
 
      26. Make sure to align stuff even when the loading container is active.
 
-     27. Create service for tournament.
+//    27. Create service for tournament.
 
-     28. Separate controllers and make them respond to their corresponding routes.
+//    28. Separate controllers and make them respond to their corresponding routes.
 
 ...
 ...

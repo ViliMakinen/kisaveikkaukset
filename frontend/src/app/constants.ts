@@ -38,6 +38,7 @@ export interface Team {
   name: string;
   points: number;
   predictedPoints: number;
+  ID: string;
 }
 
 export const loginCode = 'a';
