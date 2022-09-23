@@ -45,7 +45,7 @@
         <div class="group-container">
           <div class="group-title-container"><span class="text-margin">Joukkue</span><span
             class="text-margin">Pisteet</span></div>
-          <div *ngFor="let team of getGroup(group.name).teams" class="group-row">
+          <div *ngFor="let team of group.teams" class="group-row">
             <span class="row-box">{{ team.name }}</span>
             <span class="row-box">{{ team.points }}</span>
           </div>

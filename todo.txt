@@ -45,7 +45,7 @@
 
      21. Configure renovate bot.
 
-     22. Swap games from frontend to backend.
+//     22. Swap games from frontend to backend.
 
      23. Swap results to backend.
 

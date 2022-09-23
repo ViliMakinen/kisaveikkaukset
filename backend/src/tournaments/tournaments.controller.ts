@@ -1,9 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
-import { TournamentWithGroups } from '../../constants';
+import { MatchResult, Tournament, TournamentWithResults } from '../../constants';
 import { Observable, of } from 'rxjs';
 
-const tournament: TournamentWithGroups = {
+const tournament: Tournament = {
   name: 'MM-kisat',
+  startingDate: new Date('2022-11-19T19:00:00+02:00'),
   groups: [
     {
       name: 'A',
@@ -44,6 +45,12 @@ const tournament: TournamentWithGroups = {
           date: new Date('2022-11-29T18:00:00'),
           id: 6,
         },
+      ],
+      teams: [
+        { name: 'Qatar', points: 0, predictedPoints: 0 },
+        { name: 'Ecuador', points: 0, predictedPoints: 0 },
+        { name: 'Senegal', points: 0, predictedPoints: 0 },
+        { name: 'Hollanti', points: 0, predictedPoints: 0 },
       ],
     },
     {
@@ -86,6 +93,12 @@ const tournament: TournamentWithGroups = {
           id: 12,
         },
       ],
+      teams: [
+        { name: 'Englanti', points: 0, predictedPoints: 0 },
+        { name: 'Iran', points: 0, predictedPoints: 0 },
+        { name: 'Usa', points: 0, predictedPoints: 0 },
+        { name: 'Wales', points: 0, predictedPoints: 0 },
+      ],
     },
     {
       name: 'C',
@@ -126,6 +139,12 @@ const tournament: TournamentWithGroups = {
           date: new Date('2022-11-30T22:00:00'),
           id: 18,
         },
+      ],
+      teams: [
+        { name: 'Argentina', points: 0, predictedPoints: 0 },
+        { name: 'Saudi Arabia', points: 0, predictedPoints: 0 },
+        { name: 'Meksiko', points: 0, predictedPoints: 0 },
+        { name: 'Puola', points: 0, predictedPoints: 0 },
       ],
     },
     {
@@ -168,6 +187,12 @@ const tournament: TournamentWithGroups = {
           id: 24,
         },
       ],
+      teams: [
+        { name: 'Ranska', points: 0, predictedPoints: 0 },
+        { name: 'Tanska', points: 0, predictedPoints: 0 },
+        { name: 'Tunisia', points: 0, predictedPoints: 0 },
+        { name: 'Australia', points: 0, predictedPoints: 0 },
+      ],
     },
     {
       name: 'E',
@@ -208,6 +233,12 @@ const tournament: TournamentWithGroups = {
           date: new Date('2022-12-01T22:00:00'),
           id: 30,
         },
+      ],
+      teams: [
+        { name: 'Espanja', points: 0, predictedPoints: 0 },
+        { name: 'Saksa', points: 0, predictedPoints: 0 },
+        { name: 'Japani', points: 0, predictedPoints: 0 },
+        { name: 'Costa Rica', points: 0, predictedPoints: 0 },
       ],
     },
     {
@@ -250,6 +281,12 @@ const tournament: TournamentWithGroups = {
           id: 36,
         },
       ],
+      teams: [
+        { name: 'Belgia', points: 0, predictedPoints: 0 },
+        { name: 'Kanada', points: 0, predictedPoints: 0 },
+        { name: 'Marokko', points: 0, predictedPoints: 0 },
+        { name: 'Kroatia', points: 0, predictedPoints: 0 },
+      ],
     },
     {
       name: 'G',
@@ -290,6 +327,12 @@ const tournament: TournamentWithGroups = {
           date: new Date('2022-12-02T22:00:00'),
           id: 42,
         },
+      ],
+      teams: [
+        { name: 'Brasilia', points: 0, predictedPoints: 0 },
+        { name: 'Serbia', points: 0, predictedPoints: 0 },
+        { name: 'Sveitsi', points: 0, predictedPoints: 0 },
+        { name: 'Kamerun', points: 0, predictedPoints: 0 },
       ],
     },
     {
@@ -332,16 +375,214 @@ const tournament: TournamentWithGroups = {
           id: 48,
         },
       ],
+      teams: [
+        { name: 'Portugali', points: 0, predictedPoints: 0 },
+        { name: 'Ghana', points: 0, predictedPoints: 0 },
+        { name: 'Uruguay', points: 0, predictedPoints: 0 },
+        { name: 'Etelä-Korea', points: 0, predictedPoints: 0 },
+      ],
     },
   ],
-  startingDate: new Date('2022-11-19T19:00:00+02:00'),
 };
+const results: MatchResult[] = [
+  {
+    id: 1,
+    result: '1',
+  },
+  {
+    id: 2,
+    result: 'X',
+  },
+  {
+    id: 3,
+    result: '2',
+  },
+  {
+    id: 4,
+    result: '1',
+  },
+  {
+    id: 5,
+    result: '1',
+  },
+  {
+    id: 6,
+    result: 'X',
+  },
+  {
+    id: 7,
+    result: '2',
+  },
+  {
+    id: 8,
+    result: '1',
+  },
+  {
+    id: 9,
+    result: 'X',
+  },
+  {
+    id: 10,
+    result: null,
+  },
+  {
+    id: 11,
+    result: null,
+  },
+  {
+    id: 12,
+    result: null,
+  },
+  {
+    id: 13,
+    result: null,
+  },
+  {
+    id: 14,
+    result: null,
+  },
+  {
+    id: 15,
+    result: null,
+  },
+  {
+    id: 16,
+    result: null,
+  },
+  {
+    id: 17,
+    result: null,
+  },
+  {
+    id: 18,
+    result: null,
+  },
+  {
+    id: 19,
+    result: null,
+  },
+  {
+    id: 20,
+    result: null,
+  },
+  {
+    id: 21,
+    result: null,
+  },
+  {
+    id: 22,
+    result: null,
+  },
+  {
+    id: 23,
+    result: null,
+  },
+  {
+    id: 24,
+    result: null,
+  },
+  {
+    id: 25,
+    result: null,
+  },
+  {
+    id: 26,
+    result: null,
+  },
+  {
+    id: 27,
+    result: null,
+  },
+  {
+    id: 28,
+    result: null,
+  },
+  {
+    id: 29,
+    result: null,
+  },
+  {
+    id: 30,
+    result: null,
+  },
+  {
+    id: 31,
+    result: null,
+  },
+  {
+    id: 32,
+    result: null,
+  },
+  {
+    id: 33,
+    result: null,
+  },
+  {
+    id: 34,
+    result: null,
+  },
+  {
+    id: 35,
+    result: null,
+  },
+  {
+    id: 36,
+    result: null,
+  },
+  {
+    id: 37,
+    result: null,
+  },
+  {
+    id: 38,
+    result: null,
+  },
+  {
+    id: 39,
+    result: null,
+  },
+  {
+    id: 40,
+    result: null,
+  },
+  {
+    id: 41,
+    result: null,
+  },
+  {
+    id: 42,
+    result: null,
+  },
+  {
+    id: 43,
+    result: null,
+  },
+  {
+    id: 44,
+    result: null,
+  },
+  {
+    id: 45,
+    result: null,
+  },
+  {
+    id: 46,
+    result: null,
+  },
+  {
+    id: 47,
+    result: null,
+  },
+  {
+    id: 48,
+    result: null,
+  },
+];
 
 @Controller('tournaments')
 export class TournamentsController {
-
   @Get()
-  getTournament(): Observable<TournamentWithGroups> {
-    return of(tournament);
+  getTournament(): Observable<TournamentWithResults> {
+    return of({ tournament, results });
   }
 }

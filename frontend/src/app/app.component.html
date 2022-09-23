@@ -5,9 +5,9 @@
   <div class="title clickable" routerLink="">Kisaveikkaukset</div>
   <div></div>
 </mat-toolbar>
-<mat-drawer-container class="application-container" hasBackdrop="false">
+<mat-drawer-container class="application-container" hasBackdrop="true">
   <mat-drawer #sidenav autoFocus="false" mode="over">
-    <app-side-navigation></app-side-navigation>
+    <app-side-navigation (closeSidenav)="sidenav.close()"></app-side-navigation>
   </mat-drawer>
   <mat-drawer-content>
     <div class="content">

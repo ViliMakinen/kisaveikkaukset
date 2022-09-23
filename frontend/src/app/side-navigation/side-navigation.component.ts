@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 
@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./side-navigation.component.scss'],
 })
 export class SideNavigationComponent {
+  @Output()
+  closeSidenav = new EventEmitter<void>();
+
   constructor(private router: Router, private userService: UserService) {}
 
   isAdmin(): boolean {
