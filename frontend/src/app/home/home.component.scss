@@ -95,6 +95,12 @@
         background-color: rgb(240, 235, 235);
       }
 
+      .loading-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
       .standings-title-container {
         display: flex;
         align-items: center;

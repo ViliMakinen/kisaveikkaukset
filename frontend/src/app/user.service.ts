@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SocialUser } from '@abacritt/angularx-social-login';
 import { HttpClient } from '@angular/common/http';
-import { delay, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MockUser } from './constants';
 
 @Injectable({
@@ -16,6 +16,6 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<MockUser[]> {
-    return this.http.get<MockUser[]>('api').pipe(delay(1000));
+    return this.http.get<MockUser[]>('api/users');
   }
 }

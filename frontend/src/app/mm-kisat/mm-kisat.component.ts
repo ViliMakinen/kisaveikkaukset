@@ -1,17 +1,19 @@
 import { UserService } from '../user.service';
-import { Component, OnInit } from '@angular/core';
-import { GroupStanding, MatchResult, Result, tournament, TournamentWithGroups } from '../constants';
+import { Component, OnDestroy } from '@angular/core';
+import { MatchResult, Result, Tournament, TournamentWithResults } from '../constants';
 import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter } from 'date-fns';
+import { Observable, Subscription } from 'rxjs';
+import { TournamentService } from '../tournament.service';
 
 @Component({
   selector: 'app-mm-kisat',
   templateUrl: './mm-kisat.component.html',
   styleUrls: ['./mm-kisat.component.scss'],
 })
-export class MmKisatComponent implements OnInit {
+export class MmKisatComponent implements OnDestroy {
   userPredictions: MatchResult[] = [];
-  groups: GroupStanding[];
-  tournament: TournamentWithGroups = tournament;
+  tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournament();
+  tournament: Tournament | null = null;
   results: MatchResult[] = [];
 
   days: number = 0;
@@ -19,31 +21,27 @@ export class MmKisatComponent implements OnInit {
   minutes: number = 0;
   seconds: number = 0;
 
-  constructor(public userService: UserService) {
-    this.groups = this.tournament.groups.map((group) => {
-      const teams = group.matches.map((match) => match.away);
-      const uniqueTeams = [...new Set(teams)];
-      return {
-        name: group.name,
-        teams: uniqueTeams.map((team) => {
-          return { name: team, points: 0, predictedPoints: 0 };
-        }),
-      };
+  private tournamentSubscription: Subscription;
+
+  constructor(public userService: UserService, private tournamentService: TournamentService) {
+    this.tournamentSubscription = this.tournamentWithResults$.subscribe((tournamentWithResults) => {
+      this.tournament = tournamentWithResults.tournament;
+      this.results = tournamentWithResults.results;
+      this.initializeUserPredictions();
+      this.startCountdown();
+      this.calculateCountdownValues();
     });
-    this.initializeUserPredictions();
-    this.initializeResults();
   }
 
-  ngOnInit(): void {
-    this.startCountdown();
-    this.calculateCountdownValues();
+  ngOnDestroy(): void {
+    this.tournamentSubscription.unsubscribe();
   }
 
   initializeUserPredictions(): void {
     if (localStorage.getItem(this.userService.user?.firstName + 'predictions')) {
       this.userPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'predictions')!);
     } else {
-      const matches = this.tournament.groups.flatMap((group) => group.matches);
+      const matches = this.tournament!.groups.flatMap((group) => group.matches);
       this.userPredictions = matches.map((match) => {
         return { id: match.id, result: null };
       });
@@ -52,7 +50,7 @@ export class MmKisatComponent implements OnInit {
   }
 
   updateUserPredictions(): void {
-    const matches = this.tournament.groups.flatMap((group) => group.matches);
+    const matches = this.tournament!.groups.flatMap((group) => group.matches);
 
     this.userPredictions.forEach((matchResult) => {
       const match = matches.find((match) => match.id === matchResult.id)!;
@@ -65,24 +63,13 @@ export class MmKisatComponent implements OnInit {
         this.modifyTeamPoints(match.away, 3);
       }
     });
-    this.groups.forEach((group) => group.teams.sort((a, b) => a.predictedPoints - b.predictedPoints).reverse());
-  }
-
-  initializeResults(): void {
-    if (localStorage.getItem('result')) {
-      this.results = JSON.parse(localStorage.getItem('result')!);
-    } else {
-      const matches = this.tournament.groups.flatMap((group) => group.matches);
-      this.results = matches.map((match) => {
-        return { id: match.id, result: null };
-      });
-    }
+    this.tournament!.groups.forEach((group) => group.teams.sort((a, b) => a.predictedPoints - b.predictedPoints).reverse());
   }
 
   modifyTeamPoints(teamName: string, amount: number): void {
-    this.groups = this.groups.map((group) => {
+    this.tournament!.groups = this.tournament!.groups.map((group) => {
       return {
-        name: group.name,
+        ...group,
         teams: group.teams.map((team) => {
           if (team.name === teamName) {
             return { ...team, predictedPoints: team.predictedPoints + amount };
@@ -99,10 +86,10 @@ export class MmKisatComponent implements OnInit {
 
   calculateCountdownValues(): void {
     const now = new Date();
-    this.days = Math.floor(differenceInDays(tournament.startingDate, now));
-    this.hours = Math.floor(differenceInHours(tournament.startingDate, now) % 24);
-    this.minutes = Math.floor(differenceInMinutes(tournament.startingDate, now) - this.days * 24 * 60 - this.hours * 60);
-    this.seconds = Math.floor(differenceInSeconds(tournament.startingDate, now) - this.days * 24 * 60 * 60 - this.hours * 60 * 60 - this.minutes * 60);
+    this.days = Math.floor(differenceInDays(this.tournament!.startingDate, now));
+    this.hours = Math.floor(differenceInHours(this.tournament!.startingDate, now) % 24);
+    this.minutes = Math.floor(differenceInMinutes(this.tournament!.startingDate, now) - this.days * 24 * 60 - this.hours * 60);
+    this.seconds = Math.floor(differenceInSeconds(this.tournament!.startingDate, now) - this.days * 24 * 60 * 60 - this.hours * 60 * 60 - this.minutes * 60);
   }
 
   arePredictionsIncomplete(): boolean {
@@ -122,10 +109,6 @@ export class MmKisatComponent implements OnInit {
     return this.userPredictions[index].result;
   }
 
-  getGroup(groupName: string): GroupStanding {
-    return this.groups.find((group) => group.name === groupName)!;
-  }
-
   lockPredictions(): void {
     this.userService.arePredictionsLocked = true;
   }
@@ -141,7 +124,7 @@ export class MmKisatComponent implements OnInit {
   }
 
   hasTournamentStarted(): boolean {
-    return isAfter(new Date(), this.tournament.startingDate);
+    return isAfter(new Date(), this.tournament!.startingDate);
   }
 
   arePredictionsCorrect(id: number, value: Result): string {
@@ -158,7 +141,7 @@ export class MmKisatComponent implements OnInit {
   }
 
   private resetUserPredictions(): void {
-    this.groups = this.groups.map((group) => {
+    this.tournament!.groups = this.tournament!.groups.map((group) => {
       return {
         ...group,
         teams: group.teams.map((team) => {

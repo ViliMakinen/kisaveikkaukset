@@ -45,13 +45,25 @@
 
      21. Configure renovate bot.
 
+//     22. Swap games from frontend to backend.
 
+     23. Swap results to backend.
+
+     24. Button to save predictions to backend.
+
+     25. Delete everything related to local storage.
+
+     26. Make sure to align stuff even when the loading container is active.
+
+//    27. Create service for tournament.
+
+//    28. Separate controllers and make them respond to their corresponding routes.
 
 ...
 ...
 ...
 
- - Create a backend (NestJS).
+// - Create a backend (NestJS).
 
  - Create a database (Postgres + Prisma).
 
