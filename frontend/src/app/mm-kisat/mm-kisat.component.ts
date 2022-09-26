@@ -1,7 +1,7 @@
 import { UserService } from '../user.service';
 import { Component, OnDestroy } from '@angular/core';
 import { MatchResult, Result, Tournament, TournamentWithResults } from '../constants';
-import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter } from 'date-fns';
+import { isAfter } from 'date-fns';
 import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 
@@ -16,11 +16,6 @@ export class MmKisatComponent implements OnDestroy {
   tournament: Tournament | null = null;
   results: MatchResult[] = [];
 
-  days: number = 0;
-  hours: number = 0;
-  minutes: number = 0;
-  seconds: number = 0;
-
   private tournamentSubscription: Subscription;
 
   constructor(public userService: UserService, private tournamentService: TournamentService) {
@@ -28,8 +23,6 @@ export class MmKisatComponent implements OnDestroy {
       this.tournament = tournamentWithResults.tournament;
       this.results = tournamentWithResults.results;
       this.initializeUserPredictions();
-      this.startCountdown();
-      this.calculateCountdownValues();
     });
   }
 
@@ -78,18 +71,6 @@ export class MmKisatComponent implements OnDestroy {
         }),
       };
     });
-  }
-
-  startCountdown(): void {
-    setInterval(() => this.calculateCountdownValues(), 1000);
-  }
-
-  calculateCountdownValues(): void {
-    const now = new Date();
-    this.days = Math.floor(differenceInDays(this.tournament!.startingDate, now));
-    this.hours = Math.floor(differenceInHours(this.tournament!.startingDate, now) % 24);
-    this.minutes = Math.floor(differenceInMinutes(this.tournament!.startingDate, now) - this.days * 24 * 60 - this.hours * 60);
-    this.seconds = Math.floor(differenceInSeconds(this.tournament!.startingDate, now) - this.days * 24 * 60 * 60 - this.hours * 60 * 60 - this.minutes * 60);
   }
 
   arePredictionsIncomplete(): boolean {

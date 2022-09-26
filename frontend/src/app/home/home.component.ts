@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { isBefore, isSameDay } from 'date-fns';
+import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter, isBefore, isSameDay } from 'date-fns';
 import { Match, MatchResult, MockUser, Tournament, TournamentWithResults } from '../constants';
 import { UserService } from '../user.service';
 import { Observable, Subscription } from 'rxjs';
@@ -22,12 +22,31 @@ export class HomeComponent implements OnDestroy {
   gamesToday: Match[] = [];
   private tournamentSubscription: Subscription;
 
+  days: number = 0;
+  hours: number = 0;
+  minutes: number = 0;
+  seconds: number = 0;
+
   constructor(public userService: UserService, private tournamentService: TournamentService, private resultsService: ResultService) {
     this.tournamentSubscription = this.tournamentWithResults$.subscribe((tournamentWithResults) => {
       this.tournament = tournamentWithResults.tournament;
       this.results = tournamentWithResults.results;
       this.initializeEverything();
+      this.startCountdown();
+      this.calculateCountdownValues();
     });
+  }
+
+  startCountdown(): void {
+    setInterval(() => this.calculateCountdownValues(), 1000);
+  }
+
+  calculateCountdownValues(): void {
+    const now = new Date();
+    this.days = Math.floor(differenceInDays(this.tournament!.startingDate, now));
+    this.hours = Math.floor(differenceInHours(this.tournament!.startingDate, now) % 24);
+    this.minutes = Math.floor(differenceInMinutes(this.tournament!.startingDate, now) - this.days * 24 * 60 - this.hours * 60);
+    this.seconds = Math.floor(differenceInSeconds(this.tournament!.startingDate, now) - this.days * 24 * 60 * 60 - this.hours * 60 * 60 - this.minutes * 60);
   }
 
   ngOnDestroy(): void {
@@ -94,6 +113,10 @@ export class HomeComponent implements OnDestroy {
 
   sortUsers(mockUsers: MockUser[]): MockUser[] {
     return mockUsers.sort((a, b) => a.points - b.points).reverse();
+  }
+
+  hasTournamentStarted(): boolean {
+    return isAfter(new Date(), this.tournament!.startingDate);
   }
 
   private initializeTodaysGames() {

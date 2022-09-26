@@ -1,6 +1,27 @@
 <ng-container *ngIf="tournament !== null">
   <div class="main-content">
     <div class="title">Tervetuloa kisaveikkauksien pyhättöön !</div>
+    <ng-container *ngIf="!hasTournamentStarted()">
+      <div class="countdown-title">Turnaus alkaa:</div>
+      <div class="countdown-container">
+      <span class="countdown-item">
+        <div>Päivät</div>
+        <div class="value">{{ days }}</div>
+      </span>
+        <span class="countdown-item">
+        <div>Tunnit</div>
+        <div class="value">{{ hours }}</div>
+      </span>
+        <span class="countdown-item">
+        <div>Minuutit</div>
+        <div class="value">{{ minutes }}</div>
+      </span>
+        <span class="countdown-item">
+        <div>Sekunnit</div>
+        <div class="value">{{ seconds }}</div>
+      </span>
+      </div>
+    </ng-container>
     <div class="button-container">
       <button class="clickable button" mat-raised-button routerLink="/MM-kisat-2022">
         <mat-icon>arrow_left</mat-icon>

@@ -21,25 +21,6 @@
         </ng-container>
       </div>
       <mat-divider></mat-divider>
-      <div class="countdown-title">Turnaus alkaa:</div>
-      <div class="countdown-container">
-      <span class="countdown-item">
-        <div class="title">Päivät</div>
-        <div class="value">{{ days }}</div>
-      </span>
-        <span class="countdown-item">
-        <div class="title">Tunnit</div>
-        <div class="value">{{ hours }}</div>
-      </span>
-        <span class="countdown-item">
-        <div class="title">Minuutit</div>
-        <div class="value">{{ minutes }}</div>
-      </span>
-        <span class="countdown-item">
-        <div class="title">Sekunnit</div>
-        <div class="value">{{ seconds }}</div>
-      </span>
-      </div>
     </ng-container>
     <mat-tab-group>
       <mat-tab [label]="group.name" *ngFor="let group of tournament.groups">
