@@ -1,6 +1,26 @@
 .main-content-container {
   max-height: calc(100% - 64px);
 
+  .other-predictions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    height: 40px;
+  }
+
   .group-container {
     margin-top: 50px;
     align-items: center;
@@ -42,13 +62,6 @@
     }
   }
 
-  .title-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    height: 40px;
-  }
 
   .predictions-container {
     display: flex;

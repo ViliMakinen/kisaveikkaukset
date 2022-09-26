@@ -1,4 +1,4 @@
-import { UserService } from './../user.service';
+import { UserService } from '../user.service';
 import { Component } from '@angular/core';
 import { loginCode } from '../constants';
 import { Router } from '@angular/router';
@@ -11,10 +11,7 @@ import { Router } from '@angular/router';
 export class LogInComponent {
   code: string = '';
   groupName: string = '';
-  groupTournament: string = '';
   failMessage: string | null = null;
-
-  availableTournaments: string[] = ['MM-kisat', 'Futsal-liiga', 'SM-liga'];
 
   constructor(private router: Router, private userService: UserService) {}
 

@@ -1,9 +1,9 @@
 import { UserService } from '../user.service';
 import { Component, OnDestroy } from '@angular/core';
-import { MatchResult, Result, Tournament, TournamentWithResults } from '../constants';
-import { isAfter } from 'date-fns';
+import { MatchResult, Result, Team, Tournament, TournamentWithResults } from '../constants';
 import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-mm-kisat',
@@ -15,14 +15,19 @@ export class MmKisatComponent implements OnDestroy {
   tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournament();
   tournament: Tournament | null = null;
   results: MatchResult[] = [];
+  teams: Team[] = [];
+  topFour: string[] = [];
+  topScorer: string = '';
 
   private tournamentSubscription: Subscription;
+  isLinear = true;
 
-  constructor(public userService: UserService, private tournamentService: TournamentService) {
+  constructor(public userService: UserService, private tournamentService: TournamentService, private _formBuilder: FormBuilder) {
     this.tournamentSubscription = this.tournamentWithResults$.subscribe((tournamentWithResults) => {
       this.tournament = tournamentWithResults.tournament;
       this.results = tournamentWithResults.results;
       this.initializeUserPredictions();
+      this.teams = this.tournament.groups.flatMap((group) => group.teams).sort((a, b) => a.name.localeCompare(b.name));
     });
   }
 
@@ -90,24 +95,6 @@ export class MmKisatComponent implements OnDestroy {
     return this.userPredictions[index].result;
   }
 
-  lockPredictions(): void {
-    this.userService.arePredictionsLocked = true;
-  }
-
-  unlockPredictions(): void {
-    this.userService.arePredictionsLocked = false;
-  }
-
-  fillPredictions(): void {
-    this.userPredictions.forEach((result) => {
-      result.result = '1';
-    });
-  }
-
-  hasTournamentStarted(): boolean {
-    return isAfter(new Date(), this.tournament!.startingDate);
-  }
-
   arePredictionsCorrect(id: number, value: Result): string {
     const index = this.userPredictions.findIndex((result) => result.id === id);
     if (this.results[index].result === null) {
@@ -130,5 +117,9 @@ export class MmKisatComponent implements OnDestroy {
         }),
       };
     });
+  }
+
+  ploo() {
+    console.log(this.topFour, this.topScorer);
   }
 }
