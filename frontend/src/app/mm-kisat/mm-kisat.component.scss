@@ -1,6 +1,12 @@
 .main-content-container {
   max-height: calc(100% - 64px);
 
+  .button-info-container {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+  }
+
   .other-predictions-container {
     display: flex;
     justify-content: center;

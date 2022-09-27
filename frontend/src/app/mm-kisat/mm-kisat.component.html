@@ -4,10 +4,14 @@
       {{ tournament.name }}
     </div>
     <mat-stepper [linear]="isLinear" #stepper>
-      <mat-step [completed]="arePredictionsIncomplete()" label="Ottelukohtaiset veikkaukset">
-        <div>
-          <button [disabled]="!arePredictionsIncomplete()" mat-raised-button class="lock-button" matStepperNext>Seuraava</button>
-          <mat-icon matTooltip="Täytä kaikki veikkaukset!">info</mat-icon>
+      <mat-step [completed]="arePredictionsIncomplete()" label="1X2">
+        <div class="button-info-container">
+          <button [disabled]="!arePredictionsIncomplete()" mat-raised-button
+                  class="lock-button" matStepperNext>Seuraava
+          </button>
+          <div class="flex-container" matTooltip="Täytä kaikki veikkaukset!">
+            <img alt="info" src="assets/images/info.svg" />
+          </div>
         </div>
         <mat-tab-group>
           <mat-tab [label]="group.name" *ngFor="let group of groups">
@@ -43,7 +47,7 @@
           </mat-tab>
         </mat-tab-group>
       </mat-step>
-      <mat-step label="Muut turnaukseen liittyvät veikkaukset">
+      <mat-step label="Muut">
         <div class="button-container">
           <button mat-raised-button matStepperPrevious>Takaisin</button>
           <button mat-raised-button matStepperNext>Seuraava</button>
