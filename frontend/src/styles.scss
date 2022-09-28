@@ -15,6 +15,11 @@ body {
   opacity: 75%;
 }
 
+.fade-out {
+  -webkit-animation: fade-out 1s ease-out both;
+  animation: fade-out 1s ease-out both;
+}
+
 .flex-container {
   display: flex;
   justify-content: center;

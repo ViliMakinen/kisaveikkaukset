@@ -57,9 +57,13 @@
 
 //    28. Separate controllers and make them respond to their corresponding routes.
 
-      29. Create a new route called info with information about the application.
+//    29. Create a new route called info with information about the application.
 
-      30. Create object for extraTournamentPredictions
+//    30. Create object for extraTournamentPredictions
+
+//    31. Info balls for other predictions
+
+//    32. Button to home to mirror veikkauksiin button
 
 ...
 ...
