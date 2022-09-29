@@ -146,6 +146,10 @@ export class MmKisatComponent implements OnDestroy {
     });
   }
 
+  arePredictionsLocked(): boolean {
+    return !(localStorage.getItem(this.userService.user?.firstName + 'extraPredictions') === null);
+  }
+
   finalizePredictions() {
     // setter for backend to save user's predictions
     // this.userService.user.lockStatus = true;  and something like this
