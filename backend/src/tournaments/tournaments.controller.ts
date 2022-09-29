@@ -1,6 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
-import { MatchResult, Tournament, TournamentWithResults } from '../../constants';
-import { Observable, of } from 'rxjs';
+import {Controller, Get} from '@nestjs/common';
+import {MatchResult, Tournament, TournamentWithResults} from '../../constants';
+import {Observable, of} from 'rxjs';
 
 const tournament: Tournament = {
   name: 'MM-kisat',
@@ -76,7 +76,7 @@ const tournament: Tournament = {
         },
         {
           home: 'Englanti',
-          away: 'USA',
+          away: 'Usa',
           date: new Date('2022-11-25T22:00:00'),
           id: 10,
         },
@@ -88,7 +88,7 @@ const tournament: Tournament = {
         },
         {
           home: 'Iran',
-          away: 'USA',
+          away: 'Usa',
           date: new Date('2022-11-29T22:00:00'),
           id: 12,
         },
@@ -339,7 +339,7 @@ const tournament: Tournament = {
       name: 'H',
       matches: [
         {
-          home: 'Usuguay',
+          home: 'Uruguay',
           away: 'Etelä-Korea',
           date: new Date('2022-11-23T16:00:00'),
           id: 43,

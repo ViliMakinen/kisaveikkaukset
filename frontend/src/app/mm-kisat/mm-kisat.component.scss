@@ -1,10 +1,27 @@
 .main-content-container {
   max-height: calc(100% - 64px);
 
+  ::ng-deep .cdk-focused {
+    background: none;
+  }
+
+  ::ng-deep .mat-step-header {
+    pointer-events: none !important;
+  }
+
+  .save-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 30px;
+  }
+
   .button-info-container {
     display: flex;
     align-items: center;
-    column-gap: 10px;
+    column-gap: 7px;
+    margin-bottom: 10px;
   }
 
   .other-predictions-container {
@@ -37,6 +54,14 @@
     row-gap: 10px;
   }
 
+  .group-title {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
   .tab-container {
     display: flex;
 
@@ -46,6 +71,7 @@
       align-items: center;
       flex-basis: 50%;
       margin-top: 10px;
+      margin-bottom: 5px;
 
       .match-row {
         display: flex;
@@ -55,7 +81,22 @@
         .teams {
           display: flex;
           align-items: center;
-          width: 33%;
+          justify-content: space-between;
+          width: calc(100% - 110px);
+          column-gap: 5px;
+
+          .match-up {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+
+          .flag-image {
+            height: 30px;
+            width: 30px;
+            margin-left: 3px;
+            margin-right: 3px;
+          }
         }
 
         .match-date {
@@ -136,24 +177,16 @@
       }
 
       .match-container {
-        margin: 5px;
+        justify-content: normal;
 
         .match-row {
           width: 100%;
-
-          .teams {
-            width: 22%;
-          }
-
-          .match-date {
-            width: 48%;
-
-            .date {
-              margin-right: 0;
-            }
-          }
         }
       }
     }
+  }
+
+  ::ng-deep.mat-horizontal-content-container {
+    padding: 0 16px 16px 16px !important;
   }
 }

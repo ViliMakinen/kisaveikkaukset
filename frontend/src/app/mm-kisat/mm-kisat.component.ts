@@ -1,6 +1,6 @@
 import { UserService } from '../user.service';
 import { Component, OnDestroy } from '@angular/core';
-import { Group, MatchResult, Result, Team, Tournament, TournamentWithResults } from '../constants';
+import { countries, Country, MatchResult, Result, Team, Tournament, TournamentWithResults, UserExtraPredictions } from '../constants';
 import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { FormBuilder } from '@angular/forms';
@@ -15,26 +15,34 @@ export class MmKisatComponent implements OnDestroy {
   tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournament();
   tournament: Tournament | null = null;
   results: MatchResult[] = [];
-  groups: Group[] = [];
   teams: Team[] = [];
-  topFour: string[] = [];
-  topScorer: string = '';
+  userExtraPredictions: UserExtraPredictions = { mostGoals: '', mostCards: '', topFour: [], topScorer: '' };
+  countries: Country[] = [];
 
   private tournamentSubscription: Subscription;
-  isLinear = true;
 
   constructor(public userService: UserService, private tournamentService: TournamentService, private _formBuilder: FormBuilder) {
     this.tournamentSubscription = this.tournamentWithResults$.subscribe((tournamentWithResults) => {
       this.tournament = tournamentWithResults.tournament;
       this.results = tournamentWithResults.results;
-      this.groups = tournamentWithResults.tournament.groups;
+      this.countries = countries;
       this.initializeUserPredictions();
+      this.initializeUserOtherPredictions();
       this.teams = this.tournament.groups.flatMap((group) => group.teams).sort((a, b) => a.name.localeCompare(b.name));
     });
   }
 
   ngOnDestroy(): void {
     this.tournamentSubscription.unsubscribe();
+  }
+
+  fetchFlag(teamName: string): string {
+    const index = this.countries.findIndex((country) => country.name === teamName);
+    if (index !== -1) {
+      return this.countries[index].id;
+    } else {
+      return '';
+    }
   }
 
   initializeUserPredictions(): void {
@@ -47,6 +55,23 @@ export class MmKisatComponent implements OnDestroy {
       });
     }
     this.updateUserPredictions();
+  }
+
+  initializeUserOtherPredictions(): void {
+    if (localStorage.getItem(this.userService.user?.firstName + 'extraPredictions')) {
+      this.userExtraPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'extraPredictions')!);
+    } else {
+      this.userExtraPredictions = {
+        mostGoals: '',
+        mostCards: '',
+        topFour: [],
+        topScorer: '',
+      };
+    }
+  }
+
+  saveOtherPrediction(): void {
+    localStorage.setItem(this.userService.user?.firstName + 'extraPredictions', JSON.stringify(this.userExtraPredictions));
   }
 
   updateUserPredictions(): void {
@@ -121,7 +146,8 @@ export class MmKisatComponent implements OnDestroy {
     });
   }
 
-  ploo() {
-    console.log(this.topFour, this.topScorer);
+  finalizePredictions() {
+    // setter for backend to save user's predictions
+    // this.userService.user.lockStatus = true;  and something like this
   }
 }
