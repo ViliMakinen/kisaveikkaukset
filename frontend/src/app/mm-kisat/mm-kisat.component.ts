@@ -25,19 +25,16 @@ export class MmKisatComponent implements OnDestroy {
   tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournament();
   tournament: Tournament | null = null;
   results: MatchResult[] = [];
-  groups: Group[] = [];
   teams: Team[] = [];
   userExtraPredictions: UserExtraPredictions = { mostGoals: '', mostCards: '', topFour: [], topScorer: '' };
   countries: Country[] = [];
 
   private tournamentSubscription: Subscription;
-  isLinear = true;
 
   constructor(public userService: UserService, private tournamentService: TournamentService, private _formBuilder: FormBuilder) {
     this.tournamentSubscription = this.tournamentWithResults$.subscribe((tournamentWithResults) => {
       this.tournament = tournamentWithResults.tournament;
       this.results = tournamentWithResults.results;
-      this.groups = tournamentWithResults.tournament.groups;
       this.countries = Countries;
       this.initializeUserPredictions();
       this.initializeUserOtherPredictions();

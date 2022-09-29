@@ -35,7 +35,7 @@
 
 //   16. Update the team standing in groups according to actual results (either to front page or predictions page).
 
-     17. Get flags of countries to assets and show them in HTML
+//   17. Get flags of countries to assets and show them in HTML
 
 //   18. Create system to update user points based on correct predictions.
 
@@ -64,6 +64,18 @@
 //    31. Info balls for other predictions
 
 //    32. Button to home to mirror veikkauksiin button
+
+      33. Fix flag alignment on desktop + mobile
+
+      34. In MM-Kisat view, add some styling to the 1x2 rows to make them more visible
+
+      35. Add actual info to the info page
+
+      36. Add flags to all places with country names
+
+      37. Add check-marks next to extra predictions to indicate if the selection is filled properly
+
+      38. Add proper authentication
 
 ...
 ...

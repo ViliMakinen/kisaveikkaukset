@@ -3,7 +3,7 @@
     <div class="title-container">
       {{ tournament.name }}
     </div>
-    <mat-stepper [linear]="isLinear">
+    <mat-stepper [linear]="true">
       <mat-step [completed]="arePredictionsIncomplete()" label="1X2">
         <div class="button-container">
           <button class="clickable button" mat-raised-button routerLink="/home">
@@ -11,24 +11,25 @@
             Aloitussivulle
           </button>
           <div class="button-info-container">
-            <button [disabled]="!arePredictionsIncomplete()" mat-raised-button
-                    class="clickable" matStepperNext>Muut
+            <button [disabled]="!arePredictionsIncomplete()" class="clickable" mat-raised-button matStepperNext>Muut
             </button>
             <div class="flex-container" matTooltip="Täytä ensin 1X2 veikkaukset">
               <img alt="info" src="assets/images/info.svg"/>
             </div>
           </div>
         </div>
-        <mat-tab-group>
-          <mat-tab [label]="group.name" *ngFor="let group of groups">
+        <mat-tab-group [animationDuration]="'0'">
+          <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
+            <div class="group-title">Lohko {{ group.name }}</div>
             <div class="tab-container">
               <div class="match-container">
                 <div *ngFor="let match of group.matches" class="match-row">
-                  <span class="teams"> <img alt="home team flag" class="flag-image"
-                                            [src]="'assets/images/4x3/' + fetchFlag(match.home) + '.svg'">
-                    {{ match.home }} - {{ match.away }}
-                    <img alt="away team flag" class="flag-image"
-                         [src]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'"></span>
+                  <span class="teams">
+                    <img [src]="'assets/images/4x3/' + fetchFlag(match.home) + '.svg'" alt="home team flag"
+                         class="flag-image"/> {{ match.home }} - {{ match.away }}
+                    <img [src]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'" alt="away team flag"
+                         class="flag-image"/>
+                  </span>
                   <span class="match-date">
                     <span class="date">{{ match.date | date: 'dd.MM.yyyy' }} </span>
                     <mat-icon>schedule</mat-icon>
@@ -36,8 +37,8 @@
                   </span>
                   <span>
                     <mat-button-toggle-group (change)="savePrediction(match.id, $event.value)"
-                                             [value]="isSelected(match.id)"
-                                             [disabled]="userService.arePredictionsLocked">
+                                             [disabled]="userService.arePredictionsLocked"
+                                             [value]="isSelected(match.id)">
                       <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')"
                                          value="1">1</mat-button-toggle>
                       <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')"
@@ -78,7 +79,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <img matTooltip="Veikkaa lohkovaiheessa eniten varoituksia kerännyttä joukkuetta" alt="info"
+            <img alt="info" matTooltip="Veikkaa lohkovaiheessa eniten varoituksia kerännyttä joukkuetta"
                  src="assets/images/info.svg"/>
           </div>
           <div>
@@ -90,7 +91,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <img matTooltip="Veikkaa lohkovaiheessa eniten maaleja tehnyttä joukkuetta" alt="info"
+            <img alt="info" matTooltip="Veikkaa lohkovaiheessa eniten maaleja tehnyttä joukkuetta"
                  src="assets/images/info.svg"/>
           </div>
           <div>
@@ -99,20 +100,21 @@
               <mat-select [(ngModel)]="userExtraPredictions.topFour" multiple>
                 <mat-option *ngFor="let team of teams"
                             [disabled]="userExtraPredictions.topFour.length > 3 && !userExtraPredictions.topFour.includes(team.name)"
-                            [value]="team.name">{{ team.name }}</mat-option>
+                            [value]="team.name">{{
+                  team.name
+                  }}</mat-option>
               </mat-select>
             </mat-form-field>
-            <img matTooltip="Veikkaa turnauksen semi-finalistit" alt="info" src="assets/images/info.svg"/>
+            <img alt="info" matTooltip="Veikkaa turnauksen semi-finalistit" src="assets/images/info.svg"/>
           </div>
           <div>
             <mat-form-field appearance="fill">
               <mat-label>Maalipörssin voittaja</mat-label>
               <input [(ngModel)]="userExtraPredictions.topScorer" matInput placeholder="Etunimi Sukunimi" type="text"/>
             </mat-form-field>
-            <img matTooltip="Veikkaa koko turnauksen maalipörssin voittaja" alt="info" src="assets/images/info.svg"/>
+            <img alt="info" matTooltip="Veikkaa koko turnauksen maalipörssin voittaja" src="assets/images/info.svg"/>
           </div>
-          <button mat-raised-button class="clickable" (click)="saveOtherPrediction()"> Tallenna
-          </button>
+          <button (click)="saveOtherPrediction()" class="clickable" mat-raised-button>Tallenna</button>
         </div>
       </mat-step>
       <mat-step>
