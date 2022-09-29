@@ -53,7 +53,7 @@ export interface Team {
   predictedPoints: number;
 }
 
-export const Countries: Country[] = [
+export const countries: Country[] = [
   { name: 'Qatar', id: 'qa' },
   { name: 'Brasilia', id: 'br' },
   { name: 'Belgia', id: 'be' },

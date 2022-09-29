@@ -1,6 +1,6 @@
 import { UserService } from '../user.service';
 import { Component, OnDestroy } from '@angular/core';
-import { Countries, Country, MatchResult, Result, Team, Tournament, TournamentWithResults, UserExtraPredictions } from '../constants';
+import { countries, Country, MatchResult, Result, Team, Tournament, TournamentWithResults, UserExtraPredictions } from '../constants';
 import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { FormBuilder } from '@angular/forms';
@@ -25,7 +25,7 @@ export class MmKisatComponent implements OnDestroy {
     this.tournamentSubscription = this.tournamentWithResults$.subscribe((tournamentWithResults) => {
       this.tournament = tournamentWithResults.tournament;
       this.results = tournamentWithResults.results;
-      this.countries = Countries;
+      this.countries = countries;
       this.initializeUserPredictions();
       this.initializeUserOtherPredictions();
       this.teams = this.tournament.groups.flatMap((group) => group.teams).sort((a, b) => a.name.localeCompare(b.name));

@@ -31,7 +31,7 @@
                     <img [src]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'" alt="away team flag"
                          class="flag-image"/>
                   </span>
-                  <span style="width: 100px; margin-right: 1px;">
+                  <span>
                     <mat-button-toggle-group (change)="savePrediction(match.id, $event.value)"
                                              [disabled]="userService.arePredictionsLocked"
                                              [value]="isSelected(match.id)">
