@@ -3,7 +3,7 @@
     <div class="title-container">
       {{ tournament.name }}
     </div>
-    <mat-stepper [linear]="isLinear" #stepper>
+    <mat-stepper [linear]="isLinear">
       <mat-step [completed]="arePredictionsIncomplete()" label="1X2">
         <div class="button-container">
           <button class="clickable button" mat-raised-button routerLink="/home">
@@ -72,7 +72,7 @@
           <div class="button-info-container">
             <mat-form-field appearance="fill">
               <mat-label>Eniten varoituksia</mat-label>
-              <mat-select [(ngModel)]="mostCards">
+              <mat-select [(ngModel)]="userExtraPredictions.mostCards">
                 <mat-option *ngFor="let team of teams" [value]="team.name">
                   {{ team.name }}
                 </mat-option>
@@ -84,7 +84,7 @@
           <div>
             <mat-form-field appearance="fill">
               <mat-label>Eniten maaleja</mat-label>
-              <mat-select [(ngModel)]="mostGoals">
+              <mat-select [(ngModel)]="userExtraPredictions.mostGoals">
                 <mat-option *ngFor="let team of teams" [value]="team.name">
                   {{ team.name }}
                 </mat-option>
@@ -96,8 +96,9 @@
           <div>
             <mat-form-field appearance="fill">
               <mat-label>Top 4</mat-label>
-              <mat-select [(ngModel)]="topFour" multiple>
-                <mat-option [disabled]="topFour.length > 3 && !topFour.includes(team.name)" *ngFor="let team of teams"
+              <mat-select [(ngModel)]="userExtraPredictions.topFour" multiple>
+                <mat-option *ngFor="let team of teams"
+                            [disabled]="userExtraPredictions.topFour.length > 3 && !userExtraPredictions.topFour.includes(team.name)"
                             [value]="team.name">{{ team.name }}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -106,7 +107,7 @@
           <div>
             <mat-form-field appearance="fill">
               <mat-label>Maalipörssin voittaja</mat-label>
-              <input [(ngModel)]="topScorer" type="text" matInput placeholder="Etunimi Sukunimi"/>
+              <input [(ngModel)]="userExtraPredictions.topScorer" matInput placeholder="Etunimi Sukunimi" type="text"/>
             </mat-form-field>
             <img matTooltip="Veikkaa koko turnauksen maalipörssin voittaja" alt="info" src="assets/images/info.svg"/>
           </div>

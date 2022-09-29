@@ -1,5 +1,5 @@
-import {UserService} from '../user.service';
-import {Component, OnDestroy} from '@angular/core';
+import { UserService } from '../user.service';
+import { Component, OnDestroy } from '@angular/core';
 import {
   Countries,
   Country,
@@ -11,9 +11,9 @@ import {
   TournamentWithResults,
   UserExtraPredictions
 } from '../constants';
-import {Observable, Subscription} from 'rxjs';
-import {TournamentService} from '../tournament.service';
-import {FormBuilder} from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { TournamentService } from '../tournament.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-mm-kisat',
@@ -27,11 +27,7 @@ export class MmKisatComponent implements OnDestroy {
   results: MatchResult[] = [];
   groups: Group[] = [];
   teams: Team[] = [];
-  topFour: string[] = [];
-  topScorer: string = '';
-  mostCards: string = '';
-  mostGoals: string = '';
-  userExtraPredictions: UserExtraPredictions[] = [];
+  userExtraPredictions: UserExtraPredictions = { mostGoals: '', mostCards: '', topFour: [], topScorer: '' };
   countries: Country[] = [];
 
   private tournamentSubscription: Subscription;
@@ -54,14 +50,13 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   fetchFlag(teamName: string): string {
-    const index = this.countries.findIndex(country => country.name === teamName);
+    const index = this.countries.findIndex((country) => country.name === teamName);
     if (index !== -1) {
       return this.countries[index].id;
     } else {
-      return ''
+      return '';
     }
   }
-
 
   initializeUserPredictions(): void {
     if (localStorage.getItem(this.userService.user?.firstName + 'predictions')) {
@@ -69,7 +64,7 @@ export class MmKisatComponent implements OnDestroy {
     } else {
       const matches = this.tournament!.groups.flatMap((group) => group.matches);
       this.userPredictions = matches.map((match) => {
-        return {id: match.id, result: null};
+        return { id: match.id, result: null };
       });
     }
     this.updateUserPredictions();
@@ -77,24 +72,18 @@ export class MmKisatComponent implements OnDestroy {
 
   initializeUserOtherPredictions(): void {
     if (localStorage.getItem(this.userService.user?.firstName + 'extraPredictions')) {
-      this.userExtraPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'extraPredictions')!)
+      this.userExtraPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'extraPredictions')!);
     } else {
-      this.userExtraPredictions = [{
+      this.userExtraPredictions = {
         mostGoals: '',
         mostCards: '',
         topFour: [],
-        topScorer: ''
-      }]
+        topScorer: '',
+      };
     }
   }
 
   saveOtherPrediction(): void {
-    this.userExtraPredictions.map(prediction => {
-      prediction.mostGoals = this.mostGoals;
-      prediction.topScorer = this.topScorer;
-      prediction.mostCards = this.mostCards;
-      prediction.topFour = this.topFour;
-    })
     localStorage.setItem(this.userService.user?.firstName + 'extraPredictions', JSON.stringify(this.userExtraPredictions));
   }
 
@@ -121,9 +110,9 @@ export class MmKisatComponent implements OnDestroy {
         ...group,
         teams: group.teams.map((team) => {
           if (team.name === teamName) {
-            return {...team, predictedPoints: team.predictedPoints + amount};
+            return { ...team, predictedPoints: team.predictedPoints + amount };
           }
-          return {...team};
+          return { ...team };
         }),
       };
     });
@@ -135,7 +124,7 @@ export class MmKisatComponent implements OnDestroy {
 
   savePrediction(id: number, result: Result): void {
     const index = this.userPredictions.findIndex((result) => result.id === id);
-    this.userPredictions[index] = {id, result};
+    this.userPredictions[index] = { id, result };
     localStorage.setItem(this.userService.user?.firstName + 'predictions', JSON.stringify(this.userPredictions));
     this.resetUserPredictions();
     this.updateUserPredictions();
@@ -164,7 +153,7 @@ export class MmKisatComponent implements OnDestroy {
       return {
         ...group,
         teams: group.teams.map((team) => {
-          return {...team, predictedPoints: 0};
+          return { ...team, predictedPoints: 0 };
         }),
       };
     });
