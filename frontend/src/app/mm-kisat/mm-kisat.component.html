@@ -26,16 +26,12 @@
                 <div *ngFor="let match of group.matches" class="match-row">
                   <span class="teams">
                     <img [src]="'assets/images/4x3/' + fetchFlag(match.home) + '.svg'" alt="home team flag"
-                         class="flag-image"/> {{ match.home }} - {{ match.away }}
+                         class="flag-image"/>
+                    <span class="match-up">{{ match.home }} - {{ match.away }}</span>
                     <img [src]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'" alt="away team flag"
                          class="flag-image"/>
                   </span>
-                  <span class="match-date">
-                    <span class="date">{{ match.date | date: 'dd.MM.yyyy' }} </span>
-                    <mat-icon>schedule</mat-icon>
-                    <span>{{ match.date | date: 'HH:mm' }} </span>
-                  </span>
-                  <span>
+                  <span style="width: 100px; margin-right: 1px;">
                     <mat-button-toggle-group (change)="savePrediction(match.id, $event.value)"
                                              [disabled]="userService.arePredictionsLocked"
                                              [value]="isSelected(match.id)">
@@ -50,7 +46,6 @@
                 </div>
               </div>
               <mat-divider></mat-divider>
-
               <div class="group-container">
                 <h1>Lohkotilanne veikkauksiesi mukaan</h1>
                 <div class="group-title-container"><span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
