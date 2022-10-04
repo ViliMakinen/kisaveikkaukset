@@ -51,7 +51,9 @@
                 <div class="group-title-container"><span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
                 </div>
                 <div *ngFor="let team of group.teams" class="group-row">
-                  <span class="row-box">{{ team.name }}</span>
+                  <span class="row-box">
+                 <img [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'" alt="away team flag"
+                      class="flag-image"/>  {{ team.name }}</span>
                   <span class="row-box">{{ team.predictedPoints }}</span>
                 </div>
               </div>

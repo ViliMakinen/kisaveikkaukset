@@ -67,13 +67,13 @@
 
       33. Fix flag alignment on desktop + mobile
 
-      34. In MM-Kisat view, add some styling to the 1x2 rows to make them more visible
+//    34. In MM-Kisat view, add some styling to the 1x2 rows to make them more visible
 
       35. Add actual info to the info page
 
-      36. Add flags to all places with country names
+//    36. Add flags to all places with country names
 
-      37. Add check-marks next to extra predictions to indicate if the selection is filled properly
+//    37. Add check-marks next to extra predictions to indicate if the selection is filled properly
 
       38. Add proper authentication
 
