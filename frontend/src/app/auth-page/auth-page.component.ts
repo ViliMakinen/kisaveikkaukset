@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-auth-page',
@@ -7,5 +6,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./auth-page.component.scss'],
 })
 export class AuthPageComponent {
-  constructor(public authService: AuthService) {}
+  logIn(): void {
+    window.location.replace('/api/oauth2/google?redirect_url=/home');
+  }
 }
