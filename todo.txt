@@ -77,6 +77,12 @@
 
       38. Add proper authentication
 
+      39. Add prisma
+
+      40. Add docker
+
+
+
 ...
 ...
 ...

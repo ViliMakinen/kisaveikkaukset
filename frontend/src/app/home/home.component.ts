@@ -38,13 +38,12 @@ export class HomeComponent implements OnDestroy {
       this.calculateCountdownValues();
     });
   }
-
   fetchFlag(teamName: string): string {
     const check = this.countries.find((team) => team.name === teamName);
-    if (check!.id === undefined) {
-      return '';
+    if (check) {
+      return check.id;
     } else {
-      return check!.id;
+      return '';
     }
   }
 

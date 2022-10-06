@@ -83,46 +83,51 @@
               </span>
           </div>
           <div>
-            <mat-form-field appearance="fill">
-              <mat-label>Eniten maaleja</mat-label>
-              <span *ngIf="userExtraPredictions.mostGoals !== '' && !arePredictionsLocked()"><mat-icon
-                style="color: chartreuse">done</mat-icon></span>
-              <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userExtraPredictions.mostGoals">
-                <mat-option *ngFor="let team of teams" [value]="team.name">
-                  {{ team.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <span><img alt="info" matTooltip="Veikkaa lohkovaiheessa eniten maaleja tehnyttä joukkuetta"
-                       src="assets/images/info.svg"/></span>
+            <div class="button-info-container">
+              <mat-form-field appearance="fill">
+                <mat-label>Eniten maaleja</mat-label>
+                <span *ngIf="userExtraPredictions.mostGoals !== '' && !arePredictionsLocked()"><mat-icon
+                  style="color: chartreuse">done</mat-icon></span>
+                <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userExtraPredictions.mostGoals">
+                  <mat-option *ngFor="let team of teams" [value]="team.name">
+                    {{ team.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <span><img alt="info" matTooltip="Veikkaa lohkovaiheessa eniten maaleja tehnyttä joukkuetta"
+                         src="assets/images/info.svg"/></span>
+            </div>
+            <div></div>
+            <div class="button-info-container">
+              <mat-form-field appearance="fill">
+                <mat-label>Top 4</mat-label>
+                <span *ngIf="userExtraPredictions.topFour.length === 4 && !arePredictionsLocked()"><mat-icon
+                  style="color: chartreuse">done</mat-icon></span>
+                <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userExtraPredictions.topFour" multiple>
+                  <mat-option *ngFor="let team of teams"
+                              [disabled]="userExtraPredictions.topFour.length > 3 && !userExtraPredictions.topFour.includes(team.name)"
+                              [value]="team.name">{{
+                    team.name
+                    }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <span> <img alt="info" matTooltip="Veikkaa turnauksen semi-finalistit"
+                          src="assets/images/info.svg"/></span>
+            </div>
+            <div></div>
+            <div class="button-info-container">
+              <mat-form-field appearance="fill">
+                <mat-label>Maalipörssin voittaja</mat-label>
+                <span *ngIf="userExtraPredictions.topScorer.length > 2 && !arePredictionsLocked()"><mat-icon
+                  style="color: chartreuse">done</mat-icon></span>
+                <input [disabled]="arePredictionsLocked()" [(ngModel)]="userExtraPredictions.topScorer" matInput
+                       placeholder="Etunimi Sukunimi" type="text"/>
+              </mat-form-field>
+              <span><img alt="info" matTooltip="Veikkaa koko turnauksen maalipörssin voittaja"
+                         src="assets/images/info.svg"/></span>
+            </div>
+            <button (click)="saveOtherPrediction()" class="clickable" mat-raised-button>Tallenna</button>
           </div>
-          <div>
-            <mat-form-field appearance="fill">
-              <mat-label>Top 4</mat-label>
-              <span *ngIf="userExtraPredictions.topFour.length === 4 && !arePredictionsLocked()"><mat-icon
-                style="color: chartreuse">done</mat-icon></span>
-              <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userExtraPredictions.topFour" multiple>
-                <mat-option *ngFor="let team of teams"
-                            [disabled]="userExtraPredictions.topFour.length > 3 && !userExtraPredictions.topFour.includes(team.name)"
-                            [value]="team.name">{{
-                  team.name
-                  }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <span> <img alt="info" matTooltip="Veikkaa turnauksen semi-finalistit" src="assets/images/info.svg"/></span>
-          </div>
-          <div>
-            <mat-form-field appearance="fill">
-              <mat-label>Maalipörssin voittaja</mat-label>
-              <span *ngIf="userExtraPredictions.topScorer.length > 2 && !arePredictionsLocked()"><mat-icon
-                style="color: chartreuse">done</mat-icon></span>
-              <input [disabled]="arePredictionsLocked()" [(ngModel)]="userExtraPredictions.topScorer" matInput
-                     placeholder="Etunimi Sukunimi" type="text"/>
-            </mat-form-field>
-            <span><img alt="info" matTooltip="Veikkaa koko turnauksen maalipörssin voittaja"
-                       src="assets/images/info.svg"/></span>
-          </div>
-          <button (click)="saveOtherPrediction()" class="clickable" mat-raised-button>Tallenna</button>
         </div>
       </mat-step>
       <mat-step>
