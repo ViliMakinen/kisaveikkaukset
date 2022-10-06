@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter, isBefore, isSameDay } from 'date-fns';
-import { Match, MatchResult, MockUser, Tournament, TournamentWithResults } from '../constants';
+import { countries, Country, Match, MatchResult, MockUser, Tournament, TournamentWithResults } from '../constants';
 import { UserService } from '../user.service';
 import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
@@ -21,6 +21,7 @@ export class HomeComponent implements OnDestroy {
   today = new Date();
   gamesToday: Match[] = [];
   private tournamentSubscription: Subscription;
+  countries: Country[] = [];
 
   days: number = 0;
   hours: number = 0;
@@ -31,10 +32,20 @@ export class HomeComponent implements OnDestroy {
     this.tournamentSubscription = this.tournamentWithResults$.subscribe((tournamentWithResults) => {
       this.tournament = tournamentWithResults.tournament;
       this.results = tournamentWithResults.results;
+      this.countries = countries;
       this.initializeEverything();
       this.startCountdown();
       this.calculateCountdownValues();
     });
+  }
+
+  fetchFlag(teamName: string): string {
+    const check = this.countries.find((team) => team.name === teamName);
+    if (check!.id === undefined) {
+      return '';
+    } else {
+      return check!.id;
+    }
   }
 
   startCountdown(): void {
