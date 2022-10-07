@@ -12,7 +12,7 @@ import { TournamentService } from '../tournament.service';
 })
 export class AdminViewComponent {
   results: MatchResult[] = [];
-  tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournament();
+  tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournamentById(1);
   tournament: Tournament | null = null;
   matches: Match[] = [];
   userPredictions: MatchResult[] = [];

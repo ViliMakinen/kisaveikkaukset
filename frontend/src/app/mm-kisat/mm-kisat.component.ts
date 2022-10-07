@@ -12,7 +12,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class MmKisatComponent implements OnDestroy {
   userPredictions: MatchResult[] = [];
-  tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournament();
+  tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournamentById(1);
   tournament: Tournament | null = null;
   results: MatchResult[] = [];
   teams: Team[] = [];

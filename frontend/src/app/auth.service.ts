@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
-import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs/internal/Subject';
 import { UserService } from './user.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+@Injectable()
 export class AuthService {
-  constructor(private socialAuthService: SocialAuthService, private router: Router, private userService: UserService) {
-    this.socialAuthService.authState.subscribe((user) => {
-      if (user === null) {
-        this.router.navigate(['/']);
-      } else {
-        this.userService.user = user;
-        this.navigateToApp();
-      }
-    });
+  user = new Subject<Partial<User>>();
+
+  constructor(private router: Router, private userService: UserService, private http: HttpClient) {
   }
 
-  navigateToApp(): void {
-    this.router.navigate(['/home']);
+  isSignedIn(): Observable<Partial<User>> {
+    return this.http.get<Partial<User>>('/api/users/me');
   }
 }

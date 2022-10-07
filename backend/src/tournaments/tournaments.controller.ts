@@ -1,6 +1,5 @@
-import {Controller, Get} from '@nestjs/common';
-import {MatchResult, Tournament, TournamentWithResults} from '../../constants';
-import {Observable, of} from 'rxjs';
+import { Controller, Get, Param } from '@nestjs/common';
+import { MatchResult, Tournament, TournamentWithResults } from '../../constants';
 
 const tournament: Tournament = {
   name: 'MM-kisat',
@@ -384,6 +383,7 @@ const tournament: Tournament = {
     },
   ],
 };
+
 const results: MatchResult[] = [
   {
     id: 1,
@@ -582,7 +582,12 @@ const results: MatchResult[] = [
 @Controller('tournaments')
 export class TournamentsController {
   @Get()
-  getTournament(): Observable<TournamentWithResults> {
-    return of({ tournament, results });
+  getAvailableTournaments(): Promise<Tournament[]> {
+    return Promise.resolve([tournament]);
+  }
+
+  @Get(':id')
+  getTournamentAndResults(@Param('id') id: string): Promise<TournamentWithResults> {
+    return Promise.resolve({ tournament, results });
   }
 }

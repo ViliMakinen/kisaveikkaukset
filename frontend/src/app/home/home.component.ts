@@ -1,10 +1,18 @@
 import { Component, OnDestroy } from '@angular/core';
-import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter, isBefore, isSameDay } from 'date-fns';
+import {
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+  differenceInSeconds,
+  isAfter,
+  isBefore,
+  isSameDay
+} from 'date-fns';
 import { countries, Country, Match, MatchResult, MockUser, Tournament, TournamentWithResults } from '../constants';
 import { UserService } from '../user.service';
 import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
-import { ResultService } from '../result.service';
+import { User } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -12,15 +20,16 @@ import { ResultService } from '../result.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnDestroy {
+  currentUser: Partial<User> | null = this.userService.user;
   userPredictions: MatchResult[] = [];
-  tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournament();
+  tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournamentById(1);
   tournament: Tournament | null = null;
-  results$: Observable<MatchResult[]> = this.resultsService.getResults();
   results: MatchResult[] | null = null;
   mockUsers$: Observable<MockUser[]> = this.userService.getUsers();
+  tournamentSubscription: Subscription;
+
   today = new Date();
   gamesToday: Match[] = [];
-  private tournamentSubscription: Subscription;
   countries: Country[] = [];
 
   days: number = 0;
@@ -28,7 +37,7 @@ export class HomeComponent implements OnDestroy {
   minutes: number = 0;
   seconds: number = 0;
 
-  constructor(public userService: UserService, private tournamentService: TournamentService, private resultsService: ResultService) {
+  constructor(public userService: UserService, private tournamentService: TournamentService) {
     this.tournamentSubscription = this.tournamentWithResults$.subscribe((tournamentWithResults) => {
       this.tournament = tournamentWithResults.tournament;
       this.results = tournamentWithResults.results;
@@ -38,6 +47,7 @@ export class HomeComponent implements OnDestroy {
       this.calculateCountdownValues();
     });
   }
+
   fetchFlag(teamName: string): string {
     const check = this.countries.find((team) => team.name === teamName);
     if (check) {
