@@ -46,6 +46,8 @@ export class HomeComponent implements OnDestroy {
       this.startCountdown();
       this.calculateCountdownValues();
     });
+
+
   }
 
   fetchFlag(teamName: string): string {

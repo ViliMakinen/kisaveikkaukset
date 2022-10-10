@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { OAuth2GoogleConfig } from './config/oauth2-google.config';
 import { UsersService } from './users/users.service';
+import { GroupsController } from './groups/groups.controller';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { UsersService } from './users/users.service';
     }),
     AuthModule,
   ],
-  controllers: [AppController, UsersController, TournamentsController],
+  controllers: [AppController, UsersController, TournamentsController, GroupsController],
   providers: [PrismaService, UsersService],
 })
 export class AppModule {}

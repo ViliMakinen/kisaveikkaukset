@@ -17,7 +17,6 @@ export class UsersService {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        groups: [],
       },
     });
   }

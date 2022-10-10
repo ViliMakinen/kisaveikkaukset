@@ -1,6 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { MatchResult, Tournament, TournamentWithResults } from '../../constants';
 
+// move the tournament to the seed.ts file and use that to seed the database with the tournament
 const tournament: Tournament = {
   name: 'MM-kisat',
   startingDate: new Date('2022-11-19T19:00:00+02:00'),
@@ -384,6 +385,7 @@ const tournament: Tournament = {
   ],
 };
 
+// the results will be stored inside the Tournament in the future
 const results: MatchResult[] = [
   {
     id: 1,
@@ -583,11 +585,15 @@ const results: MatchResult[] = [
 export class TournamentsController {
   @Get()
   getAvailableTournaments(): Promise<Tournament[]> {
+    // remove the Promise.resolve and replace with a call to the tournament service where the actual database query is made
+    // remember to update the return type from any to something relevant
     return Promise.resolve([tournament]);
   }
 
   @Get(':id')
   getTournamentAndResults(@Param('id') id: string): Promise<TournamentWithResults> {
+    // remove the Promise.resolve and replace with a call to the tournament service where the actual database query is made
+    // remember to update the return type from any to something relevant
     return Promise.resolve({ tournament, results });
   }
 }
