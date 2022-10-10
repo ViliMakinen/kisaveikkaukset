@@ -4,23 +4,18 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  row-gap: 10px;
 
+  .log-in-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    width: 150px;
 
-  .google-button, .fb-button {
-    padding: 2px;
-    width: 250px;
-    margin-bottom: 10px;
-
-    &:hover {
-      box-shadow: 1px 1px 4px #0a0a0a;
+    .image {
+      height: 24px;
+      width: 24px;
     }
   }
-
-  .google-icon {
-    width: 30px;
-    height: 30px;
-    margin-right: 2px;
-  }
 }
-
-
