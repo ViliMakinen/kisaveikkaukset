@@ -33,7 +33,6 @@ CREATE TABLE "Group"
 CREATE TABLE "Tournament"
 (
     "id"             SERIAL NOT NULL,
-    "nimi"           TEXT   NOT NULL,
     "tournamentData" JSONB  NOT NULL,
 
     CONSTRAINT "Tournament_pkey" PRIMARY KEY ("id")

@@ -4,6 +4,11 @@ export interface Tournament {
   startingDate: Date;
 }
 
+export interface TournamentWithId {
+  id: number;
+  tournamentData: Tournament;
+}
+
 export interface Group {
   name: string;
   matches: Match[];

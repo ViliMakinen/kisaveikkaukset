@@ -35,7 +35,6 @@ model Group {
 
 model Tournament {
   id             Int     @id @default(autoincrement())
-  nimi           String
   tournamentData Json
   Group          Group[]
 }
