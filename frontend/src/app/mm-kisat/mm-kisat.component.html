@@ -18,7 +18,7 @@
               <img alt="info" src="assets/images/info.svg"/>
             </div></span>
         </div>
-        <mat-tab-group [animationDuration]="'0'">
+        <mat-tab-group style="min-height: 400px;" [animationDuration]="'0'">
           <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
             <div class="group-title">Lohko {{ group.name }}</div>
             <div class="tab-container">

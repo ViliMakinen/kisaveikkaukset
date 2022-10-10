@@ -18,7 +18,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
-import { LogInComponent } from './log-in/log-in.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MmKisatComponent } from './mm-kisat/mm-kisat.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -32,9 +31,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { InformationComponent } from './information/information.component';
 import { AuthService } from './auth.service';
 import { CodeGuardService } from './code-guard.service';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
-  { path: '', component: LogInComponent },
+  { path: 'overview', component: LandingPageComponent, canActivate: [LoggedInGuard] },
   { path: 'authorization', component: AuthPageComponent, canActivate: [CodeGuardService] },
   { path: 'home', component: HomeComponent, canActivate: [LoggedInGuard] },
   { path: 'MM-kisat-2022', component: MmKisatComponent, canActivate: [LoggedInGuard] },
@@ -42,11 +42,11 @@ const routes: Routes = [
   { path: 'admin-view', component: AdminViewComponent, canActivate: [LoggedInGuard] },
   { path: 'information', component: InformationComponent, canActivate: [LoggedInGuard] },
 
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'authorization' },
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SideNavigationComponent, LogInComponent, MmKisatComponent, CreateGroupComponent, AuthPageComponent, AdminViewComponent, InformationComponent],
+  declarations: [AppComponent, HomeComponent, SideNavigationComponent, MmKisatComponent, CreateGroupComponent, AuthPageComponent, AdminViewComponent, InformationComponent, LandingPageComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
