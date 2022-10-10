@@ -1,14 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import {
-  differenceInDays,
-  differenceInHours,
-  differenceInMinutes,
-  differenceInSeconds,
-  isAfter,
-  isBefore,
-  isSameDay
-} from 'date-fns';
-import { countries, Country, Match, MatchResult, MockUser, Tournament, TournamentWithResults } from '../constants';
+import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter, isBefore, isSameDay } from 'date-fns';
+import { countries, Country, Match, MatchResult, MockUser, Tournament } from '../constants';
 import { UserService } from '../user.service';
 import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
@@ -22,9 +14,10 @@ import { User } from '../auth.service';
 export class HomeComponent implements OnDestroy {
   currentUser: Partial<User> | null = this.userService.user;
   userPredictions: MatchResult[] = [];
-  tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournamentById(1);
+  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(1);
   tournament: Tournament | null = null;
   results: MatchResult[] | null = null;
+  matches: Match[] = [];
   mockUsers$: Observable<MockUser[]> = this.userService.getUsers();
   tournamentSubscription: Subscription;
 
@@ -38,16 +31,20 @@ export class HomeComponent implements OnDestroy {
   seconds: number = 0;
 
   constructor(public userService: UserService, private tournamentService: TournamentService) {
-    this.tournamentSubscription = this.tournamentWithResults$.subscribe((tournamentWithResults) => {
-      this.tournament = tournamentWithResults.tournament;
-      this.results = tournamentWithResults.results;
+    this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
+      this.tournament = tournament;
+      this.matches = this.tournament.groups.flatMap((group) => group.matches);
+      this.results = this.matches.map((match) => {
+        return {
+          id: match.id,
+          result: match.result,
+        };
+      });
       this.countries = countries;
       this.initializeEverything();
       this.startCountdown();
       this.calculateCountdownValues();
     });
-
-
   }
 
   fetchFlag(teamName: string): string {
@@ -86,16 +83,14 @@ export class HomeComponent implements OnDestroy {
     if (localStorage.getItem(this.userService.user?.firstName + 'predictions')) {
       this.userPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'predictions')!);
     } else {
-      const matches = this.tournament!.groups.flatMap((group) => group.matches);
-      this.userPredictions = matches.map((match) => {
+      this.userPredictions = this.matches.map((match) => {
         return { id: match.id, result: null };
       });
     }
   }
 
   calculateUserPoints(): void {
-    const matches = this.tournament!.groups.flatMap((group) => group.matches);
-    matches.forEach((match) => {
+    this.matches.forEach((match) => {
       if (this.results![match.id - 1].result === this.userPredictions[match.id - 1].result && this.userPredictions[match.id - 1].result !== null) {
         this.userService.points++;
       }
@@ -103,10 +98,8 @@ export class HomeComponent implements OnDestroy {
   }
 
   initializeResults(): void {
-    const matches = this.tournament!.groups.flatMap((group) => group.matches);
-
-    this.results!.forEach((matchResult) => {
-      const match = matches.find((match) => match.id === matchResult.id)!;
+    this.results?.forEach((matchResult) => {
+      const match = this.matches.find((match) => match.id === matchResult.id)!;
       if (matchResult.result === '1') {
         this.modifyTeamPoints(match.home, 3);
       } else if (matchResult.result === 'X') {

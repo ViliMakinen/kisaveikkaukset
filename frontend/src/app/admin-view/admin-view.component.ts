@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Match, MatchResult, Tournament, TournamentWithResults } from '../constants';
+import { Match, MatchResult, Tournament } from '../constants';
 import { UserService } from '../user.service';
 import { isBefore } from 'date-fns';
 import { Observable } from 'rxjs';
@@ -12,16 +12,21 @@ import { TournamentService } from '../tournament.service';
 })
 export class AdminViewComponent {
   results: MatchResult[] = [];
-  tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournamentById(1);
+  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(1);
   tournament: Tournament | null = null;
   matches: Match[] = [];
   userPredictions: MatchResult[] = [];
 
   constructor(public userService: UserService, private tournamentService: TournamentService) {
-    this.tournamentWithResults$.subscribe((tournamentWithResults) => {
-      this.tournament = tournamentWithResults.tournament;
-      this.results = tournamentWithResults.results;
+    this.tournament$.subscribe((tournament) => {
+      this.tournament = tournament;
       this.matches = this.tournament.groups.flatMap((group) => group.matches);
+      this.results = this.matches.map((match) => {
+        return {
+          id: match.id,
+          result: match.result,
+        };
+      });
       this.matches.sort((a, b) => {
         if (isBefore(a.date, b.date)) {
           return -1;

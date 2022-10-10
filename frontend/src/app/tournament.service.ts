@@ -1,26 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TournamentWithResults } from './constants';
+import { Tournament } from './constants';
 import { map, Observable } from 'rxjs';
 
-function parseTournament(tournamentWithResults: TournamentWithResults): TournamentWithResults {
+function parseTournament(tournament: Tournament): Tournament {
   return {
-    ...tournamentWithResults,
-    tournament: {
-      ...tournamentWithResults.tournament,
-      startingDate: new Date(tournamentWithResults.tournament.startingDate),
-      groups: tournamentWithResults.tournament.groups.map((group) => {
-        return {
-          ...group,
-          matches: group.matches.map((match) => {
-            return {
-              ...match,
-              date: new Date(match.date),
-            };
-          }),
-        };
-      }),
-    },
+    ...tournament,
+    startingDate: new Date(tournament.startingDate),
+    groups: tournament.groups.map((group) => {
+      return {
+        ...group,
+        matches: group.matches.map((match) => {
+          return {
+            ...match,
+            date: new Date(match.date),
+          };
+        }),
+      };
+    }),
   };
 }
 
@@ -28,10 +25,9 @@ function parseTournament(tournamentWithResults: TournamentWithResults): Tourname
   providedIn: 'root',
 })
 export class TournamentService {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
-  getTournamentById(id: number): Observable<TournamentWithResults> {
-    return this.http.get<TournamentWithResults>(`api/tournaments/${id}`).pipe(map((tournamentWithResults) => parseTournament(tournamentWithResults)));
+  getTournamentById(id: number): Observable<Tournament> {
+    return this.http.get<Tournament>(`api/tournaments/${id}`).pipe(map((Tournament) => parseTournament(Tournament)));
   }
 }

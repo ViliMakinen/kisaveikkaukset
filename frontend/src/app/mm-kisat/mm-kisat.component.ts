@@ -1,6 +1,6 @@
 import { UserService } from '../user.service';
 import { Component, OnDestroy } from '@angular/core';
-import { countries, Country, MatchResult, Result, Team, Tournament, TournamentWithResults, UserExtraPredictions } from '../constants';
+import { countries, Country, Match, MatchResult, Result, Team, Tournament, UserExtraPredictions } from '../constants';
 import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { FormBuilder } from '@angular/forms';
@@ -12,19 +12,26 @@ import { FormBuilder } from '@angular/forms';
 })
 export class MmKisatComponent implements OnDestroy {
   userPredictions: MatchResult[] = [];
-  tournamentWithResults$: Observable<TournamentWithResults> = this.tournamentService.getTournamentById(1);
+  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(1);
   tournament: Tournament | null = null;
   results: MatchResult[] = [];
   teams: Team[] = [];
+  matches: Match[] = [];
   userExtraPredictions: UserExtraPredictions = { mostGoals: '', mostCards: '', topFour: [], topScorer: '' };
   countries: Country[] = [];
 
   private tournamentSubscription: Subscription;
 
   constructor(public userService: UserService, private tournamentService: TournamentService, private _formBuilder: FormBuilder) {
-    this.tournamentSubscription = this.tournamentWithResults$.subscribe((tournamentWithResults) => {
-      this.tournament = tournamentWithResults.tournament;
-      this.results = tournamentWithResults.results;
+    this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
+      this.tournament = tournament;
+      this.matches = this.tournament.groups.flatMap((group) => group.matches);
+      this.results = this.matches.map((match) => {
+        return {
+          id: match.id,
+          result: match.result,
+        };
+      });
       this.countries = countries;
       this.initializeUserPredictions();
       this.initializeUserOtherPredictions();
@@ -49,8 +56,7 @@ export class MmKisatComponent implements OnDestroy {
     if (localStorage.getItem(this.userService.user?.firstName + 'predictions')) {
       this.userPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'predictions')!);
     } else {
-      const matches = this.tournament!.groups.flatMap((group) => group.matches);
-      this.userPredictions = matches.map((match) => {
+      this.userPredictions = this.matches.map((match) => {
         return { id: match.id, result: null };
       });
     }
@@ -75,10 +81,8 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   updateUserPredictions(): void {
-    const matches = this.tournament!.groups.flatMap((group) => group.matches);
-
     this.userPredictions.forEach((matchResult) => {
-      const match = matches.find((match) => match.id === matchResult.id)!;
+      const match = this.matches.find((match) => match.id === matchResult.id)!;
       if (matchResult.result === '1') {
         this.modifyTeamPoints(match.home, 3);
       } else if (matchResult.result === 'X') {

@@ -4,11 +4,6 @@ export interface Tournament {
   startingDate: Date;
 }
 
-export interface TournamentWithResults {
-  tournament: Tournament;
-  results: MatchResult[];
-}
-
 export interface Group {
   name: string;
   matches: Match[];
@@ -26,6 +21,7 @@ export interface Match {
   away: string;
   date: Date;
   id: number;
+  result: Result;
 }
 
 export interface MatchResult {

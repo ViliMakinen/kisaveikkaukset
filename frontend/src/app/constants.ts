@@ -11,11 +11,6 @@ export interface UserExtraPredictions {
   topScorer: string;
 }
 
-export interface TournamentWithResults {
-  tournament: Tournament;
-  results: MatchResult[];
-}
-
 export interface Group {
   name: string;
   matches: Match[];
@@ -33,6 +28,7 @@ export interface Match {
   away: string;
   date: Date;
   id: number;
+  result: Result;
 }
 
 export interface MatchResult {
@@ -87,4 +83,3 @@ export const countries: Country[] = [
   { name: 'Australia', id: 'au' },
   { name: 'Costa Rica', id: 'cr' },
 ];
-export const loginCode = 'a';
