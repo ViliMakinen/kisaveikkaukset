@@ -35,14 +35,14 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
   { path: 'overview', component: LandingPageComponent, canActivate: [LoggedInGuard] },
-  { path: 'authorization', component: AuthPageComponent, canActivate: [CodeGuardService] },
+  { path: '', component: AuthPageComponent, canActivate: [CodeGuardService] },
   { path: 'home', component: HomeComponent, canActivate: [LoggedInGuard] },
   { path: 'MM-kisat-2022', component: MmKisatComponent, canActivate: [LoggedInGuard] },
   { path: 'create-group', component: CreateGroupComponent, canActivate: [AuthGuard] },
   { path: 'admin-view', component: AdminViewComponent, canActivate: [LoggedInGuard] },
   { path: 'information', component: InformationComponent, canActivate: [LoggedInGuard] },
 
-  { path: '**', redirectTo: 'authorization' },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
