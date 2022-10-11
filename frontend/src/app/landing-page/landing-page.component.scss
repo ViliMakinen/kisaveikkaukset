@@ -1,0 +1,23 @@
+.main-content-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+
+  .join-create-container {
+    display: flex;
+    justify-content: space-evenly;
+    column-gap: 50px;
+    flex-direction: row;
+    height: 30%;
+  }
+
+  .tournament-container {
+    display: flex;
+    justify-content: space-evenly;
+    column-gap: 30px;
+    flex-direction: row;
+    height: 30%;
+  }
+}

@@ -75,12 +75,7 @@
 
 //    37. Add check-marks next to extra predictions to indicate if the selection is filled properly
 
-      38. Add proper authentication
-
-      39. Add prisma
-
-      40. Add docker
-
+      38. Catch errors instead of application going down
 
 
 ...
