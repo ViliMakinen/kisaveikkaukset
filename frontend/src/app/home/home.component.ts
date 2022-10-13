@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter, isBefore, isSameDay } from 'date-fns';
+import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter, isBefore, isSameDay, isToday } from 'date-fns';
 import { countries, Country, Match, MatchResult, MockUser, Tournament } from '../constants';
 import { UserService } from '../user.service';
 import { Observable, Subscription } from 'rxjs';
@@ -135,8 +135,10 @@ export class HomeComponent implements OnDestroy {
   }
 
   private initializeTodaysGames() {
-    //TODO: currently uses isSameDay for testing purposes before tournament starts, change to isToday later
-    this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) => isSameDay(match.date, new Date('2022-11-21T19:00:00')));
+    this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) => isToday(match.date));
+    if (this.gamesToday.length < 1) {
+      this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) => isSameDay(match.date, new Date('2022-11-19T19:00:00+02:00')));
+    }
     this.gamesToday.sort((a, b) => {
       if (isBefore(a.date, b.date)) {
         return -1;

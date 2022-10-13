@@ -47,11 +47,20 @@
         </ng-template>
       </div>
       <div class="games-today-container">
-        <div class="games-today-title-container">
-          Päivän matsit
-          <mat-icon>today</mat-icon>
-          {{ today | date: 'dd.MM.yyyy' }}
-        </div>
+        <ng-container *ngIf="hasTournamentStarted()">
+          <div class="games-today-title-container">
+            Päivän matsit
+            <mat-icon>today</mat-icon>
+            {{ today | date: 'dd.MM.yyyy' }}
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!hasTournamentStarted()">
+          <div class="games-today-title-container">
+            Turnaus alkaa
+            <mat-icon>today</mat-icon>
+            {{ tournament.startingDate | date: 'dd.MM.yyyy' }}
+          </div>
+        </ng-container>
         <div class="games-today-row-container" *ngFor="let game of gamesToday">
           <span class="games-today-row-box"> <img [src]="'assets/images/4x3/' + fetchFlag(game.home) + '.svg'"
                                                   alt="home team flag" class="flag-image"/> {{ game.home }}</span>

@@ -17,7 +17,7 @@ export class AdminViewComponent {
   tournament: Tournament | null = null;
   matches: Match[] = [];
 
-  constructor(public userService: UserService, private tournamentService: TournamentService, private _snackBar: MatSnackBar) {
+  constructor(public userService: UserService, private tournamentService: TournamentService, private snackBar: MatSnackBar) {
     this.tournament$.subscribe((tournament) => {
       this.tournament = tournament;
       this.matches = this.tournament.groups.flatMap((group) => group.matches);
@@ -47,7 +47,7 @@ export class AdminViewComponent {
     });
   }
 
-  nullResults(): void {
+  emptyResults(): void {
     this.tournament!.groups.forEach((group) => {
       group.matches.forEach((match) => (match.result = null));
     });
@@ -57,11 +57,11 @@ export class AdminViewComponent {
     });
   }
 
-  openSnackBar(message: string) {
-    this._snackBar.open(message, '', { duration: 1500 });
+  openSnackBar(message: string): void {
+    this.snackBar.open(message, '', { duration: 1500 });
   }
 
-  saveResults() {
+  saveResults(): void {
     this.tournamentService.updateTournamentResults(this.tournament!).subscribe((tournament) => {
       this.tournament = tournament;
       this.openSnackBar('Tulokset tallennettu kantaan');
