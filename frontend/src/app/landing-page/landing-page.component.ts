@@ -12,7 +12,7 @@ import { UserService } from '../user.service';
 export class LandingPageComponent {
   // groups$: Observable<PlayerGroup[]>;
   // groups: PlayerGroup[] = [];
-  tournaments: string[] = ['mm-kisat', 'em-kisat', 'liiga'];
+  usersTournaments: string[] = ['mm-kisat', 'em-kisat', 'liiga'];
   code = '';
   failMessage: string | null = null;
 
@@ -30,9 +30,10 @@ export class LandingPageComponent {
 
   tryJoiningGroup() {
     if (this.code === '123') {
-      this.router.navigateByUrl('/turnauksenSivu');
+      this.router.navigateByUrl('/home');
     } else {
       this.failMessage = 'Koodilla ei löytynyt ryhmää';
+      this.code = '';
     }
   }
 
