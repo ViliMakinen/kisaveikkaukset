@@ -81,6 +81,10 @@
 
       40. Add docker
 
+      41. Make create group actually work and create a group to db
+
+      42. Create option for user to add a nickname to themselves
+
 
 
 ...
