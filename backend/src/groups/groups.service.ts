@@ -16,7 +16,6 @@ export class GroupsService {
   }
 
   async getAll(): Promise<any[]> {
-    console.log(this.generateRandomCode(8));
     return await this.prisma.group.findMany();
   }
 }

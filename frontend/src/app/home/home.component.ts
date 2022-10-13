@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter, isBefore, isSameDay, isToday } from 'date-fns';
 import { countries, Country, Match, MatchResult, MockUser, Tournament } from '../constants';
 import { UserService } from '../user.service';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { User } from '../auth.service';
 import { GroupService } from '../group.service';
@@ -16,7 +16,7 @@ export class HomeComponent implements OnDestroy {
   currentUser: Partial<User> | null = this.userService.user;
   userPredictions: MatchResult[] = [];
   tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(2);
-  userGroups$: Observable<any> = this.groupService.getAllGroups().pipe(tap(console.log));
+  userGroups$: Observable<any> = this.groupService.getAllGroups();
   tournament: Tournament | null = null;
   results: MatchResult[] | null = null;
   matches: Match[] = [];
