@@ -14,7 +14,7 @@ import { User } from '../auth.service';
 export class HomeComponent implements OnDestroy {
   currentUser: Partial<User> | null = this.userService.user;
   userPredictions: MatchResult[] = [];
-  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(1);
+  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(2);
   tournament: Tournament | null = null;
   results: MatchResult[] | null = null;
   matches: Match[] = [];

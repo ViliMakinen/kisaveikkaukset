@@ -2,6 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: calc(100% - 50px);
+  overflow: scroll;
+
+  div:nth-child(even) {
+    background-color: rgb(240, 235, 235);
+  }
 
   .match-row {
     display: flex;
@@ -21,6 +27,44 @@
 
       .date {
         margin-right: 20px;
+      }
+    }
+  }
+
+  .toolbar-nav {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: lightslategray;
+    column-gap: 10px;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+
+    button {
+      height: 40px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .match-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .match-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .teams {
+      }
+
+      .match-date {
+        .date {
+        }
       }
     }
   }
