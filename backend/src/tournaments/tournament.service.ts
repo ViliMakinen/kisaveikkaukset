@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
+import { Tournament } from '../../constants';
 
 @Injectable()
 export class TournamentService {
@@ -10,6 +11,16 @@ export class TournamentService {
       where: {
         id: id,
       },
+    });
+  }
+
+  async saveTournamentResults(tournament: Tournament): Promise<any> {
+    const tournamentJson = JSON.parse(JSON.stringify(tournament));
+    return await this.prisma.tournament.update({
+      where: {
+        id: 2,
+      },
+      data: { tournamentData: tournamentJson },
     });
   }
 

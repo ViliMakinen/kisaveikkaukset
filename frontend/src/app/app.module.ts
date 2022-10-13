@@ -32,6 +32,7 @@ import { InformationComponent } from './information/information.component';
 import { AuthService } from './auth.service';
 import { CodeGuardService } from './code-guard.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const routes: Routes = [
   { path: 'overview', component: LandingPageComponent, canActivate: [LoggedInGuard] },
@@ -69,6 +70,7 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatStepperModule,
+    MatSnackBarModule,
   ],
   providers: [LoggedInGuard, CodeGuardService, AuthService],
   bootstrap: [AppComponent],

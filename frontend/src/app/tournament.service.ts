@@ -28,6 +28,10 @@ export class TournamentService {
   constructor(private http: HttpClient) {}
 
   getTournamentById(id: number): Observable<Tournament> {
-    return this.http.get<Tournament>(`api/tournaments/${id}`).pipe(map((Tournament) => parseTournament(Tournament)));
+    return this.http.get<Tournament>(`api/tournaments/${id}`).pipe(map((tournament) => parseTournament(tournament)));
+  }
+
+  updateTournamentResults(tournament: Tournament): Observable<Tournament> {
+    return this.http.post<Tournament>('api/tournaments', tournament).pipe(map((tournament) => parseTournament(tournament)));
   }
 }
