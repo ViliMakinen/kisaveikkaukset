@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 
-interface PlayerGroup {}
+// interface PlayerGroup {}
 
 @Component({
   selector: 'app-landing-page',
@@ -11,7 +11,10 @@ interface PlayerGroup {}
 })
 export class LandingPageComponent {
   // groups$: Observable<PlayerGroup[]>;
-  groups: PlayerGroup[] = [];
+  // groups: PlayerGroup[] = [];
+  usersTournaments: string[] = ['mm-kisat', 'em-kisat', 'liiga'];
+  code = '';
+  failMessage: string | null = null;
 
   constructor(private router: Router, private userService: UserService) {
     // this.groups$ = this.groupService.getGroups(this.userService.user?.id).subscribe(groups => {
@@ -22,11 +25,19 @@ export class LandingPageComponent {
     //   }
     //
     // });
-
-    this.rerouting();
+    //this.rerouting();
   }
 
-  rerouting() {
-    this.router.navigateByUrl('home');
+  tryJoiningGroup(): void {
+    if (this.code === '123') {
+      this.router.navigateByUrl('/home');
+    } else {
+      this.failMessage = 'Koodilla ei löytynyt ryhmää';
+      this.code = '';
+    }
   }
+
+  // rerouting() {
+  //   this.router.navigateByUrl('home');
+  // }
 }

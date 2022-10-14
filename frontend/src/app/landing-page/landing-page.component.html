@@ -1,1 +1,18 @@
-Moro
+<div class="main-content-container">
+  <div class="tournament-title-container">Turnauksesi</div>
+  <div class="tournament-container">
+    <div *ngFor="let tournament of usersTournaments">
+      <button class="clickable tournament-box" mat-raised-button>{{ tournament }}</button>
+    </div>
+  </div>
+  <div class="join-create-container">
+    <span class="join-container">
+      <mat-form-field appearance="outline" class="input-container"><input [(ngModel)]="code" autocomplete="off" matInput
+                                                                          placeholder="Anna ryhmän koodi"/></mat-form-field>
+      <button (click)="tryJoiningGroup()" class="clickable button" mat-raised-button>Liity ryhmään</button>
+      <div class="fail-message">{{ failMessage }}</div> </span
+    ><span class="create-container">
+      <button mat-raised-button class="clickable button" routerLink="/create-group">Luo uusi ryhmä</button>
+    </span>
+  </div>
+</div>
