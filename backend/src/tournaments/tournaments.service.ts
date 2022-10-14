@@ -14,7 +14,7 @@ export class TournamentsService {
     });
   }
 
-  async saveTournamentResults(tournament: Tournament): Promise<any> {
+  async updateTournamentResults(tournament: Tournament): Promise<any> {
     const tournamentJson = JSON.parse(JSON.stringify(tournament));
     return await this.prisma.tournament.update({
       where: {

@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Tournament } from './constants';
+import { Tournament, TournamentWithId } from './constants';
 import { map, Observable } from 'rxjs';
+
+function parseTournaments(tournaments: TournamentWithId[]): TournamentWithId[] {
+  return tournaments.map((tournament) => {
+    return {
+      ...tournament,
+      tournamentData: parseTournament(tournament.tournamentData),
+    };
+  });
+}
 
 function parseTournament(tournament: Tournament): Tournament {
   return {
@@ -29,6 +38,10 @@ export class TournamentService {
 
   getTournamentById(id: number): Observable<Tournament> {
     return this.http.get<Tournament>(`api/tournaments/${id}`).pipe(map((tournament) => parseTournament(tournament)));
+  }
+
+  getAllTournaments(): Observable<TournamentWithId[]> {
+    return this.http.get<TournamentWithId[]>('api/tournaments').pipe(map((tournament) => parseTournaments(tournament)));
   }
 
   updateTournamentResults(tournament: Tournament): Observable<Tournament> {

@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AdminViewComponent {
   results: MatchResult[] = [];
-  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(2);
+  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(1);
   tournament: Tournament | null = null;
   matches: Match[] = [];
 

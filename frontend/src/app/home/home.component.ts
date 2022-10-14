@@ -15,7 +15,7 @@ import { GroupService } from '../group.service';
 export class HomeComponent implements OnDestroy {
   currentUser: Partial<User> | null = this.userService.user;
   userPredictions: MatchResult[] = [];
-  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(2);
+  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(1);
   userGroups$: Observable<any> = this.groupService.getAllGroups();
   tournament: Tournament | null = null;
   results: MatchResult[] | null = null;

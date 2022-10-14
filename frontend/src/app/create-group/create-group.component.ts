@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TournamentWithId } from '../constants';
+import { UserService } from '../user.service';
+import { TournamentService } from '../tournament.service';
+import { GroupService } from '../group.service';
 
 @Component({
   selector: 'app-create-group',
@@ -6,9 +11,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./create-group.component.scss'],
 })
 export class CreateGroupComponent {
-  code: string = '';
   groupName: string = '';
-  groupTournament: string = '';
+  tournamentId: number | null = null;
 
-  availableTournaments: string[] = ['MM-kisat', 'Futsal-liiga', 'SM-liga'];
+  availableTournaments$: Observable<TournamentWithId[]> = this.tournamentService.getAllTournaments();
+
+  constructor(public userService: UserService, private tournamentService: TournamentService, private groupService: GroupService) {}
+
+  createNewGroup(): void {
+    this.groupService.createNewGroup(this.groupName, this.tournamentId!).subscribe((group) => console.log(group));
+  }
 }

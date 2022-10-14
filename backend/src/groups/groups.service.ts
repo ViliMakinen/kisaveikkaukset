@@ -18,4 +18,16 @@ export class GroupsService {
   async getAll(): Promise<any[]> {
     return await this.prisma.group.findMany();
   }
+
+  async createGroup(groupName: string, tournamentId: number, userId: number) {
+    const code = this.generateRandomCode(5);
+    return await this.prisma.group.create({
+      data: {
+        tournament: { connect: { id: tournamentId } },
+        name: groupName,
+        code: code,
+        UserGroupPredictions: { create: { user: { connect: { id: userId } }, predictions: [] } },
+      },
+    });
+  }
 }
