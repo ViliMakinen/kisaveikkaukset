@@ -21,6 +21,10 @@
     .join-container {
       display: flex;
       flex-direction: column;
+
+      .fail-message {
+        color: red;
+      }
     }
 
     .create-container {

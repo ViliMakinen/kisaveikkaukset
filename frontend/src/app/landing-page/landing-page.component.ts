@@ -28,7 +28,7 @@ export class LandingPageComponent {
     //this.rerouting();
   }
 
-  tryJoiningGroup() {
+  tryJoiningGroup(): void {
     if (this.code === '123') {
       this.router.navigateByUrl('/home');
     } else {

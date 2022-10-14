@@ -10,7 +10,7 @@
       <mat-form-field appearance="outline" class="input-container"><input [(ngModel)]="code" autocomplete="off" matInput
                                                                           placeholder="Anna ryhmän koodi"/></mat-form-field>
       <button (click)="tryJoiningGroup()" class="clickable button" mat-raised-button>Liity ryhmään</button>
-      <div style="color: red">{{ failMessage }}</div> </span
+      <div class="fail-message">{{ failMessage }}</div> </span
     ><span class="create-container">
       <button mat-raised-button class="clickable button" routerLink="/create-group">Luo uusi ryhmä</button>
     </span>
