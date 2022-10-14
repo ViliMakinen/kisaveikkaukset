@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma.service';
 import { Tournament } from '../../constants';
 
 @Injectable()
-export class TournamentService {
+export class TournamentsService {
   constructor(private prisma: PrismaService) {}
 
   async getTournamentById(id: number): Promise<any> {

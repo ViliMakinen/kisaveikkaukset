@@ -65,7 +65,7 @@
 
 //    32. Button to home to mirror veikkauksiin button
 
-      33. Fix flag alignment on desktop + mobile
+//    33. Fix flag alignment on desktop + mobile
 
 //    34. In MM-Kisat view, add some styling to the 1x2 rows to make them more visible
 
@@ -75,8 +75,17 @@
 
 //    37. Add check-marks next to extra predictions to indicate if the selection is filled properly
 
-      38. Catch errors instead of application going down
+//    38. Add proper authentication
 
+//    39. Add prisma
+
+//    40. Add docker
+
+      41. Make create group actually work and create a group to db
+
+      42. Create option for user to add a nickname to themselves
+    
+      43. Catch errors instead of application going down
 
 ...
 ...
@@ -84,11 +93,11 @@
 
 // - Create a backend (NestJS).
 
- - Create a database (Postgres + Prisma).
+// - Create a database (Postgres + Prisma).
 
  - Create frontend tests.
 
  - Deploy to somewhere.
 
- - Install docker.
+// - Install docker.
 

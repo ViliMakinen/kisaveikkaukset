@@ -71,6 +71,7 @@
         </div>
       </div>
     </div>
+    <ng-container *ngIf="userGroups$ | async as groups">toimii {{groups | json}} {{groups.length}} </ng-container>
     <mat-divider></mat-divider>
     <div class="tab-group-title">Lohkotilanteet</div>
     <mat-tab-group>

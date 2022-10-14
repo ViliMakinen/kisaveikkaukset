@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Tournament, TournamentWithId } from '../../constants';
-import { TournamentService } from './tournament.service';
+import { TournamentsService } from './tournaments.service';
 
 @Controller('tournaments')
 export class TournamentsController {
-  constructor(private tournamentService: TournamentService) {}
+  constructor(private tournamentService: TournamentsService) {}
 
   @Get()
   getAll(): Promise<TournamentWithId[]> {

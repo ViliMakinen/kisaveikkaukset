@@ -5,6 +5,7 @@ import { UserService } from '../user.service';
 import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { User } from '../auth.service';
+import { GroupService } from '../group.service';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ export class HomeComponent implements OnDestroy {
   currentUser: Partial<User> | null = this.userService.user;
   userPredictions: MatchResult[] = [];
   tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(2);
+  userGroups$: Observable<any> = this.groupService.getAllGroups();
   tournament: Tournament | null = null;
   results: MatchResult[] | null = null;
   matches: Match[] = [];
@@ -30,7 +32,7 @@ export class HomeComponent implements OnDestroy {
   minutes: number = 0;
   seconds: number = 0;
 
-  constructor(public userService: UserService, private tournamentService: TournamentService) {
+  constructor(public userService: UserService, private tournamentService: TournamentService, private groupService: GroupService) {
     this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
       this.tournament = tournament;
       this.matches = this.tournament.groups.flatMap((group) => group.matches);
