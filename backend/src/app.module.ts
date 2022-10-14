@@ -8,7 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { OAuth2GoogleConfig } from './config/oauth2-google.config';
 import { UsersService } from './users/users.service';
 import { GroupsController } from './groups/groups.controller';
-import { TournamentService } from './tournaments/tournament.service';
+import { TournamentsService } from './tournaments/tournaments.service';
+import { GroupsService } from './groups/groups.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { TournamentService } from './tournaments/tournament.service';
     AuthModule,
   ],
   controllers: [AppController, UsersController, TournamentsController, GroupsController],
-  providers: [PrismaService, UsersService, TournamentService],
+  providers: [PrismaService, UsersService, TournamentsService, GroupsService],
 })
 export class AppModule {}
