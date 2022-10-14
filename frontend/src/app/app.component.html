@@ -1,19 +1,11 @@
 <mat-toolbar class="toolbar" color="primary">
   <div class="side-nav-button">
-    <mat-icon *ngIf="router.url !== '/'" class="clickable" (click)="sidenav.toggle()">menu</mat-icon>
+    <mat-icon (click)="sidenavService.toggle()"
+              *ngIf="router.url !== '/' && router.url !== '/overview' && router.url !== '/overview/create-group'"
+              class="clickable">menu
+    </mat-icon>
   </div>
   <div class="title clickable" routerLink="">Kisaveikkaukset</div>
   <div></div>
 </mat-toolbar>
-<mat-drawer-container class="application-container" hasBackdrop="true">
-  <mat-drawer #sidenav autoFocus="false" mode="over">
-    <app-side-navigation (closeSidenav)="sidenav.close()"></app-side-navigation>
-  </mat-drawer>
-  <mat-drawer-content>
-    <div class="content">
-      <div class="main-content">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-  </mat-drawer-content>
-</mat-drawer-container>
+<router-outlet></router-outlet>

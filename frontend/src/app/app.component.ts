@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SidenavService } from './sidenav.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public router: Router) {}
+  constructor(public router: Router, public sidenavService: SidenavService) {
+  }
 }

@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AuthPageComponent {
   logIn(): void {
-    window.location.replace('/api/oauth2/google?redirect_url=/home');
+    window.location.replace('/api/oauth2/google?redirect_url=/overview');
   }
 }

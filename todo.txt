@@ -81,11 +81,19 @@
 
 //    40. Add docker
 
-      41. Make create group actually work and create a group to db
+//    41. Make create group actually work and create a group to db
 
       42. Create option for user to add a nickname to themselves
     
       43. Catch errors instead of application going down
+
+      44. Add a link back to overview page (sidenav)
+
+      45. Add a way to join group by code
+
+      46. Show users actual groups in the overview page
+
+      47. Show groups' users in the groups home page
 
 ...
 ...

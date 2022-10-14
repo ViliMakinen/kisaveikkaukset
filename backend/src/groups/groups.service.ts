@@ -28,6 +28,6 @@ export class GroupsService {
         code: code,
         UserGroupPredictions: { create: { user: { connect: { id: userId } }, predictions: [] } },
       },
-    });
+    })
   }
 }

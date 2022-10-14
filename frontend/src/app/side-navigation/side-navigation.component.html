@@ -1,8 +1,6 @@
 <div class="main-sidenav-container">
-  <div class="route clickable" (click)="closeSidenav.emit()" routerLink="/home">Aloitussivu</div>
-  <div class="route clickable" (click)="closeSidenav.emit()" routerLink="/MM-kisat-2022">Jalkapallon MM-kisat</div>
-  <div class="route clickable" (click)="closeSidenav.emit()" routerLink="/create-group">Luo ryhmä</div>
-  <div *ngIf="isAdmin()" class="route clickable" (click)="closeSidenav.emit()" routerLink="/admin-view">Admin paneeli
-  </div>
-  <div class="route clickable" (click)="closeSidenav.emit()" routerLink="/information">info</div>
+  <div (click)="routeTo('')" class="route clickable">Aloitussivu</div>
+  <div (click)="routeTo('tournament')" class="route clickable">Jalkapallon MM-kisat</div>
+  <div (click)="routeTo('information')" class="route clickable">Information</div>
+  <div (click)="routeTo('admin-view')" *ngIf="isAdmin()" class="route clickable">Admin paneeli</div>
 </div>

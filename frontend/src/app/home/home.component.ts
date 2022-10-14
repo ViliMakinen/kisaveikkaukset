@@ -1,11 +1,22 @@
 import { Component, OnDestroy } from '@angular/core';
-import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isAfter, isBefore, isSameDay, isToday } from 'date-fns';
+import {
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+  differenceInSeconds,
+  isAfter,
+  isBefore,
+  isSameDay,
+  isToday
+} from 'date-fns';
 import { countries, Country, Match, MatchResult, MockUser, Tournament } from '../constants';
 import { UserService } from '../user.service';
 import { Observable, Subscription } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { User } from '../auth.service';
 import { GroupService } from '../group.service';
+import { ActivatedRoute } from '@angular/router';
+import { SidenavService } from '../sidenav.service';
 
 @Component({
   selector: 'app-home',

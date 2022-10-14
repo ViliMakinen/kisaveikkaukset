@@ -31,21 +31,52 @@ import { InformationComponent } from './information/information.component';
 import { AuthService } from './auth.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { OverviewComponent } from './overview/overview.component';
+import { GroupComponent } from './group/group.component';
 
 const routes: Routes = [
-  { path: 'overview', component: LandingPageComponent, canActivate: [LoggedInGuard] },
   { path: '', component: AuthPageComponent },
-  { path: 'home', component: HomeComponent, canActivate: [LoggedInGuard] },
-  { path: 'MM-kisat-2022', component: MmKisatComponent, canActivate: [LoggedInGuard] },
-  { path: 'create-group', component: CreateGroupComponent, canActivate: [LoggedInGuard] },
-  { path: 'admin-view', component: AdminViewComponent, canActivate: [LoggedInGuard] },
-  { path: 'information', component: InformationComponent, canActivate: [LoggedInGuard] },
+  {
+    path: 'overview',
+    component: OverviewComponent,
+    canActivate: [LoggedInGuard],
+    children: [
+      { path: '', component: LandingPageComponent },
+      { path: 'create-group', component: CreateGroupComponent },
+      {
+        path: ':groupId',
+        component: GroupComponent,
+        children: [
+          { path: '', component: HomeComponent },
+          { path: 'tournament', component: MmKisatComponent },
+          { path: 'admin-view', component: AdminViewComponent },
+          { path: 'information', component: InformationComponent },
+        ],
+      },
+      {
+        path: '**',
+        redirectTo: '/overview',
+      },
+    ],
+  },
 
   { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SideNavigationComponent, MmKisatComponent, CreateGroupComponent, AuthPageComponent, AdminViewComponent, InformationComponent, LandingPageComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    SideNavigationComponent,
+    MmKisatComponent,
+    OverviewComponent,
+    CreateGroupComponent,
+    AuthPageComponent,
+    AdminViewComponent,
+    InformationComponent,
+    LandingPageComponent,
+    GroupComponent
+  ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),

@@ -7,18 +7,18 @@
       <mat-step [completed]="arePredictionsIncomplete()" label="1X2">
         <div class="button-container">
           <span>
-          <button class="clickable" mat-raised-button routerLink="/home">
-            <mat-icon>arrow_left</mat-icon>
-            Aloitussivulle
-          </button>
-            </span><span class="button-info-container">
-            <button [disabled]="!arePredictionsIncomplete()" class="clickable" mat-raised-button matStepperNext>Muut
-            </button>
+            <button [routerLink]="['../']" class="clickable" mat-raised-button>
+              <mat-icon>arrow_left</mat-icon>
+              Aloitussivulle
+            </button> </span
+          ><span class="button-info-container">
+            <button [disabled]="!arePredictionsIncomplete()" class="clickable" mat-raised-button
+                    matStepperNext>Muut</button>
             <div class="flex-container" matTooltip="Täytä ensin 1X2 veikkaukset">
-              <img alt="info" src="assets/images/info.svg"/>
-            </div></span>
+              <img alt="info" src="assets/images/info.svg"/></div
+            ></span>
         </div>
-        <mat-tab-group style="min-height: 400px;" [animationDuration]="'0'">
+        <mat-tab-group [animationDuration]="'0'" style="min-height: 400px">
           <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
             <div class="group-title">Lohko {{ group.name }}</div>
             <div class="tab-container">
@@ -51,9 +51,8 @@
                 <div class="group-title-container"><span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
                 </div>
                 <div *ngFor="let team of group.teams" class="group-row">
-                  <span class="row-box">
-                 <img [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'" alt="away team flag"
-                      class="flag-image"/>  {{ team.name }}</span>
+                  <span class="row-box"> <img [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'"
+                                              alt="away team flag" class="flag-image"/> {{ team.name }}</span>
                   <span class="row-box">{{ team.predictedPoints }}</span>
                 </div>
               </div>
@@ -79,8 +78,7 @@
               </mat-select>
             </mat-form-field>
             <span><img alt="info" matTooltip="Veikkaa lohkovaiheessa eniten varoituksia kerännyttä joukkuetta"
-                       src="assets/images/info.svg"/>
-              </span>
+                       src="assets/images/info.svg"/> </span>
           </div>
           <div>
             <div class="button-info-container">
@@ -120,7 +118,7 @@
                 <mat-label>Maalipörssin voittaja</mat-label>
                 <span *ngIf="userExtraPredictions.topScorer.length > 2 && !arePredictionsLocked()"><mat-icon
                   style="color: chartreuse">done</mat-icon></span>
-                <input [disabled]="arePredictionsLocked()" [(ngModel)]="userExtraPredictions.topScorer" matInput
+                <input [(ngModel)]="userExtraPredictions.topScorer" [disabled]="arePredictionsLocked()" matInput
                        placeholder="Etunimi Sukunimi" type="text"/>
               </mat-form-field>
               <span><img alt="info" matTooltip="Veikkaa koko turnauksen maalipörssin voittaja"
