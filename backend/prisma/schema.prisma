@@ -27,6 +27,7 @@ model UserGroupPredictions {
 
 model Group {
   id                   Int                    @id @default(autoincrement())
+  name                 String
   code                 String
   tournament           Tournament             @relation(fields: [tournamentId], references: [id])
   tournamentId         Int

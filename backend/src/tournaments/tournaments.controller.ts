@@ -7,8 +7,8 @@ export class TournamentsController {
   constructor(private tournamentService: TournamentsService) {}
 
   @Get()
-  getAll(): Promise<TournamentWithId[]> {
-    return this.tournamentService.getAll();
+  async getAll(): Promise<TournamentWithId[]> {
+    return await this.tournamentService.getAll();
   }
 
   @Get(':id')
@@ -18,7 +18,7 @@ export class TournamentsController {
   }
 
   @Post()
-  async create(@Body() tournament: Tournament): Promise<Tournament> {
-    return (await this.tournamentService.saveTournamentResults(tournament)).tournamentData;
+  async update(@Body() tournament: Tournament): Promise<Tournament> {
+    return (await this.tournamentService.updateTournamentResults(tournament)).tournamentData;
   }
 }

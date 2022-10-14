@@ -1,5 +1,4 @@
 import { LoggedInGuard } from './log-in-guard.service';
-import { AuthGuard } from './auth-guard.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -30,16 +29,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
 import { InformationComponent } from './information/information.component';
 import { AuthService } from './auth.service';
-import { CodeGuardService } from './code-guard.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const routes: Routes = [
   { path: 'overview', component: LandingPageComponent, canActivate: [LoggedInGuard] },
-  { path: '', component: AuthPageComponent, canActivate: [CodeGuardService] },
+  { path: '', component: AuthPageComponent },
   { path: 'home', component: HomeComponent, canActivate: [LoggedInGuard] },
   { path: 'MM-kisat-2022', component: MmKisatComponent, canActivate: [LoggedInGuard] },
-  { path: 'create-group', component: CreateGroupComponent, canActivate: [AuthGuard] },
+  { path: 'create-group', component: CreateGroupComponent, canActivate: [LoggedInGuard] },
   { path: 'admin-view', component: AdminViewComponent, canActivate: [LoggedInGuard] },
   { path: 'information', component: InformationComponent, canActivate: [LoggedInGuard] },
 
@@ -72,7 +70,7 @@ const routes: Routes = [
     MatStepperModule,
     MatSnackBarModule,
   ],
-  providers: [LoggedInGuard, CodeGuardService, AuthService],
+  providers: [LoggedInGuard, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

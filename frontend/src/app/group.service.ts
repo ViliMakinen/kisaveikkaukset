@@ -11,4 +11,11 @@ export class GroupService {
   getAllGroups(): Observable<any> {
     return this.http.get<any>('api/groups');
   }
+
+  createNewGroup(groupName: string, tournamentId: number) {
+    return this.http.post<any>('api/groups', {
+      groupName,
+      tournamentId,
+    });
+  }
 }
