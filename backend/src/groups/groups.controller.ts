@@ -1,20 +1,19 @@
 import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { GroupsService } from './groups.service';
+import { GroupWithIdAndName, PlayerGroup } from '../../constants';
 
 @Controller('groups')
 export class GroupsController {
   constructor(private groupService: GroupsService) {}
 
   @Get()
-  async getAll(): Promise<any> {
-    return await this.groupService.getAll();
+  async getAllUsersGroups(@Req() req: any): Promise<GroupWithIdAndName[]> {
+    return await this.groupService.getAllUsersGroups(req.user.id);
   }
 
   @Get(':id')
-  getGroupById(@Param('id') id: string): Promise<any> {
-    // remove the Promise.resolve and replace with a call to the groups service where the actual database query is made
-    // remember to update the return type from any to something relevant
-    return Promise.resolve({});
+  async getById(@Param('id') id: string): Promise<PlayerGroup> {
+    return await this.groupService.getGroupById(parseInt(id, 10));
   }
 
   @Post()

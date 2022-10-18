@@ -1,6 +1,7 @@
 <div class="main-sidenav-container">
-  <div (click)="routeTo('')" class="route clickable">Aloitussivu</div>
-  <div (click)="routeTo('tournament')" class="route clickable">Jalkapallon MM-kisat</div>
+  <div (click)="routeTo('overview')" class="route clickable">Aloitussivu</div>
+  <div (click)="routeTo('')" class="route clickable">Jalkapallon MM-kisat</div>
+  <div (click)="routeTo('tournament')" class="route clickable">Veikkaukset</div>
   <div (click)="routeTo('information')" class="route clickable">Information</div>
   <div (click)="routeTo('admin-view')" *ngIf="isAdmin()" class="route clickable">Admin paneeli</div>
 </div>

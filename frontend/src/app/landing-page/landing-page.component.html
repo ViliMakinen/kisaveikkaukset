@@ -1,9 +1,11 @@
 <div class="main-content-container">
   <div class="tournament-title-container">Turnauksesi</div>
   <div class="tournament-container">
-    <div *ngFor="let tournament of usersTournaments">
-      <button class="clickable tournament-box" mat-raised-button>{{ tournament }}</button>
-    </div>
+    <ng-container *ngIf="group$ | async as usersGroups">
+      <div *ngFor="let group of usersGroups">
+        <button class="clickable tournament-box" mat-raised-button>{{ group.groupName }}</button>
+      </div>
+    </ng-container>
   </div>
   <div class="join-create-container">
     <span class="join-container">
