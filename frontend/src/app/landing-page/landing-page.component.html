@@ -3,7 +3,8 @@
   <div class="tournament-container">
     <ng-container *ngIf="group$ | async as usersGroups">
       <div *ngFor="let group of usersGroups">
-        <button class="clickable tournament-box" mat-raised-button>{{ group.groupName }}</button>
+        <button (click)="navigatoToGroup(group.groupId)" class="clickable tournament-box"
+                mat-raised-button>{{ group.groupName }}</button>
       </div>
     </ng-container>
   </div>

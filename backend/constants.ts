@@ -29,6 +29,13 @@ export interface Group {
   teams: Team[];
 }
 
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 export interface GroupWithIdAndName {
   groupId: number;
   groupName: string;

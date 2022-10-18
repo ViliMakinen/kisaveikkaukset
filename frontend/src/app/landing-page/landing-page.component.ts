@@ -10,7 +10,7 @@ import { GroupService } from '../group.service';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent {
-  code = 'wbx5U';
+  code = '';
   failMessage: string | null = null;
   group$: Observable<GroupWithIdAndName[]>;
 
@@ -21,12 +21,17 @@ export class LandingPageComponent {
   tryJoiningGroup(): void {
     this.groupService.joinGroup(this.code).subscribe(
       (group) => {
-        this.router.navigate(['overview/1']);
+        this.router.navigate(['overview/', group.groupId]);
       },
       (error) => {
         this.code = '';
+        console.log(error);
         this.failMessage = 'Koodilla ei löytynyt ryhmää';
       },
     );
+  }
+
+  navigatoToGroup(id: number): void {
+    this.router.navigate(['overview/', id]);
   }
 }

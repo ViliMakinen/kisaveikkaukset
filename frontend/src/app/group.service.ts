@@ -20,7 +20,7 @@ export class GroupService {
     });
   }
 
-  joinGroup(code: string) {
+  joinGroup(code: string): Observable<any> {
     return this.http.post<any>('api/code', {
       code,
     });
