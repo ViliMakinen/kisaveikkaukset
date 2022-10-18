@@ -34,6 +34,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
+  nickName: string;
 }
 
 export interface GroupWithIdAndName {

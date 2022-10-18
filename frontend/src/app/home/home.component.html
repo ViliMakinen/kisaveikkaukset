@@ -6,6 +6,7 @@
         <div>Liittymiskoodi</div>
         <div class="lettering-container"><span class="letter-box" *ngFor="let letter of groupCode"> {{letter}} </span>
         </div>
+        <button (click)="copyCode()" class="clickable button" mat-raised-button>kopioi</button>
       </div>
       <div class="info-box"><span class="box-title">Turnausmuoto</span><span> {{tournament.name}}</span></div>
     </div>

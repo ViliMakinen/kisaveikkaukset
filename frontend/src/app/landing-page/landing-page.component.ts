@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GroupWithIdAndName } from '../constants';
 import { GroupService } from '../group.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -13,8 +14,9 @@ export class LandingPageComponent {
   code = '';
   failMessage: string | null = null;
   group$: Observable<GroupWithIdAndName[]>;
+  nickName: string = '';
 
-  constructor(private router: Router, private groupService: GroupService) {
+  constructor(private router: Router, private groupService: GroupService, private userService: UserService) {
     this.group$ = this.groupService.getUsersGroups();
   }
 
@@ -29,6 +31,10 @@ export class LandingPageComponent {
         this.failMessage = 'Koodilla ei löytynyt ryhmää';
       },
     );
+  }
+
+  addNickName(): void {
+    this.userService.addNickName(this.nickName).subscribe((foo) => console.log(foo));
   }
 
   navigatoToGroup(id: number): void {

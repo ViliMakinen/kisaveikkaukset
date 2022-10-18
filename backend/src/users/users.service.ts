@@ -16,6 +16,18 @@ export class UsersService {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        nickName: user.nickName,
+      },
+    });
+  }
+
+  async addNickName(user: any, nickName: string): Promise<any> {
+    return await this.prisma.user.update({
+      where: {
+        email: user.email,
+      },
+      data: {
+        nickName: nickName,
       },
     });
   }

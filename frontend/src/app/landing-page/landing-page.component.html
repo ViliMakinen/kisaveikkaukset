@@ -1,5 +1,9 @@
 <div class="main-content-container">
   <div class="tournament-title-container">Turnauksesi</div>
+  <mat-form-field appearance="outline" class="input-container"><input [(ngModel)]="nickName" autocomplete="off" matInput
+                                                                      placeholder="Lisää itsellesi lempinimi"/>
+  </mat-form-field>
+  <button (click)="addNickName()" class="clickable button" mat-raised-button>Valmis</button>
   <div class="tournament-container">
     <ng-container *ngIf="group$ | async as usersGroups">
       <div *ngFor="let group of usersGroups">

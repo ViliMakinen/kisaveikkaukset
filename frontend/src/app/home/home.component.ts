@@ -25,6 +25,8 @@ import { TournamentService } from '../tournament.service';
 import { User } from '../auth.service';
 import { GroupService } from '../group.service';
 import { ActivatedRoute } from '@angular/router';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -54,10 +56,12 @@ export class HomeComponent implements OnDestroy {
   seconds: number = 0;
 
   constructor(
+    private clipboard: Clipboard,
     public userService: UserService,
     private route: ActivatedRoute,
     private tournamentService: TournamentService,
     private groupService: GroupService,
+    private snackbar: MatSnackBar,
   ) {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
@@ -204,5 +208,14 @@ export class HomeComponent implements OnDestroy {
         return 1;
       }
     });
+  }
+
+  copyCode(): void {
+    this.clipboard.copy(this.group!.code);
+    this.openSnackBar('Liittymiskoodi kopioitu leikepöydälle');
+  }
+
+  openSnackBar(message: string): void {
+    this.snackbar.open(message, '', { duration: 1500 });
   }
 }

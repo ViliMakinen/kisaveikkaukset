@@ -25,8 +25,8 @@ export class CreateGroupComponent {
   ) {}
 
   createNewGroup(): void {
-    this.groupService
-      .createNewGroup(this.groupName, this.tournamentId!)
-      .subscribe((group) => this.router.navigate(['overview/', group.groupId]));
+    this.groupService.createNewGroup(this.groupName, this.tournamentId!).subscribe((group) => {
+      this.router.navigate(['overview/', group.groupId]);
+    });
   }
 }
