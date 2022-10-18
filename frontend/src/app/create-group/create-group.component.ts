@@ -17,10 +17,16 @@ export class CreateGroupComponent {
 
   availableTournaments$: Observable<TournamentWithId[]> = this.tournamentService.getAllTournaments();
 
-  constructor(public userService: UserService, private tournamentService: TournamentService, private groupService: GroupService, private router: Router) {
-  }
+  constructor(
+    public userService: UserService,
+    private tournamentService: TournamentService,
+    private groupService: GroupService,
+    private router: Router,
+  ) {}
 
   createNewGroup(): void {
-    this.groupService.createNewGroup(this.groupName, this.tournamentId!).subscribe((group) => this.router.navigate(['overview/', group.id]));
+    this.groupService
+      .createNewGroup(this.groupName, this.tournamentId!)
+      .subscribe((group) => this.router.navigate(['overview/', group.groupId]));
   }
 }

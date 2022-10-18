@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
-
-// interface PlayerGroup {}
+import { Observable } from 'rxjs';
+import { GroupWithIdAndName } from '../constants';
+import { GroupService } from '../group.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -10,34 +10,28 @@ import { UserService } from '../user.service';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent {
-  // groups$: Observable<PlayerGroup[]>;
-  // groups: PlayerGroup[] = [];
-  usersTournaments: string[] = ['mm-kisat', 'em-kisat', 'liiga'];
   code = '';
   failMessage: string | null = null;
+  group$: Observable<GroupWithIdAndName[]>;
 
-  constructor(private router: Router, private userService: UserService) {
-    // this.groups$ = this.groupService.getGroups(this.userService.user?.id).subscribe(groups => {
-    //   if (groups.length === 1) {
-    //     this.rerouting();
-    //   } else {
-    //     this.groups = groups
-    //   }
-    //
-    // });
-    //this.rerouting();
+  constructor(private router: Router, private groupService: GroupService) {
+    this.group$ = this.groupService.getUsersGroups();
   }
 
   tryJoiningGroup(): void {
-    if (this.code === '123') {
-      this.router.navigateByUrl('/home');
-    } else {
-      this.failMessage = 'Koodilla ei löytynyt ryhmää';
-      this.code = '';
-    }
+    this.groupService.joinGroup(this.code).subscribe(
+      (group) => {
+        this.router.navigate(['overview/', group.groupId]);
+      },
+      (error) => {
+        this.code = '';
+        console.log(error);
+        this.failMessage = 'Koodilla ei löytynyt ryhmää';
+      },
+    );
   }
 
-  // rerouting() {
-  //   this.router.navigateByUrl('home');
-  // }
+  navigatoToGroup(id: number): void {
+    this.router.navigate(['overview/', id]);
+  }
 }

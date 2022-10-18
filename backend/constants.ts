@@ -4,6 +4,20 @@ export interface Tournament {
   startingDate: Date;
 }
 
+export interface PlayerGroup {
+  name: string;
+  code: string;
+  tournamentId: number;
+  groupId: number;
+  users: GroupUser[];
+}
+
+export interface GroupUser {
+  firstName: string;
+  lastName: string;
+  predictions: MatchResult[];
+}
+
 export interface TournamentWithId {
   id: number;
   tournamentData: Tournament;
@@ -15,10 +29,16 @@ export interface Group {
   teams: Team[];
 }
 
-export interface MockUser {
-  name: string;
-  points: number;
-  admin: boolean;
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+export interface GroupWithIdAndName {
+  groupId: number;
+  groupName: string;
 }
 
 export interface Match {

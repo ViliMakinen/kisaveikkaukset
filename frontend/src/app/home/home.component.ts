@@ -7,16 +7,24 @@ import {
   isAfter,
   isBefore,
   isSameDay,
-  isToday
+  isToday,
 } from 'date-fns';
-import { countries, Country, Match, MatchResult, MockUser, Tournament } from '../constants';
+import {
+  countries,
+  Country,
+  GroupUser,
+  GroupUserWithPoints,
+  Match,
+  MatchResult,
+  PlayerGroup,
+  Tournament,
+} from '../constants';
 import { UserService } from '../user.service';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { User } from '../auth.service';
 import { GroupService } from '../group.service';
 import { ActivatedRoute } from '@angular/router';
-import { SidenavService } from '../sidenav.service';
 
 @Component({
   selector: 'app-home',
@@ -26,13 +34,15 @@ import { SidenavService } from '../sidenav.service';
 export class HomeComponent implements OnDestroy {
   currentUser: Partial<User> | null = this.userService.user;
   userPredictions: MatchResult[] = [];
-  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(1);
-  userGroups$: Observable<any> = this.groupService.getAllGroups();
+  tournament$: Observable<Tournament>;
   tournament: Tournament | null = null;
   results: MatchResult[] | null = null;
   matches: Match[] = [];
-  mockUsers$: Observable<MockUser[]> = this.userService.getUsers();
+  group$: Observable<PlayerGroup>;
+  group: PlayerGroup | null = null;
+  groupCode: string[] = [];
   tournamentSubscription: Subscription;
+  groupSubscription: Subscription;
 
   today = new Date();
   gamesToday: Match[] = [];
@@ -43,7 +53,15 @@ export class HomeComponent implements OnDestroy {
   minutes: number = 0;
   seconds: number = 0;
 
-  constructor(public userService: UserService, private tournamentService: TournamentService, private groupService: GroupService) {
+  constructor(
+    public userService: UserService,
+    private route: ActivatedRoute,
+    private tournamentService: TournamentService,
+    private groupService: GroupService,
+  ) {
+    const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
+    this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
+    this.tournament$ = groupId$.pipe(switchMap((groupId) => this.tournamentService.getTournamentById(groupId)));
     this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
       this.tournament = tournament;
       this.matches = this.tournament.groups.flatMap((group) => group.matches);
@@ -57,6 +75,10 @@ export class HomeComponent implements OnDestroy {
       this.initializeEverything();
       this.startCountdown();
       this.calculateCountdownValues();
+    });
+    this.groupSubscription = this.group$.subscribe((group) => {
+      this.group = group;
+      this.groupCode = group.code.split('');
     });
   }
 
@@ -77,8 +99,15 @@ export class HomeComponent implements OnDestroy {
     const now = new Date();
     this.days = Math.floor(differenceInDays(this.tournament!.startingDate, now));
     this.hours = Math.floor(differenceInHours(this.tournament!.startingDate, now) % 24);
-    this.minutes = Math.floor(differenceInMinutes(this.tournament!.startingDate, now) - this.days * 24 * 60 - this.hours * 60);
-    this.seconds = Math.floor(differenceInSeconds(this.tournament!.startingDate, now) - this.days * 24 * 60 * 60 - this.hours * 60 * 60 - this.minutes * 60);
+    this.minutes = Math.floor(
+      differenceInMinutes(this.tournament!.startingDate, now) - this.days * 24 * 60 - this.hours * 60,
+    );
+    this.seconds = Math.floor(
+      differenceInSeconds(this.tournament!.startingDate, now) -
+        this.days * 24 * 60 * 60 -
+        this.hours * 60 * 60 -
+        this.minutes * 60,
+    );
   }
 
   ngOnDestroy(): void {
@@ -89,7 +118,6 @@ export class HomeComponent implements OnDestroy {
     this.initializeUserPredictions();
     this.initializeTodaysGames();
     this.initializeResults();
-    this.calculateUserPoints();
   }
 
   initializeUserPredictions(): void {
@@ -102,12 +130,20 @@ export class HomeComponent implements OnDestroy {
     }
   }
 
-  calculateUserPoints(): void {
+  calculateUserPoints(user: GroupUser): number {
+    //todo switch to reduce functionality
+    let points: number = 0;
     this.matches.forEach((match) => {
-      if (this.results![match.id - 1].result === this.userPredictions[match.id - 1].result && this.userPredictions[match.id - 1].result !== null) {
-        this.userService.points++;
+      if (user.predictions[match.id - 1]) {
+        if (
+          this.results![match.id - 1].result === user.predictions[match.id - 1].result &&
+          this.userPredictions[match.id - 1].result !== null
+        ) {
+          points++;
+        }
       }
     });
+    return points;
   }
 
   initializeResults(): void {
@@ -139,8 +175,15 @@ export class HomeComponent implements OnDestroy {
     });
   }
 
-  sortUsers(mockUsers: MockUser[]): MockUser[] {
-    return mockUsers.sort((a, b) => a.points - b.points).reverse();
+  sortUsers(users: GroupUser[]): GroupUserWithPoints[] {
+    const usersWithPoints = users.map((user) => {
+      return {
+        ...user,
+        points: this.calculateUserPoints(user),
+      };
+    });
+    usersWithPoints.sort((a, b) => a.points - b.points).reverse();
+    return usersWithPoints;
   }
 
   hasTournamentStarted(): boolean {
@@ -150,7 +193,9 @@ export class HomeComponent implements OnDestroy {
   private initializeTodaysGames() {
     this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) => isToday(match.date));
     if (this.gamesToday.length < 1) {
-      this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) => isSameDay(match.date, new Date('2022-11-19T19:00:00+02:00')));
+      this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) =>
+        isSameDay(match.date, new Date('2022-11-19T19:00:00+02:00')),
+      );
     }
     this.gamesToday.sort((a, b) => {
       if (isBefore(a.date, b.date)) {

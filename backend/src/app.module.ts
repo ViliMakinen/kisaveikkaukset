@@ -10,6 +10,7 @@ import { UsersService } from './users/users.service';
 import { GroupsController } from './groups/groups.controller';
 import { TournamentsService } from './tournaments/tournaments.service';
 import { GroupsService } from './groups/groups.service';
+import { CodeController } from './code/code.controller';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { GroupsService } from './groups/groups.service';
     }),
     AuthModule,
   ],
-  controllers: [AppController, UsersController, TournamentsController, GroupsController],
+  controllers: [AppController, UsersController, TournamentsController, GroupsController, CodeController],
   providers: [PrismaService, UsersService, TournamentsService, GroupsService],
 })
 export class AppModule {}

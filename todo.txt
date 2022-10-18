@@ -87,13 +87,19 @@
     
       43. Catch errors instead of application going down
 
-      44. Add a link back to overview page (sidenav)
+//    44. Add a link back to overview page (sidenav)
 
       45. Add a way to join group by code
 
       46. Show users actual groups in the overview page
 
-      47. Show groups' users in the groups home page
+//    47. Show groups' users in the groups home page
+
+      48. Functionality to save predictions to db
+
+      49. Groupcode on click to clipboard
+
+
 
 ...
 ...
