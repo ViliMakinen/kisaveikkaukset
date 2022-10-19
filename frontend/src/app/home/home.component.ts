@@ -34,14 +34,14 @@ import { ActivatedRoute } from '@angular/router';
 export class HomeComponent implements OnDestroy {
   currentUser: Partial<User> | null = this.userService.user;
   userPredictions: MatchResult[] = [];
-  tournament$: Observable<Tournament>;
+  tournament$!: Observable<Tournament>;
   tournament: Tournament | null = null;
   results: MatchResult[] | null = null;
   matches: Match[] = [];
   group$: Observable<PlayerGroup>;
   group: PlayerGroup | null = null;
   groupCode: string[] = [];
-  tournamentSubscription: Subscription;
+  tournamentSubscription!: Subscription;
   groupSubscription: Subscription;
 
   today = new Date();
@@ -61,24 +61,26 @@ export class HomeComponent implements OnDestroy {
   ) {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
-    this.tournament$ = groupId$.pipe(switchMap((groupId) => this.tournamentService.getTournamentById(groupId)));
-    this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
-      this.tournament = tournament;
-      this.matches = this.tournament.groups.flatMap((group) => group.matches);
-      this.results = this.matches.map((match) => {
-        return {
-          id: match.id,
-          result: match.result,
-        };
-      });
-      this.countries = countries;
-      this.initializeEverything();
-      this.startCountdown();
-      this.calculateCountdownValues();
-    });
     this.groupSubscription = this.group$.subscribe((group) => {
       this.group = group;
       this.groupCode = group.code.split('');
+      this.tournament$ = groupId$.pipe(
+        switchMap((groupId) => this.tournamentService.getTournamentById(group.tournamentId)),
+      );
+      this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
+        this.tournament = tournament;
+        this.matches = this.tournament.groups.flatMap((group) => group.matches);
+        this.results = this.matches.map((match) => {
+          return {
+            id: match.id,
+            result: match.result,
+          };
+        });
+        this.countries = countries;
+        this.initializeEverything();
+        this.startCountdown();
+        this.calculateCountdownValues();
+      });
     });
   }
 
