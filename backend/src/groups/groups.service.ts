@@ -8,7 +8,7 @@ export class GroupsService {
 
   generateRandomCode(length: number): string {
     let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const characters = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -33,12 +33,13 @@ export class GroupsService {
       name: group.name,
       code: group.code,
       tournamentId: group.tournamentId,
-      groupId: group.id,
+      id: group.id,
       users: group.UserGroupPredictions.map((user) => {
         return {
           predictions: JSON.parse(JSON.stringify(user.predictions)) as MatchResult[],
           firstName: user.user.firstName,
           lastName: user.user.lastName,
+          nickName: user.user.nickName,
         };
       }),
     };

@@ -17,7 +17,7 @@ export class GroupsController {
   }
 
   @Post()
-  async createGroup(@Body() data: any, @Req() req: any): Promise<any> {
+  async createGroup(@Body() data: any, @Req() req: any): Promise<PlayerGroup> {
     return await this.groupService.createGroup(data.groupName, data.tournamentId, req.user.id);
   }
 }

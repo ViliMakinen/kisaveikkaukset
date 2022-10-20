@@ -20,9 +20,20 @@ export class UsersService {
     });
   }
 
+  async addNickName(id: number, nickName: string): Promise<User> {
+    return await this.prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        nickName,
+      },
+    });
+  }
+
   async findOne(id: number): Promise<User> {
     return await this.prisma.user.findUnique({
-      where: { id: id },
+      where: { id },
     });
   }
 }

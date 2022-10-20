@@ -18,13 +18,15 @@ import {
   MatchResult,
   PlayerGroup,
   Tournament,
+  User,
 } from '../constants';
 import { UserService } from '../user.service';
 import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { TournamentService } from '../tournament.service';
-import { User } from '../auth.service';
 import { GroupService } from '../group.service';
 import { ActivatedRoute } from '@angular/router';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +34,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnDestroy {
-  currentUser: Partial<User> | null = this.userService.user;
+  currentUser: User | null = this.userService.user;
   userPredictions: MatchResult[] = [];
   tournament$!: Observable<Tournament>;
   tournament: Tournament | null = null;
@@ -40,6 +42,7 @@ export class HomeComponent implements OnDestroy {
   matches: Match[] = [];
   group$: Observable<PlayerGroup>;
   group: PlayerGroup | null = null;
+  users: GroupUserWithPoints[] = [];
   groupCode: string[] = [];
   tournamentSubscription!: Subscription;
   groupSubscription: Subscription;
@@ -54,15 +57,18 @@ export class HomeComponent implements OnDestroy {
   seconds: number = 0;
 
   constructor(
+    private clipboard: Clipboard,
     public userService: UserService,
     private route: ActivatedRoute,
     private tournamentService: TournamentService,
     private groupService: GroupService,
+    private snackbar: MatSnackBar,
   ) {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
     this.groupSubscription = this.group$.subscribe((group) => {
       this.group = group;
+      this.users = this.sortUsers(group.users);
       this.groupCode = group.code.split('');
       this.tournament$ = groupId$.pipe(
         switchMap((groupId) => this.tournamentService.getTournamentById(group.tournamentId)),
@@ -206,5 +212,14 @@ export class HomeComponent implements OnDestroy {
         return 1;
       }
     });
+  }
+
+  copyCode(): void {
+    this.clipboard.copy(this.group!.code);
+    this.openSnackBar('Liittymiskoodi kopioitu leikepöydälle');
+  }
+
+  openSnackBar(message: string): void {
+    this.snackbar.open(message, '', { duration: 1500 });
   }
 }

@@ -6,6 +6,10 @@
         <div>Liittymiskoodi</div>
         <div class="lettering-container"><span class="letter-box" *ngFor="let letter of groupCode"> {{letter}} </span>
         </div>
+        <div class="button-with-icon clickable" (click)="copyCode()">
+          <button class="button" mat-raised-button>kopioi</button>
+          <mat-icon class="small-icon">content_copy</mat-icon>
+        </div>
       </div>
       <div class="info-box"><span class="box-title">Turnausmuoto</span><span> {{tournament.name}}</span></div>
     </div>
@@ -42,9 +46,12 @@
           Pistetilanne
           <mat-icon matTooltip="Viimeksi päivitetty: x">update</mat-icon>
         </div>
-        <div *ngFor="let user of sortUsers(group.users)" class="standings-row-container">
-          <span class="standings-row-box">{{ user.firstName }} {{user.lastName[0]}} </span>
-          <span class="standings-row-box">{{ user.points }}</span>
+        <div *ngFor="let user of users" class="standings-row-container">
+          <span *ngIf="user.nickName === null"
+                class="standings-row-box">{{ user.firstName }} {{user.lastName[0]}} </span>
+          <span [matTooltip]="currentUser!.firstName + ' ' + currentUser!.lastName" *ngIf="user.nickName !== null"
+                class="standings-row-box"> {{user.nickName}} </span>
+          <span class="standings-row-box"> {{user.points}}</span>
         </div>
       </div>
       <div class="games-today-container">
