@@ -20,7 +20,7 @@ export class DialogComponent {
     this.dialogRef.close();
   }
 
-  isNameValid() {
-    return this.name.match('^[A-Za-z]+$') && this.name.length > 1;
+  isNameValid(): boolean {
+    return !!this.name.match('^[A-Za-z]+$') && this.name.length > 1;
   }
 }
