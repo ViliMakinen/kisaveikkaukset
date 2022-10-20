@@ -13,6 +13,6 @@ export class UsersController {
 
   @Post()
   async addNickName(@Body() data: any, @Req() req: any): Promise<any> {
-    return await this.usersService.addNickName(data.nickName, req.user.id);
+    return await this.usersService.addNickName(req.user.id, data.nickName);
   }
 }

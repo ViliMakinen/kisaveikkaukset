@@ -16,25 +16,24 @@ export class UsersService {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        nickName: user.nickName,
       },
     });
   }
 
-  async addNickName(user: any, nickName: string): Promise<any> {
+  async addNickName(id: number, nickName: string): Promise<User> {
     return await this.prisma.user.update({
       where: {
-        email: user.email,
+        id,
       },
       data: {
-        nickName: nickName,
+        nickName,
       },
     });
   }
 
   async findOne(id: number): Promise<User> {
     return await this.prisma.user.findUnique({
-      where: { id: id },
+      where: { id },
     });
   }
 }

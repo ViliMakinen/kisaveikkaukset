@@ -4,7 +4,7 @@ import { Tournament } from '../constants';
 const prisma = new PrismaClient();
 
 const tournament: Tournament = {
-  name: 'MM-kisat',
+  name: 'Jalkapallon MM-kisat 2022',
   startingDate: new Date('2022-11-19T19:00:00+02:00'),
   groups: [
     {

@@ -1,0 +1,11 @@
+<div mat-dialog-content>
+  <p>Muokkaa nimeäsi</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Nimi</mat-label>
+    <input required minlength="4" matInput autocomplete="off" [(ngModel)]="name">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Peruuta</button>
+  <button [disabled]="!isNameValid()" mat-button [mat-dialog-close]="name">Valmis</button>
+</div>

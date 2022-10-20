@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { GroupWithIdAndName } from '../constants';
+import { GroupWithIdAndName, User } from '../constants';
 import { GroupService } from '../group.service';
 import { UserService } from '../user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-landing-page',
@@ -11,13 +14,37 @@ import { UserService } from '../user.service';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent {
+  currentUser: User | null = this.userService.user;
   code = '';
   failMessage: string | null = null;
   group$: Observable<GroupWithIdAndName[]>;
-  nickName: string = '';
 
-  constructor(private router: Router, private groupService: GroupService, private userService: UserService) {
+  constructor(
+    private router: Router,
+    private groupService: GroupService,
+    private userService: UserService,
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar,
+  ) {
     this.group$ = this.groupService.getUsersGroups();
+  }
+
+  openSnackBar(message: string): void {
+    this.snackbar.open(message, '', { duration: 1500 });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '250px',
+      data: { nickName: this.currentUser!.nickName },
+    });
+
+    dialogRef.afterClosed().subscribe((nickName) => {
+      if (nickName) {
+        this.userService.user!.nickName = nickName;
+        this.addNickName(nickName);
+      }
+    });
   }
 
   tryJoiningGroup(): void {
@@ -33,8 +60,10 @@ export class LandingPageComponent {
     );
   }
 
-  addNickName(): void {
-    this.userService.addNickName(this.nickName).subscribe((foo) => console.log(foo));
+  addNickName(nickName: string): void {
+    this.userService.addNickName(nickName).subscribe((user) => {
+      this.openSnackBar('Nimi vaihdettu: ' + user.nickName);
+    });
   }
 
   navigatoToGroup(id: number): void {

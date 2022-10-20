@@ -33,6 +33,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { OverviewComponent } from './overview/overview.component';
 import { GroupComponent } from './group/group.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponent } from './dialog/dialog.component';
 
 const routes: Routes = [
   { path: '', component: AuthPageComponent },
@@ -75,7 +77,8 @@ const routes: Routes = [
     AdminViewComponent,
     InformationComponent,
     LandingPageComponent,
-    GroupComponent
+    GroupComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,6 +103,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatStepperModule,
     MatSnackBarModule,
+    MatDialogModule,
   ],
   providers: [LoggedInGuard, AuthService],
   bootstrap: [AppComponent],

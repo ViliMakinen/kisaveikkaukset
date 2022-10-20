@@ -8,7 +8,7 @@ export interface PlayerGroup {
   name: string;
   code: string;
   tournamentId: number;
-  groupId: number;
+  id: number;
   users: GroupUser[];
 }
 
@@ -34,7 +34,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  nickName: string;
+  nickName: string | null;
 }
 
 export interface GroupWithIdAndName {

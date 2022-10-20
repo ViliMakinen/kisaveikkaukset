@@ -83,7 +83,7 @@
 
 //    41. Make create group actually work and create a group to db
 
-      42. Create option for user to add a nickname to themselves
+//    42. Create option for user to add a nickname to themselves
     
       43. Catch errors instead of application going down
 
@@ -98,6 +98,18 @@
       48. Functionality to save predictions to db
 
 //    49. Groupcode on click to clipboard
+
+//    50. Copy on click icon
+
+//    51. Overview page username editing
+
+//    52. Overview boxes to match the blue boxes on tournament page
+
+      53. Add updateLast to tournament on db that sends timestamp on last result inserts
+
+
+
+
 
 
 

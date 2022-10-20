@@ -33,12 +33,13 @@ export class GroupsService {
       name: group.name,
       code: group.code,
       tournamentId: group.tournamentId,
-      groupId: group.id,
+      id: group.id,
       users: group.UserGroupPredictions.map((user) => {
         return {
           predictions: JSON.parse(JSON.stringify(user.predictions)) as MatchResult[],
           firstName: user.user.firstName,
           lastName: user.user.lastName,
+          nickName: user.user.nickName,
         };
       }),
     };

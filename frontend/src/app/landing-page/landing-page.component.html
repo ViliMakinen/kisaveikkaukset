@@ -1,21 +1,25 @@
 <div class="main-content-container">
+  <div *ngIf="currentUser!.nickName === null" class="tournament-title-container">
+    Tervetuloa {{ currentUser!.firstName }} {{ currentUser!.lastName }}
+    <mat-icon (click)="openDialog()" title="Vaihda nimesi" class="edit-icon clickable">edit</mat-icon>
+  </div>
+  <div *ngIf="currentUser!.nickName !== null" class="tournament-title-container">
+    Tervetuloa {{ currentUser!.nickName }}!
+    <mat-icon (click)="openDialog()" title="Vaihda nimesi" class="edit-icon clickable">edit</mat-icon>
+  </div>
   <div class="tournament-title-container">Turnauksesi</div>
-  <mat-form-field appearance="outline" class="input-container"><input [(ngModel)]="nickName" autocomplete="off" matInput
-                                                                      placeholder="Lisää itsellesi lempinimi"/>
-  </mat-form-field>
-  <button (click)="addNickName()" class="clickable button" mat-raised-button>Valmis</button>
   <div class="tournament-container">
     <ng-container *ngIf="group$ | async as usersGroups">
-      <div *ngFor="let group of usersGroups">
-        <button (click)="navigatoToGroup(group.groupId)" class="clickable tournament-box"
-                mat-raised-button>{{ group.groupName }}</button>
+      <div class="clickable tournament-box" *ngFor="let group of usersGroups" (click)="navigatoToGroup(group.groupId)">
+        {{ group.groupName }}
       </div>
     </ng-container>
   </div>
   <div class="join-create-container">
     <span class="join-container">
-      <mat-form-field appearance="outline" class="input-container"><input [(ngModel)]="code" autocomplete="off" matInput
-                                                                          placeholder="Anna ryhmän koodi"/></mat-form-field>
+      <mat-form-field appearance="outline" class="input-container"
+      ><input [(ngModel)]="code" autocomplete="off" matInput placeholder="Anna ryhmän koodi"
+      /></mat-form-field>
       <button (click)="tryJoiningGroup()" class="clickable button" mat-raised-button>Liity ryhmään</button>
       <div class="fail-message">{{ failMessage }}</div> </span
     ><span class="create-container">

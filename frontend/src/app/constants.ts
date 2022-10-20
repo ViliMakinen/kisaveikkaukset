@@ -8,13 +8,22 @@ export interface PlayerGroup {
   name: string;
   code: string;
   tournamentId: number;
-  groupId: number;
+  id: number;
   users: GroupUser[];
+}
+
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  nickName: string;
+  email: string;
 }
 
 export interface GroupUser {
   firstName: string;
   lastName: string;
+  nickName: string | null;
   predictions: MatchResult[];
 }
 

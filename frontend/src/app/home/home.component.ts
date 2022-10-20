@@ -18,11 +18,11 @@ import {
   MatchResult,
   PlayerGroup,
   Tournament,
+  User,
 } from '../constants';
 import { UserService } from '../user.service';
 import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { TournamentService } from '../tournament.service';
-import { User } from '../auth.service';
 import { GroupService } from '../group.service';
 import { ActivatedRoute } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
@@ -34,7 +34,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnDestroy {
-  currentUser: Partial<User> | null = this.userService.user;
+  currentUser: User | null = this.userService.user;
   userPredictions: MatchResult[] = [];
   tournament$!: Observable<Tournament>;
   tournament: Tournament | null = null;
@@ -42,6 +42,7 @@ export class HomeComponent implements OnDestroy {
   matches: Match[] = [];
   group$: Observable<PlayerGroup>;
   group: PlayerGroup | null = null;
+  users: GroupUserWithPoints[] = [];
   groupCode: string[] = [];
   tournamentSubscription!: Subscription;
   groupSubscription: Subscription;
@@ -67,6 +68,7 @@ export class HomeComponent implements OnDestroy {
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
     this.groupSubscription = this.group$.subscribe((group) => {
       this.group = group;
+      this.users = this.sortUsers(group.users);
       this.groupCode = group.code.split('');
       this.tournament$ = groupId$.pipe(
         switchMap((groupId) => this.tournamentService.getTournamentById(group.tournamentId)),

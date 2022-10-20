@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { User } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from './constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  user: Partial<User> | null = null;
+  user: User | null = null;
   arePredictionsLocked: boolean = false;
 
   constructor(private http: HttpClient) {}

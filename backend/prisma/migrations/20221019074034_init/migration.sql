@@ -5,6 +5,7 @@ CREATE TABLE "User"
     "email"     TEXT   NOT NULL,
     "firstName" TEXT   NOT NULL,
     "lastName"  TEXT   NOT NULL,
+    "nickName"  TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -23,6 +24,7 @@ CREATE TABLE "UserGroupPredictions"
 CREATE TABLE "Group"
 (
     "id"           SERIAL  NOT NULL,
+    "name"         TEXT    NOT NULL,
     "code"         TEXT    NOT NULL,
     "tournamentId" INTEGER NOT NULL,
 
