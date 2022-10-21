@@ -8,10 +8,12 @@ import { User } from './constants';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router, private userService: UserService) {
-  }
+  constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<boolean> | Promise<boolean> | boolean {
     if (environment.e2e) {
       return true;
     }

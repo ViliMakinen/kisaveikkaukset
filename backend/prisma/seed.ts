@@ -439,6 +439,7 @@ async function main() {
   await prisma.tournament.create({
     data: {
       tournamentData: tournamentJson,
+      lastUpdated: null,
     },
   });
 }

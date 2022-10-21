@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { Match, MatchResult, Result, Tournament } from '../constants';
+import { Match, MatchResult, Result, TournamentWithId } from '../constants';
 import { UserService } from '../user.service';
 import { isBefore } from 'date-fns';
 import { Observable } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin-view',
@@ -13,32 +14,29 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AdminViewComponent {
   results: MatchResult[] = [];
-  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(1);
-  tournament: Tournament | null = null;
+  allTournaments$: Observable<TournamentWithId[]> = this.tournamentService.getAllTournaments();
+  tournaments: TournamentWithId[] | null = null;
+  tournament: TournamentWithId | null = null;
   matches: Match[] = [];
 
-  constructor(public userService: UserService, private tournamentService: TournamentService, private snackBar: MatSnackBar) {
-    this.tournament$.subscribe((tournament) => {
-      this.tournament = tournament;
-      this.matches = this.tournament.groups.flatMap((group) => group.matches);
-      this.results = this.matches.map((match) => {
-        return {
-          id: match.id,
-          result: match.result,
-        };
-      });
-      this.matches.sort((a, b) => {
-        if (isBefore(a.date, b.date)) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
+  constructor(
+    public userService: UserService,
+    private tournamentService: TournamentService,
+    private snackBar: MatSnackBar,
+    public router: ActivatedRoute,
+  ) {
+    this.allTournaments$.subscribe((tournaments) => {
+      this.tournaments = tournaments;
     });
   }
 
+  selectTournament(id: number): any {
+    this.tournament = this.tournaments!.find((tournament) => tournament.id === id)!;
+    this.initializeTournament();
+  }
+
   updateResult(id: number, result: Result): void {
-    this.tournament!.groups.forEach((group) => {
+    this.tournament!.tournamentData.groups.forEach((group) => {
       group.matches.forEach((match) => {
         if (match.id === id) {
           match.result = result;
@@ -48,11 +46,26 @@ export class AdminViewComponent {
   }
 
   emptyResults(): void {
-    this.tournament!.groups.forEach((group) => {
-      group.matches.forEach((match) => (match.result = null));
-    });
+    this.tournament = {
+      ...this.tournament!,
+      tournamentData: {
+        ...this.tournament!.tournamentData,
+        groups: this.tournament!.tournamentData.groups.map((group) => {
+          return {
+            ...group,
+            matches: group.matches.map((match) => {
+              return {
+                ...match,
+                result: null,
+              };
+            }),
+          };
+        }),
+      },
+    };
     this.tournamentService.updateTournamentResults(this.tournament!).subscribe((tournament) => {
       this.tournament = tournament;
+      this.initializeTournament();
       this.openSnackBar('Kannan tulokset nollattu');
     });
   }
@@ -62,6 +75,7 @@ export class AdminViewComponent {
   }
 
   saveResults(): void {
+    this.tournament!.lastUpdated = new Date();
     this.tournamentService.updateTournamentResults(this.tournament!).subscribe((tournament) => {
       this.tournament = tournament;
       this.openSnackBar('Tulokset tallennettu kantaan');
@@ -74,5 +88,22 @@ export class AdminViewComponent {
       return match.result;
     }
     return null;
+  }
+
+  initializeTournament(): void {
+    this.matches = this.tournament!.tournamentData.groups.flatMap((group) => group.matches);
+    this.results = this.matches.map((match) => {
+      return {
+        id: match.id,
+        result: match.result,
+      };
+    });
+    this.matches.sort((a, b) => {
+      if (isBefore(a.date, b.date)) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
   }
 }

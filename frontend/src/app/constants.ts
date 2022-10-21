@@ -34,6 +34,7 @@ export interface GroupUserWithPoints extends GroupUser {
 export interface TournamentWithId {
   id: number;
   tournamentData: Tournament;
+  lastUpdated: Date | null;
 }
 
 export interface UserExtraPredictions {

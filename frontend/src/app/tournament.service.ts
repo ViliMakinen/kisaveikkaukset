@@ -7,9 +7,18 @@ function parseTournaments(tournaments: TournamentWithId[]): TournamentWithId[] {
   return tournaments.map((tournament) => {
     return {
       ...tournament,
+      lastUpdated: tournament.lastUpdated ? new Date(tournament.lastUpdated) : null,
       tournamentData: parseTournament(tournament.tournamentData),
     };
   });
+}
+
+function parseTournamentWithId(tournament: TournamentWithId): TournamentWithId {
+  return {
+    ...tournament,
+    lastUpdated: tournament.lastUpdated ? new Date(tournament.lastUpdated) : null,
+    tournamentData: parseTournament(tournament.tournamentData),
+  };
 }
 
 function parseTournament(tournament: Tournament): Tournament {
@@ -44,7 +53,9 @@ export class TournamentService {
     return this.http.get<TournamentWithId[]>('api/tournaments').pipe(map((tournament) => parseTournaments(tournament)));
   }
 
-  updateTournamentResults(tournament: Tournament): Observable<Tournament> {
-    return this.http.post<Tournament>('api/tournaments', tournament).pipe(map((tournament) => parseTournament(tournament)));
+  updateTournamentResults(tournament: TournamentWithId): Observable<TournamentWithId> {
+    return this.http
+      .post<TournamentWithId>('api/tournaments', tournament)
+      .pipe(map((tournament) => parseTournamentWithId(tournament)));
   }
 }

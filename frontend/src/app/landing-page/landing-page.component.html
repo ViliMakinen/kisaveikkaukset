@@ -7,14 +7,18 @@
     Tervetuloa {{ currentUser!.nickName }}!
     <mat-icon (click)="openDialog()" title="Vaihda nimesi" class="edit-icon clickable">edit</mat-icon>
   </div>
-  <div class="tournament-title-container">Turnauksesi</div>
-  <div class="tournament-container">
-    <ng-container *ngIf="group$ | async as usersGroups">
+  <button [routerLink]="['admin-view']" mat-raised-button class="clickable button"
+          *ngIf="currentUser!.email === 'aapo.kallio@gmail.com' || currentUser!.email === 'makinenvi@gmail.com'">Admin
+    paneeli
+  </button>
+  <ng-container *ngIf="group$ | async as usersGroups">
+    <div *ngIf="usersGroups.length > 0" class="tournament-title-container">Turnauksesi</div>
+    <div class="tournament-container">
       <div class="clickable tournament-box" *ngFor="let group of usersGroups" (click)="navigatoToGroup(group.groupId)">
         {{ group.groupName }}
       </div>
-    </ng-container>
-  </div>
+    </div>
+  </ng-container>
   <div class="join-create-container">
     <span class="join-container">
       <mat-form-field appearance="outline" class="input-container"

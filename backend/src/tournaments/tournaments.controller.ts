@@ -18,7 +18,7 @@ export class TournamentsController {
   }
 
   @Post()
-  async update(@Body() tournament: Tournament): Promise<Tournament> {
-    return (await this.tournamentService.updateTournamentResults(tournament)).tournamentData;
+  async update(@Body() tournament: TournamentWithId): Promise<TournamentWithId> {
+    return await this.tournamentService.updateTournamentResults(tournament);
   }
 }

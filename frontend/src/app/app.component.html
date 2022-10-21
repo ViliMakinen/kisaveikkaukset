@@ -1,8 +1,10 @@
 <mat-toolbar class="toolbar" color="primary">
   <div class="side-nav-button">
-    <mat-icon (click)="sidenavService.toggle()"
-              *ngIf="router.url !== '/' && router.url !== '/overview' && router.url !== '/overview/create-group'"
-              class="clickable">menu
+    <mat-icon
+      (click)="sidenavService.toggle()"
+      *ngIf="router.url !== '/' && router.url !== '/overview' && router.url !== '/overview/create-group' && router.url !== '/overview/admin-view' "
+      class="clickable"
+    >menu
     </mat-icon>
   </div>
   <div class="title clickable" routerLink="">Kisaveikkaukset</div>

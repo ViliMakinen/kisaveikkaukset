@@ -32,9 +32,9 @@ import { AuthService } from './auth.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { OverviewComponent } from './overview/overview.component';
-import { GroupComponent } from './group/group.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
+import { AdminGuard } from './admin-guard.service';
 
 const routes: Routes = [
   { path: '', component: AuthPageComponent },
@@ -45,16 +45,14 @@ const routes: Routes = [
     children: [
       { path: '', component: LandingPageComponent },
       { path: 'create-group', component: CreateGroupComponent },
+      { path: 'admin-view', component: AdminViewComponent, canActivate: [AdminGuard] },
       {
         path: ':groupId',
-        component: GroupComponent,
-        children: [
-          { path: '', component: HomeComponent },
-          { path: 'tournament', component: MmKisatComponent },
-          { path: 'admin-view', component: AdminViewComponent },
-          { path: 'information', component: InformationComponent },
-        ],
+        component: HomeComponent,
       },
+      { path: ':groupId/tournament', component: MmKisatComponent },
+      { path: ':groupId/information', component: InformationComponent },
+
       {
         path: '**',
         redirectTo: '/overview',
@@ -77,7 +75,6 @@ const routes: Routes = [
     AdminViewComponent,
     InformationComponent,
     LandingPageComponent,
-    GroupComponent,
     DialogComponent,
   ],
   imports: [

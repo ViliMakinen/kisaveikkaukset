@@ -8,6 +8,5 @@ import { SidenavService } from './sidenav.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public router: Router, public sidenavService: SidenavService) {
-  }
+  constructor(public router: Router, public sidenavService: SidenavService) {}
 }

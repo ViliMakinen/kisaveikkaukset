@@ -1,9 +1,10 @@
 import { UserService } from '../user.service';
 import { Component, OnDestroy } from '@angular/core';
 import { countries, Country, Match, MatchResult, Result, Team, Tournament, UserExtraPredictions } from '../constants';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mm-kisat',
@@ -12,7 +13,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class MmKisatComponent implements OnDestroy {
   userPredictions: MatchResult[] = [];
-  tournament$: Observable<Tournament> = this.tournamentService.getTournamentById(1);
+  tournament$: Observable<Tournament>;
   tournament: Tournament | null = null;
   results: MatchResult[] = [];
   teams: Team[] = [];
@@ -22,7 +23,14 @@ export class MmKisatComponent implements OnDestroy {
 
   private tournamentSubscription: Subscription;
 
-  constructor(public userService: UserService, private tournamentService: TournamentService, private _formBuilder: FormBuilder) {
+  constructor(
+    public userService: UserService,
+    private tournamentService: TournamentService,
+    private _formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+  ) {
+    const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
+    this.tournament$ = groupId$.pipe(switchMap((id) => this.tournamentService.getTournamentById(id)));
     this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
       this.tournament = tournament;
       this.matches = this.tournament.groups.flatMap((group) => group.matches);
@@ -65,7 +73,9 @@ export class MmKisatComponent implements OnDestroy {
 
   initializeUserOtherPredictions(): void {
     if (localStorage.getItem(this.userService.user?.firstName + 'extraPredictions')) {
-      this.userExtraPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'extraPredictions')!);
+      this.userExtraPredictions = JSON.parse(
+        localStorage.getItem(this.userService.user?.firstName + 'extraPredictions')!,
+      );
     } else {
       this.userExtraPredictions = {
         mostGoals: '',
@@ -77,7 +87,10 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   saveOtherPrediction(): void {
-    localStorage.setItem(this.userService.user?.firstName + 'extraPredictions', JSON.stringify(this.userExtraPredictions));
+    localStorage.setItem(
+      this.userService.user?.firstName + 'extraPredictions',
+      JSON.stringify(this.userExtraPredictions),
+    );
   }
 
   updateUserPredictions(): void {
@@ -92,7 +105,9 @@ export class MmKisatComponent implements OnDestroy {
         this.modifyTeamPoints(match.away, 3);
       }
     });
-    this.tournament!.groups.forEach((group) => group.teams.sort((a, b) => a.predictedPoints - b.predictedPoints).reverse());
+    this.tournament!.groups.forEach((group) =>
+      group.teams.sort((a, b) => a.predictedPoints - b.predictedPoints).reverse(),
+    );
   }
 
   modifyTeamPoints(teamName: string, amount: number): void {
@@ -130,9 +145,15 @@ export class MmKisatComponent implements OnDestroy {
     const index = this.userPredictions.findIndex((result) => result.id === id);
     if (this.results[index].result === null) {
       return '';
-    } else if (this.results[index].result === this.userPredictions[index].result && this.userPredictions[index].result === value) {
+    } else if (
+      this.results[index].result === this.userPredictions[index].result &&
+      this.userPredictions[index].result === value
+    ) {
       return '#42FF5A';
-    } else if (this.results[index].result !== this.userPredictions[index].result && this.userPredictions[index].result === value) {
+    } else if (
+      this.results[index].result !== this.userPredictions[index].result &&
+      this.userPredictions[index].result === value
+    ) {
       return 'red';
     } else {
       return '';

@@ -9,14 +9,19 @@
         <mat-label>Turnaus</mat-label>
         <mat-select (selectionChange)="tournamentId = $event.value">
           <ng-container *ngIf="availableTournaments$ | async as tournaments">
-            <mat-option *ngFor="let tournament of tournaments"
-                        [value]="tournament.id"> {{tournament.tournamentData.name}} </mat-option>
+            <mat-option *ngFor="let tournament of tournaments" [value]="tournament.id">
+              {{ tournament.tournamentData.name }}
+            </mat-option>
           </ng-container>
         </mat-select>
       </mat-form-field>
     </div>
-    <button [disabled]="tournamentId === null || groupName === '' " class="button clickable create-new-group"
-            (click)="createNewGroup()" mat-raised-button>Luo uusi ryhmä
+    <button
+      [disabled]="tournamentId === null || groupName === ''"
+      class="button clickable create-new-group"
+      (click)="createNewGroup()"
+      mat-raised-button>
+      Luo uusi ryhmä
     </button>
   </div>
 </div>
