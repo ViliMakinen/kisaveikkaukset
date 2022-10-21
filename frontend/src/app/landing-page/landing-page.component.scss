@@ -1,30 +1,90 @@
+@use './src/colors' as *;
+
 .main-content-container {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  height: calc(100% - 64px);
+  height: 100%;
+  background-color: #ffffff;
 
-  .tournament-title-container {
-    font-size: 20px;
+  .tournament-wrapper {
     display: flex;
-    height: 30px;
+    flex-direction: column;
+    height: 50%;
+    width: 100%;
+    align-items: center;
+    row-gap: 10px;
 
-    .edit-icon {
-      font-size: 16px;
+    .tournament-title-container {
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      column-gap: 5px;
+      height: 30px;
+      margin-top: 10px;
+
+      mat-icon {
+        display: flex;
+        align-items: center;
+      }
+
+      .edit-icon {
+        font-size: 16px;
+      }
+    }
+
+    .tournament-container {
+      display: flex;
+      justify-content: center;
+      column-gap: 15px;
+      flex-direction: row;
+      width: 100%;
+      flex-wrap: wrap;
+      row-gap: 15px;
+
+      .tournament-box {
+        height: 200px;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 30px;
+        border: 1px solid #3f51b5;
+        white-space: pre-wrap;
+        text-align: center;
+      }
     }
   }
 
   .join-create-container {
     display: flex;
-    justify-content: space-between;
-    column-gap: 50px;
     flex-direction: column;
-    height: 40%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+
+    ::ng-deep.mat-form-field-appearance-outline .mat-form-field-outline {
+      color: $secondary-color;
+    }
 
     .join-container {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      column-gap: 10px;
+
+      ::ng-deep.mat-form-field-wrapper {
+        padding-bottom: 0;
+      }
+
+      button {
+        width: 50px;
+        height: 50px;
+      }
 
       .fail-message {
         color: red;
@@ -32,48 +92,25 @@
     }
 
     .create-container {
-      display: flex;
-      justify-content: center;
-
-      .button {
-        width: 200px;
-      }
-    }
-  }
-
-  .tournament-container {
-    display: flex;
-    justify-content: space-evenly;
-    column-gap: 30px;
-    flex-direction: row;
-    min-height: 30%;
-    width: 100%;
-    flex-wrap: wrap;
-    row-gap: 25px;
-
-    .tournament-box {
-      height: 120px;
-      width: 170px;
+      position: absolute;
+      width: 100%;
+      bottom: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 30px;
-      border: 1px solid #3f51b5;
-      background: #3f51b5;
-      color: white;
-      white-space: pre-wrap;
-      text-align: center;
     }
   }
 }
 
 @media only screen and (max-width: 768px) {
   .main-content-container {
-    .tournament-container {
-      .tournament-box {
-        height: 60px;
-        width: 90px;
-        border-radius: 15px;
+    .tournament-wrapper {
+      .tournament-container {
+        .tournament-box {
+          height: 120px;
+          width: 120px;
+          border-radius: 15px;
+        }
       }
     }
   }

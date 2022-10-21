@@ -7,7 +7,7 @@ import { User } from './constants';
   providedIn: 'root',
 })
 export class UserService {
-  user: User | null = null;
+  user: User = { id: 0, nickName: '', firstName: '', lastName: '', email: '' };
   arePredictionsLocked: boolean = false;
 
   constructor(private http: HttpClient) {}

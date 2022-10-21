@@ -7,17 +7,24 @@
       <mat-step [completed]="arePredictionsIncomplete()" label="1X2">
         <div class="button-container">
           <span>
-            <button [routerLink]="['../']" class="clickable" mat-raised-button>
+            <button [routerLink]="['../']" class="clickable primary-container" mat-raised-button>
               <mat-icon>arrow_left</mat-icon>
-              Aloitussivulle
-            </button> </span
-          ><span class="button-info-container">
-            <button [disabled]="!arePredictionsIncomplete()" class="clickable" mat-raised-button matStepperNext>
+              Etusivu
+            </button>
+          </span>
+          <span class="button-info-container">
+            <button
+              [disabled]="!arePredictionsIncomplete()"
+              class="clickable primary-container"
+              mat-raised-button
+              matStepperNext>
               Muut
+              <mat-icon>arrow_right</mat-icon>
             </button>
             <div class="flex-container" matTooltip="Täytä ensin 1X2 veikkaukset">
-              <img alt="info" src="assets/images/info.svg"/></div
-            ></span>
+              <img alt="info" src="assets/images/info.svg"/>
+            </div>
+          </span>
         </div>
         <mat-tab-group [animationDuration]="'0'">
           <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
@@ -55,19 +62,18 @@
                 </div>
               </div>
               <mat-divider></mat-divider>
+              <div class="group-prediction-title">Lohkotilanne veikkauksiesi mukaan</div>
               <div class="group-container">
-                <h1>Lohkotilanne veikkauksiesi mukaan</h1>
-                <div class="group-title-container">
+                <div class="group-title-container primary-container">
                   <span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
                 </div>
-                <div *ngFor="let team of group.teams" class="group-row">
+                <div *ngFor="let team of group.teams" class="group-row primary-container">
                   <span class="row-box">
                     <img
                       [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'"
                       alt="away team flag"
                       class="flag-image"/>
-                    {{ team.name }}</span
-                  >
+                    {{ team.name }}</span>
                   <span class="row-box">{{ team.predictedPoints }}</span>
                 </div>
               </div>

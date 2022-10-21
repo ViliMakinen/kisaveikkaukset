@@ -34,7 +34,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnDestroy {
-  currentUser: User | null = this.userService.user;
+  currentUser: User = this.userService.user;
   userPredictions: MatchResult[] = [];
   tournament$!: Observable<Tournament>;
   tournament: Tournament | null = null;
@@ -221,5 +221,11 @@ export class HomeComponent implements OnDestroy {
 
   openSnackBar(message: string): void {
     this.snackbar.open(message, '', { duration: 1500 });
+  }
+
+  arePredictionsCompleted(): boolean {
+    return (
+      this.group!.users.find((user) => user.firstName === this.userService.user!.firstName)!.predictions.length !== 0
+    );
   }
 }

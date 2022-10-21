@@ -1,7 +1,12 @@
+@use "./src/colors" as *;
+
 .toolbar {
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: $primary-color;
+  color: white;
 
   .side-nav-button {
     display: flex;

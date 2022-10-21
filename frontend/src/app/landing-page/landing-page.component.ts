@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent {
-  currentUser: User | null = this.userService.user;
+  currentUser: User = this.userService.user;
   code = '';
   failMessage: string | null = null;
   group$: Observable<GroupWithIdAndName[]>;
@@ -36,7 +36,7 @@ export class LandingPageComponent {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
-      data: { nickName: this.currentUser!.nickName },
+      data: { nickName: this.currentUser.nickName ? this.currentUser.nickName : '' },
     });
 
     dialogRef.afterClosed().subscribe((nickName) => {

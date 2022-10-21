@@ -19,7 +19,7 @@ export class LoggedInGuard implements CanActivate {
     }
     return this.authService.isSignedIn().pipe(
       map((user: User) => {
-        if (this.userService.user === null) {
+        if (this.userService.user !== null) {
           this.userService.user = user;
         }
         return true;

@@ -5,58 +5,61 @@
         <span class="box-title">Ryhmän nimi</span><span> {{ group.name }}</span>
       </div>
       <div class="info-box">
-        <div>Liittymiskoodi</div>
+        <div>Koodi</div>
         <div class="lettering-container">
-          <span class="letter-box" *ngFor="let letter of groupCode"> {{ letter }} </span>
-        </div>
-        <div class="button-with-icon clickable" (click)="copyCode()">
-          <button class="button" mat-raised-button>kopioi</button>
-          <mat-icon class="small-icon">content_copy</mat-icon>
+          <span *ngFor="let letter of groupCode" class="letter-box secondary-container"> {{ letter }} </span>
+          <div (click)="copyCode()" class="button-with-icon clickable">
+            <mat-icon class="small-icon">content_copy</mat-icon>
+          </div>
         </div>
       </div>
       <div class="info-box">
         <span class="box-title">Turnausmuoto</span><span> {{ tournament.name }}</span>
       </div>
     </div>
+    <mat-divider></mat-divider>
     <ng-container *ngIf="!hasTournamentStarted()">
       <div class="countdown-title">Lähtölaskenta</div>
       <div class="countdown-container">
         <span class="countdown-item">
           <div>Päivät</div>
-          <div class="value">{{ days }}</div>
+          <div class="value primary-container">{{ days }}</div>
         </span>
         <span class="countdown-item">
           <div>Tunnit</div>
-          <div class="value">{{ hours }}</div>
+          <div class="value primary-container">{{ hours }}</div>
         </span>
         <span class="countdown-item">
           <div>Minuutit</div>
-          <div class="value">{{ minutes }}</div>
+          <div class="value primary-container">{{ minutes }}</div>
         </span>
         <span class="countdown-item">
           <div>Sekunnit</div>
-          <div class="value">{{ seconds }}</div>
+          <div class="value primary-container">{{ seconds }}</div>
         </span>
       </div>
     </ng-container>
     <div class="button-container">
-      <button [routerLink]="['./tournament']" class="clickable button" mat-raised-button>
-        <mat-icon>arrow_left</mat-icon>
-        Veikkauksiin
+      <button [routerLink]="['./tournament']" class="clickable secondary-container button" mat-raised-button>
+        <div *ngIf="!arePredictionsCompleted()">Sinulla on veikkaukset aloittamatta!</div>
+        <div class="flex-container">
+          <mat-icon>arrow_left</mat-icon>
+          Klikkaa tästä veikkauksiin
+        </div>
       </button>
     </div>
     <div class="matches-today-and-user-standings-container">
-      <div class="standings-container">
+      <div class="standings-container primary-container">
         <div class="standings-title-container">
           Pistetilanne
           <mat-icon matTooltip="Viimeksi päivitetty: x">update</mat-icon>
         </div>
         <div *ngFor="let user of users" class="standings-row-container">
-          <span *ngIf="user.nickName === null" class="standings-row-box"
-          >{{ user.firstName }} {{ user.lastName[0] }}
+          <span *ngIf="user.nickName === null" class="standings-row-box">
+            {{ user.firstName }} {{ user.lastName[0] }}
           </span>
           <span
-            [matTooltip]="currentUser!.firstName + ' ' + currentUser!.lastName"
+            [matTooltip]="currentUser.firstName + ' ' + currentUser.lastName"
             *ngIf="user.nickName !== null"
             class="standings-row-box">
             {{ user.nickName }}
@@ -64,7 +67,7 @@
           <span class="standings-row-box"> {{ user.points }}</span>
         </div>
       </div>
-      <div class="games-today-container">
+      <div class="games-today-container primary-container">
         <ng-container *ngIf="hasTournamentStarted()">
           <div class="games-today-title-container">
             Päivän matsit
@@ -96,7 +99,7 @@
     <div class="tab-group-title">Lohkotilanteet</div>
     <mat-tab-group>
       <mat-tab [label]="group.name" *ngFor="let group of tournament.groups">
-        <div class="group-container">
+        <div class="group-container primary-container">
           <div class="group-title-container">
             <span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
           </div>

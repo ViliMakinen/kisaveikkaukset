@@ -1,33 +1,44 @@
 <div class="main-content-container">
-  <div *ngIf="currentUser!.nickName === null" class="tournament-title-container">
-    Tervetuloa {{ currentUser!.firstName }} {{ currentUser!.lastName }}
-    <mat-icon (click)="openDialog()" title="Vaihda nimesi" class="edit-icon clickable">edit</mat-icon>
-  </div>
-  <div *ngIf="currentUser!.nickName !== null" class="tournament-title-container">
-    Tervetuloa {{ currentUser!.nickName }}!
-    <mat-icon (click)="openDialog()" title="Vaihda nimesi" class="edit-icon clickable">edit</mat-icon>
-  </div>
-  <button [routerLink]="['admin-view']" mat-raised-button class="clickable button"
-          *ngIf="currentUser!.email === 'aapo.kallio@gmail.com' || currentUser!.email === 'makinenvi@gmail.com'">Admin
-    paneeli
-  </button>
-  <ng-container *ngIf="group$ | async as usersGroups">
-    <div *ngIf="usersGroups.length > 0" class="tournament-title-container">Turnauksesi</div>
-    <div class="tournament-container">
-      <div class="clickable tournament-box" *ngFor="let group of usersGroups" (click)="navigatoToGroup(group.groupId)">
-        {{ group.groupName }}
-      </div>
+  <div class="tournament-wrapper">
+    <div *ngIf="currentUser.nickName === null" class="tournament-title-container">
+      <span> Tervetuloa {{ currentUser.firstName }} {{ currentUser.lastName }} </span>
+      <mat-icon (click)="openDialog()" class="edit-icon clickable" title="Vaihda nimesi">edit</mat-icon>
     </div>
-  </ng-container>
+    <div *ngIf="currentUser.nickName !== null" class="tournament-title-container">
+      Tervetuloa {{ currentUser.nickName }}!
+      <mat-icon (click)="openDialog()" class="edit-icon clickable" title="Vaihda nimesi">edit</mat-icon>
+    </div>
+    <button
+      *ngIf="currentUser.email === 'aapo.kallio@gmail.com' || currentUser.email === 'makinenvi@gmail.com'"
+      [routerLink]="['admin-view']"
+      class="secondary-container clickable button"
+      mat-raised-button>
+      Admin paneeli
+    </button>
+    <ng-container *ngIf="group$ | async as usersGroups">
+      <div class="tournament-container">
+        <div
+          (click)="navigatoToGroup(group.groupId)"
+          *ngFor="let group of usersGroups"
+          class="clickable primary-container tournament-box">
+          {{ group.groupName }}
+        </div>
+      </div>
+    </ng-container>
+  </div>
   <div class="join-create-container">
-    <span class="join-container">
-      <mat-form-field appearance="outline" class="input-container"
-      ><input [(ngModel)]="code" autocomplete="off" matInput placeholder="Anna ryhmän koodi"
-      /></mat-form-field>
-      <button (click)="tryJoiningGroup()" class="clickable button" mat-raised-button>Liity ryhmään</button>
-      <div class="fail-message">{{ failMessage }}</div> </span
-    ><span class="create-container">
-      <button class="clickable button" mat-raised-button routerLink="create-group">Luo uusi ryhmä</button>
+    <div class="join-container">
+      <mat-form-field appearance="outline" class="input-container">
+        <input [(ngModel)]="code" autocomplete="off" matInput placeholder="Liity koodilla"/>
+      </mat-form-field>
+      <button (click)="tryJoiningGroup()" class="clickable secondary-container button" mat-flat-button>
+        <mat-icon>arrow_right_alt</mat-icon>
+      </button>
+      <div class="fail-message">{{ failMessage }}</div>
+    </div>
+    <span class="create-container">
+      <button class="clickable button secondary-container" mat-raised-button
+              routerLink="create-group">Luo uusi ryhmä</button>
     </span>
   </div>
 </div>

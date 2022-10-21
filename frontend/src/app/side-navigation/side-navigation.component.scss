@@ -1,3 +1,4 @@
+
 .main-sidenav-container {
   background: white;
   height: 100%;
@@ -12,9 +13,10 @@
   }
 
   .route {
-    border-radius: 5px;
-    border: 1px solid black;
     height: 35px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 10px;
     justify-content: center;
     display: flex;
     align-items: center;
