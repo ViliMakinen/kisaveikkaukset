@@ -1,6 +1,16 @@
 import { UserService } from '../user.service';
 import { Component, OnDestroy } from '@angular/core';
-import { countries, Country, Match, MatchResult, Result, Team, Tournament, UserExtraPredictions } from '../constants';
+import {
+  countries,
+  Country,
+  Match,
+  MatchResult,
+  Result,
+  Team,
+  Tournament,
+  TournamentWithId,
+  UserExtraPredictions,
+} from '../constants';
 import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { FormBuilder } from '@angular/forms';
@@ -13,7 +23,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MmKisatComponent implements OnDestroy {
   userPredictions: MatchResult[] = [];
-  tournament$: Observable<Tournament>;
+  tournament$: Observable<TournamentWithId>;
   tournament: Tournament | null = null;
   results: MatchResult[] = [];
   teams: Team[] = [];
@@ -32,7 +42,7 @@ export class MmKisatComponent implements OnDestroy {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
     this.tournament$ = groupId$.pipe(switchMap((id) => this.tournamentService.getTournamentById(id)));
     this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
-      this.tournament = tournament;
+      this.tournament = tournament.tournamentData;
       this.matches = this.tournament.groups.flatMap((group) => group.matches);
       this.results = this.matches.map((match) => {
         return {

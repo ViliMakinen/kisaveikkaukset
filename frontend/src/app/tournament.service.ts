@@ -45,8 +45,10 @@ function parseTournament(tournament: Tournament): Tournament {
 export class TournamentService {
   constructor(private http: HttpClient) {}
 
-  getTournamentById(id: number): Observable<Tournament> {
-    return this.http.get<Tournament>(`api/tournaments/${id}`).pipe(map((tournament) => parseTournament(tournament)));
+  getTournamentById(id: number): Observable<TournamentWithId> {
+    return this.http
+      .get<TournamentWithId>(`api/tournaments/${id}`)
+      .pipe(map((tournament) => parseTournamentWithId(tournament)));
   }
 
   getAllTournaments(): Observable<TournamentWithId[]> {

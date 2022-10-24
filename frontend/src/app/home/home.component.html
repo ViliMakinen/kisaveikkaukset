@@ -2,7 +2,7 @@
   <div class="main-content">
     <div class="tournament-info-container">
       <div class="info-box">
-        <span class="box-title">Ryhmän nimi</span><span> {{ group.name }}</span>
+        <span class="box-title">Ryhmän nimi</span><span class="box-content"> {{ group.name }}</span>
       </div>
       <div class="info-box">
         <div>Koodi</div>
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="info-box">
-        <span class="box-title">Turnausmuoto</span><span> {{ tournament.name }}</span>
+        <span class="box-title">Turnausmuoto</span><span class="box-content"> {{ tournament.name }}</span>
       </div>
     </div>
     <mat-divider></mat-divider>
@@ -52,7 +52,7 @@
       <div class="standings-container primary-container">
         <div class="standings-title-container">
           Pistetilanne
-          <mat-icon matTooltip="Viimeksi päivitetty: x">update</mat-icon>
+          <mat-icon matTooltip="Viimeksi päivitetty: {{ lastUpdated | date: 'dd.MM.yyyy HH.mm' }} ">update</mat-icon>
         </div>
         <div *ngFor="let user of users" class="standings-row-container">
           <span *ngIf="user.nickName === null" class="standings-row-box">

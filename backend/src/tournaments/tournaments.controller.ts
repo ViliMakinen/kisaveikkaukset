@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Tournament, TournamentWithId } from '../../constants';
+import { TournamentWithId } from '../../constants';
 import { TournamentsService } from './tournaments.service';
 
 @Controller('tournaments')
@@ -12,9 +12,8 @@ export class TournamentsController {
   }
 
   @Get(':id')
-  async getById(@Param('id') id: string): Promise<Tournament> {
-    const tournament = await this.tournamentService.getTournamentById(parseInt(id, 10));
-    return tournament.tournamentData;
+  async getById(@Param('id') id: string): Promise<TournamentWithId> {
+    return await this.tournamentService.getTournamentById(parseInt(id, 10));
   }
 
   @Post()
