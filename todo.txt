@@ -105,7 +105,7 @@
 
 //    52. Overview boxes to match the blue boxes on tournament page
 
-      53. Add updateLast to tournament on db that sends timestamp on last result inserts
+//    53. Add updateLast to tournament on db that sends timestamp on last result inserts
 
 
 

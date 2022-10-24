@@ -18,6 +18,7 @@ import {
   MatchResult,
   PlayerGroup,
   Tournament,
+  TournamentWithId,
   User,
 } from '../constants';
 import { UserService } from '../user.service';
@@ -36,7 +37,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class HomeComponent implements OnDestroy {
   currentUser: User = this.userService.user;
   userPredictions: MatchResult[] = [];
-  tournament$!: Observable<Tournament>;
+  tournament$!: Observable<TournamentWithId>;
   tournament: Tournament | null = null;
   results: MatchResult[] | null = null;
   matches: Match[] = [];
@@ -44,6 +45,7 @@ export class HomeComponent implements OnDestroy {
   group: PlayerGroup | null = null;
   users: GroupUserWithPoints[] = [];
   groupCode: string[] = [];
+  lastUpdated: Date | null = null;
   tournamentSubscription!: Subscription;
   groupSubscription: Subscription;
 
@@ -74,7 +76,8 @@ export class HomeComponent implements OnDestroy {
         switchMap((groupId) => this.tournamentService.getTournamentById(group.tournamentId)),
       );
       this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
-        this.tournament = tournament;
+        this.tournament = tournament.tournamentData;
+        this.lastUpdated = tournament.lastUpdated;
         this.matches = this.tournament.groups.flatMap((group) => group.matches);
         this.results = this.matches.map((match) => {
           return {
