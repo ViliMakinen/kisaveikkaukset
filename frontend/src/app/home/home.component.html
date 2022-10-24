@@ -52,7 +52,7 @@
       <div class="standings-container primary-container">
         <div class="standings-title-container">
           Pistetilanne
-          <mat-icon matTooltip="Viimeksi päivitetty: {{lastUpdated | date: 'dd.MM.yyyy HH.mm'}} ">update</mat-icon>
+          <mat-icon matTooltip="Viimeksi päivitetty: {{ lastUpdated | date: 'dd.MM.yyyy HH.mm' }} ">update</mat-icon>
         </div>
         <div *ngFor="let user of users" class="standings-row-container">
           <span *ngIf="user.nickName === null" class="standings-row-box">
