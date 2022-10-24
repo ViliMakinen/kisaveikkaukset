@@ -15,7 +15,7 @@ export interface PlayerGroup {
 export interface GroupUser {
   firstName: string;
   lastName: string;
-  predictions: MatchResult[];
+  predictions: Predictions;
 }
 
 export interface TournamentWithId {
@@ -28,6 +28,18 @@ export interface Group {
   name: string;
   matches: Match[];
   teams: Team[];
+}
+
+export interface Predictions {
+  matchPredictions: MatchResult[];
+  extraPredictions: UserExtraPredictions;
+}
+
+export interface UserExtraPredictions {
+  mostCards: string;
+  topFour: string[];
+  mostGoals: string;
+  topScorer: string;
 }
 
 export interface User {

@@ -24,7 +24,13 @@ export interface GroupUser {
   firstName: string;
   lastName: string;
   nickName: string | null;
-  predictions: MatchResult[];
+  id: number;
+  predictions: Predictions;
+}
+
+export interface Predictions {
+  matchPredictions: MatchResult[];
+  extraPredictions: UserExtraPredictions;
 }
 
 export interface GroupUserWithPoints extends GroupUser {

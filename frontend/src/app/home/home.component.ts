@@ -19,7 +19,6 @@ import {
   PlayerGroup,
   Tournament,
   TournamentWithId,
-  User,
 } from '../constants';
 import { UserService } from '../user.service';
 import { map, Observable, Subscription, switchMap } from 'rxjs';
@@ -35,8 +34,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnDestroy {
-  currentUser: User = this.userService.user;
-  userPredictions: MatchResult[] = [];
   tournament$!: Observable<TournamentWithId>;
   tournament: Tournament | null = null;
   results: MatchResult[] | null = null;
@@ -70,7 +67,6 @@ export class HomeComponent implements OnDestroy {
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
     this.groupSubscription = this.group$.subscribe((group) => {
       this.group = group;
-      this.users = this.sortUsers(group.users);
       this.groupCode = group.code.split('');
       this.tournament$ = groupId$.pipe(
         switchMap((groupId) => this.tournamentService.getTournamentById(group.tournamentId)),
@@ -89,6 +85,7 @@ export class HomeComponent implements OnDestroy {
         this.initializeEverything();
         this.startCountdown();
         this.calculateCountdownValues();
+        this.users = this.sortUsers(group.users);
       });
     });
   }
@@ -126,29 +123,21 @@ export class HomeComponent implements OnDestroy {
   }
 
   private initializeEverything() {
-    this.initializeUserPredictions();
     this.initializeTodaysGames();
     this.initializeResults();
   }
 
-  initializeUserPredictions(): void {
-    if (localStorage.getItem(this.userService.user?.firstName + 'predictions')) {
-      this.userPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'predictions')!);
-    } else {
-      this.userPredictions = this.matches.map((match) => {
-        return { id: match.id, result: null };
-      });
-    }
-  }
-
   calculateUserPoints(user: GroupUser): number {
     //todo switch to reduce functionality
+    if (!user.predictions.matchPredictions) {
+      return 0;
+    }
     let points: number = 0;
     this.matches.forEach((match) => {
-      if (user.predictions[match.id - 1]) {
+      if (user.predictions.matchPredictions[match.id - 1]) {
         if (
-          this.results![match.id - 1].result === user.predictions[match.id - 1].result &&
-          this.userPredictions[match.id - 1].result !== null
+          this.results![match.id - 1].result === user.predictions.matchPredictions[match.id - 1].result &&
+          user.predictions.matchPredictions[match.id - 1].result !== null
         ) {
           points++;
         }
@@ -228,7 +217,8 @@ export class HomeComponent implements OnDestroy {
 
   arePredictionsCompleted(): boolean {
     return (
-      this.group!.users.find((user) => user.firstName === this.userService.user!.firstName)!.predictions.length !== 0
+      this.group!.users.find((user) => user.firstName === this.userService.user!.firstName)!.predictions
+        .matchPredictions !== undefined
     );
   }
 }
