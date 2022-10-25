@@ -52,7 +52,6 @@ export class MmKisatComponent implements OnDestroy {
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
     this.groupSubscription = this.group$.subscribe((group) => {
       this.group = group;
-      console.log(group);
       this.tournament$ = groupId$.pipe(
         switchMap((groupId) => this.tournamentService.getTournamentById(group.tournamentId)),
       );
@@ -142,7 +141,6 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   lockPredictions(): void {
-    console.log(this.userPredictions);
     this.userService.updatePredictions(this.userPredictions, this.group!.id).subscribe(
       (predictions) => {
         this.openSnackBar('Veikkaukset tallennettu kantaan!');
