@@ -49,9 +49,9 @@
 
 //   23. Swap results to backend.
 
-     24. Button to save predictions to backend.
+//   24. Button to save predictions to backend.
 
-     25. Delete everything related to local storage.
+//   25. Delete everything related to local storage.
 
 //    27. Create service for tournament.
 
@@ -95,7 +95,7 @@
 
 //    47. Show groups' users in the groups home page
 
-      48. Functionality to save predictions to db
+//    48. Functionality to save predictions to db
 
 //    49. Groupcode on click to clipboard
 
@@ -107,7 +107,7 @@
 
 //    53. Add updateLast to tournament on db that sends timestamp on last result inserts
 
-
+      54. Fix home html :nth stuff
 
 
 

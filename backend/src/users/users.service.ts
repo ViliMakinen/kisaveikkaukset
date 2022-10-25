@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { User } from '../../constants';
+import { MatchResult, User } from '../../constants';
 
 @Injectable()
 export class UsersService {
@@ -34,6 +34,14 @@ export class UsersService {
   async findOne(id: number): Promise<User> {
     return await this.prisma.user.findUnique({
       where: { id },
+    });
+  }
+
+  async updatePredictions(predictions: MatchResult[], groupId: number, userId: number): Promise<any> {
+    const predictionsJson = JSON.parse(JSON.stringify(predictions));
+    return await this.prisma.userGroupPredictions.update({
+      where: { userId_groupId: { userId, groupId } },
+      data: { predictions: predictionsJson },
     });
   }
 }

@@ -52,8 +52,8 @@
                       >1</mat-button-toggle
                       >
                       <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')" value="X"
-                      >X</mat-button-toggle
-                      >
+                      >X
+                      </mat-button-toggle>
                       <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')" value="2"
                       >2</mat-button-toggle
                       >
@@ -87,16 +87,16 @@
       <mat-step label="Muut">
         <div class="button-container">
           <button class="clickable" mat-raised-button matStepperPrevious>1X2</button>
-          <button class="clickable" mat-raised-button matStepperNext>Tallennus</button>
+          <button class="clickable" matStepperNext>Tallennus</button>
         </div>
         <div class="other-predictions-container">
           <div class="button-info-container">
             <mat-form-field appearance="fill">
               <mat-label>Eniten varoituksia</mat-label>
-              <span *ngIf="userExtraPredictions.mostCards !== '' && !arePredictionsLocked()"
+              <span *ngIf="userPredictions.extraPredictions.mostCards !== '' && !arePredictionsLocked()"
               ><mat-icon style="color: chartreuse">done</mat-icon></span
               >
-              <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userExtraPredictions.mostCards">
+              <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userPredictions.extraPredictions.mostCards">
                 <mat-option *ngFor="let team of teams" [value]="team.name">
                   {{ team.name }}
                 </mat-option>
@@ -113,10 +113,11 @@
             <div class="button-info-container">
               <mat-form-field appearance="fill">
                 <mat-label>Eniten maaleja</mat-label>
-                <span *ngIf="userExtraPredictions.mostGoals !== '' && !arePredictionsLocked()"
+                <span *ngIf="userPredictions.extraPredictions.mostGoals !== '' && !arePredictionsLocked()"
                 ><mat-icon style="color: chartreuse">done</mat-icon></span
                 >
-                <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userExtraPredictions.mostGoals">
+                <mat-select [disabled]="arePredictionsLocked()"
+                            [(ngModel)]="userPredictions.extraPredictions.mostGoals">
                   <mat-option *ngFor="let team of teams" [value]="team.name">
                     {{ team.name }}
                   </mat-option>
@@ -133,14 +134,15 @@
             <div class="button-info-container">
               <mat-form-field appearance="fill">
                 <mat-label>Top 4</mat-label>
-                <span *ngIf="userExtraPredictions.topFour.length === 4 && !arePredictionsLocked()"
+                <span *ngIf="userPredictions.extraPredictions.topFour.length === 4 && !arePredictionsLocked()"
                 ><mat-icon style="color: chartreuse">done</mat-icon></span
                 >
-                <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userExtraPredictions.topFour" multiple>
+                <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userPredictions.extraPredictions.topFour"
+                            multiple>
                   <mat-option
                     *ngFor="let team of teams"
                     [disabled]="
-                      userExtraPredictions.topFour.length > 3 && !userExtraPredictions.topFour.includes(team.name)
+                      userPredictions.extraPredictions.topFour.length > 3 && !userPredictions.extraPredictions.topFour.includes(team.name)
                     "
                     [value]="team.name"
                   >{{ team.name }}</mat-option
@@ -155,11 +157,10 @@
             <div class="button-info-container">
               <mat-form-field appearance="fill">
                 <mat-label>Maalipörssin voittaja</mat-label>
-                <span *ngIf="userExtraPredictions.topScorer.length > 2 && !arePredictionsLocked()"
-                ><mat-icon style="color: chartreuse">done</mat-icon></span
-                >
+                <span *ngIf="userPredictions.extraPredictions.topScorer.length > 2 && !arePredictionsLocked()"
+                ><mat-icon style="color: chartreuse">done</mat-icon></span>
                 <input
-                  [(ngModel)]="userExtraPredictions.topScorer"
+                  [(ngModel)]="userPredictions.extraPredictions.topScorer"
                   [disabled]="arePredictionsLocked()"
                   matInput
                   placeholder="Etunimi Sukunimi"
@@ -172,7 +173,6 @@
                 src="assets/images/info.svg"
               /></span>
             </div>
-            <button (click)="saveOtherPrediction()" class="clickable" mat-raised-button>Tallenna</button>
           </div>
         </div>
       </mat-step>
@@ -181,7 +181,7 @@
         <p></p>
         <div class="save-button-container">
           <button class="clickable" mat-raised-button matStepperPrevious>Takaisin</button>
-          <button mat-raised-button class="clickable" (click)="finalizePredictions()">Lyö veikkaukset lukkoon</button>
+          <button mat-raised-button class="clickable" (click)="lockPredictions()">Lyö veikkaukset lukkoon</button>
         </div>
       </mat-step>
     </mat-stepper>

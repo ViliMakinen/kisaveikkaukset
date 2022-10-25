@@ -5,16 +5,18 @@ import {
   Country,
   Match,
   MatchResult,
+  PlayerGroup,
+  Predictions,
   Result,
   Team,
   Tournament,
   TournamentWithId,
-  UserExtraPredictions,
 } from '../constants';
 import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { TournamentService } from '../tournament.service';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GroupService } from '../group.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-mm-kisat',
@@ -22,38 +24,52 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./mm-kisat.component.scss'],
 })
 export class MmKisatComponent implements OnDestroy {
-  userPredictions: MatchResult[] = [];
-  tournament$: Observable<TournamentWithId>;
+  userPredictions: Predictions = {
+    matchPredictions: [],
+    extraPredictions: { mostGoals: '', mostCards: '', topFour: [], topScorer: '' },
+  };
+  tournament$!: Observable<TournamentWithId>;
   tournament: Tournament | null = null;
+  group$: Observable<PlayerGroup>;
+  group: PlayerGroup | null = null;
   results: MatchResult[] = [];
   teams: Team[] = [];
   matches: Match[] = [];
-  userExtraPredictions: UserExtraPredictions = { mostGoals: '', mostCards: '', topFour: [], topScorer: '' };
   countries: Country[] = [];
 
-  private tournamentSubscription: Subscription;
+  groupSubscription: Subscription;
+  tournamentSubscription!: Subscription;
 
   constructor(
+    private router: Router,
+    private snackbar: MatSnackBar,
     public userService: UserService,
     private tournamentService: TournamentService,
-    private _formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private groupService: GroupService,
   ) {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
-    this.tournament$ = groupId$.pipe(switchMap((id) => this.tournamentService.getTournamentById(id)));
-    this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
-      this.tournament = tournament.tournamentData;
-      this.matches = this.tournament.groups.flatMap((group) => group.matches);
-      this.results = this.matches.map((match) => {
-        return {
-          id: match.id,
-          result: match.result,
-        };
+    this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
+    this.groupSubscription = this.group$.subscribe((group) => {
+      this.group = group;
+      this.tournament$ = groupId$.pipe(
+        switchMap((groupId) => this.tournamentService.getTournamentById(group.tournamentId)),
+      );
+      this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
+        this.tournament = tournament.tournamentData;
+        this.matches = this.tournament.groups.flatMap((group) => group.matches);
+        this.results = this.matches.map((match) => {
+          return {
+            id: match.id,
+            result: match.result,
+          };
+        });
+        this.countries = countries;
+        this.initializeUserPredictions();
+        this.teams = this.tournament.groups
+          .flatMap((group) => group.teams)
+          .sort((a, b) => a.name.localeCompare(b.name));
       });
-      this.countries = countries;
-      this.initializeUserPredictions();
-      this.initializeUserOtherPredictions();
-      this.teams = this.tournament.groups.flatMap((group) => group.teams).sort((a, b) => a.name.localeCompare(b.name));
     });
   }
 
@@ -71,40 +87,21 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   initializeUserPredictions(): void {
-    if (localStorage.getItem(this.userService.user?.firstName + 'predictions')) {
-      this.userPredictions = JSON.parse(localStorage.getItem(this.userService.user?.firstName + 'predictions')!);
+    const currentUser = this.group!.users.find((user) => user.id === this.userService.user.id)!;
+    if (currentUser.predictions.matchPredictions) {
+      this.userPredictions.matchPredictions = currentUser.predictions.matchPredictions;
+      this.userPredictions.extraPredictions = currentUser.predictions.extraPredictions;
     } else {
-      this.userPredictions = this.matches.map((match) => {
+      this.userPredictions.matchPredictions = this.matches.map((match) => {
         return { id: match.id, result: null };
       });
     }
-    this.updateUserPredictions();
+    this.updatePredictedPoints();
   }
 
-  initializeUserOtherPredictions(): void {
-    if (localStorage.getItem(this.userService.user?.firstName + 'extraPredictions')) {
-      this.userExtraPredictions = JSON.parse(
-        localStorage.getItem(this.userService.user?.firstName + 'extraPredictions')!,
-      );
-    } else {
-      this.userExtraPredictions = {
-        mostGoals: '',
-        mostCards: '',
-        topFour: [],
-        topScorer: '',
-      };
-    }
-  }
-
-  saveOtherPrediction(): void {
-    localStorage.setItem(
-      this.userService.user?.firstName + 'extraPredictions',
-      JSON.stringify(this.userExtraPredictions),
-    );
-  }
-
-  updateUserPredictions(): void {
-    this.userPredictions.forEach((matchResult) => {
+  updatePredictedPoints(): void {
+    this.emptyPredictedPoints();
+    this.userPredictions.matchPredictions.forEach((matchResult) => {
       const match = this.matches.find((match) => match.id === matchResult.id)!;
       if (matchResult.result === '1') {
         this.modifyTeamPoints(match.home, 3);
@@ -135,34 +132,48 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   arePredictionsIncomplete(): boolean {
-    return this.userPredictions.some((result) => result.result === null);
+    return this.userPredictions.matchPredictions.some((result) => result.result === null);
   }
 
   savePrediction(id: number, result: Result): void {
-    const index = this.userPredictions.findIndex((result) => result.id === id);
-    this.userPredictions[index] = { id, result };
-    localStorage.setItem(this.userService.user?.firstName + 'predictions', JSON.stringify(this.userPredictions));
-    this.resetUserPredictions();
-    this.updateUserPredictions();
+    this.userPredictions.matchPredictions.find((result) => result.id === id)!.result = result;
+    this.updatePredictedPoints();
+  }
+
+  lockPredictions(): void {
+    this.userService.updatePredictions(this.userPredictions, this.group!.id).subscribe(
+      (predictions) => {
+        this.openSnackBar('Veikkaukset tallennettu kantaan!');
+        this.router.navigate(['overview/', this.group!.id]);
+      },
+      (error) => {
+        console.log(error);
+        this.openSnackBar('Jotain meni vikaan');
+      },
+    );
+  }
+
+  openSnackBar(message: string): void {
+    this.snackbar.open(message, '', { duration: 2000 });
   }
 
   isSelected(id: number): Result {
-    const index = this.userPredictions.findIndex((result) => result.id === id);
-    return this.userPredictions[index].result;
+    const index = this.userPredictions.matchPredictions.findIndex((result) => result.id === id);
+    return this.userPredictions.matchPredictions[index].result;
   }
 
   arePredictionsCorrect(id: number, value: Result): string {
-    const index = this.userPredictions.findIndex((result) => result.id === id);
+    const index = this.userPredictions.matchPredictions.findIndex((result) => result.id === id);
     if (this.results[index].result === null) {
       return '';
     } else if (
-      this.results[index].result === this.userPredictions[index].result &&
-      this.userPredictions[index].result === value
+      this.results[index].result === this.userPredictions.matchPredictions[index].result &&
+      this.userPredictions.matchPredictions[index].result === value
     ) {
       return '#42FF5A';
     } else if (
-      this.results[index].result !== this.userPredictions[index].result &&
-      this.userPredictions[index].result === value
+      this.results[index].result !== this.userPredictions.matchPredictions[index].result &&
+      this.userPredictions.matchPredictions[index].result === value
     ) {
       return 'red';
     } else {
@@ -170,7 +181,7 @@ export class MmKisatComponent implements OnDestroy {
     }
   }
 
-  private resetUserPredictions(): void {
+  private emptyPredictedPoints(): void {
     this.tournament!.groups = this.tournament!.groups.map((group) => {
       return {
         ...group,
@@ -182,7 +193,7 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   arePredictionsLocked(): boolean {
-    return !(localStorage.getItem(this.userService.user?.firstName + 'extraPredictions') === null);
+    return false;
   }
 
   finalizePredictions() {

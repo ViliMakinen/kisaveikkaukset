@@ -59,7 +59,7 @@
             {{ user.firstName }} {{ user.lastName[0] }}
           </span>
           <span
-            [matTooltip]="currentUser.firstName + ' ' + currentUser.lastName"
+            [matTooltip]="user.firstName + ' ' + user.lastName"
             *ngIf="user.nickName !== null"
             class="standings-row-box">
             {{ user.nickName }}

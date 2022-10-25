@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { GroupWithIdAndName, MatchResult, PlayerGroup } from '../../constants';
+import { GroupWithIdAndName, PlayerGroup, Predictions } from '../../constants';
 
 @Injectable()
 export class GroupsService {
@@ -36,10 +36,11 @@ export class GroupsService {
       id: group.id,
       users: group.UserGroupPredictions.map((user) => {
         return {
-          predictions: JSON.parse(JSON.stringify(user.predictions)) as MatchResult[],
+          predictions: JSON.parse(JSON.stringify(user.predictions)) as Predictions,
           firstName: user.user.firstName,
           lastName: user.user.lastName,
           nickName: user.user.nickName,
+          id: user.user.id,
         };
       }),
     };
@@ -102,7 +103,7 @@ export class GroupsService {
             id: groupByCode.id,
           },
         },
-        predictions: [],
+        predictions: {},
       },
     });
   }
