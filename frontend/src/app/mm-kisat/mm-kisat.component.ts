@@ -17,6 +17,7 @@ import { TournamentService } from '../tournament.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../group.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { isBefore } from 'date-fns';
 
 @Component({
   selector: 'app-mm-kisat',
@@ -193,11 +194,6 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   arePredictionsLocked(): boolean {
-    return false;
-  }
-
-  finalizePredictions() {
-    // setter for backend to save user's predictions
-    // this.userService.user.lockStatus = true;  and something like this
+    return isBefore(this.tournament!.startingDate, new Date());
   }
 }

@@ -3,8 +3,8 @@
     <div class="title-container">
       {{ tournament.name }}
     </div>
-    <mat-stepper [linear]="true">
-      <mat-step [completed]="arePredictionsIncomplete()" label="1X2">
+    <mat-stepper>
+      <mat-step label="1X2">
         <div class="button-container">
           <span>
             <button [routerLink]="['../']" class="clickable primary-container" mat-raised-button>
@@ -14,7 +14,6 @@
           </span>
           <span class="button-info-container">
             <button
-              [disabled]="!arePredictionsIncomplete()"
               class="clickable primary-container"
               mat-raised-button
               matStepperNext>
@@ -46,7 +45,7 @@
                   <span>
                     <mat-button-toggle-group
                       (change)="savePrediction(match.id, $event.value)"
-                      [disabled]="userService.arePredictionsLocked"
+                      [disabled]="arePredictionsLocked()"
                       [value]="isSelected(match.id)">
                       <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')" value="1"
                       >1</mat-button-toggle

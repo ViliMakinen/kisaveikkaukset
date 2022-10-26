@@ -6,9 +6,9 @@
       </div>
       <div class="info-box">
         <div>Koodi</div>
-        <div class="lettering-container">
+        <div class="lettering-container clickable" (click)="copyCode()">
           <span *ngFor="let letter of groupCode" class="letter-box secondary-container"> {{ letter }} </span>
-          <div (click)="copyCode()" class="button-with-icon clickable">
+          <div class="button-with-icon clickable">
             <mat-icon class="small-icon">content_copy</mat-icon>
           </div>
         </div>
@@ -39,12 +39,20 @@
         </span>
       </div>
     </ng-container>
-    <div class="button-container">
+    <div *ngIf="!hasTournamentStarted()" class="button-container">
       <button [routerLink]="['./tournament']" class="clickable secondary-container button" mat-raised-button>
-        <div *ngIf="!arePredictionsCompleted()">Sinulla on veikkaukset aloittamatta!</div>
+        <div>{{arePredictionsCompleted()}}</div>
         <div class="flex-container">
           <mat-icon>arrow_left</mat-icon>
           Klikkaa tästä veikkauksiin
+        </div>
+      </button>
+    </div>
+    <div *ngIf="hasTournamentStarted()" class="alternative-button-container">
+      <button [routerLink]="['./tournament']" class="clickable secondary-container button" mat-raised-button>
+        <div class="flex-container">
+          <mat-icon>arrow_left</mat-icon>
+          Katso veikkauksiasi
         </div>
       </button>
     </div>

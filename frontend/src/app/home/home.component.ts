@@ -215,10 +215,13 @@ export class HomeComponent implements OnDestroy {
     this.snackbar.open(message, '', { duration: 1500 });
   }
 
-  arePredictionsCompleted(): boolean {
-    return (
-      this.group!.users.find((user) => user.firstName === this.userService.user!.firstName)!.predictions
-        .matchPredictions !== undefined
-    );
+  arePredictionsCompleted(): string {
+    const predictions = this.group!.users.find((user) => user.id === this.userService.user!.id)!.predictions;
+    if (predictions.matchPredictions === undefined) {
+      return 'Sinulla on veikkaukset aloittamatta!';
+    } else if (predictions.matchPredictions.some((match) => match.result === null)) {
+      return 'Muista viimeistellä veikkauksesi!';
+    }
+    return 'Voit vielä muokata veikkauksiasi!';
   }
 }
