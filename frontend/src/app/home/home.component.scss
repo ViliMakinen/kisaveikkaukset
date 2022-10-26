@@ -176,6 +176,14 @@
     }
   }
 
+  .alternative-button-container {
+    margin: 15px;
+
+    .button {
+      height: 40px;
+    }
+  }
+
   ::ng-deep.mat-tab-labels {
     justify-content: center;
   }
@@ -192,6 +200,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      height: fit-content;
 
       div:nth-child(even) {
         background-color: rgb(240, 235, 235);
@@ -220,6 +229,16 @@
         border-bottom: 1px solid black;
         border-top: 1px solid black;
 
+        &:nth-child(even) {
+          background-color: white;
+          color: black;
+        }
+
+        &:nth-child(2n + 3) {
+          background-color: lightgrey;
+          color: black;
+        }
+
         .standings-row-box {
           display: flex;
           align-items: center;
@@ -234,6 +253,8 @@
       width: 40%;
       display: flex;
       flex-direction: column;
+      height: fit-content;
+
 
       div:nth-child(even) {
         background-color: rgb(240, 235, 235);
@@ -255,6 +276,16 @@
         height: 40px;
         border-bottom: 1px solid black;
         border-top: 1px solid black;
+
+        &:nth-child(even) {
+          background-color: white;
+          color: black;
+        }
+
+        &:nth-child(2n + 3) {
+          background-color: lightgrey;
+          color: black;
+        }
 
         .games-today-row-box {
           display: flex;

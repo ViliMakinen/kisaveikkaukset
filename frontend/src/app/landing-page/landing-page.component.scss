@@ -11,7 +11,6 @@
   .tournament-wrapper {
     display: flex;
     flex-direction: column;
-    height: 50%;
     width: 100%;
     align-items: center;
     row-gap: 10px;
@@ -45,8 +44,8 @@
       row-gap: 15px;
 
       .tournament-box {
-        height: 200px;
-        width: 200px;
+        height: 190px;
+        width: 190px;
         display: flex;
         justify-content: center;
         align-items: center;

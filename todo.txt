@@ -107,7 +107,7 @@
 
 //    53. Add updateLast to tournament on db that sends timestamp on last result inserts
 
-      54. Fix home html :nth stuff
+//    54. Fix home html :nth stuff
 
 
 
