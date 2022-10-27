@@ -56,9 +56,7 @@ export class MmKisatComponent implements OnDestroy {
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
     this.groupSubscription = this.group$.subscribe((group) => {
       this.group = group;
-      this.tournament$ = groupId$.pipe(
-        switchMap((groupId) => this.tournamentService.getTournamentById(group.tournamentId)),
-      );
+      this.tournament$ = groupId$.pipe(switchMap(() => this.tournamentService.getTournamentById(group.tournamentId)));
       this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
         this.tournament = tournament.tournamentData;
         this.matches = this.tournament.groups.flatMap((group) => group.matches);
@@ -170,7 +168,7 @@ export class MmKisatComponent implements OnDestroy {
 
   lockPredictions(): void {
     this.userService.updatePredictions(this.userPredictions, this.group!.id).subscribe(
-      (predictions) => {
+      () => {
         this.openSnackBar('Veikkaukset tallennettu kantaan!');
         this.router.navigate(['overview/', this.group!.id]);
       },
@@ -222,5 +220,9 @@ export class MmKisatComponent implements OnDestroy {
 
   arePredictionsLocked(): boolean {
     return isBefore(this.tournament!.startingDate, new Date());
+  }
+
+  backToTop(mainContent: HTMLElement): void {
+    mainContent.scrollIntoView({ behavior: 'smooth' });
   }
 }

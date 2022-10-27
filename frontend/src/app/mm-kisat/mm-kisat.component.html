@@ -1,5 +1,5 @@
 <ng-container *ngIf="tournament !== null">
-  <div class="main-content-container">
+  <div #mainContent class="main-content-container">
     <div class="title-container">
       {{ tournament.name }}
     </div>
@@ -22,63 +22,101 @@
             </div>
           </span>
         </div>
-        <mat-tab-group [animationDuration]="'0'">
-          <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
-            <div class="group-title">Lohko {{ group.name }}</div>
-            <div class="tab-container">
-              <div class="match-container">
-                <div *ngFor="let match of group.matches" class="match-row">
-                  <span class="teams">
-                    <img
-                      [src]="'assets/images/4x3/' + fetchFlag(match.home) + '.svg'"
-                      alt="home team flag"
-                      class="flag-image"/>
-                    <span class="match-up">{{ match.home }} - {{ match.away }}</span>
-                    <img
-                      [src]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'"
-                      alt="away team flag"
-                      class="flag-image"/>
-                  </span>
-                  <span>
-                    <mat-button-toggle-group
-                      (change)="savePrediction(match.id, $event.value)"
-                      [disabled]="arePredictionsLocked()"
-                      [value]="isSelected(match.id)">
-                      <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')" value="1"
-                      >1</mat-button-toggle
-                      >
-                      <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')" value="X"
-                      >X
-                      </mat-button-toggle>
-                      <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')" value="2"
-                      >2</mat-button-toggle
-                      >
-                    </mat-button-toggle-group>
-                  </span>
-                </div>
-              </div>
-              <mat-divider></mat-divider>
-              <div class="group-container">
-                <div class="group-prediction-title">Lohkotilanne veikkauksiesi mukaan</div>
-                <div class="group-content-container">
-                  <div class="group-title-container primary-container">
-                    <span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
-                  </div>
-                  <div *ngFor="let team of group.teams" class="group-row">
-                    <span class="row-box">
+        <div
+          style="
+            border: 5px solid #45425a;
+            border-radius: 5px;
+            background: rgb(0, 114, 182);
+            background: linear-gradient(
+              204deg,
+              rgba(0, 114, 182, 1) 0%,
+              rgba(7, 116, 185, 1) 1%,
+              rgba(75, 157, 36, 1) 14%,
+              rgba(52, 127, 204, 1) 18%,
+              rgba(68, 131, 211, 1) 23%,
+              rgba(72, 132, 213, 1) 25%,
+              rgba(61, 129, 208, 1) 26%,
+              rgba(83, 135, 218, 1) 29%,
+              rgba(86, 136, 219, 1) 30%,
+              rgba(59, 69, 119, 1) 31%,
+              rgba(67, 112, 226, 1) 34%,
+              rgba(46, 85, 235, 1) 34%,
+              rgba(57, 100, 230, 1) 39%,
+              rgba(29, 57, 245, 1) 48%,
+              rgba(29, 57, 245, 1) 48%,
+              rgba(46, 85, 235, 1) 49%,
+              rgba(19, 53, 244, 1) 58%,
+              rgba(23, 55, 244, 1) 60%,
+              rgba(29, 57, 244, 1) 66%,
+              rgba(28, 56, 240, 1) 70%,
+              rgba(88, 93, 209, 1) 83%,
+              rgba(110, 107, 198, 1) 87%,
+              rgba(115, 110, 195, 1) 88%,
+              rgba(126, 117, 190, 1) 90%,
+              rgba(28, 56, 239, 1) 92%,
+              rgba(97, 98, 204, 1) 93%,
+              rgba(58, 73, 222, 1) 97%,
+              rgba(28, 55, 236, 1) 100%
+            );
+          ">
+          <mat-tab-group [animationDuration]="'0'">
+            <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
+              <div class="group-title">Lohko {{ group.name }}</div>
+              <div class="tab-container">
+                <div class="match-container">
+                  <div *ngFor="let match of group.matches" class="match-row">
+                    <span class="teams">
                       <img
-                        [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'"
+                        [src]="'assets/images/4x3/' + fetchFlag(match.home) + '.svg'"
+                        alt="home team flag"
+                        class="flag-image"/>
+                      <span class="match-up">{{ match.home }} - {{ match.away }}</span>
+                      <img
+                        [src]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'"
                         alt="away team flag"
                         class="flag-image"/>
-                      {{ team.name }}</span
-                    >
-                    <span class="row-box">{{ team.predictedPoints }}</span>
+                    </span>
+                    <span>
+                      <mat-button-toggle-group
+                        (change)="savePrediction(match.id, $event.value)"
+                        [disabled]="arePredictionsLocked()"
+                        [value]="isSelected(match.id)">
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')" value="1"
+                        >1</mat-button-toggle
+                        >
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')" value="X"
+                        >X
+                        </mat-button-toggle>
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')" value="2"
+                        >2</mat-button-toggle
+                        >
+                      </mat-button-toggle-group>
+                    </span>
+                  </div>
+                </div>
+                <div style="border-top: 5px solid #45425a; margin-top: 10px"></div>
+                <div class="group-container">
+                  <div class="group-prediction-title">Lohkotilanne veikkauksiesi mukaan</div>
+                  <div class="group-content-container">
+                    <div class="group-title-container primary-container">
+                      <span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
+                    </div>
+                    <div *ngFor="let team of group.teams" class="group-row">
+                      <span class="row-box">
+                        <img
+                          [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'"
+                          alt="away team flag"
+                          class="flag-image"/>
+                        {{ team.name }}</span
+                      >
+                      <span class="row-box">{{ team.predictedPoints }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
       </mat-step>
       <mat-step label="Muut">
         <div class="button-container">
@@ -137,8 +175,7 @@
               <mat-button-toggle class="toggle-button" value="Saksa">x</mat-button-toggle>
             </mat-button-toggle-group>
           </div>
-          <span class="slider-title">Turnauksen nopein maali</span
-          >
+          <span class="slider-title">Turnauksen nopein maali</span>
           <mat-slider
             class="slider"
             [(ngModel)]="fastestGoal"
@@ -149,8 +186,7 @@
             min="0"
             max="5"></mat-slider>
           <div>
-            <span class="slider-title">Turnauksen isomaalisin ottelu</span
-            >
+            <span class="slider-title">Turnauksen isomaalisin ottelu</span>
             <mat-slider
               class="slider"
               [(ngModel)]="highestScoringMatch"
@@ -161,27 +197,26 @@
               min="4"
               max="11"></mat-slider>
           </div>
-          <div class="button-info-container height-100">
+          <div class="button-info-container">
             <mat-form-field appearance="outline">
               <mat-label>Eniten varoituksia</mat-label>
               <mat-icon
                 *ngIf="userPredictions.extraPredictions.mostCards !== '' && !arePredictionsLocked()"
                 matSuffix
-                style="color: chartreuse"
-              >done
-              </mat-icon
-              >
+                style="color: chartreuse">
+                done
+              </mat-icon>
               <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userPredictions.extraPredictions.mostCards">
                 <mat-option *ngFor="let team of teams" [value]="team.name">
                   {{ team.name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <span
-            ><img
-              alt="info"
-              matTooltip="Veikkaa lohkovaiheessa eniten varoituksia kerännyttä joukkuetta"
-              src="assets/images/info.svg"/>
+            <span class="info-button">
+              <img
+                alt="info"
+                matTooltip="Veikkaa lohkovaiheessa eniten varoituksia kerännyttä joukkuetta"
+                src="assets/images/info.svg"/>
             </span>
           </div>
           <div>
@@ -193,8 +228,7 @@
                   matSuffix
                   style="color: chartreuse"
                 >done
-                </mat-icon
-                >
+                </mat-icon>
                 <mat-select
                   [disabled]="arePredictionsLocked()"
                   [(ngModel)]="userPredictions.extraPredictions.mostGoals">
@@ -203,15 +237,15 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <span
-              ><img
-                alt="info"
-                matTooltip="Veikkaa lohkovaiheessa eniten maaleja tehnyttä joukkuetta"
-                src="assets/images/info.svg"
-              /></span>
+              <span class="info-button">
+                <img
+                  alt="info"
+                  matTooltip="Veikkaa lohkovaiheessa eniten maaleja tehnyttä joukkuetta"
+                  src="assets/images/info.svg"/>
+              </span>
             </div>
             <div></div>
-            <div class="button-info-container height-100">
+            <div class="button-info-container">
               <mat-form-field appearance="outline">
                 <mat-label>Top 4</mat-label>
                 <mat-icon
@@ -219,8 +253,7 @@
                   matSuffix
                   style="color: chartreuse"
                 >done
-                </mat-icon
-                >
+                </mat-icon>
                 <mat-select
                   [disabled]="arePredictionsLocked()"
                   [(ngModel)]="userPredictions.extraPredictions.topFour"
@@ -236,10 +269,11 @@
                   >
                 </mat-select>
               </mat-form-field>
-              <span>
+              <span class="info-button">
                 <img alt="info" matTooltip="Veikkaa turnauksen semi-finalistit" src="assets/images/info.svg"
-              /></span>
+                /></span>
             </div>
+            <button (click)="backToTop(mainContent)">Palaa ylös</button>
           </div>
         </div>
       </mat-step>

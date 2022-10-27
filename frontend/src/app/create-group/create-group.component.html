@@ -1,11 +1,11 @@
 <div class="create-group-container">
   <div>
     <div class="group-info-container">
-      <mat-form-field class="example-full-width" appearance="legacy">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Ryhmän nimi</mat-label>
         <input autocomplete="off" matInput [(ngModel)]="groupName">
       </mat-form-field>
-      <mat-form-field appearance="legacy">
+      <mat-form-field appearance="outline">
         <mat-label>Turnaus</mat-label>
         <mat-select (selectionChange)="tournamentId = $event.value">
           <ng-container *ngIf="availableTournaments$ | async as tournaments">
