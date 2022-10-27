@@ -22,44 +22,8 @@
             </div>
           </span>
         </div>
-        <div
-          style="
-            border: 5px solid #45425a;
-            border-radius: 5px;
-            background: rgb(0, 114, 182);
-            background: linear-gradient(
-              204deg,
-              rgba(0, 114, 182, 1) 0%,
-              rgba(7, 116, 185, 1) 1%,
-              rgba(75, 157, 36, 1) 14%,
-              rgba(52, 127, 204, 1) 18%,
-              rgba(68, 131, 211, 1) 23%,
-              rgba(72, 132, 213, 1) 25%,
-              rgba(61, 129, 208, 1) 26%,
-              rgba(83, 135, 218, 1) 29%,
-              rgba(86, 136, 219, 1) 30%,
-              rgba(59, 69, 119, 1) 31%,
-              rgba(67, 112, 226, 1) 34%,
-              rgba(46, 85, 235, 1) 34%,
-              rgba(57, 100, 230, 1) 39%,
-              rgba(29, 57, 245, 1) 48%,
-              rgba(29, 57, 245, 1) 48%,
-              rgba(46, 85, 235, 1) 49%,
-              rgba(19, 53, 244, 1) 58%,
-              rgba(23, 55, 244, 1) 60%,
-              rgba(29, 57, 244, 1) 66%,
-              rgba(28, 56, 240, 1) 70%,
-              rgba(88, 93, 209, 1) 83%,
-              rgba(110, 107, 198, 1) 87%,
-              rgba(115, 110, 195, 1) 88%,
-              rgba(126, 117, 190, 1) 90%,
-              rgba(28, 56, 239, 1) 92%,
-              rgba(97, 98, 204, 1) 93%,
-              rgba(58, 73, 222, 1) 97%,
-              rgba(28, 55, 236, 1) 100%
-            );
-          ">
-          <mat-tab-group [animationDuration]="'0'">
+        <div class="tab-group">
+          <mat-tab-group style="min-height: 410px" [animationDuration]="'0'">
             <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
               <div class="group-title">Lohko {{ group.name }}</div>
               <div class="tab-container">
@@ -94,7 +58,7 @@
                     </span>
                   </div>
                 </div>
-                <div style="border-top: 5px solid #45425a; margin-top: 10px"></div>
+                <div class="divider"></div>
                 <div class="group-container">
                   <div class="group-prediction-title">Lohkotilanne veikkauksiesi mukaan</div>
                   <div class="group-content-container">
@@ -273,17 +237,21 @@
                 <img alt="info" matTooltip="Veikkaa turnauksen semi-finalistit" src="assets/images/info.svg"
                 /></span>
             </div>
-            <button (click)="backToTop(mainContent)">Palaa ylös</button>
+            <div class="save-button-container">
+              <button mat-raised-button class="clickable button primary-container" (click)="backToTop(mainContent)">
+                Palaa ylös
+              </button>
+            </div>
           </div>
         </div>
       </mat-step>
-      <mat-step>
+      <mat-step *ngIf="!arePredictionsLocked()">
         <ng-template matStepLabel>Tallenna</ng-template>
         <p></p>
         <div class="save-button-container">
           <button class="clickable primary-container" mat-raised-button matStepperPrevious>Takaisin</button>
           <button class="clickable primary-container" mat-raised-button (click)="lockPredictions()">
-            Lyö veikkaukset lukkoon
+            Tallenna veikkaukset
           </button>
         </div>
       </mat-step>
