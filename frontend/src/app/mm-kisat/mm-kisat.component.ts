@@ -37,6 +37,9 @@ export class MmKisatComponent implements OnDestroy {
   teams: Team[] = [];
   matches: Match[] = [];
   countries: Country[] = [];
+  countryh2h1: string | null = null;
+  fastestGoal: number | null = null;
+  highestScoringMatch: number | null = null;
 
   groupSubscription: Subscription;
   tournamentSubscription!: Subscription;
@@ -72,6 +75,26 @@ export class MmKisatComponent implements OnDestroy {
           .sort((a, b) => a.name.localeCompare(b.name));
       });
     });
+  }
+
+  formatLabelMatch(value: number): string {
+    if (value === 5) {
+      return '05:00+';
+    }
+    return '0' + value + ':00 - 0' + value + ':59';
+  }
+
+  formatLabelScore(value: number): string {
+    if (value === 4) {
+      return '0-4';
+    } else if (value === 6) {
+      return '5-6';
+    } else if (value === 8) {
+      return '7-8';
+    } else if (value === 10) {
+      return '9-10';
+    }
+    return '11+';
   }
 
   ngOnDestroy(): void {
@@ -139,6 +162,10 @@ export class MmKisatComponent implements OnDestroy {
   savePrediction(id: number, result: Result): void {
     this.userPredictions.matchPredictions.find((result) => result.id === id)!.result = result;
     this.updatePredictedPoints();
+  }
+
+  saveHeadToHeadPrediction(result: string): void {
+    this.countryh2h1 = result;
   }
 
   lockPredictions(): void {

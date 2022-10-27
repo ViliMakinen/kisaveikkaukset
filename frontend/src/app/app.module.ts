@@ -35,6 +35,7 @@ import { OverviewComponent } from './overview/overview.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { AdminGuard } from './admin-guard.service';
+import { MatSliderModule } from '@angular/material/slider';
 
 const routes: Routes = [
   { path: '', component: AuthPageComponent },
@@ -101,6 +102,7 @@ const routes: Routes = [
     MatStepperModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatSliderModule,
   ],
   providers: [LoggedInGuard, AuthService],
   bootstrap: [AppComponent],

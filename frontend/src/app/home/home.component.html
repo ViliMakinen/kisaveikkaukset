@@ -41,7 +41,7 @@
     </ng-container>
     <div *ngIf="!hasTournamentStarted()" class="button-container">
       <button [routerLink]="['./tournament']" class="clickable secondary-container button" mat-raised-button>
-        <div>{{arePredictionsCompleted()}}</div>
+        <div>{{ arePredictionsCompleted() }}</div>
         <div class="flex-container">
           <mat-icon>arrow_left</mat-icon>
           Klikkaa tästä veikkauksiin
