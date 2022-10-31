@@ -2,6 +2,7 @@ export interface Tournament {
   name: string;
   groups: Group[];
   startingDate: Date;
+  extraPredictions: ExtraPredictions;
 }
 
 export interface PlayerGroup {
@@ -30,7 +31,7 @@ export interface GroupUser {
 
 export interface Predictions {
   matchPredictions: MatchResult[];
-  extraPredictions: UserExtraPredictions;
+  extraPredictions: ExtraPredictions;
 }
 
 export interface GroupUserWithPoints extends GroupUser {
@@ -43,11 +44,19 @@ export interface TournamentWithId {
   lastUpdated: Date | null;
 }
 
-export interface UserExtraPredictions {
+export interface ExtraPredictions {
   mostCards: string;
   topFour: string[];
   mostGoals: string;
-  topScorer: string;
+  fastestGoal: number | null;
+  highestScoring: number | null;
+  headToHead: HeadToHead[];
+}
+
+export interface HeadToHead {
+  winner: string | null;
+  contestants: string[];
+  type: 'goal' | 'pass' | 'winner';
 }
 
 export interface Group {
@@ -86,6 +95,46 @@ export interface Team {
   points: number;
   predictedPoints: number;
 }
+
+export const emptyExtraPredictions: ExtraPredictions = {
+  mostGoals: '',
+  topFour: [],
+  mostCards: '',
+  fastestGoal: null,
+  highestScoring: null,
+  headToHead: [
+    {
+      contestants: ['Englanti', 'Saksa'],
+      winner: null,
+      type: 'winner',
+    },
+    {
+      contestants: ['Ranska', 'Italia'],
+      winner: null,
+      type: 'winner',
+    },
+    {
+      contestants: ['Brasilia, Argentina'],
+      winner: null,
+      type: 'winner',
+    },
+    {
+      contestants: ['Kane', 'Mbappé'],
+      winner: null,
+      type: 'goal',
+    },
+    {
+      contestants: ['Messi', 'Ronaldo'],
+      winner: null,
+      type: 'goal',
+    },
+    {
+      contestants: ['Neymar', 'de Bruyne'],
+      winner: null,
+      type: 'pass',
+    },
+  ],
+};
 
 export const countries: Country[] = [
   { name: 'Qatar', id: 'qa' },

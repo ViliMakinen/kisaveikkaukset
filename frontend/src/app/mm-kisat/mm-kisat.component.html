@@ -90,59 +90,26 @@
         <div class="other-predictions-container">
           <div class="head-to-head-container">
             <div class="head-to-head-title">Kumpi</div>
-            <mat-button-toggle-group
-              class="head-to-head-row"
-              (change)="saveHeadToHeadPrediction($event.value)"
-              [value]="countryh2h1">
-              <mat-button-toggle class="toggle-button" value="Englanti">Englanti</mat-button-toggle>
-              <div class="question-container">Pääsee pidemmälle</div>
-              <mat-button-toggle class="toggle-button" value="Saksa">Saksa</mat-button-toggle>
-            </mat-button-toggle-group>
-            <mat-button-toggle-group
-              class="head-to-head-row"
-              (change)="saveHeadToHeadPrediction($event.value)"
-              [value]="countryh2h1">
-              <mat-button-toggle class="toggle-button" value="Italia">Italia</mat-button-toggle>
-              <div class="question-container">Pääsee pidemmälle</div>
-              <mat-button-toggle class="toggle-button" value="Ranska">Ranska</mat-button-toggle>
-            </mat-button-toggle-group>
-            <mat-button-toggle-group
-              class="head-to-head-row"
-              (change)="saveHeadToHeadPrediction($event.value)"
-              [value]="countryh2h1">
-              <mat-button-toggle class="toggle-button" value="Brasilia">Brasilia</mat-button-toggle>
-              <div class="question-container">Pääsee pidemmälle</div>
-              <mat-button-toggle class="toggle-button" value="Argentina">Argentina</mat-button-toggle>
-            </mat-button-toggle-group>
-            <mat-button-toggle-group
-              class="head-to-head-row"
-              (change)="saveHeadToHeadPrediction($event.value)"
-              [value]="countryh2h1">
-              <mat-button-toggle class="toggle-button" value="Ronaldo">Mbappe</mat-button-toggle>
-              <div class="question-container">Tekee enemmän maaleja</div>
-              <mat-button-toggle class="toggle-button" value="Messi">Messi</mat-button-toggle>
-            </mat-button-toggle-group>
-            <mat-button-toggle-group
-              class="head-to-head-row"
-              (change)="saveHeadToHeadPrediction($event.value)"
-              [value]="countryh2h1">
-              <mat-button-toggle class="toggle-button" value="Italia">x</mat-button-toggle>
-              <div class="question-container">Tekee enemmän maaleja</div>
-              <mat-button-toggle class="toggle-button" value="Saksa">x</mat-button-toggle>
-            </mat-button-toggle-group>
-            <mat-button-toggle-group
-              class="head-to-head-row"
-              (change)="saveHeadToHeadPrediction($event.value)"
-              [value]="countryh2h1">
-              <mat-button-toggle class="toggle-button" value="Italia">x</mat-button-toggle>
-              <div class="question-container">Syöttää enemmän maaleja</div>
-              <mat-button-toggle class="toggle-button" value="Saksa">x</mat-button-toggle>
-            </mat-button-toggle-group>
+            <div *ngFor="let matchUp of tournament.extraPredictions.headToHead; let i = index">
+              <mat-button-toggle-group
+                class="head-to-head-row"
+                (change)="saveHeadToHeadPrediction($event.value, i)"
+                [value]="isSelectedH2H(i)">
+                <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[0]">{{
+                  matchUp.contestants[0]
+                  }}</mat-button-toggle>
+                <div class="question-container">{{ getMatchUpType(matchUp) }}</div>
+                <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[1]">{{
+                  matchUp.contestants[1]
+                  }}</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
           </div>
           <span class="slider-title">Turnauksen nopein maali</span>
           <mat-slider
+            [value]="userPredictions.extraPredictions.fastestGoal"
             class="slider"
-            [(ngModel)]="fastestGoal"
+            [(ngModel)]="userPredictions.extraPredictions.fastestGoal"
             thumbLabel
             [displayWith]="formatLabelMatch"
             tickInterval="1"
@@ -152,14 +119,15 @@
           <div>
             <span class="slider-title">Turnauksen isomaalisin ottelu</span>
             <mat-slider
+              [value]="userPredictions.extraPredictions.highestScoring"
               class="slider"
-              [(ngModel)]="highestScoringMatch"
+              [(ngModel)]="userPredictions.extraPredictions.highestScoring"
               thumbLabel
               [displayWith]="formatLabelScore"
               tickInterval="2"
               step="2"
               min="4"
-              max="11"></mat-slider>
+              max="12"></mat-slider>
           </div>
           <div class="button-info-container">
             <mat-form-field appearance="outline">
@@ -250,7 +218,7 @@
         <p></p>
         <div class="save-button-container">
           <button class="clickable primary-container" mat-raised-button matStepperPrevious>Takaisin</button>
-          <button class="clickable primary-container" mat-raised-button (click)="lockPredictions()">
+          <button class="clickable primary-container" mat-raised-button (click)="savePredictions()">
             Tallenna veikkaukset
           </button>
         </div>

@@ -3,6 +3,8 @@ import { Component, OnDestroy } from '@angular/core';
 import {
   countries,
   Country,
+  emptyExtraPredictions,
+  HeadToHead,
   Match,
   MatchResult,
   PlayerGroup,
@@ -27,7 +29,7 @@ import { isBefore } from 'date-fns';
 export class MmKisatComponent implements OnDestroy {
   userPredictions: Predictions = {
     matchPredictions: [],
-    extraPredictions: { mostGoals: '', mostCards: '', topFour: [], topScorer: '' },
+    extraPredictions: emptyExtraPredictions,
   };
   tournament$!: Observable<TournamentWithId>;
   tournament: Tournament | null = null;
@@ -37,9 +39,6 @@ export class MmKisatComponent implements OnDestroy {
   teams: Team[] = [];
   matches: Match[] = [];
   countries: Country[] = [];
-  countryh2h1: string | null = null;
-  fastestGoal: number | null = null;
-  highestScoringMatch: number | null = null;
 
   groupSubscription: Subscription;
   tournamentSubscription!: Subscription;
@@ -153,20 +152,16 @@ export class MmKisatComponent implements OnDestroy {
     });
   }
 
-  arePredictionsIncomplete(): boolean {
-    return this.userPredictions.matchPredictions.some((result) => result.result === null);
-  }
-
   savePrediction(id: number, result: Result): void {
     this.userPredictions.matchPredictions.find((result) => result.id === id)!.result = result;
     this.updatePredictedPoints();
   }
 
-  saveHeadToHeadPrediction(result: string): void {
-    this.countryh2h1 = result;
+  saveHeadToHeadPrediction(result: string, index: number): void {
+    this.userPredictions.extraPredictions.headToHead[index].winner = result;
   }
 
-  lockPredictions(): void {
+  savePredictions(): void {
     this.userService.updatePredictions(this.userPredictions, this.group!.id).subscribe(
       () => {
         this.openSnackBar('Veikkaukset tallennettu kantaan!');
@@ -186,6 +181,14 @@ export class MmKisatComponent implements OnDestroy {
   isSelected(id: number): Result {
     const index = this.userPredictions.matchPredictions.findIndex((result) => result.id === id);
     return this.userPredictions.matchPredictions[index].result;
+  }
+
+  isSelectedH2H(i: number): string {
+    const winner = this.userPredictions.extraPredictions.headToHead[i].winner;
+    if (winner) {
+      return winner;
+    }
+    return '';
   }
 
   arePredictionsCorrect(id: number, value: Result): string {
@@ -224,5 +227,14 @@ export class MmKisatComponent implements OnDestroy {
 
   backToTop(mainContent: HTMLElement): void {
     mainContent.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  getMatchUpType(matchUp: HeadToHead): string {
+    if (matchUp.type === 'goal') {
+      return 'Tekee enemmän maaleja';
+    } else if (matchUp.type === 'winner') {
+      return 'Pääsee pidemmälle';
+    }
+    return 'Syöttää enemmän maaleja';
   }
 }

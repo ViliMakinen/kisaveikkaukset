@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Req } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { MatchResult } from '../../constants';
+import { ExtraPredictions, MatchResult } from '../../constants';
 
 @Controller('predictions')
 export class PredictionsController {
@@ -8,7 +8,7 @@ export class PredictionsController {
 
   @Post()
   async updatePredictions(
-    @Body() data: { predictions: MatchResult[]; groupId: number },
+    @Body() data: { predictions: { predictions: MatchResult[]; extraPredictions: ExtraPredictions }; groupId: number },
     @Req() req: any,
   ): Promise<any> {
     return await this.userService.updatePredictions(data.predictions, data.groupId, req.user.id);
