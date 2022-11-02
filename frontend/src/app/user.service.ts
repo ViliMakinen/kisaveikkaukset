@@ -10,7 +10,6 @@ const emptyUser: User = { id: 0, nickName: '', firstName: '', lastName: '', emai
 })
 export class UserService {
   user: User = emptyUser;
-  arePredictionsLocked: boolean = false;
 
   constructor(private http: HttpClient) {}
 

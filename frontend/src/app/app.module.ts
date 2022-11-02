@@ -27,7 +27,6 @@ import { AdminViewComponent } from './admin-view/admin-view.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
-import { InformationComponent } from './information/information.component';
 import { AuthService } from './auth.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -52,7 +51,6 @@ const routes: Routes = [
         component: HomeComponent,
       },
       { path: ':groupId/tournament', component: MmKisatComponent },
-      { path: ':groupId/information', component: InformationComponent },
 
       {
         path: '**',
@@ -74,7 +72,6 @@ const routes: Routes = [
     CreateGroupComponent,
     AuthPageComponent,
     AdminViewComponent,
-    InformationComponent,
     LandingPageComponent,
     DialogComponent,
   ],

@@ -68,9 +68,7 @@ export class HomeComponent implements OnDestroy {
     this.groupSubscription = this.group$.subscribe((group) => {
       this.group = group;
       this.groupCode = group.code.split('');
-      this.tournament$ = groupId$.pipe(
-        switchMap((groupId) => this.tournamentService.getTournamentById(group.tournamentId)),
-      );
+      this.tournament$ = groupId$.pipe(switchMap(() => this.tournamentService.getTournamentById(group.tournamentId)));
       this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
         this.tournament = tournament.tournamentData;
         this.lastUpdated = tournament.lastUpdated;
@@ -128,10 +126,46 @@ export class HomeComponent implements OnDestroy {
   }
 
   calculateUserPoints(user: GroupUser): number {
-    //todo switch to reduce functionality
-    if (!user.predictions.matchPredictions) {
+    if (user.predictions.matchPredictions === undefined) {
       return 0;
     }
+    let points: number = 0;
+    points += this.calculateMatchPoints(user);
+    points += this.calculateHeadToHeadAndTopFourPoints(user);
+    points += this.calculateExtraPredictionPoints(user);
+    return points;
+  }
+
+  calculateExtraPredictionPoints(user: GroupUser): number {
+    let points = 0;
+    if (
+      user.predictions.extraPredictions.fastestGoal === this.tournament!.extraPredictions.fastestGoal &&
+      this.tournament!.extraPredictions.fastestGoal !== null
+    ) {
+      points += 2;
+    }
+    if (
+      user.predictions.extraPredictions.highestScoring === this.tournament!.extraPredictions.highestScoring &&
+      this.tournament!.extraPredictions.highestScoring !== null
+    ) {
+      points += 2;
+    }
+    if (
+      user.predictions.extraPredictions.mostCards === this.tournament!.extraPredictions.mostCards &&
+      this.tournament!.extraPredictions.mostCards !== ''
+    ) {
+      points += 2;
+    }
+    if (
+      user.predictions.extraPredictions.mostGoals === this.tournament!.extraPredictions.mostGoals &&
+      this.tournament!.extraPredictions.mostGoals !== ''
+    ) {
+      points += 2;
+    }
+    return points;
+  }
+
+  calculateMatchPoints(user: GroupUser): number {
     let points: number = 0;
     this.matches.forEach((match) => {
       if (user.predictions.matchPredictions[match.id - 1]) {
@@ -141,6 +175,27 @@ export class HomeComponent implements OnDestroy {
         ) {
           points++;
         }
+      }
+    });
+    return points;
+  }
+
+  calculateHeadToHeadAndTopFourPoints(user: GroupUser): number {
+    let points = 0;
+    user.predictions.extraPredictions.headToHead.forEach((prediction, index) => {
+      if (
+        prediction.winner === this.tournament!.extraPredictions.headToHead[index].winner &&
+        this.tournament!.extraPredictions.headToHead[index].winner !== null
+      ) {
+        points++;
+      }
+    });
+    user.predictions.extraPredictions.topFour.forEach((team) => {
+      if (
+        this.tournament!.extraPredictions.topFour.includes(team) &&
+        this.tournament!.extraPredictions.topFour.length > 0
+      ) {
+        points++;
       }
     });
     return points;
