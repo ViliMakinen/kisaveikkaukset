@@ -1,5 +1,5 @@
 <ng-container *ngIf="tournament !== null">
-  <div class="main-content-container">
+  <div #mainContent class="main-content-container">
     <div class="title-container">
       {{ tournament.name }}
     </div>
@@ -13,10 +13,7 @@
             </button>
           </span>
           <span class="button-info-container">
-            <button
-              class="clickable primary-container"
-              mat-raised-button
-              matStepperNext>
+            <button class="clickable primary-container" mat-raised-button matStepperNext>
               Muut
               <mat-icon>arrow_right</mat-icon>
             </button>
@@ -25,162 +22,205 @@
             </div>
           </span>
         </div>
-        <mat-tab-group [animationDuration]="'0'">
-          <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
-            <div class="group-title">Lohko {{ group.name }}</div>
-            <div class="tab-container">
-              <div class="match-container">
-                <div *ngFor="let match of group.matches" class="match-row">
-                  <span class="teams">
-                    <img
-                      [src]="'assets/images/4x3/' + fetchFlag(match.home) + '.svg'"
-                      alt="home team flag"
-                      class="flag-image"/>
-                    <span class="match-up">{{ match.home }} - {{ match.away }}</span>
-                    <img
-                      [src]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'"
-                      alt="away team flag"
-                      class="flag-image"/>
-                  </span>
-                  <span>
-                    <mat-button-toggle-group
-                      (change)="savePrediction(match.id, $event.value)"
-                      [disabled]="arePredictionsLocked()"
-                      [value]="isSelected(match.id)">
-                      <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')" value="1"
-                      >1</mat-button-toggle
-                      >
-                      <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')" value="X"
-                      >X
-                      </mat-button-toggle>
-                      <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')" value="2"
-                      >2</mat-button-toggle
-                      >
-                    </mat-button-toggle-group>
-                  </span>
-                </div>
-              </div>
-              <mat-divider></mat-divider>
-              <div class="group-container">
-                <div class="group-prediction-title">Lohkotilanne veikkauksiesi mukaan</div>
-                <div class="group-content-container">
-                  <div class="group-title-container primary-container">
-                    <span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
-                  </div>
-                  <div *ngFor="let team of group.teams" class="group-row">
-                    <span class="row-box">
+        <div class="tab-group">
+          <mat-tab-group style="min-height: 410px" [animationDuration]="'0'">
+            <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
+              <div class="group-title">Lohko {{ group.name }}</div>
+              <div class="tab-container">
+                <div class="match-container">
+                  <div *ngFor="let match of group.matches" class="match-row">
+                    <span class="teams">
                       <img
-                        [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'"
+                        [src]="'assets/images/4x3/' + fetchFlag(match.home) + '.svg'"
+                        alt="home team flag"
+                        class="flag-image"/>
+                      <span class="match-up">{{ match.home }} - {{ match.away }}</span>
+                      <img
+                        [src]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'"
                         alt="away team flag"
                         class="flag-image"/>
-                      {{ team.name }}</span
-                    >
-                    <span class="row-box">{{ team.predictedPoints }}</span>
+                    </span>
+                    <span>
+                      <mat-button-toggle-group
+                        (change)="savePrediction(match.id, $event.value)"
+                        [disabled]="arePredictionsLocked()"
+                        [value]="isSelected(match.id)">
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')" value="1"
+                        >1</mat-button-toggle
+                        >
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')" value="X"
+                        >X
+                        </mat-button-toggle>
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')" value="2"
+                        >2</mat-button-toggle
+                        >
+                      </mat-button-toggle-group>
+                    </span>
+                  </div>
+                </div>
+                <div class="divider"></div>
+                <div class="group-container">
+                  <div class="group-prediction-title">Lohkotilanne veikkauksiesi mukaan</div>
+                  <div class="group-content-container">
+                    <div class="group-title-container primary-container">
+                      <span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
+                    </div>
+                    <div *ngFor="let team of group.teams" class="group-row">
+                      <span class="row-box">
+                        <img
+                          [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'"
+                          alt="away team flag"
+                          class="flag-image"/>
+                        {{ team.name }}</span
+                      >
+                      <span class="row-box">{{ team.predictedPoints }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
       </mat-step>
       <mat-step label="Muut">
         <div class="button-container">
-          <button class="clickable" mat-raised-button matStepperPrevious>1X2</button>
-          <button class="clickable" matStepperNext>Tallennus</button>
+          <button class="clickable primary-container" mat-raised-button matStepperPrevious>1X2</button>
+          <button class="clickable primary-container" mat-raised-button matStepperNext>Tallennus</button>
         </div>
         <div class="other-predictions-container">
+          <div class="head-to-head-container">
+            <div class="head-to-head-title">Kumpi</div>
+            <div *ngFor="let matchUp of tournament.extraPredictions.headToHead; let i = index">
+              <mat-button-toggle-group
+                class="head-to-head-row"
+                (change)="saveHeadToHeadPrediction($event.value, i)"
+                [value]="isSelectedH2H(i)">
+                <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[0]">{{
+                  matchUp.contestants[0]
+                  }}</mat-button-toggle>
+                <div class="question-container">{{ getMatchUpType(matchUp) }}</div>
+                <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[1]">{{
+                  matchUp.contestants[1]
+                  }}</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+          <span class="slider-title">Turnauksen nopein maali</span>
+          <mat-slider
+            [value]="userPredictions.extraPredictions.fastestGoal"
+            class="slider"
+            [(ngModel)]="userPredictions.extraPredictions.fastestGoal"
+            thumbLabel
+            [displayWith]="formatLabelMatch"
+            tickInterval="1"
+            step="1"
+            min="0"
+            max="5"></mat-slider>
+          <div>
+            <span class="slider-title">Turnauksen isomaalisin ottelu</span>
+            <mat-slider
+              [value]="userPredictions.extraPredictions.highestScoring"
+              class="slider"
+              [(ngModel)]="userPredictions.extraPredictions.highestScoring"
+              thumbLabel
+              [displayWith]="formatLabelScore"
+              tickInterval="2"
+              step="2"
+              min="4"
+              max="12"></mat-slider>
+          </div>
           <div class="button-info-container">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
               <mat-label>Eniten varoituksia</mat-label>
-              <span *ngIf="userPredictions.extraPredictions.mostCards !== '' && !arePredictionsLocked()"
-              ><mat-icon style="color: chartreuse">done</mat-icon></span
-              >
+              <mat-icon
+                *ngIf="userPredictions.extraPredictions.mostCards !== '' && !arePredictionsLocked()"
+                matSuffix
+                style="color: chartreuse">
+                done
+              </mat-icon>
               <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userPredictions.extraPredictions.mostCards">
                 <mat-option *ngFor="let team of teams" [value]="team.name">
                   {{ team.name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <span
-            ><img
-              alt="info"
-              matTooltip="Veikkaa lohkovaiheessa eniten varoituksia kerännyttä joukkuetta"
-              src="assets/images/info.svg"/>
+            <span class="info-button">
+              <img
+                alt="info"
+                matTooltip="Veikkaa lohkovaiheessa eniten varoituksia kerännyttä joukkuetta"
+                src="assets/images/info.svg"/>
             </span>
           </div>
           <div>
             <div class="button-info-container">
-              <mat-form-field appearance="fill">
+              <mat-form-field appearance="outline">
                 <mat-label>Eniten maaleja</mat-label>
-                <span *ngIf="userPredictions.extraPredictions.mostGoals !== '' && !arePredictionsLocked()"
-                ><mat-icon style="color: chartreuse">done</mat-icon></span
-                >
-                <mat-select [disabled]="arePredictionsLocked()"
-                            [(ngModel)]="userPredictions.extraPredictions.mostGoals">
+                <mat-icon
+                  *ngIf="userPredictions.extraPredictions.mostGoals !== '' && !arePredictionsLocked()"
+                  matSuffix
+                  style="color: chartreuse"
+                >done
+                </mat-icon>
+                <mat-select
+                  [disabled]="arePredictionsLocked()"
+                  [(ngModel)]="userPredictions.extraPredictions.mostGoals">
                   <mat-option *ngFor="let team of teams" [value]="team.name">
                     {{ team.name }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <span
-              ><img
-                alt="info"
-                matTooltip="Veikkaa lohkovaiheessa eniten maaleja tehnyttä joukkuetta"
-                src="assets/images/info.svg"
-              /></span>
+              <span class="info-button">
+                <img
+                  alt="info"
+                  matTooltip="Veikkaa lohkovaiheessa eniten maaleja tehnyttä joukkuetta"
+                  src="assets/images/info.svg"/>
+              </span>
             </div>
             <div></div>
             <div class="button-info-container">
-              <mat-form-field appearance="fill">
+              <mat-form-field appearance="outline">
                 <mat-label>Top 4</mat-label>
-                <span *ngIf="userPredictions.extraPredictions.topFour.length === 4 && !arePredictionsLocked()"
-                ><mat-icon style="color: chartreuse">done</mat-icon></span
-                >
-                <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userPredictions.extraPredictions.topFour"
-                            multiple>
+                <mat-icon
+                  *ngIf="userPredictions.extraPredictions.topFour.length === 4 && !arePredictionsLocked()"
+                  matSuffix
+                  style="color: chartreuse"
+                >done
+                </mat-icon>
+                <mat-select
+                  [disabled]="arePredictionsLocked()"
+                  [(ngModel)]="userPredictions.extraPredictions.topFour"
+                  multiple>
                   <mat-option
                     *ngFor="let team of teams"
                     [disabled]="
-                      userPredictions.extraPredictions.topFour.length > 3 && !userPredictions.extraPredictions.topFour.includes(team.name)
+                      userPredictions.extraPredictions.topFour.length > 3 &&
+                      !userPredictions.extraPredictions.topFour.includes(team.name)
                     "
                     [value]="team.name"
                   >{{ team.name }}</mat-option
                   >
                 </mat-select>
               </mat-form-field>
-              <span>
+              <span class="info-button">
                 <img alt="info" matTooltip="Veikkaa turnauksen semi-finalistit" src="assets/images/info.svg"
                 /></span>
             </div>
-            <div></div>
-            <div class="button-info-container">
-              <mat-form-field appearance="fill">
-                <mat-label>Maalipörssin voittaja</mat-label>
-                <span *ngIf="userPredictions.extraPredictions.topScorer.length > 2 && !arePredictionsLocked()"
-                ><mat-icon style="color: chartreuse">done</mat-icon></span>
-                <input
-                  [(ngModel)]="userPredictions.extraPredictions.topScorer"
-                  [disabled]="arePredictionsLocked()"
-                  matInput
-                  placeholder="Etunimi Sukunimi"
-                  type="text"/>
-              </mat-form-field>
-              <span
-              ><img
-                alt="info"
-                matTooltip="Veikkaa koko turnauksen maalipörssin voittaja"
-                src="assets/images/info.svg"
-              /></span>
+            <div class="save-button-container">
+              <button mat-raised-button class="clickable button primary-container" (click)="backToTop(mainContent)">
+                Palaa ylös
+              </button>
             </div>
           </div>
         </div>
       </mat-step>
-      <mat-step>
+      <mat-step *ngIf="!arePredictionsLocked()">
         <ng-template matStepLabel>Tallenna</ng-template>
         <p></p>
         <div class="save-button-container">
-          <button class="clickable" mat-raised-button matStepperPrevious>Takaisin</button>
-          <button mat-raised-button class="clickable" (click)="lockPredictions()">Lyö veikkaukset lukkoon</button>
+          <button class="clickable primary-container" mat-raised-button matStepperPrevious>Takaisin</button>
+          <button class="clickable primary-container" mat-raised-button (click)="savePredictions()">
+            Tallenna veikkaukset
+          </button>
         </div>
       </mat-step>
     </mat-stepper>

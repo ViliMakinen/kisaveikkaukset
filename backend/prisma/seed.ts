@@ -6,6 +6,45 @@ const prisma = new PrismaClient();
 const tournament: Tournament = {
   name: 'Jalkapallon MM-kisat 2022',
   startingDate: new Date('2022-11-19T19:00:00+02:00'),
+  extraPredictions: {
+    mostGoals: '',
+    topFour: [],
+    mostCards: '',
+    fastestGoal: null,
+    highestScoring: null,
+    headToHead: [
+      {
+        contestants: ['Englanti', 'Saksa'],
+        winner: null,
+        type: 'winner',
+      },
+      {
+        contestants: ['Ranska', 'Italia'],
+        winner: null,
+        type: 'winner',
+      },
+      {
+        contestants: ['Brasilia', 'Argentina'],
+        winner: null,
+        type: 'winner',
+      },
+      {
+        contestants: ['Kane', 'Mbappé'],
+        winner: null,
+        type: 'goal',
+      },
+      {
+        contestants: ['Messi', 'Ronaldo'],
+        winner: null,
+        type: 'goal',
+      },
+      {
+        contestants: ['Neymar', 'de Bruyne'],
+        winner: null,
+        type: 'pass',
+      },
+    ],
+  },
   groups: [
     {
       name: 'A',
@@ -436,10 +475,12 @@ const tournament: Tournament = {
 
 async function main() {
   const tournamentJson = JSON.parse(JSON.stringify(tournament));
+  const tournamentExtraPredictionsJson = JSON.parse(JSON.stringify(tournament.extraPredictions));
   await prisma.tournament.create({
     data: {
       tournamentData: tournamentJson,
       lastUpdated: null,
+      extraPredictions: tournamentExtraPredictionsJson,
     },
   });
 }

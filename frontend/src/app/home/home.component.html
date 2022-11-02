@@ -41,7 +41,7 @@
     </ng-container>
     <div *ngIf="!hasTournamentStarted()" class="button-container">
       <button [routerLink]="['./tournament']" class="clickable secondary-container button" mat-raised-button>
-        <div>{{arePredictionsCompleted()}}</div>
+        <div>{{ arePredictionsCompleted() }}</div>
         <div class="flex-container">
           <mat-icon>arrow_left</mat-icon>
           Klikkaa tästä veikkauksiin
@@ -60,7 +60,10 @@
       <div class="standings-container primary-container">
         <div class="standings-title-container">
           Pistetilanne
-          <mat-icon matTooltip="Viimeksi päivitetty: {{ lastUpdated | date: 'dd.MM.yyyy HH.mm' }} ">update</mat-icon>
+          <mat-icon matTooltip="Kantaan päivitetty tulokset viimeksi  {{ lastUpdated | date: 'dd.MM.yyyy HH.mm' }} "
+          >update
+          </mat-icon
+          >
         </div>
         <div *ngFor="let user of users" class="standings-row-container">
           <span *ngIf="user.nickName === null" class="standings-row-box">
@@ -105,7 +108,7 @@
     </div>
     <mat-divider></mat-divider>
     <div class="tab-group-title">Lohkotilanteet</div>
-    <mat-tab-group>
+    <mat-tab-group class="min-height">
       <mat-tab [label]="group.name" *ngFor="let group of tournament.groups">
         <div class="group-container primary-container">
           <div class="group-title-container">

@@ -1,12 +1,36 @@
+@use './src/colors' as *;
+
 .main-content-container {
   max-height: calc(100% - 64px);
 
-  ::ng-deep .cdk-focused {
-    background: none;
-  }
-
   ::ng-deep .mat-step-header {
     pointer-events: none !important;
+  }
+
+  .slider-title {
+    justify-content: center;
+    display: flex;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+
+    ::ng-deep .mat-slider-wrapper {
+      .mat-slider-thumb-container {
+        .mat-slider-thumb-label {
+          width: 50px;
+          height: 50px;
+          top: -62px;
+          right: -25px;
+          text-align: center;
+        }
+      }
+    }
   }
 
   .save-button-container {
@@ -22,6 +46,10 @@
     align-items: center;
     column-gap: 7px;
     margin-bottom: 10px;
+
+    .info-button {
+      margin-bottom: 10px;
+    }
   }
 
   .other-predictions-container {
@@ -29,6 +57,49 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    .head-to-head-container {
+      border: 3px solid $primary-color;
+      border-radius: 20px;
+      width: 360px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+      justify-content: center;
+      align-items: center;
+
+      .head-to-head-title {
+        font-size: 20px;
+        text-decoration: underline $primary-color;
+      }
+
+      .head-to-head-row {
+        display: flex;
+        justify-content: space-between;
+        width: 340px;
+
+        .toggle-button {
+          font-size: 16px;
+          color: $primary-color;
+          border: 2px inset $primary-color;
+          border-radius: 10px;
+          width: 100px;
+        }
+
+        .question-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 120px;
+          margin-left: 5px;
+          margin-right: 5px;
+          white-space: pre-wrap;
+          text-align: center;
+          font-size: 14px;
+        }
+      }
+    }
   }
 
   .button-container {
@@ -36,7 +107,7 @@
     justify-content: space-between;
     margin-bottom: 10px;
 
-    button {
+    .button {
       width: 120px;
     }
   }
@@ -59,127 +130,136 @@
     row-gap: 10px;
   }
 
-  .group-title {
+  .tab-group {
     display: flex;
     justify-content: center;
-    font-size: 18px;
-    margin-top: 10px;
-    margin-bottom: 5px;
-  }
+    border: 5px solid #45425a;
+    border-radius: 20px;
 
-  .tab-container {
-    display: flex;
-
-    .match-container {
+    .group-title {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex-basis: 50%;
+      justify-content: center;
+      font-size: 18px;
       margin-top: 10px;
       margin-bottom: 5px;
-
-      .match-row {
-        display: flex;
-        justify-content: space-between;
-        width: 90%;
-        border-bottom: 1px solid gray;
-
-        .teams {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          width: calc(100% - 110px);
-          column-gap: 5px;
-
-          .match-up {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-          }
-
-          .flag-image {
-            height: 30px;
-            width: 30px;
-            margin-left: 3px;
-            margin-right: 3px;
-          }
-        }
-
-        .match-date {
-          display: flex;
-          align-items: center;
-          width: 33%;
-
-          .date {
-            margin-right: 20px;
-          }
-        }
-      }
     }
 
-    .group-container {
-      width: 50%;
-      flex-basis: 50%;
+    .tab-container {
       display: flex;
-      flex-direction: column;
 
-
-      .group-prediction-title {
-        display: flex;
-        justify-content: center;
-        font-size: 18px;
-        margin-top: 10px;
-        margin-bottom: 5px;
-      }
-
-      .group-content-container {
-        align-items: center;
+      .match-container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        flex-basis: 50%;
+        margin-top: 10px;
+        margin-bottom: 5px;
 
-        .group-title-container {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          height: 40px;
-          border-bottom: 1px inset black;
-          font-size: 15px;
-          width: 80%;
-
-          .text-margin {
-            margin-left: 5px;
-            margin-right: 5px;
-          }
-        }
-
-        .group-row {
+        .match-row {
           display: flex;
           justify-content: space-between;
-          width: 80%;
-          height: 40px;
+          width: 90%;
+          border-bottom: 1px solid gray;
 
-          &:nth-child(2n + 3) {
-            background-color: lightgrey;
-            color: black;
-          }
-
-          &:nth-child(even) {
-            background-color: white;
-            color: black;
-          }
-
-
-          .row-box {
+          .teams {
             display: flex;
             align-items: center;
-            margin-left: 5px;
-            margin-right: 5px;
+            justify-content: space-between;
+            width: calc(100% - 110px);
+            column-gap: 5px;
+
+            .match-up {
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+            }
 
             .flag-image {
               height: 30px;
               width: 30px;
+              margin-left: 3px;
               margin-right: 3px;
+            }
+          }
+
+          .match-date {
+            display: flex;
+            align-items: center;
+            width: 33%;
+
+            .date {
+              margin-right: 20px;
+            }
+          }
+        }
+      }
+
+      .divider {
+        border-top: 5px solid #45425a;
+        margin-top: 10px;
+      }
+
+      .group-container {
+        flex-basis: 50%;
+        display: flex;
+        flex-direction: column;
+
+        .group-prediction-title {
+          display: flex;
+          justify-content: center;
+          font-size: 18px;
+          margin-top: 10px;
+          margin-bottom: 5px;
+        }
+
+        .group-content-container {
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          .group-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 40px;
+            border-bottom: 1px inset black;
+            font-size: 15px;
+            width: 90%;
+
+            .text-margin {
+              margin-left: 5px;
+              margin-right: 5px;
+            }
+          }
+
+          .group-row {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            height: 40px;
+
+            &:nth-child(2n + 3) {
+              background-color: lightgrey;
+              color: black;
+            }
+
+            &:nth-child(even) {
+              background-color: white;
+              color: black;
+            }
+
+            .row-box {
+              display: flex;
+              align-items: center;
+              margin-left: 5px;
+              margin-right: 5px;
+
+              .flag-image {
+                height: 30px;
+                width: 30px;
+                margin-right: 3px;
+              }
             }
           }
         }
@@ -194,6 +274,17 @@
 
 @media only screen and (max-width: 768px) {
   .main-content-container {
+    .other-predictions-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .head-to-head-container {
+        width: 96%;
+      }
+    }
+
     .tab-container {
       display: flex;
       flex-direction: column;

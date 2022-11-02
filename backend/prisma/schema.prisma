@@ -36,8 +36,9 @@ model Group {
 }
 
 model Tournament {
-  id             Int        @id @default(autoincrement())
-  tournamentData Json
-  lastUpdated    DateTime?  @db.Timestamptz(6)
-  Group          Group[]
+  id                Int        @id @default(autoincrement())
+  tournamentData    Json
+  lastUpdated       DateTime?  @db.Timestamptz(6)
+  Group             Group[]
+  extraPredictions  Json
 }

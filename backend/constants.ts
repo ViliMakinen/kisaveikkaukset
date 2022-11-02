@@ -2,6 +2,7 @@ export interface Tournament {
   name: string;
   groups: Group[];
   startingDate: Date;
+  extraPredictions: ExtraPredictions;
 }
 
 export interface PlayerGroup {
@@ -32,14 +33,22 @@ export interface Group {
 
 export interface Predictions {
   matchPredictions: MatchResult[];
-  extraPredictions: UserExtraPredictions;
+  extraPredictions: ExtraPredictions;
 }
 
-export interface UserExtraPredictions {
+export interface ExtraPredictions {
   mostCards: string;
   topFour: string[];
   mostGoals: string;
-  topScorer: string;
+  fastestGoal: number | null;
+  highestScoring: number | null;
+  headToHead: HeadToHead[];
+}
+
+export interface HeadToHead {
+  winner: string | null;
+  contestants: string[];
+  type: 'goal' | 'pass' | 'winner';
 }
 
 export interface User {

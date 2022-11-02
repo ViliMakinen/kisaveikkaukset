@@ -34,8 +34,10 @@ CREATE TABLE "Group"
 -- CreateTable
 CREATE TABLE "Tournament"
 (
-    "id"             SERIAL NOT NULL,
-    "tournamentData" JSONB  NOT NULL,
+    "id"               SERIAL NOT NULL,
+    "tournamentData"   JSONB  NOT NULL,
+    "lastUpdated"      TIMESTAMPTZ(6),
+    "extraPredictions" JSONB  NOT NULL,
 
     CONSTRAINT "Tournament_pkey" PRIMARY KEY ("id")
 );

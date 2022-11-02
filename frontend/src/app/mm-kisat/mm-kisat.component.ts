@@ -3,6 +3,8 @@ import { Component, OnDestroy } from '@angular/core';
 import {
   countries,
   Country,
+  emptyExtraPredictions,
+  HeadToHead,
   Match,
   MatchResult,
   PlayerGroup,
@@ -27,7 +29,7 @@ import { isBefore } from 'date-fns';
 export class MmKisatComponent implements OnDestroy {
   userPredictions: Predictions = {
     matchPredictions: [],
-    extraPredictions: { mostGoals: '', mostCards: '', topFour: [], topScorer: '' },
+    extraPredictions: emptyExtraPredictions,
   };
   tournament$!: Observable<TournamentWithId>;
   tournament: Tournament | null = null;
@@ -53,9 +55,7 @@ export class MmKisatComponent implements OnDestroy {
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
     this.groupSubscription = this.group$.subscribe((group) => {
       this.group = group;
-      this.tournament$ = groupId$.pipe(
-        switchMap((groupId) => this.tournamentService.getTournamentById(group.tournamentId)),
-      );
+      this.tournament$ = groupId$.pipe(switchMap(() => this.tournamentService.getTournamentById(group.tournamentId)));
       this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
         this.tournament = tournament.tournamentData;
         this.matches = this.tournament.groups.flatMap((group) => group.matches);
@@ -72,6 +72,26 @@ export class MmKisatComponent implements OnDestroy {
           .sort((a, b) => a.name.localeCompare(b.name));
       });
     });
+  }
+
+  formatLabelMatch(value: number): string {
+    if (value === 5) {
+      return '05:00+';
+    }
+    return '0' + value + ':00 - 0' + value + ':59';
+  }
+
+  formatLabelScore(value: number): string {
+    if (value === 4) {
+      return '0-4';
+    } else if (value === 6) {
+      return '5-6';
+    } else if (value === 8) {
+      return '7-8';
+    } else if (value === 10) {
+      return '9-10';
+    }
+    return '11+';
   }
 
   ngOnDestroy(): void {
@@ -132,18 +152,18 @@ export class MmKisatComponent implements OnDestroy {
     });
   }
 
-  arePredictionsIncomplete(): boolean {
-    return this.userPredictions.matchPredictions.some((result) => result.result === null);
-  }
-
   savePrediction(id: number, result: Result): void {
     this.userPredictions.matchPredictions.find((result) => result.id === id)!.result = result;
     this.updatePredictedPoints();
   }
 
-  lockPredictions(): void {
+  saveHeadToHeadPrediction(result: string, index: number): void {
+    this.userPredictions.extraPredictions.headToHead[index].winner = result;
+  }
+
+  savePredictions(): void {
     this.userService.updatePredictions(this.userPredictions, this.group!.id).subscribe(
-      (predictions) => {
+      () => {
         this.openSnackBar('Veikkaukset tallennettu kantaan!');
         this.router.navigate(['overview/', this.group!.id]);
       },
@@ -161,6 +181,14 @@ export class MmKisatComponent implements OnDestroy {
   isSelected(id: number): Result {
     const index = this.userPredictions.matchPredictions.findIndex((result) => result.id === id);
     return this.userPredictions.matchPredictions[index].result;
+  }
+
+  isSelectedH2H(i: number): string {
+    const winner = this.userPredictions.extraPredictions.headToHead[i].winner;
+    if (winner) {
+      return winner;
+    }
+    return '';
   }
 
   arePredictionsCorrect(id: number, value: Result): string {
@@ -195,5 +223,18 @@ export class MmKisatComponent implements OnDestroy {
 
   arePredictionsLocked(): boolean {
     return isBefore(this.tournament!.startingDate, new Date());
+  }
+
+  backToTop(mainContent: HTMLElement): void {
+    mainContent.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  getMatchUpType(matchUp: HeadToHead): string {
+    if (matchUp.type === 'goal') {
+      return 'Tekee enemmän maaleja';
+    } else if (matchUp.type === 'winner') {
+      return 'Pääsee pidemmälle';
+    }
+    return 'Syöttää enemmän maaleja';
   }
 }
