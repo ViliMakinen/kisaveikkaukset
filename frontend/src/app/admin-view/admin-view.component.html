@@ -28,11 +28,6 @@
           </mat-button-toggle-group>
         </span>
       </div>
-      <div class="toolbar-nav">
-        <button mat-raised-button class="button clickable" [routerLink]="['../']">Poistu</button>
-        <button mat-raised-button class="button clickable" (click)="emptyResults()">Nollaa</button>
-        <button mat-raised-button class="button clickable" (click)="saveResults()">Tallenna</button>
-      </div>
     </div>
     <div class="other-predictions-container">
       <div class="head-to-head-container">
@@ -41,7 +36,7 @@
           <mat-button-toggle-group
             class="head-to-head-row"
             (change)="saveHeadToHeadResult($event.value, i)"
-            [value]="tournament.tournamentData.extraPredictions.headToHead[i]">
+            [value]="tournament.tournamentData.extraPredictions.headToHead[i].winner">
             <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[0]">{{
               matchUp.contestants[0]
               }}</mat-button-toggle>
@@ -132,7 +127,11 @@
             >done
             </mat-icon>
             <mat-select [(ngModel)]="tournament.tournamentData.extraPredictions.topFour" multiple>
-              <mat-option *ngFor="let team of teams" [value]="team.name">{{ team.name }}</mat-option>
+              <mat-option [disabled]="
+                      tournament.tournamentData.extraPredictions.topFour.length > 3 &&
+                      !tournament.tournamentData.extraPredictions.topFour.includes(team.name)
+                    "
+                          *ngFor="let team of teams" [value]="team.name">{{ team.name }}</mat-option>
             </mat-select>
           </mat-form-field>
           <span class="info-button">
@@ -140,6 +139,11 @@
             /></span>
         </div>
       </div>
+    </div>
+    <div class="toolbar-nav">
+      <button mat-raised-button class="button clickable" [routerLink]="['../']">Poistu</button>
+      <button mat-raised-button class="button clickable" (click)="emptyResults()">Nollaa</button>
+      <button mat-raised-button class="button clickable" (click)="saveResults()">Tallenna</button>
     </div>
   </div>
 </ng-container>
