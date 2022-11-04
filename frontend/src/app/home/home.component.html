@@ -60,12 +60,11 @@
       <div class="standings-container primary-container">
         <div class="standings-title-container">
           Pistetilanne
-          <mat-icon matTooltip="Kantaan päivitetty tulokset viimeksi  {{ lastUpdated | date: 'dd.MM.yyyy HH.mm' }} "
-          >update
-          </mat-icon
-          >
+          <mat-icon matTooltip="Kantaan päivitetty tulokset viimeksi  {{ lastUpdated | date: 'dd.MM.yyyy HH.mm' }} ">
+            update
+          </mat-icon>
         </div>
-        <div *ngFor="let user of users" class="standings-row-container">
+        <div *ngFor="let user of users.slice(0, 5)" class="standings-row-container">
           <span *ngIf="user.nickName === null" class="standings-row-box">
             {{ user.firstName }} {{ user.lastName[0] }}
           </span>
@@ -76,6 +75,27 @@
             {{ user.nickName }}
           </span>
           <span class="standings-row-box"> {{ user.points }}</span>
+        </div>
+        <ng-container *ngIf="isUserListExpanded">
+          <div *ngFor="let user of users.slice(5)" class="standings-row-container">
+            <span *ngIf="user.nickName === null" class="standings-row-box">
+              {{ user.firstName }} {{ user.lastName[0] }}
+            </span>
+            <span
+              *ngIf="user.nickName !== null"
+              [matTooltip]="user.firstName + ' ' + user.lastName"
+              class="standings-row-box">
+              {{ user.nickName }}
+            </span>
+            <span class="standings-row-box"> {{ user.points }}</span>
+          </div>
+        </ng-container>
+        <div
+          (click)="isUserListExpanded = !isUserListExpanded"
+          *ngIf="users.length > 5"
+          class="expand-standings-container">
+          <mat-icon *ngIf="isUserListExpanded">expand_less</mat-icon>
+          <mat-icon *ngIf="!isUserListExpanded">expand_more</mat-icon>
         </div>
       </div>
       <div class="games-today-container primary-container">

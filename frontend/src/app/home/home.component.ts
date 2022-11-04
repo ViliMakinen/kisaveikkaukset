@@ -54,6 +54,7 @@ export class HomeComponent implements OnDestroy {
   hours: number = 0;
   minutes: number = 0;
   seconds: number = 0;
+  isUserListExpanded = false;
 
   constructor(
     private clipboard: Clipboard,

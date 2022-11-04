@@ -12,8 +12,8 @@ export class GroupsController {
   }
 
   @Get(':id')
-  async getById(@Param('id') id: string): Promise<PlayerGroup> {
-    return await this.groupService.getGroupById(parseInt(id, 10));
+  async getById(@Param('id') id: string, @Req() req: any): Promise<PlayerGroup> {
+    return await this.groupService.getGroupById(parseInt(id, 10), req.user.id);
   }
 
   @Post()

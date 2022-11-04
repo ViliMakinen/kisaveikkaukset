@@ -16,7 +16,7 @@ export class GroupsService {
     return result;
   }
 
-  async getGroupById(id: number): Promise<PlayerGroup> {
+  async getGroupById(id: number, userId: number): Promise<PlayerGroup> {
     const group = await this.prisma.group.findUnique({
       where: {
         id: id,
@@ -29,6 +29,11 @@ export class GroupsService {
         },
       },
     });
+
+    if (group === null || group.UserGroupPredictions.every((userGroup) => userGroup.userId !== userId)) {
+      throw Error;
+    }
+
     return {
       name: group.name,
       code: group.code,
