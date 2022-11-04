@@ -1,7 +1,7 @@
 @use './src/colors' as *;
 
 .main-content-container {
-  max-height: calc(100% - 64px);
+  min-height: 100%;
 
   ::ng-deep .mat-step-header {
     pointer-events: none !important;

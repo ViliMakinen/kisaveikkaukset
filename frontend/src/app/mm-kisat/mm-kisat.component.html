@@ -1,9 +1,9 @@
 <ng-container *ngIf="tournament !== null">
-  <div #mainContent class="main-content-container">
+  <div #mainContent class="main-content-container background-color-container">
     <div class="title-container">
       {{ tournament.name }}
     </div>
-    <mat-stepper>
+    <mat-stepper class="background-color-container">
       <mat-step label="1X2">
         <div class="button-container">
           <span>
@@ -216,7 +216,6 @@
       <mat-step *ngIf="!arePredictionsLocked()">
         <ng-template matStepLabel>Tallenna</ng-template>
         <p></p>
-
         <div class="save-button-container">
           <button class="clickable primary-container" mat-raised-button matStepperPrevious>Takaisin</button>
           <button class="clickable primary-container" mat-raised-button (click)="savePredictions()">

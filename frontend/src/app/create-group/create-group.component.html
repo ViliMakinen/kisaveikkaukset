@@ -1,9 +1,9 @@
-<div class="create-group-container">
-  <div>
+<div class="create-group-container background-color-container">
+  <div class="wrapper">
     <div class="group-info-container">
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Ryhmän nimi</mat-label>
-        <input autocomplete="off" matInput [(ngModel)]="groupName">
+        <input [(ngModel)]="groupName" autocomplete="off" matInput/>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Turnaus</mat-label>
@@ -16,12 +16,14 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <button
-      [disabled]="tournamentId === null || groupName === ''"
-      class="button clickable create-new-group"
-      (click)="createNewGroup()"
-      mat-raised-button>
-      Luo uusi ryhmä
-    </button>
+    <div>
+      <button
+        (click)="createNewGroup()"
+        [disabled]="tournamentId === null || groupName === ''"
+        class="button clickable secondary-container"
+        mat-raised-button>
+        Luo uusi ryhmä
+      </button>
+    </div>
   </div>
 </div>
