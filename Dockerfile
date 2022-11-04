@@ -36,4 +36,4 @@ COPY --from=backend /home/node/backend/dist/ /home/node/dist/
 COPY --from=backend /home/node/backend/prisma/ /home/node/prisma/
 COPY --from=frontend /home/node/frontend/dist/kisaveikkaukset /home/node/dist/backend/public
 
-CMD ["node", "dist/backend/src/main.js"]
+CMD ["node", "backend/dist/src/main.js"]
