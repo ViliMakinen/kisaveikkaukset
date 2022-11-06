@@ -95,11 +95,15 @@
                 class="head-to-head-row"
                 (change)="saveHeadToHeadPrediction($event.value, i)"
                 [value]="isSelectedH2H(i)">
-                <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[0]">{{
+                <mat-button-toggle class="toggle-button"
+                                   [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[0])"
+                                   [value]="matchUp.contestants[0]">{{
                   matchUp.contestants[0]
                   }}</mat-button-toggle>
                 <div class="question-container">{{ getMatchUpType(matchUp) }}</div>
-                <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[1]">{{
+                <mat-button-toggle class="toggle-button"
+                                   [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[1])"
+                                   [value]="matchUp.contestants[1]">{{
                   matchUp.contestants[1]
                   }}</mat-button-toggle>
               </mat-button-toggle-group>

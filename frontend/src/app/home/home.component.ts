@@ -27,6 +27,8 @@ import { GroupService } from '../group.service';
 import { ActivatedRoute } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { InformationDialogComponent } from '../information-dialog/information-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -62,6 +64,7 @@ export class HomeComponent implements OnDestroy {
     private tournamentService: TournamentService,
     private groupService: GroupService,
     private snackbar: MatSnackBar,
+    private dialog: MatDialog,
   ) {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
@@ -85,6 +88,12 @@ export class HomeComponent implements OnDestroy {
         this.calculateCountdownValues();
         this.users = this.sortUsers(group.users);
       });
+    });
+  }
+
+  openDialog(): void {
+    this.dialog.open(InformationDialogComponent, {
+      width: '330px',
     });
   }
 

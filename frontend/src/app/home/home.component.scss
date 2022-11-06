@@ -224,6 +224,12 @@
         font-size: 24px;
         height: 40px;
         column-gap: 5px;
+
+        .info-icon {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+        }
       }
 
       .standings-row-container {

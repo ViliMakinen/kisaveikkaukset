@@ -237,4 +237,21 @@ export class MmKisatComponent implements OnDestroy {
     }
     return 'Syöttää enemmän maaleja';
   }
+
+  areHeadToHeadPredictionsCorrect(i: number, team: string): string {
+    if (
+      this.userPredictions.extraPredictions.headToHead[i].winner === team &&
+      this.tournament!.extraPredictions.headToHead[i].winner === team &&
+      this.tournament!.extraPredictions.headToHead[i].winner !== null
+    ) {
+      return '#42FF5A';
+    } else if (
+      this.userPredictions.extraPredictions.headToHead[i].winner === team &&
+      this.tournament!.extraPredictions.headToHead[i].winner !== team &&
+      this.tournament!.extraPredictions.headToHead[i].winner !== null
+    ) {
+      return 'red';
+    }
+    return '';
+  }
 }

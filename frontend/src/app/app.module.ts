@@ -35,6 +35,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { AdminGuard } from './admin-guard.service';
 import { MatSliderModule } from '@angular/material/slider';
+import { InformationDialogComponent } from './information-dialog/information-dialog.component';
 
 const routes: Routes = [
   { path: '', component: AuthPageComponent },
@@ -74,6 +75,7 @@ const routes: Routes = [
     AdminViewComponent,
     LandingPageComponent,
     DialogComponent,
+    InformationDialogComponent,
   ],
   imports: [
     BrowserModule,
