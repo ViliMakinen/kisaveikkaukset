@@ -23,6 +23,7 @@
       column-gap: 5px;
       height: 30px;
       margin-top: 10px;
+      border-bottom: 1px solid black;
 
       mat-icon {
         display: flex;
@@ -32,6 +33,14 @@
       .edit-icon {
         font-size: 16px;
       }
+    }
+
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px;
+      font-size: 20px;
     }
 
     .tournament-container {
@@ -69,37 +78,44 @@
       color: $secondary-color;
     }
 
-    .join-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      column-gap: 10px;
+    .join-container-with-message {
+      height: 100px;
 
-      ::ng-deep.mat-form-field-wrapper {
-        padding-bottom: 0;
+      .join-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        column-gap: 10px;
+
+
+        ::ng-deep.mat-form-field-wrapper {
+          padding-bottom: 0;
+        }
+
+        button {
+          width: 50px;
+          height: 50px;
+        }
       }
-
-      button {
-        width: 50px;
-        height: 50px;
-      }
-
       .fail-message {
         color: red;
+        font-size: 15px;
+        justify-content: center;
+        display: flex;
       }
-    }
-
-    .create-container {
-      position: absolute;
-      width: 100%;
-      bottom: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      .create-container {
+        position: absolute;
+        width: 100%;
+        bottom: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }
+
 
 @media only screen and (max-width: 768px) {
   .main-content-container {

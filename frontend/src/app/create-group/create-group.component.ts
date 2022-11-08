@@ -29,4 +29,11 @@ export class CreateGroupComponent {
       this.router.navigate(['overview/', group.id]);
     });
   }
+
+  isValid(): string {
+    if (this.groupName !== '' && this.tournamentId !== null) {
+      return 'secondary-container';
+    }
+    return '';
+  }
 }

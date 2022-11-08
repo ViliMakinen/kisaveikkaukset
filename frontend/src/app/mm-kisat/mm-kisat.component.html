@@ -7,19 +7,16 @@
       <mat-step label="1X2">
         <div class="button-container">
           <span>
-            <button [routerLink]="['../']" class="clickable primary-container" mat-raised-button>
+            <button [routerLink]="['../']" class="clickable button primary-container" mat-raised-button>
               <mat-icon>arrow_left</mat-icon>
               Etusivu
             </button>
           </span>
-          <span class="button-info-container">
-            <button class="clickable primary-container" mat-raised-button matStepperNext>
+          <span class="button-container">
+            <button class="clickable button primary-container" mat-raised-button matStepperNext>
               Muut
               <mat-icon>arrow_right</mat-icon>
             </button>
-            <div class="flex-container" matTooltip="Täytä ensin 1X2 veikkaukset">
-              <img alt="info" src="assets/images/info.svg"/>
-            </div>
           </span>
         </div>
         <div class="tab-group">
@@ -84,8 +81,8 @@
       </mat-step>
       <mat-step label="Muut">
         <div class="button-container">
-          <button class="clickable primary-container" mat-raised-button matStepperPrevious>1X2</button>
-          <button class="clickable primary-container" mat-raised-button matStepperNext>Tallennus</button>
+          <button class="clickable button primary-container" mat-raised-button matStepperPrevious>1X2</button>
+          <button class="clickable button primary-container" mat-raised-button matStepperNext>Tallennus</button>
         </div>
         <div class="other-predictions-container">
           <div class="head-to-head-container">
@@ -216,9 +213,11 @@
       <mat-step *ngIf="!arePredictionsLocked()">
         <ng-template matStepLabel>Tallenna</ng-template>
         <p></p>
+        <div class="back-button-container">
+          <button mat-raised-button class="clickable primary-container" matStepperPrevious>Takaisin</button>
+        </div>
         <div class="save-button-container">
-          <button class="clickable primary-container" mat-raised-button matStepperPrevious>Takaisin</button>
-          <button class="clickable primary-container" mat-raised-button (click)="savePredictions()">
+          <button class="clickable save-button primary-container" mat-raised-button (click)="savePredictions()">
             Tallenna veikkaukset
           </button>
         </div>

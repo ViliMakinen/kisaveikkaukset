@@ -4,6 +4,10 @@
   height: calc(100% - 20px);
   padding-top: 20px;
 
+  .button {
+    margin-top: 20px;
+  }
+
   .wrapper {
     display: flex;
     flex-direction: column;
