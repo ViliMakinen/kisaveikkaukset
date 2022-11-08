@@ -3,7 +3,7 @@
     <div class="group-info-container">
       <mat-form-field appearance="outline">
         <mat-label>Ryhmän nimi</mat-label>
-        <input [(ngModel)]="groupName" autocomplete="off" matInput/>
+        <input [(ngModel)]="groupName" autocomplete="off" matInput />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Turnaus</mat-label>
@@ -20,14 +20,13 @@
       <button
         (click)="createNewGroup()"
         [disabled]="tournamentId === null || groupName === ''"
-        class="button clickable"
-        [class]="isValid()"
+        class="button clickable {{ isValid() }} "
         mat-raised-button>
         Luo uusi ryhmä
       </button>
     </div>
     <div>
-      <button mat-raised-button class="button clickable secondary-container" [routerLink]="['../']"> Takaisin</button>
+      <button mat-raised-button class="button clickable secondary-container" [routerLink]="['../']">Takaisin</button>
     </div>
   </div>
 </div>
