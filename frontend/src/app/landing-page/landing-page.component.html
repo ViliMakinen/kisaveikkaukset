@@ -16,6 +16,7 @@
       Admin paneeli
     </button>
     <ng-container *ngIf="group$ | async as usersGroups">
+      <div class="title" *ngIf="usersGroups.length > 0"> Turnaukset joihin kuulut</div>
       <div class="tournament-container">
         <div
           (click)="navigatoToGroup(group.groupId)"
@@ -27,15 +28,17 @@
     </ng-container>
   </div>
   <div class="join-create-container">
-    <div class="join-container">
-      <mat-form-field appearance="outline" class="input-container">
-        <input [(ngModel)]="code" autocomplete="off" matInput placeholder="Liity koodilla"/>
-      </mat-form-field>
-      <button (click)="tryJoiningGroup()" class="clickable secondary-container button" mat-flat-button>
-        <mat-icon>arrow_right_alt</mat-icon>
-      </button>
+    <div class="join-container-with-message">
+      <div class="join-container">
+        <mat-form-field appearance="outline" class="input-container">
+          <input [(ngModel)]="code" autocomplete="off" matInput placeholder="Liity koodilla"/>
+        </mat-form-field>
+        <button (click)="tryJoiningGroup()" class="clickable secondary-container button" mat-flat-button>
+          <mat-icon>arrow_right_alt</mat-icon>
+        </button>
+      </div>
+      <div class="fail-message">{{ failMessage }}</div>
     </div>
-    <div class="fail-message">{{ failMessage }}</div>
     <span class="create-container">
       <button class="clickable button secondary-container" mat-raised-button
               routerLink="create-group">Luo uusi ryhmä</button>

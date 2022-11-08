@@ -119,12 +119,12 @@
     flex-direction: column;
 
     div:nth-child(even) {
-      background-color: rgb(240, 235, 235);
+      background-color: rgb(240, 220, 240);
       color: black;
     }
 
     div:nth-child(2n + 3) {
-      background-color: white;
+      background-color: rgb(220, 200, 220);
       color: black;
     }
 
@@ -207,7 +207,7 @@
       height: fit-content;
 
       div:nth-child(even) {
-        background-color: rgb(240, 235, 235);
+        background-color: rgb(240, 220, 240);
         color: black;
       }
 
@@ -234,12 +234,12 @@
         border-top: 1px solid black;
 
         &:nth-child(even) {
-          background-color: white;
+          background-color:  rgb(240, 220, 240);
           color: black;
         }
 
         &:nth-child(2n + 3) {
-          background-color: lightgrey;
+          background-color: rgb(220, 200, 220);
           color: black;
         }
 
@@ -288,12 +288,12 @@
         border-top: 1px solid black;
 
         &:nth-child(even) {
-          background-color: white;
+          background-color: rgb(240, 220, 240);
           color: black;
         }
 
         &:nth-child(2n + 3) {
-          background-color: lightgrey;
+          background-color: rgb(220, 200, 220);
           color: black;
         }
 

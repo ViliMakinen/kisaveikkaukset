@@ -114,7 +114,7 @@ export const emptyExtraPredictions: ExtraPredictions = {
       type: 'winner',
     },
     {
-      contestants: ['Brasilia, Argentina'],
+      contestants: ['Brasilia', 'Argentina'],
       winner: null,
       type: 'winner',
     },
