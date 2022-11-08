@@ -257,6 +257,13 @@
           margin-right: 5px;
         }
       }
+
+      .expand-standings-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        background-color: $secondary-color;
+      }
     }
 
     .games-today-container {

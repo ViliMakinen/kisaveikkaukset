@@ -12,9 +12,14 @@ import { TournamentsService } from './tournaments/tournaments.service';
 import { GroupsService } from './groups/groups.service';
 import { CodeController } from './code/code.controller';
 import { PredictionsController } from './predictions/predictions.controller';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
     ConfigModule.forRoot({
       envFilePath: ['.env'],
       load: [OAuth2GoogleConfig],

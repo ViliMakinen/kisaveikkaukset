@@ -1,4 +1,4 @@
-<div class="main-content-container">
+<div class="main-content-container background-color-container">
   <div class="tournament-wrapper">
     <div *ngIf="currentUser.nickName === null" class="tournament-title-container">
       <span> Tervetuloa {{ currentUser.firstName }} {{ currentUser.lastName }} </span>
@@ -34,8 +34,8 @@
       <button (click)="tryJoiningGroup()" class="clickable secondary-container button" mat-flat-button>
         <mat-icon>arrow_right_alt</mat-icon>
       </button>
-      <div class="fail-message">{{ failMessage }}</div>
     </div>
+    <div class="fail-message">{{ failMessage }}</div>
     <span class="create-container">
       <button class="clickable button secondary-container" mat-raised-button
               routerLink="create-group">Luo uusi ryhmä</button>

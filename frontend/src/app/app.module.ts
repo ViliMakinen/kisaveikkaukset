@@ -35,6 +35,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { AdminGuard } from './admin-guard.service';
 import { MatSliderModule } from '@angular/material/slider';
+import { RangePipe } from './range.pipe';
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
 
 const routes: Routes = [
@@ -74,6 +75,7 @@ const routes: Routes = [
     AuthPageComponent,
     AdminViewComponent,
     LandingPageComponent,
+    RangePipe,
     DialogComponent,
     InformationDialogComponent,
   ],

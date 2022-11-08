@@ -31,7 +31,7 @@
 //   14. Create a standings table on the front page with a button to link you to the predictions section.
         -Update interval
 
-   15. Change color theme to dark.
+//   15. Change color theme to dark.
 
 //   16. Update the team standing in groups according to actual results (either to front page or predictions page).
 
@@ -69,7 +69,7 @@
 
 //    34. In MM-Kisat view, add some styling to the 1x2 rows to make them more visible
 
-      35. Add actual info to the info page
+//    35. Add actual info to the info page
 
 //    36. Add flags to all places with country names
 
@@ -85,7 +85,7 @@
 
 //    42. Create option for user to add a nickname to themselves
     
-      43. Catch errors instead of application going down
+//    43. Catch errors instead of application going down
 
 //    44. Add a link back to overview page (sidenav)
 
@@ -109,9 +109,13 @@
 
 //    54. Fix home html :nth stuff
 
+      55. Prevent users from changing computer's time to allow changing predictions
 
+      56. How to escape group creation
 
+      57. Fail message location
 
+      58. Create proper favicons
 
 ...
 ...
@@ -123,7 +127,7 @@
 
  - Create frontend tests.
 
- - Deploy to somewhere.
+// - Deploy to somewhere.
 
 // - Install docker.
 
