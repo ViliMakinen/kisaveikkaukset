@@ -33,6 +33,7 @@ export class MmKisatComponent implements OnDestroy {
   };
   tournament$!: Observable<TournamentWithId>;
   tournament: Tournament | null = null;
+  lastUpdated: Date | null = null;
   group$: Observable<PlayerGroup>;
   group: PlayerGroup | null = null;
   results: MatchResult[] = [];
@@ -58,6 +59,7 @@ export class MmKisatComponent implements OnDestroy {
       this.tournament$ = groupId$.pipe(switchMap(() => this.tournamentService.getTournamentById(group.tournamentId)));
       this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
         this.tournament = tournament.tournamentData;
+        this.lastUpdated = tournament.lastUpdated;
         this.matches = this.tournament.groups.flatMap((group) => group.matches);
         this.results = this.matches.map((match) => {
           return {
@@ -75,14 +77,19 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   formatLabelMatch(value: number): string {
-    if (value === 5) {
+    if (value === 0) {
+      return 'Valitse aikaväli';
+    }
+    if (value === 6) {
       return '05:00+';
     }
-    return '0' + value + ':00 - 0' + value + ':59';
+    return '0' + (value - 1) + ':00 - 0' + (value - 1) + ':59';
   }
 
   formatLabelScore(value: number): string {
-    if (value === 4) {
+    if (value === 2) {
+      return 'Valitse maalimäärä';
+    } else if (value === 4) {
       return '0-4';
     } else if (value === 6) {
       return '5-6';
@@ -118,6 +125,12 @@ export class MmKisatComponent implements OnDestroy {
       });
     }
     this.updatePredictedPoints();
+  }
+
+  top4CorrectAmount(): number {
+    return this.userPredictions.extraPredictions.topFour.filter((team) =>
+      this.tournament!.extraPredictions.topFour.includes(team),
+    ).length;
   }
 
   updatePredictedPoints(): void {
@@ -222,7 +235,10 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   arePredictionsLocked(): boolean {
-    return isBefore(this.tournament!.startingDate, new Date());
+    if (this.lastUpdated) {
+      return isBefore(this.tournament!.startingDate, this.lastUpdated);
+    }
+    return false;
   }
 
   backToTop(mainContent: HTMLElement): void {

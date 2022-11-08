@@ -131,14 +131,19 @@ export class AdminViewComponent {
   }
 
   formatLabelMatch(value: number): string {
-    if (value === 5) {
+    if (value === 0) {
+      return 'Valitse aikaväli';
+    }
+    if (value === 6) {
       return '05:00+';
     }
-    return '0' + value + ':00 - 0' + value + ':59';
+    return '0' + (value - 1) + ':00 - 0' + (value - 1) + ':59';
   }
 
   formatLabelScore(value: number): string {
-    if (value === 4) {
+    if (value === 2) {
+      return 'Valitse maalimäärä';
+    } else if (value === 4) {
       return '0-4';
     } else if (value === 6) {
       return '5-6';

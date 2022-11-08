@@ -85,7 +85,9 @@
       <mat-step label="Muut">
         <div class="button-container">
           <button class="clickable primary-container" mat-raised-button matStepperPrevious>1X2</button>
-          <button class="clickable primary-container" mat-raised-button matStepperNext>Tallennus</button>
+          <ng-container *ngIf="!arePredictionsLocked()">
+            <button class="clickable primary-container" mat-raised-button matStepperNext>Tallennus</button>
+          </ng-container>
         </div>
         <div class="other-predictions-container">
           <div class="head-to-head-container">
@@ -93,24 +95,28 @@
             <div *ngFor="let matchUp of tournament.extraPredictions.headToHead; let i = index">
               <mat-button-toggle-group
                 class="head-to-head-row"
+                [disabled]="arePredictionsLocked()"
                 (change)="saveHeadToHeadPrediction($event.value, i)"
                 [value]="isSelectedH2H(i)">
-                <mat-button-toggle class="toggle-button"
-                                   [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[0])"
-                                   [value]="matchUp.contestants[0]">{{
-                  matchUp.contestants[0]
-                  }}</mat-button-toggle>
+                <mat-button-toggle
+                  class="toggle-button"
+                  [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[0])"
+                  [value]="matchUp.contestants[0]"
+                >{{ matchUp.contestants[0] }}</mat-button-toggle
+                >
                 <div class="question-container">{{ getMatchUpType(matchUp) }}</div>
-                <mat-button-toggle class="toggle-button"
-                                   [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[1])"
-                                   [value]="matchUp.contestants[1]">{{
-                  matchUp.contestants[1]
-                  }}</mat-button-toggle>
+                <mat-button-toggle
+                  class="toggle-button"
+                  [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[1])"
+                  [value]="matchUp.contestants[1]"
+                >{{ matchUp.contestants[1] }}</mat-button-toggle
+                >
               </mat-button-toggle-group>
             </div>
           </div>
           <span class="slider-title">Turnauksen nopein maali</span>
           <mat-slider
+            [disabled]="arePredictionsLocked()"
             [value]="userPredictions.extraPredictions.fastestGoal"
             class="slider"
             [(ngModel)]="userPredictions.extraPredictions.fastestGoal"
@@ -119,10 +125,11 @@
             tickInterval="1"
             step="1"
             min="0"
-            max="5"></mat-slider>
+            max="6"></mat-slider>
           <div>
             <span class="slider-title">Turnauksen isomaalisin ottelu</span>
             <mat-slider
+              [disabled]="arePredictionsLocked()"
               [value]="userPredictions.extraPredictions.highestScoring"
               class="slider"
               [(ngModel)]="userPredictions.extraPredictions.highestScoring"
@@ -130,18 +137,12 @@
               [displayWith]="formatLabelScore"
               tickInterval="2"
               step="2"
-              min="4"
+              min="2"
               max="12"></mat-slider>
           </div>
           <div class="button-info-container">
             <mat-form-field appearance="outline">
               <mat-label>Eniten varoituksia</mat-label>
-              <mat-icon
-                *ngIf="userPredictions.extraPredictions.mostCards !== '' && !arePredictionsLocked()"
-                matSuffix
-                style="color: chartreuse">
-                done
-              </mat-icon>
               <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userPredictions.extraPredictions.mostCards">
                 <mat-option *ngFor="let team of teams" [value]="team.name">
                   {{ team.name }}
@@ -159,12 +160,6 @@
             <div class="button-info-container">
               <mat-form-field appearance="outline">
                 <mat-label>Eniten maaleja</mat-label>
-                <mat-icon
-                  *ngIf="userPredictions.extraPredictions.mostGoals !== '' && !arePredictionsLocked()"
-                  matSuffix
-                  style="color: chartreuse"
-                >done
-                </mat-icon>
                 <mat-select
                   [disabled]="arePredictionsLocked()"
                   [(ngModel)]="userPredictions.extraPredictions.mostGoals">
@@ -184,12 +179,6 @@
             <div class="button-info-container">
               <mat-form-field appearance="outline">
                 <mat-label>Top 4</mat-label>
-                <mat-icon
-                  *ngIf="userPredictions.extraPredictions.topFour.length === 4 && !arePredictionsLocked()"
-                  matSuffix
-                  style="color: chartreuse"
-                >done
-                </mat-icon>
                 <mat-select
                   [disabled]="arePredictionsLocked()"
                   [(ngModel)]="userPredictions.extraPredictions.topFour"
@@ -201,7 +190,7 @@
                       !userPredictions.extraPredictions.topFour.includes(team.name)
                     "
                     [value]="team.name"
-                  >{{ team.name }}</mat-option
+                  >{{ team.name }} </mat-option
                   >
                 </mat-select>
               </mat-form-field>

@@ -109,7 +109,7 @@
 
 //    54. Fix home html :nth stuff
 
-      55. Prevent users from changing computer's time to allow changing predictions
+//    55. Prevent users from changing computer's time to allow changing predictions
 
       56. How to escape group creation
 
@@ -117,6 +117,7 @@
 
       58. Create proper favicons
 
+      59. Replace info hovers with dialog
 ...
 ...
 ...
