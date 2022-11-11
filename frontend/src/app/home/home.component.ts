@@ -164,13 +164,13 @@ export class HomeComponent implements OnDestroy {
       user.predictions.extraPredictions.mostCards === this.tournament!.extraPredictions.mostCards &&
       this.tournament!.extraPredictions.mostCards !== ''
     ) {
-      points += 2;
+      points += 3;
     }
     if (
       user.predictions.extraPredictions.mostGoals === this.tournament!.extraPredictions.mostGoals &&
       this.tournament!.extraPredictions.mostGoals !== ''
     ) {
-      points += 2;
+      points += 3;
     }
     return points;
   }
@@ -194,8 +194,9 @@ export class HomeComponent implements OnDestroy {
     let points = 0;
     user.predictions.extraPredictions.headToHead.forEach((prediction, index) => {
       if (
-        prediction.winner === this.tournament!.extraPredictions.headToHead[index].winner &&
-        this.tournament!.extraPredictions.headToHead[index].winner !== null
+        (prediction.winner === this.tournament!.extraPredictions.headToHead[index].winner &&
+          this.tournament!.extraPredictions.headToHead[index].winner !== null) ||
+        (this.tournament!.extraPredictions.headToHead[index].winner === 'tasapeli' && prediction.winner !== null)
       ) {
         points++;
       }
@@ -205,7 +206,7 @@ export class HomeComponent implements OnDestroy {
         this.tournament!.extraPredictions.topFour.includes(team) &&
         this.tournament!.extraPredictions.topFour.length > 0
       ) {
-        points++;
+        points += 2;
       }
     });
     return points;

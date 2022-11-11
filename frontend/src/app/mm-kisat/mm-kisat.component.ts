@@ -20,6 +20,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../group.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { isBefore } from 'date-fns';
+import { MatDialog } from '@angular/material/dialog';
+import { CustomMsgDialogComponent } from '../custom-msg-dialog/custom-msg-dialog.component';
 
 @Component({
   selector: 'app-mm-kisat',
@@ -51,6 +53,7 @@ export class MmKisatComponent implements OnDestroy {
     private tournamentService: TournamentService,
     private route: ActivatedRoute,
     private groupService: GroupService,
+    private dialog: MatDialog,
   ) {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
@@ -149,6 +152,13 @@ export class MmKisatComponent implements OnDestroy {
     this.tournament!.groups.forEach((group) =>
       group.teams.sort((a, b) => a.predictedPoints - b.predictedPoints).reverse(),
     );
+  }
+
+  openCustomDialog(text: string): void {
+    this.dialog.open(CustomMsgDialogComponent, {
+      width: '250px',
+      data: text,
+    });
   }
 
   modifyTeamPoints(teamName: string, amount: number): void {
@@ -256,17 +266,19 @@ export class MmKisatComponent implements OnDestroy {
 
   areHeadToHeadPredictionsCorrect(i: number, team: string): string {
     if (
-      this.userPredictions.extraPredictions.headToHead[i].winner === team &&
-      this.tournament!.extraPredictions.headToHead[i].winner === team &&
-      this.tournament!.extraPredictions.headToHead[i].winner !== null
+      (this.userPredictions.extraPredictions.headToHead[i].winner === team &&
+        this.tournament!.extraPredictions.headToHead[i].winner === team &&
+        this.tournament!.extraPredictions.headToHead[i].winner !== null) ||
+      (this.tournament!.extraPredictions.headToHead[i].winner === 'tasapeli' &&
+        this.userPredictions.extraPredictions.headToHead[i].winner !== null)
     ) {
-      return '#42FF5A';
+      return '#228B22';
     } else if (
       this.userPredictions.extraPredictions.headToHead[i].winner === team &&
       this.tournament!.extraPredictions.headToHead[i].winner !== team &&
       this.tournament!.extraPredictions.headToHead[i].winner !== null
     ) {
-      return 'red';
+      return '#CE2029';
     }
     return '';
   }

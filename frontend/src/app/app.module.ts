@@ -37,6 +37,7 @@ import { AdminGuard } from './admin-guard.service';
 import { MatSliderModule } from '@angular/material/slider';
 import { RangePipe } from './range.pipe';
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
+import { CustomMsgDialogComponent } from './custom-msg-dialog/custom-msg-dialog.component';
 
 const routes: Routes = [
   { path: '', component: AuthPageComponent },
@@ -78,6 +79,7 @@ const routes: Routes = [
     RangePipe,
     DialogComponent,
     InformationDialogComponent,
+    CustomMsgDialogComponent,
   ],
   imports: [
     BrowserModule,
