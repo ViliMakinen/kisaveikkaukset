@@ -196,7 +196,7 @@ export class HomeComponent implements OnDestroy {
       if (
         (prediction.winner === this.tournament!.extraPredictions.headToHead[index].winner &&
           this.tournament!.extraPredictions.headToHead[index].winner !== null) ||
-        (this.tournament!.extraPredictions.headToHead[index].winner === 'tasapeli' && prediction.winner !== null)
+        (this.tournament!.extraPredictions.headToHead[index].winner === 'Tasapeli' && prediction.winner !== null)
       ) {
         points++;
       }

@@ -269,7 +269,7 @@ export class MmKisatComponent implements OnDestroy {
       (this.userPredictions.extraPredictions.headToHead[i].winner === team &&
         this.tournament!.extraPredictions.headToHead[i].winner === team &&
         this.tournament!.extraPredictions.headToHead[i].winner !== null) ||
-      (this.tournament!.extraPredictions.headToHead[i].winner === 'tasapeli' &&
+      (this.tournament!.extraPredictions.headToHead[i].winner === 'Tasapeli' &&
         this.userPredictions.extraPredictions.headToHead[i].winner !== null)
     ) {
       return '#228B22';
