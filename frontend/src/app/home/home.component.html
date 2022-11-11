@@ -59,6 +59,7 @@
     <div class="matches-today-and-user-standings-container">
       <div class="standings-container primary-container">
         <div class="standings-title-container">
+          <mat-icon class="info-icon clickable" (click)="openDialog()">info</mat-icon>
           Pistetilanne
           <mat-icon matTooltip="Kantaan päivitetty tulokset viimeksi  {{ lastUpdated | date: 'dd.MM.yyyy HH.mm' }} ">
             update
@@ -93,7 +94,7 @@
         <div
           (click)="isUserListExpanded = !isUserListExpanded"
           *ngIf="users.length > 5"
-          class="expand-standings-container">
+          class="expand-standings-container clickable">
           <mat-icon *ngIf="isUserListExpanded">expand_less</mat-icon>
           <mat-icon *ngIf="!isUserListExpanded">expand_more</mat-icon>
         </div>

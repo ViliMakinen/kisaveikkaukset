@@ -27,6 +27,8 @@ import { GroupService } from '../group.service';
 import { ActivatedRoute } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { InformationDialogComponent } from '../information-dialog/information-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -63,6 +65,7 @@ export class HomeComponent implements OnDestroy {
     private tournamentService: TournamentService,
     private groupService: GroupService,
     private snackbar: MatSnackBar,
+    private dialog: MatDialog,
   ) {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
@@ -86,6 +89,12 @@ export class HomeComponent implements OnDestroy {
         this.calculateCountdownValues();
         this.users = this.sortUsers(group.users);
       });
+    });
+  }
+
+  openDialog(): void {
+    this.dialog.open(InformationDialogComponent, {
+      width: '330px',
     });
   }
 
@@ -155,13 +164,13 @@ export class HomeComponent implements OnDestroy {
       user.predictions.extraPredictions.mostCards === this.tournament!.extraPredictions.mostCards &&
       this.tournament!.extraPredictions.mostCards !== ''
     ) {
-      points += 2;
+      points += 3;
     }
     if (
       user.predictions.extraPredictions.mostGoals === this.tournament!.extraPredictions.mostGoals &&
       this.tournament!.extraPredictions.mostGoals !== ''
     ) {
-      points += 2;
+      points += 3;
     }
     return points;
   }
@@ -185,8 +194,9 @@ export class HomeComponent implements OnDestroy {
     let points = 0;
     user.predictions.extraPredictions.headToHead.forEach((prediction, index) => {
       if (
-        prediction.winner === this.tournament!.extraPredictions.headToHead[index].winner &&
-        this.tournament!.extraPredictions.headToHead[index].winner !== null
+        (prediction.winner === this.tournament!.extraPredictions.headToHead[index].winner &&
+          this.tournament!.extraPredictions.headToHead[index].winner !== null) ||
+        (this.tournament!.extraPredictions.headToHead[index].winner === 'Tasapeli' && prediction.winner !== null)
       ) {
         points++;
       }
@@ -196,7 +206,7 @@ export class HomeComponent implements OnDestroy {
         this.tournament!.extraPredictions.topFour.includes(team) &&
         this.tournament!.extraPredictions.topFour.length > 0
       ) {
-        points++;
+        points += 2;
       }
     });
     return points;
