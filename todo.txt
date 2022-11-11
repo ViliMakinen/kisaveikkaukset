@@ -111,11 +111,11 @@
 
 //    55. Prevent users from changing computer's time to allow changing predictions
 
-      56. How to escape group creation
+//    56. How to escape group creation
 
-      57. Fail message location
+//    57. Fail message location
 
-      58. Create proper favicons
+//    58. Create proper favicons
 
       59. Replace info hovers with dialog
 ...

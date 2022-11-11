@@ -212,12 +212,12 @@ export class MmKisatComponent implements OnDestroy {
       this.results[index].result === this.userPredictions.matchPredictions[index].result &&
       this.userPredictions.matchPredictions[index].result === value
     ) {
-      return '#42FF5A';
+      return '#228B22';
     } else if (
       this.results[index].result !== this.userPredictions.matchPredictions[index].result &&
       this.userPredictions.matchPredictions[index].result === value
     ) {
-      return 'red';
+      return '#CE2029';
     } else {
       return '';
     }
