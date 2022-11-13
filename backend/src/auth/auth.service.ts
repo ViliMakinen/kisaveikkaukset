@@ -11,6 +11,7 @@ export class AuthService {
         const firstName = tokenData.firstName;
         const lastName = tokenData.lastName;
         const email = tokenData.email;
+        console.log('User: ', firstName, lastName, email, ' logged in.');
 
         const userData = await this.userService.getOrCreate({ firstName, lastName, email });
         const token = this.jwtService.sign(userData);

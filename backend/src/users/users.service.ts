@@ -15,7 +15,7 @@ export class UsersService {
       create: {
         email: user.email,
         firstName: user.firstName,
-        lastName: user.lastName,
+        lastName: user.lastName ?? '',
       },
     });
   }
