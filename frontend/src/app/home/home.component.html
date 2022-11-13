@@ -61,7 +61,8 @@
         <div class="standings-title-container">
           <mat-icon class="info-icon clickable" (click)="openDialog()">info</mat-icon>
           Pistetilanne
-          <mat-icon matTooltip="Kantaan päivitetty tulokset viimeksi  {{ lastUpdated | date: 'dd.MM.yyyy HH.mm' }} ">
+          <mat-icon
+            matTooltip="Otteluiden tulokset päivitetty:  {{ lastUpdated ? (lastUpdated | date: 'dd.MM.yyyy HH.mm') : '-' }} ">
             update
           </mat-icon>
         </div>
