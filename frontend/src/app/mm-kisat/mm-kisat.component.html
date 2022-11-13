@@ -81,9 +81,15 @@
       </mat-step>
       <mat-step label="Muut">
         <div class="button-container">
-          <button class="clickable primary-container" mat-raised-button matStepperPrevious>1X2</button>
+          <button class="clickable primary-container" mat-raised-button matStepperPrevious>
+            <mat-icon>arrow_left</mat-icon>
+            1X2
+          </button>
           <ng-container *ngIf="!arePredictionsLocked()">
-            <button class="clickable primary-container" mat-raised-button matStepperNext>Tallennus</button>
+            <button class="clickable primary-container" mat-raised-button matStepperNext>
+              Tallennus
+              <mat-icon>arrow_right</mat-icon>
+            </button>
           </ng-container>
         </div>
         <div class="other-predictions-container">
