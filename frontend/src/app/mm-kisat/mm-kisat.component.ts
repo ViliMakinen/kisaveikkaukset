@@ -156,7 +156,7 @@ export class MmKisatComponent implements OnDestroy {
 
   openCustomDialog(text: string): void {
     this.dialog.open(CustomMsgDialogComponent, {
-      width: '250px',
+      width: '300px',
       data: text,
     });
   }
@@ -187,7 +187,7 @@ export class MmKisatComponent implements OnDestroy {
   savePredictions(): void {
     this.userService.updatePredictions(this.userPredictions, this.group!.id).subscribe(
       () => {
-        this.openSnackBar('Veikkaukset tallennettu kantaan!');
+        this.openSnackBar('Veikkaukset tallennettu!');
         this.router.navigate(['overview/', this.group!.id]);
       },
       (error) => {

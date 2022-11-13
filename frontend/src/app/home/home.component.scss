@@ -1,7 +1,8 @@
 @use './src/colors' as *;
 
 .main-content {
-  padding: 2%;
+  padding: 10px;
+  height: calc(100% - 20px);
 
   .tournament-info-container {
     display: flex;
@@ -106,6 +107,12 @@
     border-bottom: 1px inset black;
     font-size: 30px;
     margin-top: 25px;
+  }
+
+  .tournament-group-container {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
   }
 
   .min-height {

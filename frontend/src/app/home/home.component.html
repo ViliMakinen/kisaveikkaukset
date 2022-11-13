@@ -129,21 +129,23 @@
     </div>
     <mat-divider></mat-divider>
     <div class="tab-group-title">Lohkotilanteet</div>
-    <mat-tab-group class="min-height">
-      <mat-tab [label]="group.name" *ngFor="let group of tournament.groups">
-        <div class="group-container primary-container">
-          <div class="group-title-container">
-            <span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
+    <div class="min-height tournament-group-container">
+      <mat-tab-group>
+        <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
+          <div class="group-container primary-container">
+            <div class="group-title-container">
+              <span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
+            </div>
+            <div *ngFor="let team of group.teams" class="group-row">
+              <span class="row-box">
+                <img [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'" alt="team flag" class="flag-image"/>
+                {{ team.name }}</span
+              >
+              <span class="row-box">{{ team.points }}</span>
+            </div>
           </div>
-          <div *ngFor="let team of group.teams" class="group-row">
-            <span class="row-box">
-              <img [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'" alt="team flag" class="flag-image"/>
-              {{ team.name }}</span
-            >
-            <span class="row-box">{{ team.points }}</span>
-          </div>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
   </div>
 </ng-container>

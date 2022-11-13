@@ -68,21 +68,19 @@
     }
   }
 
-  .back-button-container {
-    margin-bottom: 30px;
+  .buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .save-button-container {
+  .info-container {
+    margin-top: 20px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    row-gap: 30px;
-
-    .save-button {
-      height: 80px;
-    }
   }
+
 
   .button-info-container {
     display: flex;
@@ -425,5 +423,9 @@
 
   ::ng-deep.mat-horizontal-content-container {
     padding: 0 16px 16px 16px !important;
+  }
+
+  .tab-group {
+    min-height: 666px;
   }
 }

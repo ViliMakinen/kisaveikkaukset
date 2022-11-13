@@ -88,7 +88,7 @@
         </div>
         <div class="other-predictions-container">
           <div class="head-to-head-container">
-            <div class="head-to-head-title">Kumpi</div>
+            <div class="head-to-head-title">Kumpi vai Kampi</div>
             <div *ngFor="let matchUp of tournament.extraPredictions.headToHead; let i = index">
               <mat-button-toggle-group
                 class="head-to-head-row"
@@ -184,7 +184,7 @@
               class="info-button clickable"
               (click)="
                 openCustomDialog(
-                  '<div>Veikkaa <u><b>lohkovaiheessa</u></b> eniten kortteja kerännyttä joukkuetta</div>'
+                  '<div>Veikkaa <u>lohkovaiheessa</u> eniten kortteja (keltaiset + punaiset) kerännyttä joukkuetta</div>'
                 )
               ">
               <mat-icon class="button"> info </mat-icon>
@@ -218,7 +218,7 @@
               <span
                 class="info-button clickable"
                 (click)="
-                  openCustomDialog('<div>Veikkaa <u><b>lohkovaiheessa</u></b> eniten maaleja tehnyttä joukkuetta</div>')
+                  openCustomDialog('<div>Veikkaa <u>lohkovaiheessa</u> eniten maaleja tehnyttä joukkuetta</div>')
                 ">
                 <mat-icon class="button"> info </mat-icon>
               </span>
@@ -255,7 +255,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <span class="info-button clickable" (click)="openCustomDialog('Veikkaa turnauksen semi-finalistit')">
+              <span (click)="openCustomDialog('Veikkaa turnauksen top 4 joukkueet')" class="info-button clickable">
                 <mat-icon class="button"> info </mat-icon></span
               >
               <div class="top4-wrong-right-container" *ngIf="tournament.extraPredictions.topFour.length !== 0">
@@ -282,14 +282,13 @@
       <mat-step *ngIf="!arePredictionsLocked()">
         <ng-template matStepLabel>Tallenna</ng-template>
         <p></p>
-        <div class="back-button-container">
+        <div class="buttons-container">
           <button mat-raised-button class="clickable primary-container" matStepperPrevious>Takaisin</button>
-        </div>
-        <div class="save-button-container">
           <button class="clickable save-button primary-container" mat-raised-button (click)="savePredictions()">
             Tallenna veikkaukset
           </button>
         </div>
+        <div class="info-container">Veikkauksia voi muokata turnauksen alkamiseen asti!</div>
       </mat-step>
     </mat-stepper>
   </div>
