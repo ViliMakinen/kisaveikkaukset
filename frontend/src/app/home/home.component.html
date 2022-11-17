@@ -61,8 +61,9 @@
         <div class="standings-title-container">
           <mat-icon class="info-icon clickable" (click)="openDialog()">info</mat-icon>
           Pistetilanne
-          <mat-icon
-            matTooltip="Otteluiden tulokset päivitetty:  {{ lastUpdated ? (lastUpdated | date: 'dd.MM.yyyy HH.mm') : '-' }} ">
+          <mat-icon class="clickable"
+                    *ngIf="lastUpdated"
+                    (click)="openCustomDialog('Otteluiden tulokset päivitetty: ' + formatDate(lastUpdated))">
             update
           </mat-icon>
         </div>
@@ -101,20 +102,23 @@
         </div>
       </div>
       <div class="games-today-container primary-container">
-        <ng-container *ngIf="hasTournamentStarted()">
-          <div class="games-today-title-container">
-            Päivän matsit
-            <mat-icon>today</mat-icon>
-            {{ today | date: 'dd.MM.yyyy' }}
+        <div class="games-today-title-container primary-container"
+             *ngIf="gamesToday.length === 0 && placeholderDate > tournament.startingDate"> Lohkovaihe on päättynyt
+        </div>
+        <div class="games-today-title-container primary-container"
+             *ngIf="gamesToday.length === 0 && tournament.startingDate > placeholderDate">Turnaus ei ole alkanut vielä
+        </div>
+        <div class="games-today-title-container primary-container" *ngIf="gamesToday.length > 0">Päivän matsit</div>
+        <div class="games-today-date-container primary-container">
+          <div class="button clickable secondary-container" (click)="changeDay(-1)">
+            <mat-icon>arrow_left</mat-icon>
           </div>
-        </ng-container>
-        <ng-container *ngIf="!hasTournamentStarted()">
-          <div class="games-today-title-container">
-            Turnaus alkaa
-            <mat-icon>today</mat-icon>
-            {{ tournament.startingDate | date: 'dd.MM.yyyy' }}
+          <span class="date-container"><mat-icon>today</mat-icon>
+            {{ placeholderDate | date: 'dd.MM.yyyy' }}</span>
+          <div class="button clickable secondary-container" (click)="changeDay(1)">
+            <mat-icon>arrow_right</mat-icon>
           </div>
-        </ng-container>
+        </div>
         <div class="games-today-row-container" *ngFor="let game of gamesToday">
           <span class="games-today-row-box">
             <img [src]="'assets/images/4x3/' + fetchFlag(game.home) + '.svg'" alt="home team flag" class="flag-image"/>

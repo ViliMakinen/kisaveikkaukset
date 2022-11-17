@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnDestroy } from '@angular/core';
 import {
+  addDays,
   differenceInDays,
   differenceInHours,
   differenceInMinutes,
@@ -7,7 +8,7 @@ import {
   isAfter,
   isBefore,
   isSameDay,
-  isToday,
+  subDays,
 } from 'date-fns';
 import {
   countries,
@@ -29,6 +30,8 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { InformationDialogComponent } from '../information-dialog/information-dialog.component';
+import { CustomMsgDialogComponent } from '../custom-msg-dialog/custom-msg-dialog.component';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -48,7 +51,7 @@ export class HomeComponent implements OnDestroy {
   tournamentSubscription!: Subscription;
   groupSubscription: Subscription;
 
-  today = new Date();
+  placeholderDate = new Date();
   gamesToday: Match[] = [];
   countries: Country[] = [];
 
@@ -59,6 +62,7 @@ export class HomeComponent implements OnDestroy {
   isUserListExpanded = false;
 
   constructor(
+    @Inject(LOCALE_ID) private locale: string,
     private clipboard: Clipboard,
     public userService: UserService,
     private route: ActivatedRoute,
@@ -89,6 +93,13 @@ export class HomeComponent implements OnDestroy {
         this.calculateCountdownValues();
         this.users = this.sortUsers(group.users);
       });
+    });
+  }
+
+  openCustomDialog(text: string): void {
+    this.dialog.open(CustomMsgDialogComponent, {
+      width: '300px',
+      data: text,
     });
   }
 
@@ -256,13 +267,10 @@ export class HomeComponent implements OnDestroy {
     return isAfter(new Date(), this.tournament!.startingDate);
   }
 
-  private initializeTodaysGames() {
-    this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) => isToday(match.date));
-    if (this.gamesToday.length < 1) {
-      this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) =>
-        isSameDay(match.date, new Date('2022-11-19T19:00:00+02:00')),
-      );
-    }
+  private initializeTodaysGames(): void {
+    this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) =>
+      isSameDay(match.date, this.placeholderDate),
+    );
     this.gamesToday.sort((a, b) => {
       if (isBefore(a.date, b.date)) {
         return -1;
@@ -289,5 +297,19 @@ export class HomeComponent implements OnDestroy {
       return 'Muista viimeistellä veikkauksesi!';
     }
     return 'Voit vielä muokata veikkauksiasi!';
+  }
+
+  formatDate(lastUpdated: Date) {
+    return formatDate(lastUpdated, 'dd.MM.yyyy HH.mm', this.locale);
+  }
+
+  changeDay(number: number): void {
+    if (number === -1) {
+      this.placeholderDate = subDays(this.placeholderDate, 1);
+      this.initializeTodaysGames();
+    } else {
+      this.placeholderDate = addDays(this.placeholderDate, 1);
+      this.initializeTodaysGames();
+    }
   }
 }
