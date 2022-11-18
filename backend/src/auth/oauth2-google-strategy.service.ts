@@ -21,9 +21,9 @@ export class OAuth2GoogleStrategy extends PassportStrategy(GoogleStrategy, 'oaut
             (req: Request, access: string, refresh: string, profile: any, done: VerifyCallback) => {
                 this.authService
                     .handleOAuthResponse({
-                        firstName: profile.name.givenName,
-                        lastName: profile.name.familyName,
-                        email: profile.emails[0].value,
+                        firstName: profile.name?.givenName,
+                        lastName: profile.name?.familyName,
+                        email: profile.emails[0]?.value,
                     })
                     .then((user) => done(null, user))
                     .catch((error) => done(error));
