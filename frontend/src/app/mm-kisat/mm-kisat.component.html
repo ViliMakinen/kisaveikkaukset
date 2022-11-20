@@ -120,7 +120,7 @@
           <div class="slider-container">
             <span class="slider-title">Turnauksen nopein maali</span>
             <mat-slider
-              class="slider"
+              class="slider {{ arePredictionsLocked() ? 'locked' : '' }}"
               [(ngModel)]="userPredictions.extraPredictions.fastestGoal"
               thumbLabel
               [displayWith]="formatLabelMatch"
