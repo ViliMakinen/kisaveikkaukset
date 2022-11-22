@@ -42,15 +42,15 @@
                         (change)="savePrediction(match.id, $event.value)"
                         [disabled]="arePredictionsLocked()"
                         [value]="isSelected(match.id)">
-                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')" value="1"
-                        >1</mat-button-toggle
-                        >
-                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')" value="X"
-                        >X
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')" value="1">
+                          1
                         </mat-button-toggle>
-                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')" value="2"
-                        >2</mat-button-toggle
-                        >
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')" value="X">
+                          X
+                        </mat-button-toggle>
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')" value="2">
+                          2
+                        </mat-button-toggle>
                       </mat-button-toggle-group>
                     </span>
                   </div>
@@ -104,9 +104,9 @@
                 <mat-button-toggle
                   class="toggle-button"
                   [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[0])"
-                  [value]="matchUp.contestants[0]"
-                >{{ matchUp.contestants[0] }}</mat-button-toggle
-                >
+                  [value]="matchUp.contestants[0]">
+                  {{ matchUp.contestants[0] }}
+                </mat-button-toggle>
                 <div class="question-container">{{ getMatchUpType(matchUp) }}</div>
                 <mat-button-toggle
                   class="toggle-button"
@@ -131,19 +131,24 @@
             <span class="slider-check-container" *ngIf="tournament.extraPredictions.fastestGoal !== null">
               <span
                 *ngIf="tournament.extraPredictions.fastestGoal !== userPredictions.extraPredictions.fastestGoal"
-                class="wrong"
-              ><mat-icon>close</mat-icon> Oikea vastaus
+                class="wrong">
+                <mat-icon>close</mat-icon> Oikea vastaus
                 {{ formatLabelMatch(tournament.extraPredictions.fastestGoal) }} <br/>
                 <ng-container *ngIf="userPredictions.extraPredictions.fastestGoal">
-                  Sinun arvauksesi {{ formatLabelMatch(userPredictions.extraPredictions.fastestGoal) }}</ng-container
-                >
+                  Sinun arvauksesi {{ formatLabelMatch(userPredictions.extraPredictions.fastestGoal) }}
+                </ng-container>
               </span>
               <span
                 *ngIf="tournament.extraPredictions.fastestGoal === userPredictions.extraPredictions.fastestGoal"
                 class="right">
-                <mat-icon> done </mat-icon></span
-              ></span
-            >
+                <mat-icon> done </mat-icon>
+              </span>
+            </span>
+            <span
+              *ngIf="tournament.extraPredictions.fastestGoal === null && arePredictionsLocked()"
+              class="slider-check-container">
+              Sinun arvauksesi {{ formatLabelMatch(userPredictions.extraPredictions.fastestGoal!) }}
+            </span>
           </div>
           <div class="slider-container">
             <div class="slider-title">Turnauksen isomaalisin ottelu</div>
@@ -160,22 +165,28 @@
               <span
                 *ngIf="tournament.extraPredictions.highestScoring !== userPredictions.extraPredictions.highestScoring"
                 class="wrong"
-              ><mat-icon>close</mat-icon> Oikea vastaus
+              ><mat-icon>close</mat-icon>
+                Oikea vastaus
                 {{ formatLabelScore(tournament.extraPredictions.highestScoring) }} <br/>
                 <ng-container
                   *ngIf="
                     userPredictions.extraPredictions.highestScoring &&
                     userPredictions.extraPredictions.highestScoring !== 2
                   ">
-                  Sinun arvauksesi {{ formatLabelScore(userPredictions.extraPredictions.highestScoring) }}</ng-container
-                >
+                  Sinun arvauksesi {{ formatLabelScore(userPredictions.extraPredictions.highestScoring) }}
+                </ng-container>
               </span>
               <span
                 *ngIf="tournament.extraPredictions.highestScoring === userPredictions.extraPredictions.highestScoring"
                 class="right">
-                <mat-icon> done </mat-icon></span
-              ></span
-            >
+                <mat-icon> done </mat-icon>
+              </span>
+            </span>
+            <span
+              *ngIf="tournament.extraPredictions.highestScoring === null && arePredictionsLocked()"
+              class="slider-check-container">
+              Sinun arvauksesi {{ formatLabelScore(userPredictions.extraPredictions.highestScoring!) }}
+            </span>
           </div>
           <div class="button-info-container">
             <mat-form-field appearance="outline">
