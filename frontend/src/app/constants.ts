@@ -78,6 +78,10 @@ export interface Match {
   result: Result;
 }
 
+export interface MatchWithPredictions extends Match {
+  predictedResults: [number, number, number];
+}
+
 export interface MatchResult {
   id: number;
   result: Result;

@@ -4,9 +4,11 @@ import {
   countries,
   Country,
   emptyExtraPredictions,
+  GroupUser,
   HeadToHead,
   Match,
   MatchResult,
+  MatchWithPredictions,
   PlayerGroup,
   Predictions,
   Result,
@@ -40,7 +42,7 @@ export class MmKisatComponent implements OnDestroy {
   group: PlayerGroup | null = null;
   results: MatchResult[] = [];
   teams: Team[] = [];
-  matches: Match[] = [];
+  matches: MatchWithPredictions[] = [];
   countries: Country[] = [];
 
   groupSubscription: Subscription;
@@ -63,7 +65,8 @@ export class MmKisatComponent implements OnDestroy {
       this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
         this.tournament = tournament.tournamentData;
         this.lastUpdated = tournament.lastUpdated;
-        this.matches = this.tournament.groups.flatMap((group) => group.matches);
+        const matches = this.tournament.groups.flatMap((group) => group.matches);
+        this.matches = this.calculatePredictedResults(this.group!.users, matches);
         this.results = this.matches.map((match) => {
           return {
             id: match.id,
@@ -77,6 +80,18 @@ export class MmKisatComponent implements OnDestroy {
           .sort((a, b) => a.name.localeCompare(b.name));
       });
     });
+  }
+
+  getMatchPrediction(score: Result, index: number): number {
+    const predictions = this.matches.find((match) => match.id === index)!.predictedResults;
+    if (score === '1') {
+      return predictions[0];
+    } else if (score === 'X') {
+      return predictions[1];
+    } else if (score === '2') {
+      return predictions[2];
+    }
+    return 0;
   }
 
   formatLabelMatch(value: number): string {
@@ -281,5 +296,29 @@ export class MmKisatComponent implements OnDestroy {
       return '#CE2029';
     }
     return '';
+  }
+
+  private calculatePredictedResults(users: GroupUser[], matches: Match[]): MatchWithPredictions[] {
+    return matches.map((match) => {
+      const winPredictions =
+        users.filter((user) => {
+          const prediction = user.predictions.matchPredictions.find((prediction) => prediction.id === match.id);
+          return prediction && prediction.result === '1';
+        }).length / users.length;
+
+      const drawPredictions =
+        users.filter((user) => {
+          const prediction = user.predictions.matchPredictions.find((prediction) => prediction.id === match.id);
+          return prediction && prediction.result === 'X';
+        }).length / users.length;
+
+      const lossPredictions =
+        users.filter((user) => {
+          const prediction = user.predictions.matchPredictions.find((prediction) => prediction.id === match.id);
+          return prediction && prediction.result === '2';
+        }).length / users.length;
+
+      return { ...match, predictedResults: [winPredictions, drawPredictions, lossPredictions] };
+    });
   }
 }

@@ -37,22 +37,37 @@
                         alt="away team flag"
                         class="flag-image"/>
                     </span>
-                    <span>
+                    <div>
                       <mat-button-toggle-group
                         (change)="savePrediction(match.id, $event.value)"
                         [disabled]="arePredictionsLocked()"
                         [value]="isSelected(match.id)">
                         <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')" value="1">
-                          1
+                          <div>
+                            <div>
+                              1
+                              <div class="predicted-percent">{{ getMatchPrediction('1', match.id) | percent }}</div>
+                            </div>
+                          </div>
                         </mat-button-toggle>
                         <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')" value="X">
-                          X
+                          <div>
+                            <div>
+                              X
+                              <div class="predicted-percent">{{ getMatchPrediction('X', match.id) | percent }}</div>
+                            </div>
+                          </div>
                         </mat-button-toggle>
                         <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')" value="2">
-                          2
+                          <div>
+                            <div>
+                              2
+                              <div class="predicted-percent">{{ getMatchPrediction('2', match.id) | percent }}</div>
+                            </div>
+                          </div>
                         </mat-button-toggle>
                       </mat-button-toggle-group>
-                    </span>
+                    </div>
                   </div>
                 </div>
                 <div class="divider"></div>
