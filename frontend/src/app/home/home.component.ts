@@ -46,6 +46,7 @@ export class HomeComponent implements OnDestroy {
   group$: Observable<PlayerGroup>;
   group: PlayerGroup | null = null;
   users: GroupUserWithPoints[] = [];
+  usersPreviously: GroupUserWithPoints[] = [];
   groupCode: string[] = [];
   lastUpdated: Date | null = null;
   tournamentSubscription!: Subscription;
@@ -92,6 +93,7 @@ export class HomeComponent implements OnDestroy {
         this.startCountdown();
         this.calculateCountdownValues();
         this.users = this.sortUsers(group.users);
+        this.usersPreviously = this.sortUsersPreviously(group.users);
       });
     });
   }
@@ -157,6 +159,15 @@ export class HomeComponent implements OnDestroy {
     return points;
   }
 
+  calculatePreviousPoints(user: GroupUser): number {
+    if (user.predictions.matchPredictions === undefined) {
+      return 0;
+    }
+    let points: number = 0;
+    points += this.calculatePoints24hoursAgo(user);
+    return points;
+  }
+
   calculateExtraPredictionPoints(user: GroupUser): number {
     let points = 0;
     if (
@@ -184,6 +195,35 @@ export class HomeComponent implements OnDestroy {
       points += 3;
     }
     return points;
+  }
+
+  calculatePoints24hoursAgo(user: GroupUser): number {
+    let points: number = 0;
+    const matchesWithoutPast24hours = this.matches.filter((match) =>
+      isBefore(match.date, subDays(this.lastUpdated!, 1)),
+    );
+    matchesWithoutPast24hours.forEach((match) => {
+      if (user.predictions.matchPredictions[match.id - 1]) {
+        if (
+          this.results![match.id - 1].result === user.predictions.matchPredictions[match.id - 1].result &&
+          user.predictions.matchPredictions[match.id - 1].result !== null
+        ) {
+          points++;
+        }
+      }
+    });
+    return points;
+  }
+
+  compareUserPosition(user: GroupUserWithPoints) {
+    const indexNow = this.users.findIndex((player) => player.id === user.id);
+    const indexThen = this.usersPreviously.findIndex((player) => player.id === user.id);
+    if (indexNow > indexThen) {
+      return indexNow - indexThen;
+    } else if (indexNow < indexThen) {
+      return indexThen - indexNow;
+    }
+    return 0;
   }
 
   calculateMatchPoints(user: GroupUser): number {
@@ -257,6 +297,17 @@ export class HomeComponent implements OnDestroy {
       return {
         ...user,
         points: this.calculateUserPoints(user),
+      };
+    });
+    usersWithPoints.sort((a, b) => a.points - b.points).reverse();
+    return usersWithPoints;
+  }
+
+  sortUsersPreviously(users: GroupUser[]): GroupUserWithPoints[] {
+    const usersWithPoints = users.map((user) => {
+      return {
+        ...user,
+        points: this.calculatePreviousPoints(user),
       };
     });
     usersWithPoints.sort((a, b) => a.points - b.points).reverse();

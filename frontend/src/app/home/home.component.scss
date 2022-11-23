@@ -270,6 +270,22 @@
           font-size: 20px;
           margin-left: 5px;
           margin-right: 5px;
+
+          .up {
+            color: forestgreen;
+          }
+
+          .down {
+            color: #ce2029;
+          }
+
+          .even {
+            color: black;
+          }
+
+          .compared-points {
+            font-size: 12px;
+          }
         }
       }
 
