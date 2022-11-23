@@ -271,19 +271,27 @@
           margin-left: 5px;
           margin-right: 5px;
 
+
           .up {
+            position: absolute;
+            right: 65px;
             color: forestgreen;
           }
 
           .down {
+            position: absolute;
+            right: 65px;
             color: #ce2029;
           }
 
           .even {
+            position: absolute;
+            right: 65px;
             color: black;
           }
 
           .compared-points {
+            margin-right: 5px;
             font-size: 12px;
           }
         }
