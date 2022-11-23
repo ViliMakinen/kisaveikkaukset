@@ -82,7 +82,9 @@
             <mat-icon *ngIf="compareUserPosition(user) === 0" class="even">horizontal_rule</mat-icon>
             <mat-icon *ngIf="compareUserPosition(user) > 0" class="up">arrow_upward</mat-icon>
             <mat-icon *ngIf="compareUserPosition(user) < 0" class="down">arrow_downward</mat-icon>
-            <span class="compared-points"> ({{ compareUserPosition(user) }}) </span>
+             <span class="compared-points">
+                ({{ compareUserPosition(user) > 0 ? '+' + compareUserPosition(user) : compareUserPosition(user) }})
+              </span>
             {{ user.points }}
           </span>
         </div>
@@ -101,7 +103,9 @@
               <mat-icon *ngIf="compareUserPosition(user) === 0" class="even">horizontal_rule</mat-icon>
               <mat-icon *ngIf="compareUserPosition(user) > 0" class="up">arrow_upward</mat-icon>
               <mat-icon *ngIf="compareUserPosition(user) < 0" class="down">arrow_downward</mat-icon>
-              <span class="compared-points"> ({{ compareUserPosition(user) }}) </span>
+                <span class="compared-points">
+                ({{ compareUserPosition(user) > 0 ? '+' + compareUserPosition(user) : compareUserPosition(user) }})
+              </span>
               {{ user.points }}
             </span>
           </div>
