@@ -61,9 +61,10 @@
         <div class="standings-title-container">
           <mat-icon class="info-icon clickable" (click)="openDialog()">info</mat-icon>
           Pistetilanne
-          <mat-icon class="clickable"
-                    *ngIf="lastUpdated"
-                    (click)="openCustomDialog('Otteluiden tulokset päivitetty: ' + formatDate(lastUpdated))">
+          <mat-icon
+            class="clickable"
+            *ngIf="lastUpdated"
+            (click)="openCustomDialog('Otteluiden tulokset päivitetty: ' + formatDate(lastUpdated))">
             update
           </mat-icon>
         </div>
@@ -102,11 +103,15 @@
         </div>
       </div>
       <div class="games-today-container primary-container">
-        <div class="games-today-title-container primary-container"
-             *ngIf="gamesToday.length === 0 && placeholderDate > tournament.startingDate"> Lohkovaihe on päättynyt
+        <div
+          class="games-today-title-container primary-container"
+          *ngIf="gamesToday.length === 0 && placeholderDate > tournament.startingDate">
+          Lohkovaihe on päättynyt
         </div>
-        <div class="games-today-title-container primary-container"
-             *ngIf="gamesToday.length === 0 && tournament.startingDate > placeholderDate">Turnaus ei ole alkanut vielä
+        <div
+          class="games-today-title-container primary-container"
+          *ngIf="gamesToday.length === 0 && tournament.startingDate > placeholderDate">
+          Turnaus ei ole alkanut vielä
         </div>
         <div class="games-today-title-container primary-container" *ngIf="gamesToday.length > 0">Päivän matsit</div>
         <div class="games-today-date-container primary-container">
@@ -124,7 +129,8 @@
             <img [src]="'assets/images/4x3/' + fetchFlag(game.home) + '.svg'" alt="home team flag" class="flag-image"/>
             {{ game.home }}</span
           >
-          <span class="games-today-row-box"> {{ game.date | date: 'HH:mm' }}</span>
+          <span *ngIf="!game.result" class="games-today-row-box"> {{ game.date | date: 'HH:mm' }}</span>
+          <span *ngIf="game.result" class="games-today-row-box"> {{ game.result }}</span>
           <span class="games-today-row-box">
             {{ game.away }}
             <img [src]="'assets/images/4x3/' + fetchFlag(game.away) + '.svg'" alt="away team flag" class="flag-image"
@@ -139,7 +145,17 @@
         <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
           <div class="group-container primary-container">
             <div class="group-title-container">
-              <span class="text-margin">Joukkue</span><span class="text-margin">Pisteet</span>
+              <span class="text-margin"
+              ><mat-icon
+                class="clickable"
+                (click)="
+                    openCustomDialog(
+                      'Lohkotilanteet eivät osaa ottaa huomioon maalieroa, joten tasatilanteissa joukkueet ovat satunnaisessa järjestyksessä.'
+                    )
+                  "
+              >info</mat-icon
+              >Joukkue</span
+              ><span class="text-margin">Pisteet</span>
             </div>
             <div *ngFor="let team of group.teams" class="group-row">
               <span class="row-box">
