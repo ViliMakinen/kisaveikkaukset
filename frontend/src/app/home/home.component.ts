@@ -215,11 +215,11 @@ export class HomeComponent implements OnDestroy {
     return points;
   }
 
-  compareUserPosition(user: GroupUserWithPoints) {
+  compareUserPosition(user: GroupUserWithPoints): number {
     const indexNow = this.users.findIndex((player) => player.id === user.id);
     const indexThen = this.usersPreviously.findIndex((player) => player.id === user.id);
     if (indexNow > indexThen) {
-      return indexNow - indexThen;
+      return indexThen - indexNow;
     } else if (indexNow < indexThen) {
       return indexThen - indexNow;
     }

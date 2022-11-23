@@ -79,15 +79,9 @@
             {{ user.nickName }}
           </span>
           <span class="standings-row-box">
-            <ng-container *ngIf="compareUserPosition(user) === 0">
-              <mat-icon class="even">horizontal_rule</mat-icon>
-            </ng-container>
-            <ng-container *ngIf="compareUserPosition(user) > 0">
-              <mat-icon class="up">arrow_upward</mat-icon>
-            </ng-container>
-            <ng-container *ngIf="compareUserPosition(user) < 0">
-              <mat-icon class="down">arrow_downward</mat-icon></ng-container
-            >
+            <mat-icon *ngIf="compareUserPosition(user) === 0" class="even">horizontal_rule</mat-icon>
+            <mat-icon *ngIf="compareUserPosition(user) > 0" class="up">arrow_upward</mat-icon>
+            <mat-icon *ngIf="compareUserPosition(user) < 0" class="down">arrow_downward</mat-icon>
             <span class="compared-points"> ({{ compareUserPosition(user) }}) </span>
             {{ user.points }}
           </span>
@@ -103,7 +97,13 @@
               class="standings-row-box">
               {{ user.nickName }}
             </span>
-            <span class="standings-row-box"> {{ user.points }}</span>
+            <span class="standings-row-box">
+              <mat-icon *ngIf="compareUserPosition(user) === 0" class="even">horizontal_rule</mat-icon>
+              <mat-icon *ngIf="compareUserPosition(user) > 0" class="up">arrow_upward</mat-icon>
+              <mat-icon *ngIf="compareUserPosition(user) < 0" class="down">arrow_downward</mat-icon>
+              <span class="compared-points"> ({{ compareUserPosition(user) }}) </span>
+              {{ user.points }}
+            </span>
           </div>
         </ng-container>
         <div
