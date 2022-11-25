@@ -258,6 +258,11 @@
           width: 90%;
           border-bottom: 1px solid gray;
 
+          .correct {
+            border: 1px black solid;
+            border-radius: 20px;
+          }
+
           .predicted-percent {
             position: absolute;
             transform: translate(-12px, -65%);

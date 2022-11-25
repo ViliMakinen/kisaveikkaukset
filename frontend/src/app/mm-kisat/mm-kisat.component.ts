@@ -321,4 +321,26 @@ export class MmKisatComponent implements OnDestroy {
       return { ...match, predictedResults: [winPredictions, drawPredictions, lossPredictions] };
     });
   }
+
+  calculateH2HPredictionPercentages(id: number, side: string): number {
+    let left = 0;
+    let right = 0;
+    this.group!.users.forEach((user) => {
+      if (
+        user.predictions.extraPredictions.headToHead[id].winner ===
+        user.predictions.extraPredictions.headToHead[id].contestants[0]
+      ) {
+        left++;
+      } else if (
+        user.predictions.extraPredictions.headToHead[id].winner ===
+        user.predictions.extraPredictions.headToHead[id].contestants[1]
+      ) {
+        right++;
+      }
+    });
+    if (side === 'left') {
+      return (left / this.group!.users.length) * 100;
+    }
+    return (right / this.group!.users.length) * 100;
+  }
 }
