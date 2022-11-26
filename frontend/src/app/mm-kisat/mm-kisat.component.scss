@@ -177,12 +177,24 @@
         width: 340px;
 
         .toggle-button {
+          position: relative;
           font-size: 16px;
           color: $primary-color;
           border: 2px inset $primary-color;
           border-radius: 10px;
           width: 100px;
+
+          .predicted-percent {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 10px;
+            width: 32px;
+            display: flex;
+            justify-content: center;
+          }
         }
+
 
         .question-container {
           display: flex;
@@ -258,9 +270,10 @@
           width: 90%;
           border-bottom: 1px solid gray;
 
-          .correct {
-            border: 1px black solid;
-            border-radius: 20px;
+
+          .toggle-number {
+            font-weight: 900;
+            color: darkgreen;
           }
 
           .predicted-percent {

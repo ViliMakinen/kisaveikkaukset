@@ -42,35 +42,50 @@
                         (change)="savePrediction(match.id, $event.value)"
                         [disabled]="arePredictionsLocked()"
                         [value]="isSelected(match.id)">
-                        <mat-button-toggle
-                          [class]="results[match.id - 1].result === '1' ? 'correct' : ''"
-                          [style.background-color]="arePredictionsCorrect(match.id, '1')"
-                          value="1">
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')" value="1">
                           <div>
                             <div>
-                              1
+                              <span
+                                [class]="
+                                  results[match.id - 1].result === '1' &&
+                                  userPredictions.matchPredictions[match.id - 1].result !== '1'
+                                    ? 'toggle-number'
+                                    : ''
+                                ">
+                                1</span
+                              >
                               <div class="predicted-percent">{{ getMatchPrediction('1', match.id) | percent }}</div>
                             </div>
                           </div>
                         </mat-button-toggle>
-                        <mat-button-toggle
-                          [class]="results[match.id - 1].result === 'X' ? 'correct' : ''"
-                          [style.background-color]="arePredictionsCorrect(match.id, 'X')"
-                          value="X">
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')" value="X">
                           <div>
                             <div>
-                              X
+                              <span
+                                [class]="
+                                  results[match.id - 1].result === 'X' &&
+                                  userPredictions.matchPredictions[match.id - 1].result !== 'X'
+                                    ? 'toggle-number'
+                                    : ''
+                                ">
+                                X</span
+                              >
                               <div class="predicted-percent">{{ getMatchPrediction('X', match.id) | percent }}</div>
                             </div>
                           </div>
                         </mat-button-toggle>
-                        <mat-button-toggle
-                          [class]="results[match.id - 1].result === '2' ? 'correct' : ''"
-                          [style.background-color]="arePredictionsCorrect(match.id, '2')"
-                          value="2">
+                        <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')" value="2">
                           <div>
                             <div>
-                              2
+                              <span
+                                [class]="
+                                  results[match.id - 1].result === '2' &&
+                                  userPredictions.matchPredictions[match.id - 1].result !== '2'
+                                    ? 'toggle-number'
+                                    : ''
+                                ">
+                                2</span
+                              >
                               <div class="predicted-percent">{{ getMatchPrediction('2', match.id) | percent }}</div>
                             </div>
                           </div>
@@ -129,16 +144,20 @@
                   class="toggle-button"
                   [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[0])"
                   [value]="matchUp.contestants[0]">
-                  {{ matchUp.contestants[0] }}
-                  <div class="percentages">{{ calculateH2HPredictionPercentages(i, 'left') }}%</div>
+                  <span>
+                    {{ matchUp.contestants[0] }}
+                  </span>
+                  <div class="predicted-percent">{{ calculateH2HPredictionPercentages(i, 'left') }}%</div>
                 </mat-button-toggle>
                 <div class="question-container">{{ getMatchUpType(matchUp) }}</div>
                 <mat-button-toggle
                   class="toggle-button"
                   [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[1])"
                   [value]="matchUp.contestants[1]">
-                  {{ matchUp.contestants[1] }}
-                  <div>{{ calculateH2HPredictionPercentages(i, 'right') }}%</div>
+                  <span>
+                    {{ matchUp.contestants[1] }}
+                  </span>
+                  <div class="predicted-percent">{{ calculateH2HPredictionPercentages(i, 'right') }}%</div>
                 </mat-button-toggle>
               </mat-button-toggle-group>
             </div>

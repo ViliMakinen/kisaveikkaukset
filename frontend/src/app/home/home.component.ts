@@ -39,6 +39,7 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnDestroy {
+  currentUser: GroupUser | null = null;
   tournament$!: Observable<TournamentWithId>;
   tournament: Tournament | null = null;
   results: MatchResult[] | null = null;
@@ -94,6 +95,7 @@ export class HomeComponent implements OnDestroy {
         this.calculateCountdownValues();
         this.users = this.sortUsers(group.users);
         this.usersPreviously = this.sortUsersPreviously(group.users);
+        this.currentUser = this.group!.users.find((user) => user.id === this.userService.user.id)!;
       });
     });
   }
@@ -362,5 +364,23 @@ export class HomeComponent implements OnDestroy {
       this.placeholderDate = addDays(this.placeholderDate, 1);
       this.initializeTodaysGames();
     }
+  }
+
+  checkResult(id: number, date: Date): string {
+    if (this.results![id].result === null) {
+      return '';
+    }
+    if (
+      this.currentUser!.predictions.matchPredictions[id].result !== null &&
+      this.currentUser!.predictions.matchPredictions[id].result === this.results![id].result
+    ) {
+      return 'done';
+    } else if (
+      this.currentUser!.predictions.matchPredictions[id].result !== null &&
+      this.currentUser!.predictions.matchPredictions[id].result !== this.results![id].result
+    ) {
+      return 'close';
+    }
+    return '';
   }
 }
