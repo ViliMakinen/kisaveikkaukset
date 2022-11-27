@@ -187,9 +187,8 @@
           .predicted-percent {
             position: absolute;
             top: 16px;
-            right: 20px;
             font-size: 10px;
-            width: 32px;
+            width: calc(100% - 24px);
             display: flex;
             justify-content: center;
           }

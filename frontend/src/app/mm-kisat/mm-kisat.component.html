@@ -147,7 +147,7 @@
                   <span>
                     {{ matchUp.contestants[0] }}
                   </span>
-                  <div class="predicted-percent">{{ calculateH2HPredictionPercentages(i, 'left') }}%</div>
+                  <div class="predicted-percent">{{ calculateH2HPredictionPercentages(i, 'left') | percent }}</div>
                 </mat-button-toggle>
                 <div class="question-container">{{ getMatchUpType(matchUp) }}</div>
                 <mat-button-toggle
@@ -157,7 +157,7 @@
                   <span>
                     {{ matchUp.contestants[1] }}
                   </span>
-                  <div class="predicted-percent">{{ calculateH2HPredictionPercentages(i, 'right') }}%</div>
+                  <div class="predicted-percent">{{ calculateH2HPredictionPercentages(i, 'right') | percent }}</div>
                 </mat-button-toggle>
               </mat-button-toggle-group>
             </div>

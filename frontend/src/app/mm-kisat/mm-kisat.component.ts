@@ -339,8 +339,8 @@ export class MmKisatComponent implements OnDestroy {
       }
     });
     if (side === 'left') {
-      return (left / this.group!.users.length) * 100;
+      return left / this.group!.users.length;
     }
-    return (right / this.group!.users.length) * 100;
+    return right / this.group!.users.length;
   }
 }
