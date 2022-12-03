@@ -191,8 +191,8 @@ export class HomeComponent implements OnDestroy {
       points += 3;
     }
     if (
-      user.predictions.extraPredictions.mostGoals === this.tournament!.extraPredictions.mostGoals &&
-      this.tournament!.extraPredictions.mostGoals !== ''
+      user.predictions.extraPredictions.mostGoals === 'Espanja' ||
+      user.predictions.extraPredictions.mostGoals === 'Englanti'
     ) {
       points += 3;
     }
@@ -366,7 +366,7 @@ export class HomeComponent implements OnDestroy {
     }
   }
 
-  checkResult(id: number, date: Date): string {
+  checkResult(id: number): string {
     if (this.results![id].result === null) {
       return '';
     }

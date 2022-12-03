@@ -287,14 +287,14 @@
               <span class="wrong-right-container" *ngIf="tournament.extraPredictions.mostGoals">
                 <span
                   class="right"
-                  *ngIf="tournament.extraPredictions.mostGoals === userPredictions.extraPredictions.mostGoals">
+                  *ngIf="userPredictions.extraPredictions.mostGoals === 'Espanja' || userPredictions.extraPredictions.mostGoals === 'Englanti'">
                   <mat-icon> done </mat-icon>
                 </span>
                 <span
                   class="wrong"
-                  *ngIf="userPredictions.extraPredictions.mostGoals !== tournament.extraPredictions.mostGoals">
+                  *ngIf="userPredictions.extraPredictions.mostGoals !== 'Espanja' && userPredictions.extraPredictions.mostGoals !== 'Englanti'">
                   <mat-icon>close</mat-icon>
-                  Oikea vastaus {{ tournament.extraPredictions.mostGoals }}
+                  Oikea vastaus Espanja ja Englanti
                 </span>
               </span>
             </div>
