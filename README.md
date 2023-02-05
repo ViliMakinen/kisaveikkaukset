@@ -1,10 +1,16 @@
-This project was done for football World Cup 2022. Additional usage possible for future competitions with quite minimal extra work as everything is coded dynamically. 
+This project was done as a hobby project for FIFA World Cup 2022. 
 
-Basic idea is you can create a group, invite people to your group and have a type of fantasy football competition with your friends.
-Program gives you the games and other predictions for you to fill before the tournament starts.
-Then calculates points for everyone based on submitted results by admin users. 
+Basic idea:
 
-   Utilizes:
+- users can create groups and invite their friends to the group with a code
+- once users have joined a group, they will see all active groups for them when logged in
+- users can make predictions of the group stage results ( 1 X 2 -format ) before the tournament begins
+- users can also make additional predictions of the whole tournament ( best goal scorers etc. ) before the tournament begins
+- when the tournament begins, predictions are locked and cannot be changed
+- when admin-users input the correct results of individual games, the points of each user in a group is updated and shown to all users of the group
+
+Utilizes:
+
 - Angular
 - Typescript
 - Node.js
@@ -14,4 +20,4 @@ Then calculates points for everyone based on submitted results by admin users.
 - Docker
 - Heroku
 
-Url: https://kisaveikkaukset.herokuapp.com/  //disclaimer: Currently there are no active tournaments. 
+https://kisaveikkaukset.herokuapp.com/ - disclaimer: currently there are no active tournaments. 
