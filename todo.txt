@@ -1,134 +1,17 @@
-// 1. Create a new landing page design (for mobile also).
+EM2024 new start
 
-// 2. Move the 'create group' -stuff to its own page and create a small button on the landing page to access it.
-
-// 3. Align the starting date of matches to be consistent.
-
-// 4. Create a new login page and include google.
-
-// 5. Create a AuthGuard that checks if userServices user is set or is null. This guard would prevent the user from accessing any routes except for / and /authorization.
-
-// 6. Create another guard that checks if the group code is valid.
-
-// 7. Add a 'save' button where users can ultimately submit the predictions (for now this can just console.log the predictions).
-     - when submitted, the predictions get locked
-     - userService would have a field called arePredictionsLocked and manipulate this variable
-
-// 8. Add a final date that the 'save' button can be pressed - this should probably come from the tournaments' info?
-     - How to programmatically disable a button
-
-// 9. Create additional information ball for save button that disables after predictions are full.
-    - - create a 'unlock' button for development purposes
-
-// 10. Create a countdown timer for tournament starting day.
-
-//   11. Create a 'final' data structure for users predictions and create it dynamically as the user changes the predictions.
-
-//   12. Create a system to change the toggle button background colors according to actual results.
-
-//   13. Create admin user to set results.
-
-//   14. Create a standings table on the front page with a button to link you to the predictions section.
-        -Update interval
-
-//   15. Change color theme to dark.
-
-//   16. Update the team standing in groups according to actual results (either to front page or predictions page).
-
-//   17. Get flags of countries to assets and show them in HTML
-
-//   18. Create system to update user points based on correct predictions.
-
-//   19. Change results standings to homepage.
-
-//   20. Change predictions page standings to reflect user predictions.
-
-     21. Configure renovate bot.
-
-//   22. Swap games from frontend to backend.
-
-//   23. Swap results to backend.
-
-//   24. Button to save predictions to backend.
-
-//   25. Delete everything related to local storage.
-
-//    27. Create service for tournament.
-
-//    28. Separate controllers and make them respond to their corresponding routes.
-
-//    29. Create a new route called info with information about the application.
-
-//    30. Create object for extraTournamentPredictions
-
-//    31. Info balls for other predictions
-
-//    32. Button to home to mirror veikkauksiin button
-
-//    33. Fix flag alignment on desktop + mobile
-
-//    34. In MM-Kisat view, add some styling to the 1x2 rows to make them more visible
-
-//    35. Add actual info to the info page
-
-//    36. Add flags to all places with country names
-
-//    37. Add check-marks next to extra predictions to indicate if the selection is filled properly
-
-//    38. Add proper authentication
-
-//    39. Add prisma
-
-//    40. Add docker
-
-//    41. Make create group actually work and create a group to db
-
-//    42. Create option for user to add a nickname to themselves
-    
-//    43. Catch errors instead of application going down
-
-//    44. Add a link back to overview page (sidenav)
-
-//    45. Add a way to join group by code
-
-//    46. Show users actual groups in the overview page
-
-//    47. Show groups' users in the groups home page
-
-//    48. Functionality to save predictions to db
-
-//    49. Groupcode on click to clipboard
-
-//    50. Copy on click icon
-
-//    51. Overview page username editing
-
-//    52. Overview boxes to match the blue boxes on tournament page
-
-//    53. Add updateLast to tournament on db that sends timestamp on last result inserts
-
-//    54. Fix home html :nth stuff
-
-//    55. Prevent users from changing computer's time to allow changing predictions
-
-//    56. How to escape group creation
-
-//    57. Fail message location
-
-//    58. Create proper favicons
-
-//    59. Replace info hovers with dialog
-...
-...
-...
-
-// - Create a backend (NestJS).
-
-// - Create a database (Postgres + Prisma).
-
- - Create frontend tests.
-
-// - Deploy to somewhere.
-
-// - Install docker.
-
+1. Remove percentages from making predictions
+2. Extra predictions figure out how to do this time
+3. Scrape games perhaps?
+4. Scrape results and update db with it
+5. Extra features ddtasuri etc.
+6. Playoff tree
+7. When creating group have 2 different tournament types (groups/+playoffs)
+8. extra points for going against the grain ?
+9. different point calculating possibilities
+10. Updates to previousposition etc.
+11. Direct directly to your group if only one
+12. Token time++++
+13. Match view results after that shows all predictors positions
+14. More standings views
+15. Charts for performance etc. ?

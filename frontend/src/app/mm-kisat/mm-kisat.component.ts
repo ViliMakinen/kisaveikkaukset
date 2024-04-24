@@ -60,12 +60,15 @@ export class MmKisatComponent implements OnDestroy {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
     this.groupSubscription = this.group$.subscribe((group) => {
+      console.log(group);
       this.group = group;
       this.tournament$ = groupId$.pipe(switchMap(() => this.tournamentService.getTournamentById(group.tournamentId)));
       this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
+        console.log(tournament);
         this.tournament = tournament.tournamentData;
         this.lastUpdated = tournament.lastUpdated;
         const matches = this.tournament.groups.flatMap((group) => group.matches);
+        console.log(matches);
         this.matches = this.calculatePredictedResults(this.group!.users, matches);
         this.results = this.matches.map((match) => {
           return {
@@ -302,19 +305,20 @@ export class MmKisatComponent implements OnDestroy {
     return matches.map((match) => {
       const winPredictions =
         users.filter((user) => {
-          const prediction = user.predictions.matchPredictions.find((prediction) => prediction.id === match.id);
+          const prediction = user.predictions.matchPredictions?.find((prediction) => prediction.id === match.id);
           return prediction && prediction.result === '1';
         }).length / users.length;
 
+      console.log('here');
       const drawPredictions =
         users.filter((user) => {
-          const prediction = user.predictions.matchPredictions.find((prediction) => prediction.id === match.id);
+          const prediction = user.predictions.matchPredictions?.find((prediction) => prediction.id === match.id);
           return prediction && prediction.result === 'X';
         }).length / users.length;
 
       const lossPredictions =
         users.filter((user) => {
-          const prediction = user.predictions.matchPredictions.find((prediction) => prediction.id === match.id);
+          const prediction = user.predictions.matchPredictions?.find((prediction) => prediction.id === match.id);
           return prediction && prediction.result === '2';
         }).length / users.length;
 

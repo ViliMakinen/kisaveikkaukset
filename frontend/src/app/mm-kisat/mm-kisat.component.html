@@ -30,12 +30,12 @@
                       <img
                         [src]="'assets/images/4x3/' + fetchFlag(match.home) + '.svg'"
                         alt="home team flag"
-                        class="flag-image"/>
+                        class="flag-image" />
                       <span class="match-up">{{ match.home }} - {{ match.away }}</span>
                       <img
                         [src]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'"
                         alt="away team flag"
-                        class="flag-image"/>
+                        class="flag-image" />
                     </span>
                     <div>
                       <mat-button-toggle-group
@@ -45,15 +45,6 @@
                         <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '1')" value="1">
                           <div>
                             <div>
-                              <span
-                                [class]="
-                                  results[match.id - 1].result === '1' &&
-                                  userPredictions.matchPredictions[match.id - 1].result !== '1'
-                                    ? 'toggle-number'
-                                    : ''
-                                ">
-                                1</span
-                              >
                               <div class="predicted-percent">{{ getMatchPrediction('1', match.id) | percent }}</div>
                             </div>
                           </div>
@@ -61,15 +52,6 @@
                         <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, 'X')" value="X">
                           <div>
                             <div>
-                              <span
-                                [class]="
-                                  results[match.id - 1].result === 'X' &&
-                                  userPredictions.matchPredictions[match.id - 1].result !== 'X'
-                                    ? 'toggle-number'
-                                    : ''
-                                ">
-                                X</span
-                              >
                               <div class="predicted-percent">{{ getMatchPrediction('X', match.id) | percent }}</div>
                             </div>
                           </div>
@@ -77,15 +59,6 @@
                         <mat-button-toggle [style.background-color]="arePredictionsCorrect(match.id, '2')" value="2">
                           <div>
                             <div>
-                              <span
-                                [class]="
-                                  results[match.id - 1].result === '2' &&
-                                  userPredictions.matchPredictions[match.id - 1].result !== '2'
-                                    ? 'toggle-number'
-                                    : ''
-                                ">
-                                2</span
-                              >
                               <div class="predicted-percent">{{ getMatchPrediction('2', match.id) | percent }}</div>
                             </div>
                           </div>
@@ -106,7 +79,7 @@
                         <img
                           [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'"
                           alt="away team flag"
-                          class="flag-image"/>
+                          class="flag-image" />
                         {{ team.name }}</span
                       >
                       <span class="row-box">{{ team.predictedPoints }}</span>
@@ -138,105 +111,33 @@
               <mat-button-toggle-group
                 class="head-to-head-row"
                 [disabled]="arePredictionsLocked()"
-                (change)="saveHeadToHeadPrediction($event.value, i)"
-                [value]="isSelectedH2H(i)">
-                <mat-button-toggle
-                  class="toggle-button"
-                  [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[0])"
-                  [value]="matchUp.contestants[0]">
+                (change)="saveHeadToHeadPrediction($event.value, i)">
+                <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[0]">
                   <span>
                     {{ matchUp.contestants[0] }}
                   </span>
-                  <div class="predicted-percent">{{ calculateH2HPredictionPercentages(i, 'left') | percent }}</div>
+                  <div class="predicted-percent"></div>
                 </mat-button-toggle>
-                <div class="question-container">{{ getMatchUpType(matchUp) }}</div>
-                <mat-button-toggle
-                  class="toggle-button"
-                  [style.background-color]="areHeadToHeadPredictionsCorrect(i, matchUp.contestants[1])"
-                  [value]="matchUp.contestants[1]">
+                <div class="question-container"></div>
+                <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[1]">
                   <span>
                     {{ matchUp.contestants[1] }}
                   </span>
-                  <div class="predicted-percent">{{ calculateH2HPredictionPercentages(i, 'right') | percent }}</div>
                 </mat-button-toggle>
               </mat-button-toggle-group>
             </div>
           </div>
           <div class="slider-container">
             <span class="slider-title">Turnauksen nopein maali</span>
-            <mat-slider
-              class="slider {{ arePredictionsLocked() ? 'locked' : '' }}"
-              [(ngModel)]="userPredictions.extraPredictions.fastestGoal"
-              thumbLabel
-              [displayWith]="formatLabelMatch"
-              tickInterval="1"
-              step="1"
-              min="0"
-              max="6"></mat-slider>
-            <span class="slider-check-container" *ngIf="tournament.extraPredictions.fastestGoal !== null">
-              <span
-                *ngIf="tournament.extraPredictions.fastestGoal !== userPredictions.extraPredictions.fastestGoal"
-                class="wrong">
-                <mat-icon>close</mat-icon> Oikea vastaus
-                {{ formatLabelMatch(tournament.extraPredictions.fastestGoal) }} <br/>
-                <ng-container *ngIf="userPredictions.extraPredictions.fastestGoal">
-                  Sinun arvauksesi {{ formatLabelMatch(userPredictions.extraPredictions.fastestGoal) }}
-                </ng-container>
-              </span>
-              <span
-                *ngIf="tournament.extraPredictions.fastestGoal === userPredictions.extraPredictions.fastestGoal"
-                class="right">
-                <mat-icon> done </mat-icon>
-              </span>
-            </span>
-            <span
-              *ngIf="tournament.extraPredictions.fastestGoal === null && arePredictionsLocked()"
-              class="slider-check-container">
-              Sinun arvauksesi {{ formatLabelMatch(userPredictions.extraPredictions.fastestGoal!) }}
-            </span>
+            <span class="slider-check-container" *ngIf="tournament.extraPredictions.fastestGoal !== null"> </span>
           </div>
           <div class="slider-container">
             <div class="slider-title">Turnauksen isomaalisin ottelu</div>
-            <mat-slider
-              class="slider {{ arePredictionsLocked() ? 'locked' : '' }}"
-              [(ngModel)]="userPredictions.extraPredictions.highestScoring"
-              thumbLabel
-              [displayWith]="formatLabelScore"
-              tickInterval="2"
-              step="2"
-              min="2"
-              max="12"></mat-slider>
-            <span class="slider-check-container" *ngIf="tournament.extraPredictions.highestScoring !== null">
-              <span
-                *ngIf="tournament.extraPredictions.highestScoring !== userPredictions.extraPredictions.highestScoring"
-                class="wrong"
-              ><mat-icon>close</mat-icon>
-                Oikea vastaus
-                {{ formatLabelScore(tournament.extraPredictions.highestScoring) }} <br/>
-                <ng-container
-                  *ngIf="
-                    userPredictions.extraPredictions.highestScoring &&
-                    userPredictions.extraPredictions.highestScoring !== 2
-                  ">
-                  Sinun arvauksesi {{ formatLabelScore(userPredictions.extraPredictions.highestScoring) }}
-                </ng-container>
-              </span>
-              <span
-                *ngIf="tournament.extraPredictions.highestScoring === userPredictions.extraPredictions.highestScoring"
-                class="right">
-                <mat-icon> done </mat-icon>
-              </span>
-            </span>
-            <span
-              *ngIf="tournament.extraPredictions.highestScoring === null && arePredictionsLocked()"
-              class="slider-check-container">
-              Sinun arvauksesi {{ formatLabelScore(userPredictions.extraPredictions.highestScoring!) }}
-            </span>
           </div>
           <div class="button-info-container">
             <mat-form-field appearance="outline">
-              <mat-label>Eniten varoituksia</mat-label>
-              <mat-select [disabled]="arePredictionsLocked()" [(ngModel)]="userPredictions.extraPredictions.mostCards">
+                            <mat-label>Eniten varoituksia</mat-label>
+              <mat-select [disabled]="arePredictionsLocked()">
                 <mat-option *ngFor="let team of teams" [value]="team.name">
                   {{ team.name }}
                 </mat-option>
@@ -251,27 +152,12 @@
               ">
               <mat-icon class="button"> info </mat-icon>
             </span>
-            <span class="wrong-right-container" *ngIf="tournament.extraPredictions.mostCards">
-              <span
-                class="right"
-                *ngIf="tournament.extraPredictions.mostCards === userPredictions.extraPredictions.mostCards">
-                <mat-icon> done </mat-icon>
-              </span>
-              <span
-                class="wrong"
-                *ngIf="userPredictions.extraPredictions.mostCards !== tournament.extraPredictions.mostCards">
-                <mat-icon>close</mat-icon>
-                Oikea vastaus {{ tournament.extraPredictions.mostCards }}
-              </span>
-            </span>
           </div>
           <div>
             <div class="button-info-container">
               <mat-form-field appearance="outline">
                 <mat-label>Eniten maaleja</mat-label>
-                <mat-select
-                  [disabled]="arePredictionsLocked()"
-                  [(ngModel)]="userPredictions.extraPredictions.mostGoals">
+                <mat-select [disabled]="arePredictionsLocked()">
                   <mat-option *ngFor="let team of teams" [value]="team.name">
                     {{ team.name }}
                   </mat-option>
@@ -284,54 +170,18 @@
                 ">
                 <mat-icon class="button"> info </mat-icon>
               </span>
-              <span class="wrong-right-container" *ngIf="tournament.extraPredictions.mostGoals">
-                <span
-                  class="right"
-                  *ngIf="userPredictions.extraPredictions.mostGoals === 'Espanja' || userPredictions.extraPredictions.mostGoals === 'Englanti'">
-                  <mat-icon> done </mat-icon>
-                </span>
-                <span
-                  class="wrong"
-                  *ngIf="userPredictions.extraPredictions.mostGoals !== 'Espanja' && userPredictions.extraPredictions.mostGoals !== 'Englanti'">
-                  <mat-icon>close</mat-icon>
-                  Oikea vastaus Espanja ja Englanti
-                </span>
-              </span>
             </div>
             <div></div>
             <div class="button-info-container">
               <mat-form-field appearance="outline">
                 <mat-label>Top 4</mat-label>
-                <mat-select
-                  [disabled]="arePredictionsLocked()"
-                  [(ngModel)]="userPredictions.extraPredictions.topFour"
-                  multiple>
-                  <mat-option
-                    *ngFor="let team of teams"
-                    [disabled]="
-                      userPredictions.extraPredictions.topFour.length > 3 &&
-                      !userPredictions.extraPredictions.topFour.includes(team.name)
-                    "
-                    [value]="team.name"
-                  >{{ team.name }}
-                  </mat-option>
+                <mat-select [disabled]="arePredictionsLocked()" multiple>
+                  <mat-option *ngFor="let team of teams" [value]="team.name">{{ team.name }} </mat-option>
                 </mat-select>
               </mat-form-field>
               <span (click)="openCustomDialog('Veikkaa turnauksen top 4 joukkueet')" class="info-button clickable">
                 <mat-icon class="button"> info </mat-icon></span
               >
-              <div class="top4-wrong-right-container" *ngIf="tournament.extraPredictions.topFour.length !== 0">
-                <div>
-                  <mat-icon *ngFor="let _ of top4CorrectAmount() | range" class="right">done</mat-icon>
-                </div>
-                <div>
-                  <mat-icon
-                    *ngFor="let _ of userPredictions.extraPredictions.topFour.length - top4CorrectAmount() | range"
-                    class="wrong">
-                    close
-                  </mat-icon>
-                </div>
-              </div>
             </div>
             <div class="save-button-container">
               <button mat-raised-button class="clickable button primary-container" (click)="backToTop(mainContent)">

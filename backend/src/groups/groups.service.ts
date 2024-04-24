@@ -1,6 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { GroupWithIdAndName, PlayerGroup, Predictions } from '../../constants';
+import {
+  ExtraPredictions,
+  GroupWithIdAndName,
+  HeadToHead,
+  MatchResult,
+  PlayerGroup,
+  Predictions,
+} from '../../constants';
 
 @Injectable()
 export class GroupsService {
@@ -70,12 +77,18 @@ export class GroupsService {
 
   async createGroup(groupName: string, tournamentId: number, userId: number): Promise<any> {
     const code = this.generateRandomCode(5);
-    return await this.prisma.group.create({
+
+    return this.prisma.group.create({
       data: {
         tournament: { connect: { id: tournamentId } },
         name: groupName,
         code: code,
-        UserGroupPredictions: { create: { user: { connect: { id: userId } }, predictions: [] } },
+        UserGroupPredictions: {
+          create: {
+            user: { connect: { id: userId } },
+            predictions: [],
+          },
+        },
       },
     });
   }
