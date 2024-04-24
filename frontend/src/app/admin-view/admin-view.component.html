@@ -5,8 +5,8 @@
         [value]="tournament.tournamentData.name"
         (click)="selectTournament(tournament.id)"
         *ngFor="let tournament of tournaments"
-      >{{ tournament.tournamentData.name }}</mat-option
-      >
+        >{{ tournament.tournamentData.name }}
+      </mat-option>
     </mat-select>
   </mat-form-field>
 </ng-container>
@@ -36,20 +36,19 @@
             class="head-to-head-row"
             (change)="saveHeadToHeadResult($event.value, i)"
             [value]="tournament.tournamentData.extraPredictions.headToHead[i].winner">
-            <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[0]">{{
-              matchUp.contestants[0]
-              }}</mat-button-toggle>
+            <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[0]"
+              >{{ matchUp.contestants[0] }}
+            </mat-button-toggle>
             <div class="question-container">{{ getMatchUpType(matchUp) }}</div>
-            <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[1]">{{
-              matchUp.contestants[1]
-              }}</mat-button-toggle>
+            <mat-button-toggle class="toggle-button" [value]="matchUp.contestants[1]"
+              >{{ matchUp.contestants[1] }}
+            </mat-button-toggle>
             <mat-button-toggle class="toggle-button" value="Tasapeli">Tasapeli</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
       </div>
       <span class="slider-title">Turnauksen nopein maali</span>
       <mat-slider
-        [value]="tournament.tournamentData.extraPredictions.fastestGoal"
         class="slider"
         [(ngModel)]="tournament.tournamentData.extraPredictions.fastestGoal"
         thumbLabel
@@ -61,7 +60,6 @@
       <div>
         <span class="slider-title">Turnauksen isomaalisin ottelu</span>
         <mat-slider
-          [value]="tournament.tournamentData.extraPredictions.highestScoring"
           class="slider"
           [(ngModel)]="tournament.tournamentData.extraPredictions.highestScoring"
           thumbLabel
@@ -90,7 +88,7 @@
           <img
             alt="info"
             matTooltip="Veikkaa lohkovaiheessa eniten varoituksia kerännyttä joukkuetta"
-            src="assets/images/info.svg"/>
+            src="assets/images/info.svg" />
         </span>
       </div>
       <div>
@@ -101,7 +99,7 @@
               *ngIf="tournament.tournamentData.extraPredictions.mostGoals !== ''"
               matSuffix
               style="color: chartreuse"
-            >done
+              >done
             </mat-icon>
             <mat-select [(ngModel)]="tournament.tournamentData.extraPredictions.mostGoals">
               <mat-option *ngFor="let team of teams" [value]="team.name">
@@ -113,7 +111,7 @@
             <img
               alt="info"
               matTooltip="Veikkaa lohkovaiheessa eniten maaleja tehnyttä joukkuetta"
-              src="assets/images/info.svg"/>
+              src="assets/images/info.svg" />
           </span>
         </div>
         <div></div>
@@ -124,19 +122,23 @@
               *ngIf="tournament.tournamentData.extraPredictions.topFour.length === 4"
               matSuffix
               style="color: chartreuse"
-            >done
+              >done
             </mat-icon>
             <mat-select [(ngModel)]="tournament.tournamentData.extraPredictions.topFour" multiple>
-              <mat-option [disabled]="
-                      tournament.tournamentData.extraPredictions.topFour.length > 3 &&
-                      !tournament.tournamentData.extraPredictions.topFour.includes(team.name)
-                    "
-                          *ngFor="let team of teams" [value]="team.name">{{ team.name }}</mat-option>
+              <mat-option
+                [disabled]="
+                  tournament.tournamentData.extraPredictions.topFour.length > 3 &&
+                  !tournament.tournamentData.extraPredictions.topFour.includes(team.name)
+                "
+                *ngFor="let team of teams"
+                [value]="team.name"
+                >{{ team.name }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
           <span class="info-button">
             <img alt="info" matTooltip="Veikkaa turnauksen top 4 joukkueet" src="assets/images/info.svg"
-            /></span>
+          /></span>
         </div>
       </div>
     </div>

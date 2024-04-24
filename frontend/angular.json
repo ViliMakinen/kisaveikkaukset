@@ -72,11 +72,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "kisaveikkaukset:build:production"
+              "buildTarget": "kisaveikkaukset:build:production"
             },
             "development": {
-              "browserTarget": "kisaveikkaukset:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "proxyConfig": "src/proxy.conf.json",
+              "buildTarget": "kisaveikkaukset:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "kisaveikkaukset:build"
+            "buildTarget": "kisaveikkaukset:build"
           }
         },
         "test": {
