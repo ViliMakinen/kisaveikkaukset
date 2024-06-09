@@ -21,7 +21,7 @@ COPY --chown=node:node ./backend /home/node/backend
 
 WORKDIR /home/node/backend
 
-RUN npm ci && npm run build
+RUN npm ci && npm run build && npm run prisma:generate
 
 FROM node:20-alpine3.18
 
