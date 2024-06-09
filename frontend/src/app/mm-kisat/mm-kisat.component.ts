@@ -47,6 +47,7 @@ export class MmKisatComponent implements OnDestroy {
 
   groupSubscription: Subscription;
   tournamentSubscription!: Subscription;
+  now = new Date();
 
   constructor(
     private router: Router,
@@ -60,15 +61,11 @@ export class MmKisatComponent implements OnDestroy {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
     this.groupSubscription = this.group$.subscribe((group) => {
-      console.log(group);
       this.group = group;
       this.tournament$ = groupId$.pipe(switchMap(() => this.tournamentService.getTournamentById(group.tournamentId)));
       this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
-        console.log(tournament);
         this.tournament = tournament.tournamentData;
-        this.lastUpdated = tournament.lastUpdated;
         const matches = this.tournament.groups.flatMap((group) => group.matches);
-        console.log(matches);
         this.matches = this.calculatePredictedResults(this.group!.users, matches);
         this.results = this.matches.map((match) => {
           return {
@@ -100,11 +97,19 @@ export class MmKisatComponent implements OnDestroy {
   formatLabelMatch(value: number): string {
     if (value === 0) {
       return 'Valitse aikaväli';
-    }
-    if (value === 6) {
+    } else if (value === 1) {
+      return '00:00 - 00:59';
+    } else if (value === 2) {
+      return '01:00 - 01:59';
+    } else if (value === 3) {
+      return '02:00 - 02:59';
+    } else if (value === 4) {
+      return '03:00 - 03:59';
+    } else if (value === 5) {
+      return '04:00 - 04:59';
+    } else {
       return '05:00+';
     }
-    return '0' + (value - 1) + ':00 - 0' + (value - 1) + ':59';
   }
 
   formatLabelScore(value: number): string {
@@ -209,7 +214,6 @@ export class MmKisatComponent implements OnDestroy {
         this.router.navigate(['overview/', this.group!.id]);
       },
       (error) => {
-        console.log(error);
         this.openSnackBar('Jotain meni vikaan');
       },
     );
@@ -263,8 +267,8 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   arePredictionsLocked(): boolean {
-    if (this.lastUpdated) {
-      return isBefore(this.tournament!.startingDate, this.lastUpdated);
+    if (this.now) {
+      return isBefore(this.tournament!.startingDate, this.now);
     }
     return false;
   }
@@ -309,7 +313,6 @@ export class MmKisatComponent implements OnDestroy {
           return prediction && prediction.result === '1';
         }).length / users.length;
 
-      console.log('here');
       const drawPredictions =
         users.filter((user) => {
           const prediction = user.predictions.matchPredictions?.find((prediction) => prediction.id === match.id);
@@ -327,24 +330,28 @@ export class MmKisatComponent implements OnDestroy {
   }
 
   calculateH2HPredictionPercentages(id: number, side: string): number {
-    let left = 0;
-    let right = 0;
-    this.group!.users.forEach((user) => {
-      if (
-        user.predictions.extraPredictions.headToHead[id].winner ===
-        user.predictions.extraPredictions.headToHead[id].contestants[0]
-      ) {
-        left++;
-      } else if (
-        user.predictions.extraPredictions.headToHead[id].winner ===
-        user.predictions.extraPredictions.headToHead[id].contestants[1]
-      ) {
-        right++;
+    if (this.group!.users.every((user) => user.predictions.extraPredictions !== undefined)) {
+      let left = 0;
+      let right = 0;
+      this.group!.users.forEach((user) => {
+        if (
+          user.predictions.extraPredictions.headToHead[id].winner ===
+          user.predictions.extraPredictions.headToHead[id].contestants[0]
+        ) {
+          left++;
+        } else if (
+          user.predictions.extraPredictions.headToHead[id].winner ===
+          user.predictions.extraPredictions.headToHead[id].contestants[1]
+        ) {
+          right++;
+        }
+      });
+      if (side === 'left') {
+        return left / this.group!.users.length;
       }
-    });
-    if (side === 'left') {
-      return left / this.group!.users.length;
+      return right / this.group!.users.length;
+    } else {
+      return 0;
     }
-    return right / this.group!.users.length;
   }
 }

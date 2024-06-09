@@ -63,7 +63,10 @@
         color: $primary-color;
         border: 2px solid $primary-color;
         border-radius: 10px;
-        width: 100px;
+        min-width: 150px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
 
       .question-container {

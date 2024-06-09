@@ -108,17 +108,12 @@ export const emptyExtraPredictions: ExtraPredictions = {
   highestScoring: null,
   headToHead: [
     {
-      contestants: ['Englanti', 'Saksa'],
+      contestants: ['Espanja', 'Saksa'],
       winner: null,
       type: 'winner',
     },
     {
-      contestants: ['Ranska', 'Espanja'],
-      winner: null,
-      type: 'winner',
-    },
-    {
-      contestants: ['Brasilia', 'Argentina'],
+      contestants: ['Ranska', 'Englanti'],
       winner: null,
       type: 'winner',
     },
@@ -128,12 +123,17 @@ export const emptyExtraPredictions: ExtraPredictions = {
       type: 'goal',
     },
     {
-      contestants: ['Messi', 'Ronaldo'],
+      contestants: ['Griezmann', 'Bellingham'],
       winner: null,
       type: 'goal',
     },
     {
-      contestants: ['Neymar', 'de Bruyne'],
+      contestants: ['Ronaldo', 'Foden'],
+      winner: null,
+      type: 'goal',
+    },
+    {
+      contestants: ['Bruno F.', 'de Bruyne'],
       winner: null,
       type: 'pass',
     },
@@ -173,4 +173,16 @@ export const countries: Country[] = [
   { name: 'Wales', id: 'gb-wls' },
   { name: 'Australia', id: 'au' },
   { name: 'Costa Rica', id: 'cr' },
+  { name: 'Unkari', id: 'hu' },
+  { name: 'Skotlanti', id: 'gb-sct' },
+  { name: 'Italia', id: 'it' },
+  { name: 'Albania', id: 'al' },
+  { name: 'Slovenia', id: 'si' },
+  { name: 'Itävalta', id: 'at' },
+  { name: 'Romania', id: 'ro' },
+  { name: 'Slovakia', id: 'sk' },
+  { name: 'Ukraina', id: 'ua' },
+  { name: 'Turkki', id: 'tr' },
+  { name: 'Georgia', id: 'ge' },
+  { name: 'Tsekki', id: 'cz' },
 ];

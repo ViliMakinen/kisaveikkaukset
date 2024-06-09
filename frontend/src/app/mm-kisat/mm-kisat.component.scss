@@ -14,7 +14,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 15px;
+      margin-bottom: 45px;
 
       .wrong {
         display: flex;
@@ -182,15 +182,22 @@
           color: $primary-color;
           border: 2px inset $primary-color;
           border-radius: 10px;
-          width: 100px;
+          min-width: 100px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
 
           .predicted-percent {
             position: absolute;
             top: 16px;
             font-size: 10px;
             width: calc(100% - 24px);
-            display: flex;
+            display: none;
             justify-content: center;
+
+            &.show {
+              display: flex;
+            }
           }
         }
 
@@ -262,13 +269,24 @@
         flex-basis: 50%;
         margin-top: 10px;
         margin-bottom: 5px;
+        row-gap: 5px;
 
         .match-row {
           display: flex;
           justify-content: space-between;
+          align-items: center;
           width: 90%;
+          padding-bottom: 5px;
           border-bottom: 1px solid gray;
 
+          mat-button-toggle-group {
+            width: 100px;
+            height: 48px;
+
+            mat-button-toggle {
+              flex-grow: 1;
+            }
+          }
 
           .toggle-number {
             font-weight: 900;
@@ -277,11 +295,15 @@
 
           .predicted-percent {
             position: absolute;
-            transform: translate(-12px, -65%);
+            transform: translate(-12px, -15px);
             font-size: 10px;
             width: 32px;
-            display: flex;
+            display: none;
             justify-content: center;
+
+            &.show {
+              display: flex;
+            }
           }
 
           .mat-button-toggle {
@@ -368,7 +390,7 @@
             display: flex;
             justify-content: space-between;
             width: 90%;
-            height: 40px;
+            height: 48px;
 
             &:nth-child(2n + 3) {
               background-color: rgb(220, 200, 220);

@@ -3,7 +3,7 @@ import { Tournament } from '../constants';
 
 const prisma = new PrismaClient();
 
-const tournament: Tournament = {
+const MM2022tournament: Tournament = {
   name: 'Jalkapallon MM-kisat 2022',
   startingDate: new Date('2022-11-20T18:00:00+02:00'),
   extraPredictions: {
@@ -472,16 +472,386 @@ const tournament: Tournament = {
     },
   ],
 };
+const EM2024tournament: Tournament = {
+  name: 'Jalkapallon EM-kisat 2024',
+  startingDate: new Date('2024-06-14T22:00:00+03:00'),
+  extraPredictions: {
+    mostGoals: '',
+    topFour: [],
+    mostCards: '',
+    fastestGoal: null,
+    highestScoring: null,
+    headToHead: [
+      {
+        contestants: ['Espanja', 'Saksa'],
+        winner: null,
+        type: 'winner',
+      },
+      {
+        contestants: ['Ranska', 'Englanti'],
+        winner: null,
+        type: 'winner',
+      },
+      {
+        contestants: ['Kane', 'Mbappé'],
+        winner: null,
+        type: 'goal',
+      },
+      {
+        contestants: ['Griezmann', 'Bellingham'],
+        winner: null,
+        type: 'goal',
+      },
+      {
+        contestants: ['Ronaldo', 'Foden'],
+        winner: null,
+        type: 'goal',
+      },
+      {
+        contestants: ['Bruno F.', 'de Bruyne'],
+        winner: null,
+        type: 'pass',
+      },
+    ],
+  },
+  groups: [
+    {
+      name: 'A',
+      matches: [
+        {
+          home: 'Saksa',
+          away: 'Skotlanti',
+          date: new Date('2024-06-14T22:00:00+03:00'),
+          id: 1,
+          result: null,
+        },
+        {
+          home: 'Unkari',
+          away: 'Sveitsi',
+          date: new Date('2024-06-15T16:00:00+03:00'),
+          id: 2,
+          result: null,
+        },
+        {
+          home: 'Saksa',
+          away: 'Unkari',
+          date: new Date('2024-06-19T19:00:00+03:00'),
+          id: 3,
+          result: null,
+        },
+        {
+          home: 'Skotlanti',
+          away: 'Sveitsi',
+          date: new Date('2024-06-19T22:00:00+03:00'),
+          id: 4,
+          result: null,
+        },
+        {
+          home: 'Sveitsi',
+          away: 'Saksa',
+          date: new Date('2024-06-23T22:00:00+03:00'),
+          id: 5,
+          result: null,
+        },
+        {
+          home: 'Skotlanti',
+          away: 'Unkari',
+          date: new Date('2024-06-23T22:00:00+03:00'),
+          id: 6,
+          result: null,
+        },
+      ],
+      teams: [
+        { name: 'Saksa', points: 0, predictedPoints: 0 },
+        { name: 'Skotlanti', points: 0, predictedPoints: 0 },
+        { name: 'Unkari', points: 0, predictedPoints: 0 },
+        { name: 'Sveitsi', points: 0, predictedPoints: 0 },
+      ],
+    },
+    {
+      name: 'B',
+      matches: [
+        {
+          home: 'Espanja',
+          away: 'Kroatia',
+          date: new Date('2024-06-15T19:00:00+03:00'),
+          id: 7,
+          result: null,
+        },
+        {
+          home: 'Italia',
+          away: 'Albania',
+          date: new Date('2024-06-15T22:00:00+03:00'),
+          id: 8,
+          result: null,
+        },
+        {
+          home: 'Kroatia',
+          away: 'Albania',
+          date: new Date('2024-06-19T16:00:00+03:00'),
+          id: 9,
+          result: null,
+        },
+        {
+          home: 'Espanja',
+          away: 'Italia',
+          date: new Date('2024-06-20T22:00:00+03:00'),
+          id: 10,
+          result: null,
+        },
+        {
+          home: 'Albania',
+          away: 'Espanja',
+          date: new Date('2024-06-24T22:00:00+03:00'),
+          id: 11,
+          result: null,
+        },
+        {
+          home: 'Kroatia',
+          away: 'Italia',
+          date: new Date('2024-06-24T22:00:00+03:00'),
+          id: 12,
+          result: null,
+        },
+      ],
+      teams: [
+        { name: 'Espanja', points: 0, predictedPoints: 0 },
+        { name: 'Kroatia', points: 0, predictedPoints: 0 },
+        { name: 'Italia', points: 0, predictedPoints: 0 },
+        { name: 'Albania', points: 0, predictedPoints: 0 },
+      ],
+    },
+    {
+      name: 'C',
+      matches: [
+        {
+          home: 'Slovenia',
+          away: 'Tanska',
+          date: new Date('2024-06-16T19:00:00+03:00'),
+          id: 13,
+          result: null,
+        },
+        {
+          home: 'Serbia',
+          away: 'Englanti',
+          date: new Date('2024-06-16T22:00:00+03:00'),
+          id: 14,
+          result: null,
+        },
+        {
+          home: 'Slovenia',
+          away: 'Serbia',
+          date: new Date('2024-06-20T16:00:00+03:00'),
+          id: 15,
+          result: null,
+        },
+        {
+          home: 'Tanska',
+          away: 'Englanti',
+          date: new Date('2024-06-20T19:00:00+03:00'),
+          id: 16,
+          result: null,
+        },
+        {
+          home: 'Englanti',
+          away: 'Slovenia',
+          date: new Date('2024-06-25T22:00:00+03:00'),
+          id: 17,
+          result: null,
+        },
+        {
+          home: 'Tanska',
+          away: 'Serbia',
+          date: new Date('2024-06-25T22:00:00+03:00'),
+          id: 18,
+          result: null,
+        },
+      ],
+      teams: [
+        { name: 'Slovenia', points: 0, predictedPoints: 0 },
+        { name: 'Tanska', points: 0, predictedPoints: 0 },
+        { name: 'Serbia', points: 0, predictedPoints: 0 },
+        { name: 'Englanti', points: 0, predictedPoints: 0 },
+      ],
+    },
+    {
+      name: 'D',
+      matches: [
+        {
+          home: 'Puola',
+          away: 'Hollanti',
+          date: new Date('2024-06-16T16:00:00+03:00'),
+          id: 19,
+          result: null,
+        },
+        {
+          home: 'Itävalta',
+          away: 'Ranska',
+          date: new Date('2024-06-17T22:00:00+03:00'),
+          id: 20,
+          result: null,
+        },
+        {
+          home: 'Puola',
+          away: 'Itävalta',
+          date: new Date('2024-06-21T19:00:00+03:00'),
+          id: 21,
+          result: null,
+        },
+        {
+          home: 'Hollanti',
+          away: 'Ranska',
+          date: new Date('2024-06-21T22:00:00+03:00'),
+          id: 22,
+          result: null,
+        },
+        {
+          home: 'Hollanti',
+          away: 'Itävalta',
+          date: new Date('2024-06-25T19:00:00+03:00'),
+          id: 23,
+          result: null,
+        },
+        {
+          home: 'Ranska',
+          away: 'Puola',
+          date: new Date('2024-06-25T19:00:00+03:00'),
+          id: 24,
+          result: null,
+        },
+      ],
+      teams: [
+        { name: 'Hollanti', points: 0, predictedPoints: 0 },
+        { name: 'Ranska', points: 0, predictedPoints: 0 },
+        { name: 'Puola', points: 0, predictedPoints: 0 },
+        { name: 'Itävalta', points: 0, predictedPoints: 0 },
+      ],
+    },
+    {
+      name: 'E',
+      matches: [
+        {
+          home: 'Romania',
+          away: 'Ukraina',
+          date: new Date('2024-06-17T16:00:00+03:00'),
+          id: 25,
+          result: null,
+        },
+        {
+          home: 'Belgia',
+          away: 'Slovakia',
+          date: new Date('2024-06-17T19:00:00+03:00'),
+          id: 26,
+          result: null,
+        },
+        {
+          home: 'Slovakia',
+          away: 'Ukraina',
+          date: new Date('2024-06-21T16:00:00+03:00'),
+          id: 27,
+          result: null,
+        },
+        {
+          home: 'Belgia',
+          away: 'Romania',
+          date: new Date('2024-06-22T22:00:00+03:00'),
+          id: 28,
+          result: null,
+        },
+        {
+          home: 'Slovakia',
+          away: 'Romania',
+          date: new Date('2024-06-26T19:00:00+03:00'),
+          id: 29,
+          result: null,
+        },
+        {
+          home: 'Ukraina',
+          away: 'Belgia',
+          date: new Date('2024-06-26T19:00:00+03:00'),
+          id: 30,
+          result: null,
+        },
+      ],
+      teams: [
+        { name: 'Ukraina', points: 0, predictedPoints: 0 },
+        { name: 'Slovakia', points: 0, predictedPoints: 0 },
+        { name: 'Belgia', points: 0, predictedPoints: 0 },
+        { name: 'Romania', points: 0, predictedPoints: 0 },
+      ],
+    },
+    {
+      name: 'F',
+      matches: [
+        {
+          home: 'Turkki',
+          away: 'Georgia',
+          date: new Date('2024-06-18T19:00:00+03:00'),
+          id: 31,
+          result: null,
+        },
+        {
+          home: 'Portugali',
+          away: 'Tsekki',
+          date: new Date('2024-06-18T22:00:00+03:00'),
+          id: 32,
+          result: null,
+        },
+        {
+          home: 'Georgia',
+          away: 'Tsekki',
+          date: new Date('2024-06-22T16:00:00+03:00'),
+          id: 33,
+          result: null,
+        },
+        {
+          home: 'Turkki',
+          away: 'Portugali',
+          date: new Date('2024-06-22T19:00:00+03:00'),
+          id: 34,
+          result: null,
+        },
+        {
+          home: 'Georgia',
+          away: 'Portugali',
+          date: new Date('2024-06-26T22:00:00+03:00'),
+          id: 35,
+          result: null,
+        },
+        {
+          home: 'Tsekki',
+          away: 'Turkki',
+          date: new Date('2024-06-26T22:00:00+03:00'),
+          id: 36,
+          result: null,
+        },
+      ],
+      teams: [
+        { name: 'Portugali', points: 0, predictedPoints: 0 },
+        { name: 'Tsekki', points: 0, predictedPoints: 0 },
+        { name: 'Georgia', points: 0, predictedPoints: 0 },
+        { name: 'Turkki', points: 0, predictedPoints: 0 },
+      ],
+    },
+  ],
+};
 
 async function main() {
-  const tournamentJson = JSON.parse(JSON.stringify(tournament));
-  const tournamentExtraPredictionsJson = JSON.parse(JSON.stringify(tournament.extraPredictions));
-  await prisma.tournament.create({
-    data: {
-      tournamentData: tournamentJson,
-      lastUpdated: null,
-      extraPredictions: tournamentExtraPredictionsJson,
-    },
+  const tournamentJson = MM2022tournament;
+  const tournamentExtraPredictionsJson = MM2022tournament.extraPredictions;
+  await prisma.tournament.createMany({
+    data: [
+      {
+        tournamentData: tournamentJson as any,
+        lastUpdated: null,
+        extraPredictions: tournamentExtraPredictionsJson as any,
+      },
+      {
+        tournamentData: EM2024tournament as any,
+        lastUpdated: null,
+        extraPredictions: EM2024tournament.extraPredictions as any,
+      },
+    ],
   });
 }
 

@@ -30,7 +30,7 @@
   <div class="join-create-container">
     <div class="join-container-with-message">
       <div class="join-container">
-        <mat-form-field appearance="outline" class="input-container">
+        <mat-form-field appearance="outline" class="input-container" subscriptSizing="dynamic">
           <input [(ngModel)]="code" autocomplete="off" matInput placeholder="Liity koodilla"/>
         </mat-form-field>
         <button (click)="tryJoiningGroup()" class="clickable secondary-container button" mat-flat-button>

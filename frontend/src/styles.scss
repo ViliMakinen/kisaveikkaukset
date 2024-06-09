@@ -35,3 +35,7 @@ body {
 .background-color-container {
   background-color: $background-color !important;
 }
+
+.mat-mdc-slider .mdc-slider__value-indicator {
+  white-space: pre;
+}
