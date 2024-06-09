@@ -21,7 +21,10 @@ COPY --chown=node:node ./backend /home/node/backend
 
 WORKDIR /home/node/backend
 
+USER root
 RUN apk add --update --no-cache openssl1.1-compat
+
+USER node
 RUN npm ci && npm run build
 
 FROM node:20-alpine3.18
