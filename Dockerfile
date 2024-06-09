@@ -1,5 +1,5 @@
 
-FROM node:20-alpine3.18 as frontend
+FROM node:20-alpine3.16 as frontend
 
 ENV NODE_ENV build
 
@@ -11,7 +11,7 @@ WORKDIR /home/node/frontend
 
 RUN npm ci && npm run build
 
-FROM node:20-alpine3.18 as backend
+FROM node:20-alpine3.16 as backend
 
 ENV NODE_ENV build
 
@@ -27,7 +27,7 @@ RUN apk add --update --no-cache openssl1.1-compat
 USER node
 RUN npm ci && npm run build
 
-FROM node:20-alpine3.18
+FROM node:20-alpine3.16
 
 ENV NODE_ENV production
 
