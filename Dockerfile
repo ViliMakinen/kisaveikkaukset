@@ -15,6 +15,8 @@ FROM node:20-alpine3.18 as backend
 
 ENV NODE_ENV build
 
+RUN apk update && apk upgrade
+
 USER node
 
 COPY --chown=node:node ./backend /home/node/backend
