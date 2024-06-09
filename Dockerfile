@@ -22,7 +22,7 @@ COPY --chown=node:node ./backend /home/node/backend
 WORKDIR /home/node/backend
 
 USER root
-RUN apk add --update --no-cache openssl1.1-compat
+RUN apk update && apk upgrade openssl
 
 USER node
 RUN npm ci && npm run build
