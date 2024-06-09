@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent {
-  currentUser: User = this.userService.user;
+  currentUser: User;
   code = '';
   failMessage: string | null = null;
   group$: Observable<GroupWithIdAndName[]>;
@@ -27,6 +27,7 @@ export class LandingPageComponent {
     private snackbar: MatSnackBar,
   ) {
     this.group$ = this.groupService.getUsersGroups();
+    this.currentUser = this.userService.user;
   }
 
   openSnackBar(message: string): void {
@@ -41,7 +42,7 @@ export class LandingPageComponent {
 
     dialogRef.afterClosed().subscribe((nickName) => {
       if (nickName) {
-        this.userService.user!.nickName = nickName;
+        this.currentUser.nickName = nickName;
         this.addNickName(nickName);
       }
     });

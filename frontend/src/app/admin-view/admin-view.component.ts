@@ -9,7 +9,6 @@ import {
   Team,
   TournamentWithId,
 } from '../constants';
-import { UserService } from '../user.service';
 import { isBefore } from 'date-fns';
 import { Observable } from 'rxjs';
 import { TournamentService } from '../tournament.service';
@@ -23,7 +22,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AdminViewComponent {
   matchResults: MatchResult[] = [];
-  allTournaments$: Observable<TournamentWithId[]> = this.tournamentService.getAllTournaments();
+  allTournaments$: Observable<TournamentWithId[]>;
   tournaments: TournamentWithId[] | null = null;
   tournament: TournamentWithId | null = null;
   matches: Match[] = [];
@@ -31,11 +30,11 @@ export class AdminViewComponent {
   extraPredictionResults: ExtraPredictions = emptyExtraPredictions;
 
   constructor(
-    public userService: UserService,
     private tournamentService: TournamentService,
     private snackBar: MatSnackBar,
     public router: ActivatedRoute,
   ) {
+    this.allTournaments$ = this.tournamentService.getAllTournaments();
     this.allTournaments$.subscribe((tournaments) => {
       this.tournaments = tournaments;
     });

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TournamentWithId } from '../constants';
-import { UserService } from '../user.service';
 import { TournamentService } from '../tournament.service';
 import { GroupService } from '../group.service';
 import { Router } from '@angular/router';
@@ -15,14 +14,15 @@ export class CreateGroupComponent {
   groupName: string = '';
   tournamentId: number | null = null;
 
-  availableTournaments$: Observable<TournamentWithId[]> = this.tournamentService.getAllTournaments();
+  availableTournaments$: Observable<TournamentWithId[]>;
 
   constructor(
-    public userService: UserService,
     private tournamentService: TournamentService,
     private groupService: GroupService,
     private router: Router,
-  ) {}
+  ) {
+    this.availableTournaments$ = this.tournamentService.getAllTournaments();
+  }
 
   createNewGroup(): void {
     this.groupService.createNewGroup(this.groupName, this.tournamentId!).subscribe((group) => {
