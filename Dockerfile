@@ -15,14 +15,13 @@ FROM node:20-alpine3.18 as backend
 
 ENV NODE_ENV build
 
-RUN apk update && apk upgrade
-
 USER node
 
 COPY --chown=node:node ./backend /home/node/backend
 
 WORKDIR /home/node/backend
 
+RUN apk add --update --no-cache openssl1.1-compat
 RUN npm ci && npm run build
 
 FROM node:20-alpine3.18
