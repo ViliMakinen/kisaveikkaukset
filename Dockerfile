@@ -1,8 +1,10 @@
+FROM node:20-alpine3.18 as frontend
 
-FROM node:20-alpine3.16 as frontend
-
+ENV SKIP_PUPPETEER_BROWSER_DOWNLOAD true
 ENV NODE_ENV build
 
+RUN apk update && apk upgrade && apk add python3 py3-pip build-base
+RUN apk add chromium
 USER node
 
 COPY --chown=node:node ./frontend /home/node/frontend
@@ -11,25 +13,25 @@ WORKDIR /home/node/frontend
 
 RUN npm ci && npm run build
 
-FROM node:20-alpine3.16 as backend
+FROM node:20-alpine3.18 as backend
 
 ENV NODE_ENV build
 
+RUN apk update && apk upgrade
 USER node
 
 COPY --chown=node:node ./backend /home/node/backend
 
 WORKDIR /home/node/backend
 
-USER root
-RUN apk update && apk upgrade openssl
-
 USER node
 RUN npm ci && npm run build
 
-FROM node:20-alpine3.16
+FROM node:20-alpine3.18
 
 ENV NODE_ENV production
+RUN apk update && apk upgrade
+RUN apk add chromium
 
 USER node
 WORKDIR /home/node
