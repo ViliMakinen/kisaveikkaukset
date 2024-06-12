@@ -219,7 +219,7 @@
           </div>
           <div class="button-info-container">
             <mat-form-field appearance="outline">
-              <mat-label>Eniten varoituksia</mat-label>
+              <mat-label>Eniten kortteja</mat-label>
               <mat-select [(ngModel)]="userPredictions.extraPredictions.mostCards" [disabled]="arePredictionsLocked()">
                 <mat-option *ngFor="let team of teams" [value]="team.name">
                   {{ team.name }}
