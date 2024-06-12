@@ -154,7 +154,7 @@
               min="0"
               showTickMarks
               step="1">
-              <input matSliderThumb/>
+              <input [(ngModel)]="userPredictions.extraPredictions.fastestGoal" matSliderThumb/>
             </mat-slider>
             <span *ngIf="tournament.extraPredictions.fastestGoal !== null" class="slider-check-container">
               <span
@@ -188,7 +188,7 @@
               min="2"
               showTickMarks
               step="2">
-              <input matSliderThumb/>
+              <input [(ngModel)]="userPredictions.extraPredictions.highestScoring" matSliderThumb/>
             </mat-slider>
             <span *ngIf="tournament.extraPredictions.highestScoring !== null" class="slider-check-container">
               <span
