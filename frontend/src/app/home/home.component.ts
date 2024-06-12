@@ -191,8 +191,8 @@ export class HomeComponent implements OnDestroy {
       points += 3;
     }
     if (
-      user.predictions.extraPredictions.mostGoals === 'Espanja' ||
-      user.predictions.extraPredictions.mostGoals === 'Englanti'
+      user.predictions.extraPredictions.mostGoals === 'to_be_inserted' ||
+      user.predictions.extraPredictions.mostGoals === 'to_be_inserted'
     ) {
       points += 3;
     }
