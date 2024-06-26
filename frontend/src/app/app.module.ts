@@ -38,6 +38,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { RangePipe } from './range.pipe';
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
 import { CustomMsgDialogComponent } from './custom-msg-dialog/custom-msg-dialog.component';
+import { PlayoffComponent } from './playoff/playoff.component';
 
 const routes: Routes = [
   { path: '', component: AuthPageComponent },
@@ -54,6 +55,7 @@ const routes: Routes = [
         component: HomeComponent,
       },
       { path: ':groupId/tournament', component: MmKisatComponent },
+      { path: ':groupId/tournament-playoffs', component: PlayoffComponent },
 
       {
         path: '**',
@@ -78,6 +80,7 @@ const routes: Routes = [
     LandingPageComponent,
     RangePipe,
     DialogComponent,
+    PlayoffComponent,
     InformationDialogComponent,
     CustomMsgDialogComponent,
   ],

@@ -34,6 +34,7 @@ export interface Group {
 export interface Predictions {
   matchPredictions: MatchResult[];
   extraPredictions: ExtraPredictions;
+  playoffPredictions?: MatchResult[];
 }
 
 export interface ExtraPredictions {
