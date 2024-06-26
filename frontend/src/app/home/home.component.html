@@ -48,7 +48,7 @@
         </div>
       </button>
     </div>
-    @if (true) {
+    @if (false) {
       <div class="button-container">
         <button [routerLink]="['./tournament-playoffs']" class="clickable secondary-container button" mat-raised-button>
           <div class="flex-container">
@@ -144,15 +144,14 @@
           <div class="button clickable secondary-container" (click)="changeDay(-1)">
             <mat-icon>arrow_left</mat-icon>
           </div>
-          <span class="date-container"><mat-icon>today</mat-icon>
-            {{ placeholderDate | date: 'dd.MM.yyyy' }}</span>
+          <span class="date-container"><mat-icon>today</mat-icon> {{ placeholderDate | date: 'dd.MM.yyyy' }}</span>
           <div class="button clickable secondary-container" (click)="changeDay(1)">
             <mat-icon>arrow_right</mat-icon>
           </div>
         </div>
         <div class="games-today-row-container" *ngFor="let game of gamesToday">
           <span class="games-today-row-box">
-            <img [src]="'assets/images/4x3/' + fetchFlag(game.home) + '.svg'" alt="home team flag" class="flag-image"/>
+            <img [src]="'assets/images/4x3/' + fetchFlag(game.home) + '.svg'" alt="home team flag" class="flag-image" />
             {{ game.home }}</span
           >
           <span *ngIf="!game.result" class="games-today-row-box"> {{ game.date | date: 'HH:mm' }}</span>
@@ -165,7 +164,7 @@
           <span class="games-today-row-box">
             {{ game.away }}
             <img [src]="'assets/images/4x3/' + fetchFlag(game.away) + '.svg'" alt="away team flag" class="flag-image"
-            /></span>
+          /></span>
         </div>
       </div>
     </div>
@@ -177,20 +176,20 @@
           <div class="group-container primary-container">
             <div class="group-title-container">
               <span class="text-margin"
-              ><mat-icon
-                class="clickable"
-                (click)="
+                ><mat-icon
+                  class="clickable"
+                  (click)="
                     openCustomDialog(
                       'Lohkotilanteet eivät osaa ottaa huomioon maalieroa, joten tasatilanteissa joukkueet ovat satunnaisessa järjestyksessä.'
                     )
                   "
-              >info</mat-icon
-              >Joukkue</span
+                  >info</mat-icon
+                >Joukkue</span
               ><span class="text-margin">Pisteet</span>
             </div>
             <div *ngFor="let team of group.teams" class="group-row">
               <span class="row-box">
-                <img [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'" alt="team flag" class="flag-image"/>
+                <img [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'" alt="team flag" class="flag-image" />
                 {{ team.name }}</span
               >
               <span class="row-box">{{ team.points }}</span>

@@ -1,0 +1,336 @@
+<div class="main-container">
+  <div class="finals">
+    <div class="match column">
+      <div (click)="chooseChampion(userPlayoffBracket.grandFinal.home)" class="team clickable">
+        <div class="name">{{ userPlayoffBracket.grandFinal.home }}</div>
+        <div class="flag">
+          @if (userPlayoffBracket.grandFinal.home !== '') {
+            <img
+              width="16"
+              height="12"
+              [ngSrc]="'assets/images/4x3/' + fetchFlag(userPlayoffBracket.grandFinal.home) + '.svg'"
+              alt="away team flag"
+              class="flag-image" />
+          }
+        </div>
+      </div>
+      <div class="team clickable">
+        <div class="name">{{ userPlayoffBracket.grandFinal.away }}</div>
+        <div class="flag">
+          @if (userPlayoffBracket.grandFinal.away !== '') {
+            <img
+              width="16"
+              height="12"
+              [ngSrc]="'assets/images/4x3/' + fetchFlag(userPlayoffBracket.grandFinal.away) + '.svg'"
+              alt="away team flag"
+              class="flag-image" />
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  @if (bracketSide === 'left') {
+    <div class="brackets">
+      <div class="change-bracket-button">
+        <button (click)="bracketSide = 'right'" mat-flat-button>
+          <i class="material-icons">keyboard_double_arrow_right</i>
+        </button>
+      </div>
+      <div class="round">
+        <div
+          *ngFor="let match of userPlayoffBracket.leftSide.quarterFinals; let i = index"
+          class="match"
+          [class.selected]="checkIfChosenForSF(match.home, 'left')">
+          <div (click)="chooseQFWinner(match.home, i)" class="team clickable">
+            <div class="name">{{ match.home }}</div>
+            <div class="flag">
+              <img
+                *ngIf="match.home !== ''"
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag(match.home) + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+          <div (click)="chooseQFWinner(match.away, i)" class="team clickable">
+            <div class="name"></div>
+            {{ match.away }}
+            <div class="flag">
+              <img
+                *ngIf="match.away !== ''"
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="round">
+        <div *ngFor="let match of userPlayoffBracket.leftSide.semiFinals; let i = index" class="match">
+          <div
+            (click)="chooseSFWinner(match.home, i, 'left')"
+            class="team clickable"
+            [class.selected]="userPlayoffBracket.leftSide.bracketFinal.home === match.home && match.home !== ''">
+            <div class="name">{{ match.home }}</div>
+            <div class="flag">
+              <img
+                *ngIf="match.home !== ''"
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag(match.home) + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+          <div (click)="chooseSFWinner(match.away, i, 'left')" class="team clickable">
+            <div class="name">{{ match.away }}</div>
+            <div class="flag">
+              @if (match.away !== '') {
+                <img
+                  width="16"
+                  height="12"
+                  [ngSrc]="'assets/images/4x3/' + fetchFlag(match.away) + '.svg'"
+                  alt="away team flag"
+                  class="flag-image" />
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="round">
+        <div class="match">
+          <div
+            (click)="chooseBFWinner(userPlayoffBracket.leftSide.bracketFinal.home, 'left')"
+            class="team clickable"
+            [class.selected]="
+              userPlayoffBracket.grandFinal.home === userPlayoffBracket.leftSide.bracketFinal.home &&
+              userPlayoffBracket.leftSide.bracketFinal.home !== ''
+            ">
+            <div class="name">{{ userPlayoffBracket.leftSide.bracketFinal.home }}</div>
+            <div class="flag">
+              <img
+                *ngIf="userPlayoffBracket.leftSide.bracketFinal.home !== ''"
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag(userPlayoffBracket.leftSide.bracketFinal.home) + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+          <div (click)="chooseBFWinner(userPlayoffBracket.leftSide.bracketFinal.away, 'left')" class="team clickable"
+               [class.selected]="
+              userPlayoffBracket.grandFinal.home === userPlayoffBracket.leftSide.bracketFinal.away &&
+              userPlayoffBracket.leftSide.bracketFinal.away !== ''
+            ">
+            <div class="name"></div>
+            {{ userPlayoffBracket.leftSide.bracketFinal.away }}
+            <div class="flag">
+              <img
+                *ngIf="userPlayoffBracket.leftSide.bracketFinal.away !== ''"
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag(userPlayoffBracket.leftSide.bracketFinal.away) + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="brackets right">
+      <div class="change-bracket-button right">
+        <button (click)="bracketSide = 'left'" mat-flat-button>
+          <i class="material-icons">keyboard_double_arrow_left</i>
+        </button>
+      </div>
+
+      <div class="round">
+        <div class="match">
+          <div class="team clickable">
+            <div class="name">england</div>
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Englanti') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+          <div class="team clickable">
+            <div class="name"></div>
+            saksa
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Saksa') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+        </div>
+        <div class="match">
+          <div class="team clickable">
+            <div class="name">england</div>
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Englanti') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+          <div class="team clickable">
+            <div class="name"></div>
+            saksa
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Saksa') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+        </div>
+
+        <div class="match">
+          <div class="team clickable">
+            <div class="name">england</div>
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Englanti') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+          <div class="team clickable">
+            <div class="name"></div>
+            saksa
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Saksa') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+        </div>
+        <div class="match">
+          <div class="team clickable">
+            <div class="name">england</div>
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Englanti') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+          <div class="team clickable">
+            <div class="name"></div>
+            saksa
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Saksa') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="round">
+        <div class="match">
+          <div class="team clickable">
+            <div class="name">england</div>
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Englanti') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+          <div class="team clickable">
+            <div class="name"></div>
+            saksa
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Saksa') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+        </div>
+
+        <div class="match">
+          <div class="team clickable">
+            <div class="name">england</div>
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Englanti') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+          <div class="team clickable">
+            <div class="name"></div>
+            saksa
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Saksa') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="round">
+        <div class="match">
+          <div class="team clickable">
+            <div class="name">england</div>
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Englanti') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+          <div class="team clickable">
+            <div class="name"></div>
+            saksa
+            <div class="flag">
+              <img
+                width="16"
+                height="12"
+                [ngSrc]="'assets/images/4x3/' + fetchFlag('Saksa') + '.svg'"
+                alt="away team flag"
+                class="flag-image" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

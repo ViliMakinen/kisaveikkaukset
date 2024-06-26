@@ -39,6 +39,7 @@ import { RangePipe } from './range.pipe';
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
 import { CustomMsgDialogComponent } from './custom-msg-dialog/custom-msg-dialog.component';
 import { PlayoffComponent } from './playoff/playoff.component';
+import {NgOptimizedImage} from "@angular/common";
 
 const routes: Routes = [
   { path: '', component: AuthPageComponent },
@@ -109,6 +110,7 @@ const routes: Routes = [
     MatSnackBarModule,
     MatDialogModule,
     MatSliderModule,
+    NgOptimizedImage,
   ],
   providers: [LoggedInGuard, AuthService],
   bootstrap: [AppComponent],
