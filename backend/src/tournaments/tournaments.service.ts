@@ -27,4 +27,29 @@ export class TournamentsService {
   async getAll(): Promise<any[]> {
     return await this.prisma.tournament.findMany();
   }
+
+  async playoffPredictions(predictions: any, groupId: number, userId: number) {
+    const userPredictions: any = await this.prisma.userGroupPredictions.findFirst({
+      where: {
+        userId,
+        groupId,
+      },
+    });
+    const predictionsWithPlayoffPredictions = {
+      extraPredictions: userPredictions.predictions.extraPredictions,
+      matchPredictions: userPredictions.predictions.matchPredictions,
+      playoffPredictions: predictions,
+    };
+    return this.prisma.userGroupPredictions.update({
+      where: {
+        userId_groupId: {
+          groupId: userPredictions.groupId,
+          userId: userPredictions.userId,
+        },
+      },
+      data: {
+        predictions: predictionsWithPlayoffPredictions,
+      },
+    });
+  }
 }

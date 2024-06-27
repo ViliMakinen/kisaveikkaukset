@@ -34,6 +34,7 @@ export class MmKisatComponent implements OnDestroy {
   userPredictions: Predictions = {
     matchPredictions: [],
     extraPredictions: emptyExtraPredictions,
+    playoffPredictions: null
   };
   tournament$!: Observable<TournamentWithId>;
   tournament: Tournament | null = null;
@@ -61,6 +62,7 @@ export class MmKisatComponent implements OnDestroy {
     const groupId$ = this.route.params.pipe(map((params) => parseInt(params['groupId'], 10)));
     this.group$ = groupId$.pipe(switchMap((groupId) => this.groupService.getGroupById(groupId)));
     this.groupSubscription = this.group$.subscribe((group) => {
+
       this.group = group;
       this.tournament$ = groupId$.pipe(switchMap(() => this.tournamentService.getTournamentById(group.tournamentId)));
       this.tournamentSubscription = this.tournament$.subscribe((tournament) => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { GroupWithIdAndName, PlayerGroup } from './constants';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class GroupService {
   constructor(private http: HttpClient) {}
 
   getGroupById(id: number): Observable<PlayerGroup> {
-    return this.http.get<any>(`api/groups/${id}`);
+    return this.http.get<any>(`api/groups/${id}`).pipe(tap(console.log));
   }
 
   createNewGroup(groupName: string, tournamentId: number): Observable<PlayerGroup> {

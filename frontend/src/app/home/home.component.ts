@@ -299,6 +299,7 @@ export class HomeComponent implements OnDestroy {
       return {
         ...user,
         points: this.calculateUserPoints(user),
+        playoffPoints: this.calculateUserPlayoffPoints(user),
       };
     });
     usersWithPoints.sort((a, b) => a.points - b.points).reverse();
@@ -310,6 +311,7 @@ export class HomeComponent implements OnDestroy {
       return {
         ...user,
         points: this.calculatePreviousPoints(user),
+        playoffPoints: 0,
       };
     });
     usersWithPoints.sort((a, b) => a.points - b.points).reverse();
@@ -352,6 +354,11 @@ export class HomeComponent implements OnDestroy {
     return 'Voit vielä muokata veikkauksiasi!';
   }
 
+  arePlayoffPredictionsUnfinished(): boolean {
+    const predictions = this.group!.users.find((user) => user.id === this.userService.user!.id)!.predictions;
+    return predictions.playoffPredictions?.winner === '';
+  }
+
   formatDate(lastUpdated: Date) {
     return formatDate(lastUpdated, 'dd.MM.yyyy HH.mm', this.locale);
   }
@@ -382,5 +389,9 @@ export class HomeComponent implements OnDestroy {
       return 'close';
     }
     return '';
+  }
+
+  calculateUserPlayoffPoints(user: GroupUser) {
+    return 0;
   }
 }

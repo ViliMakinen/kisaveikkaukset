@@ -48,26 +48,14 @@
         </div>
       </div>
       <span class="slider-title">Turnauksen nopein maali</span>
-      <mat-slider
-        class="slider"
-        [(ngModel)]="tournament.tournamentData.extraPredictions.fastestGoal"
-        thumbLabel
-        [displayWith]="formatLabelMatch"
-        tickInterval="1"
-        step="1"
-        min="0"
-        max="6"></mat-slider>
+      <mat-slider [displayWith]="formatLabelMatch" class="slider" discrete max="6" min="0" step="1" tickInterval="1">
+        <input [(ngModel)]="tournament.tournamentData.extraPredictions.fastestGoal" matSliderThumb/>
+      </mat-slider>
       <div>
         <span class="slider-title">Turnauksen isomaalisin ottelu</span>
-        <mat-slider
-          class="slider"
-          [(ngModel)]="tournament.tournamentData.extraPredictions.highestScoring"
-          thumbLabel
-          [displayWith]="formatLabelScore"
-          tickInterval="2"
-          step="2"
-          min="2"
-          max="12"></mat-slider>
+        <mat-slider [displayWith]="formatLabelScore" class="slider" discrete max="12" min="2" step="2" tickInterval="2">
+          <input [(ngModel)]="tournament.tournamentData.extraPredictions.highestScoring" matSliderThumb/>
+        </mat-slider>
       </div>
       <div class="button-info-container">
         <mat-form-field appearance="outline">
@@ -140,6 +128,21 @@
             <img alt="info" matTooltip="Veikkaa turnauksen top 4 joukkueet" src="assets/images/info.svg"
           /></span>
         </div>
+      </div>
+    </div>
+    <div class="playoff-predictions-container match-container">
+      <h4 class="playoff-predictions-title">Pudotuspelit</h4>
+      <div *ngFor="let match of playoffMatches; let index = index" class="match-row">
+        <span class="playoff-teams">
+          <div (click)="selectWinner(match.home)" [class.selected]="isSelectedPlayoffWinner(match.home, match)"
+               class="team">
+            {{ match.home }}
+          </div>
+          <div (click)="selectWinner(match.away)" [class.selected]="isSelectedPlayoffWinner(match.away, match)"
+               class="team">
+            {{ match.away }}
+          </div>
+        </span>
       </div>
     </div>
     <div class="toolbar-nav">

@@ -99,11 +99,36 @@
     justify-content: space-between;
     width: 50%;
 
+    .playoff-teams {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      column-gap: 10px;
+
+      .team {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 80px;
+        border: 1px solid black;
+        padding: 5px;
+        border-radius: 3px;
+
+
+        &.selected {
+          background-color: gray;
+        }
+      }
+    }
+
     .teams {
       margin-left: 3px;
       display: flex;
       align-items: center;
       width: 33%;
+
     }
 
     .match-date {

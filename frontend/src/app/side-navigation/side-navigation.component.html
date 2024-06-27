@@ -1,13 +1,21 @@
 <div class="main-sidenav-container primary-container">
   <div (click)="closeSidenav.emit()" [routerLink]="['./']" class="route secondary-container clickable">Aloitussivu</div>
-  <div (click)="closeSidenav.emit()" [routerLink]="['./', router.url.split('/')[2]]"
-       class="route secondary-container clickable">
+  <div
+    (click)="closeSidenav.emit()"
+    [routerLink]="['./', router.url.split('/')[2]]"
+    class="route secondary-container clickable">
     Ryhmän etusivu
   </div>
   <div
     [routerLink]="['./', router.url.split('/')[2], 'tournament']"
     (click)="closeSidenav.emit()"
     class="route secondary-container clickable">
-    Veikkaukset
+    Alkulohkoveikkaukset
+  </div>
+  <div
+    (click)="closeSidenav.emit()"
+    [routerLink]="['./', router.url.split('/')[2], 'tournament-playoffs']"
+    class="route secondary-container clickable">
+    Pudotuspeliveikkaukset
   </div>
 </div>

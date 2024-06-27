@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { TournamentWithId } from '../../constants';
 import { TournamentsService } from './tournaments.service';
 
@@ -19,5 +19,14 @@ export class TournamentsController {
   @Post()
   async update(@Body() tournament: TournamentWithId): Promise<TournamentWithId> {
     return await this.tournamentService.updateTournamentResults(tournament);
+  }
+
+  @Post('playoff-predictions')
+  async playoffPredictions(@Req() req: any, @Body() predictions: any): Promise<any> {
+    return await this.tournamentService.playoffPredictions(
+        predictions.predictions,
+        parseInt(predictions.groupId, 10),
+        req.user.id,
+    );
   }
 }

@@ -49,85 +49,162 @@
       </button>
     </div>
     @if (false) {
-      <div class="button-container">
-        <button [routerLink]="['./tournament-playoffs']" class="clickable secondary-container button" mat-raised-button>
-          <div class="flex-container">
-            <mat-icon>arrow_left</mat-icon>
-            Tee pudotuspeliveikkaukset
-          </div>
-        </button>
-      </div>
+      @if (arePlayoffPredictionsUnfinished()) {
+        <div class="alternative-button-container">
+          <button
+            [routerLink]="['./tournament-playoffs']"
+            class="clickable secondary-container button"
+            mat-raised-button>
+            <div class="flex-container">
+              <mat-icon>arrow_left</mat-icon>
+              Tee pudotuspeliveikkaukset
+            </div>
+          </button>
+        </div>
+      } @else {
+        <div class="alternative-button-container">
+          <button
+            [routerLink]="['./tournament-playoffs']"
+            class="clickable secondary-container button"
+            mat-raised-button>
+            <div class="flex-container">
+              <mat-icon>arrow_left</mat-icon>
+              Katso pudotuspeliveikkauksiasi
+            </div>
+          </button>
+        </div>
+      }
     }
     <div *ngIf="hasTournamentStarted()" class="alternative-button-container">
       <button [routerLink]="['./tournament']" class="clickable secondary-container button" mat-raised-button>
         <div class="flex-container">
           <mat-icon>arrow_left</mat-icon>
-          Katso veikkauksiasi
+          Katso alkulohkoveikkauksiasi
         </div>
       </button>
     </div>
     <div class="matches-today-and-user-standings-container">
-      <div class="standings-container primary-container">
-        <div class="standings-title-container">
-          <mat-icon class="info-icon clickable" (click)="openDialog()">info</mat-icon>
-          Pistetilanne
-          <mat-icon
-            class="clickable"
-            *ngIf="lastUpdated"
-            (click)="openCustomDialog('Otteluiden tulokset päivitetty: ' + formatDate(lastUpdated))">
-            update
-          </mat-icon>
-        </div>
-        <div *ngFor="let user of users.slice(0, 5)" class="standings-row-container">
-          <span *ngIf="user.nickName === null" class="standings-row-box">
-            {{ user.firstName }} {{ user.lastName[0] }}
-          </span>
-          <span
-            [matTooltip]="user.firstName + ' ' + user.lastName"
-            *ngIf="user.nickName !== null"
-            class="standings-row-box">
-            {{ user.nickName }}
-          </span>
-          <span class="standings-row-box">
-            <mat-icon *ngIf="compareUserPosition(user) === 0" class="even">horizontal_rule</mat-icon>
-            <mat-icon *ngIf="compareUserPosition(user) > 0" class="up">arrow_upward</mat-icon>
-            <mat-icon *ngIf="compareUserPosition(user) < 0" class="down">arrow_downward</mat-icon>
-            <span class="compared-points">
-              ({{ compareUserPosition(user) > 0 ? '+' + compareUserPosition(user) : compareUserPosition(user) }})
-            </span>
-            {{ user.points }}
-          </span>
-        </div>
-        <ng-container *ngIf="isUserListExpanded">
-          <div *ngFor="let user of users.slice(5)" class="standings-row-container">
-            <span *ngIf="user.nickName === null" class="standings-row-box">
-              {{ user.firstName }} {{ user.lastName[0] }}
-            </span>
-            <span
-              *ngIf="user.nickName !== null"
-              [matTooltip]="user.firstName + ' ' + user.lastName"
-              class="standings-row-box">
-              {{ user.nickName }}
-            </span>
-            <span class="standings-row-box">
-              <mat-icon *ngIf="compareUserPosition(user) === 0" class="even">horizontal_rule</mat-icon>
-              <mat-icon *ngIf="compareUserPosition(user) > 0" class="up">arrow_upward</mat-icon>
-              <mat-icon *ngIf="compareUserPosition(user) < 0" class="down">arrow_downward</mat-icon>
-              <span class="compared-points">
-                ({{ compareUserPosition(user) > 0 ? '+' + compareUserPosition(user) : compareUserPosition(user) }})
+      <mat-tab-group>
+        <mat-tab label="Alkulohkoveikkaukset">
+          <div class="standings-container primary-container">
+            <div class="standings-title-container">
+              <mat-icon (click)="openDialog()" class="info-icon clickable">info</mat-icon>
+              Pistetilanne
+              <mat-icon
+                (click)="openCustomDialog('Otteluiden tulokset päivitetty: ' + formatDate(lastUpdated))"
+                *ngIf="lastUpdated"
+                class="clickable">
+                update
+              </mat-icon>
+            </div>
+            <div *ngFor="let user of users.slice(0, 5)" class="standings-row-container">
+              <span *ngIf="user.nickName === null" class="standings-row-box">
+                {{ user.firstName }} {{ user.lastName[0] }}
               </span>
-              {{ user.points }}
-            </span>
+              <span
+                *ngIf="user.nickName !== null"
+                [matTooltip]="user.firstName + ' ' + user.lastName"
+                class="standings-row-box">
+                {{ user.nickName }}
+              </span>
+              <span class="standings-row-box">
+                <mat-icon *ngIf="compareUserPosition(user) === 0" class="even">horizontal_rule</mat-icon>
+                <mat-icon *ngIf="compareUserPosition(user) > 0" class="up">arrow_upward</mat-icon>
+                <mat-icon *ngIf="compareUserPosition(user) < 0" class="down">arrow_downward</mat-icon>
+                <span class="compared-points">
+                  ({{ compareUserPosition(user) > 0 ? '+' + compareUserPosition(user) : compareUserPosition(user) }})
+                </span>
+                {{ user.points }}
+              </span>
+            </div>
+            <ng-container *ngIf="isUserListExpanded">
+              <div *ngFor="let user of users.slice(5)" class="standings-row-container">
+                <span *ngIf="user.nickName === null" class="standings-row-box">
+                  {{ user.firstName }} {{ user.lastName[0] }}
+                </span>
+                <span
+                  *ngIf="user.nickName !== null"
+                  [matTooltip]="user.firstName + ' ' + user.lastName"
+                  class="standings-row-box">
+                  {{ user.nickName }}
+                </span>
+                <span class="standings-row-box">
+                  <mat-icon *ngIf="compareUserPosition(user) === 0" class="even">horizontal_rule</mat-icon>
+                  <mat-icon *ngIf="compareUserPosition(user) > 0" class="up">arrow_upward</mat-icon>
+                  <mat-icon *ngIf="compareUserPosition(user) < 0" class="down">arrow_downward</mat-icon>
+                  <span class="compared-points">
+                    ({{ compareUserPosition(user) > 0 ? '+' + compareUserPosition(user) : compareUserPosition(user) }})
+                  </span>
+                  {{ user.points }}
+                </span>
+              </div>
+            </ng-container>
+            <div
+              (click)="isUserListExpanded = !isUserListExpanded"
+              *ngIf="users.length > 5"
+              class="expand-standings-container clickable">
+              <mat-icon *ngIf="isUserListExpanded">expand_less</mat-icon>
+              <mat-icon *ngIf="!isUserListExpanded">expand_more</mat-icon>
+            </div>
           </div>
-        </ng-container>
-        <div
-          (click)="isUserListExpanded = !isUserListExpanded"
-          *ngIf="users.length > 5"
-          class="expand-standings-container clickable">
-          <mat-icon *ngIf="isUserListExpanded">expand_less</mat-icon>
-          <mat-icon *ngIf="!isUserListExpanded">expand_more</mat-icon>
-        </div>
-      </div>
+        </mat-tab>
+        <mat-tab label="Pudotuspeliveikkaukset">
+          <div class="standings-container primary-container">
+            <div class="standings-title-container">
+              Pistetilanne
+              <mat-icon
+                (click)="openCustomDialog('Otteluiden tulokset päivitetty: ' + formatDate(lastUpdated))"
+                *ngIf="lastUpdated"
+                class="clickable">
+                update
+              </mat-icon>
+            </div>
+            <div *ngFor="let user of users.slice(0, 5)" class="standings-row-container">
+              <span *ngIf="user.nickName === null" class="standings-row-box">
+                {{ user.firstName }} {{ user.lastName[0] }}
+              </span>
+              <span
+                *ngIf="user.nickName !== null"
+                [matTooltip]="user.firstName + ' ' + user.lastName"
+                class="standings-row-box">
+                {{ user.nickName }}
+              </span>
+              <span class="standings-row-box">
+                {{ user.playoffPoints }}
+              </span>
+            </div>
+            <ng-container *ngIf="isUserListExpanded">
+              <div *ngFor="let user of users.slice(5)" class="standings-row-container">
+                <span *ngIf="user.nickName === null" class="standings-row-box">
+                  {{ user.firstName }} {{ user.lastName[0] }}
+                </span>
+                <span
+                  *ngIf="user.nickName !== null"
+                  [matTooltip]="user.firstName + ' ' + user.lastName"
+                  class="standings-row-box">
+                  {{ user.nickName }}
+                </span>
+                <span class="standings-row-box">
+                  <mat-icon *ngIf="compareUserPosition(user) === 0" class="even">horizontal_rule</mat-icon>
+                  <mat-icon *ngIf="compareUserPosition(user) > 0" class="up">arrow_upward</mat-icon>
+                  <mat-icon *ngIf="compareUserPosition(user) < 0" class="down">arrow_downward</mat-icon>
+                  <span class="compared-points">
+                    ({{ compareUserPosition(user) > 0 ? '+' + compareUserPosition(user) : compareUserPosition(user) }})
+                  </span>
+                  {{ user.points }}
+                </span>
+              </div>
+            </ng-container>
+            <div
+              (click)="isUserListExpanded = !isUserListExpanded"
+              *ngIf="users.length > 5"
+              class="expand-standings-container clickable">
+              <mat-icon *ngIf="isUserListExpanded">expand_less</mat-icon>
+              <mat-icon *ngIf="!isUserListExpanded">expand_more</mat-icon>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
       <div class="games-today-container primary-container">
         <div
           class="games-today-title-container primary-container"
@@ -167,36 +244,6 @@
           /></span>
         </div>
       </div>
-    </div>
-    <mat-divider></mat-divider>
-    <div class="tab-group-title">Lohkotilanteet</div>
-    <div class="min-height tournament-group-container">
-      <mat-tab-group>
-        <mat-tab *ngFor="let group of tournament.groups" [label]="group.name">
-          <div class="group-container primary-container">
-            <div class="group-title-container">
-              <span class="text-margin"
-                ><mat-icon
-                  class="clickable"
-                  (click)="
-                    openCustomDialog(
-                      'Lohkotilanteet eivät osaa ottaa huomioon maalieroa, joten tasatilanteissa joukkueet ovat satunnaisessa järjestyksessä.'
-                    )
-                  "
-                  >info</mat-icon
-                >Joukkue</span
-              ><span class="text-margin">Pisteet</span>
-            </div>
-            <div *ngFor="let team of group.teams" class="group-row">
-              <span class="row-box">
-                <img [src]="'assets/images/4x3/' + fetchFlag(team.name) + '.svg'" alt="team flag" class="flag-image" />
-                {{ team.name }}</span
-              >
-              <span class="row-box">{{ team.points }}</span>
-            </div>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
     </div>
   </div>
 </ng-container>

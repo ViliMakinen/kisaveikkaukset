@@ -447,7 +447,8 @@
       }
 
       .standings-container {
-        width: 90%;
+        margin-top: 10px;
+        width: calc(100% - 10px);
 
         .standings-title-container {
           font-size: 18px;

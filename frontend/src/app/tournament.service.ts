@@ -36,6 +36,12 @@ function parseTournament(tournament: Tournament): Tournament {
         }),
       };
     }),
+    playoffMatches: tournament.playoffMatches?.map((match) => {
+      return {
+        ...match,
+        date: new Date(match.date),
+      };
+    }),
   };
 }
 
@@ -59,5 +65,9 @@ export class TournamentService {
     return this.http
       .post<TournamentWithId>('api/tournaments', tournament)
       .pipe(map((tournament) => parseTournamentWithId(tournament)));
+  }
+
+  savePlayoffPredictions(predictions: any, groupId: number) {
+    return this.http.post('api/tournaments/playoff-predictions', { predictions, groupId });
   }
 }

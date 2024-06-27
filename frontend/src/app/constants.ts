@@ -3,6 +3,15 @@ export interface Tournament {
   groups: Group[];
   startingDate: Date;
   extraPredictions: ExtraPredictions;
+  playoffMatches: PlayoffMatch[];
+}
+
+export interface PlayoffMatch {
+  home: string;
+  away: string;
+  date: Date;
+  id: number;
+  result: string;
 }
 
 export interface PlayerGroup {
@@ -32,10 +41,12 @@ export interface GroupUser {
 export interface Predictions {
   matchPredictions: MatchResult[];
   extraPredictions: ExtraPredictions;
+  playoffPredictions: any;
 }
 
 export interface GroupUserWithPoints extends GroupUser {
   points: number;
+  playoffPoints: number;
 }
 
 export interface TournamentWithId {

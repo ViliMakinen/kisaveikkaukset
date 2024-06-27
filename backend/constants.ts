@@ -3,6 +3,7 @@ export interface Tournament {
   groups: Group[];
   startingDate: Date;
   extraPredictions: ExtraPredictions;
+  playoffMatches: Match[];
 }
 
 export interface PlayerGroup {

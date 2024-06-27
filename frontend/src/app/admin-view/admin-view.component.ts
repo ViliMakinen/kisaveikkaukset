@@ -28,6 +28,7 @@ export class AdminViewComponent {
   matches: Match[] = [];
   teams: Team[] = [];
   extraPredictionResults: ExtraPredictions = emptyExtraPredictions;
+  playoffMatches: any;
 
   constructor(
     private tournamentService: TournamentService,
@@ -114,6 +115,7 @@ export class AdminViewComponent {
     this.extraPredictionResults = this.tournament!.tournamentData.extraPredictions;
     this.teams = this.tournament!.tournamentData.groups.flatMap((group) => group.teams);
     this.matches = this.tournament!.tournamentData.groups.flatMap((group) => group.matches);
+    this.playoffMatches = this.tournament!.tournamentData.playoffMatches;
     this.matchResults = this.matches.map((match) => {
       return {
         id: match.id,
@@ -156,5 +158,27 @@ export class AdminViewComponent {
 
   saveHeadToHeadResult(result: string, i: number): void {
     this.tournament!.tournamentData.extraPredictions.headToHead[i].winner = result;
+  }
+
+  selectWinner(home: string): void {
+    this.tournament!.tournamentData = {
+      ...this.tournament!.tournamentData,
+      playoffMatches: this.tournament!.tournamentData.playoffMatches.map((playoffMatch) => {
+        if (playoffMatch.home === home) {
+          return {
+            ...playoffMatch,
+            result: home,
+          };
+        }
+        return playoffMatch;
+      }),
+    };
+  }
+
+  isSelectedPlayoffWinner(home: any, match: any) {
+    return (
+      this.tournament!.tournamentData.playoffMatches.find((playoffMatch) => playoffMatch.id === match.id)!.result ===
+      home
+    );
   }
 }
