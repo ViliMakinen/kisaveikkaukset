@@ -269,20 +269,10 @@
                 <mat-icon class="button"> info </mat-icon>
               </span>
               <span *ngIf="tournament.extraPredictions.mostGoals" class="wrong-right-container">
-                <span
-                  *ngIf="
-                    userPredictions.extraPredictions.mostGoals === 'to_be_inserted' ||
-                    userPredictions.extraPredictions.mostGoals === 'to_be_inserted'
-                  "
-                  class="right">
+                <span *ngIf="userPredictions.extraPredictions.mostGoals === 'Saksa'" class="right">
                   <mat-icon> done </mat-icon>
                 </span>
-                <span
-                  *ngIf="
-                    userPredictions.extraPredictions.mostGoals !== 'to_be_inserted' &&
-                    userPredictions.extraPredictions.mostGoals !== 'to_be_inserted'
-                  "
-                  class="wrong">
+                <span *ngIf="userPredictions.extraPredictions.mostGoals !== 'Saksa'" class="wrong">
                   <mat-icon>close</mat-icon>
                   Oikea vastaus Saksa
                 </span>
