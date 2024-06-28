@@ -160,14 +160,20 @@ export class AdminViewComponent {
     this.tournament!.tournamentData.extraPredictions.headToHead[i].winner = result;
   }
 
-  selectWinner(home: string): void {
+  selectWinner(winner: string): void {
     this.tournament!.tournamentData = {
       ...this.tournament!.tournamentData,
       playoffMatches: this.tournament!.tournamentData.playoffMatches.map((playoffMatch) => {
-        if (playoffMatch.home === home) {
+        if (playoffMatch.home === winner) {
           return {
             ...playoffMatch,
-            result: home,
+            result: winner,
+          };
+        }
+        if (playoffMatch.away === winner) {
+          return {
+            ...playoffMatch,
+            result: winner,
           };
         }
         return playoffMatch;
@@ -175,10 +181,10 @@ export class AdminViewComponent {
     };
   }
 
-  isSelectedPlayoffWinner(home: any, match: any) {
+  isSelectedPlayoffWinner(winner: string, match: any) {
     return (
       this.tournament!.tournamentData.playoffMatches.find((playoffMatch) => playoffMatch.id === match.id)!.result ===
-      home
+      winner
     );
   }
 }

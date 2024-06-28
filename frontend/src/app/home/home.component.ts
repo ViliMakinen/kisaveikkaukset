@@ -18,6 +18,7 @@ import {
   Match,
   MatchResult,
   PlayerGroup,
+  PlayoffMatch,
   Tournament,
   TournamentWithId,
 } from '../constants';
@@ -52,6 +53,8 @@ export class HomeComponent implements OnDestroy {
   lastUpdated: Date | null = null;
   tournamentSubscription!: Subscription;
   groupSubscription: Subscription;
+  playoffMatches: PlayoffMatch[] = [];
+  userPlayoffMatches: Match[] = [];
 
   placeholderDate = new Date();
   gamesToday: Match[] = [];
@@ -82,6 +85,7 @@ export class HomeComponent implements OnDestroy {
       this.tournamentSubscription = this.tournament$.subscribe((tournament) => {
         this.tournament = tournament.tournamentData;
         this.lastUpdated = tournament.lastUpdated;
+        this.playoffMatches = tournament.tournamentData.playoffMatches;
         this.matches = this.tournament.groups.flatMap((group) => group.matches);
         this.results = this.matches.map((match) => {
           return {
@@ -93,9 +97,9 @@ export class HomeComponent implements OnDestroy {
         this.initializeEverything();
         this.startCountdown();
         this.calculateCountdownValues();
+        this.currentUser = this.group!.users.find((user) => user.id === this.userService.user.id)!;
         this.users = this.sortUsers(group.users);
         this.usersPreviously = this.sortUsersPreviously(group.users);
-        this.currentUser = this.group!.users.find((user) => user.id === this.userService.user.id)!;
       });
     });
   }
@@ -391,7 +395,55 @@ export class HomeComponent implements OnDestroy {
     return '';
   }
 
-  calculateUserPlayoffPoints(user: GroupUser) {
-    return 0;
+  private calculateUserPlayoffPoints(user: GroupUser) {
+    if (!user.predictions.playoffPredictions) {
+      return 0;
+    }
+    const { leftSide, rightSide, grandFinal } = this.currentUser!.predictions.playoffPredictions;
+
+    this.userPlayoffMatches = [
+      ...(leftSide?.quarterFinals || []),
+      ...(leftSide?.semiFinals || []),
+      leftSide?.bracketFinal || {},
+      ...(rightSide?.quarterFinals || []),
+      ...(rightSide?.semiFinals || []),
+      rightSide?.bracketFinal || {},
+      grandFinal || {},
+    ];
+
+    let points: number = 0;
+    const semis = [4, 5, 11, 12];
+    const bracketFinals = [6, 13];
+    this.userPlayoffMatches.forEach((match: Match, index: number) => {
+      if (semis.includes(index)) {
+        if (match.home === this.playoffMatches[index].home || match.home === this.playoffMatches[index].away) {
+          points++;
+        }
+        if (match.away === this.playoffMatches[index].home || match.away === this.playoffMatches[index].away) {
+          points++;
+        }
+      }
+      if (bracketFinals.includes(index)) {
+        if (match.home === this.playoffMatches[index].home || match.home === this.playoffMatches[index].away) {
+          points++;
+        }
+        if (match.away === this.playoffMatches[index].home || match.away === this.playoffMatches[index].away) {
+          points++;
+        }
+      }
+      if (index === 14) {
+        if (match.home === this.playoffMatches[index].home || match.home === this.playoffMatches[index].away) {
+          points++;
+        }
+        if (match.away === this.playoffMatches[index].home || match.away === this.playoffMatches[index].away) {
+          points++;
+        }
+        if (user.predictions.playoffPredictions.winner === this.playoffMatches[index].result) {
+          points++;
+        }
+      }
+    });
+
+    return points;
   }
 }

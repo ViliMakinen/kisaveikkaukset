@@ -300,7 +300,7 @@
       </div>
     </div>
   }
-  @if (userPlayoffBracket.winner !== '') {
-    <button (click)="saveUserPlayoffPredictions()" class="save-button {{ bracketSide }}" mat-raised-button>Save</button>
+  @if (userPlayoffBracket.winner !== '' && arePredictionsLocked()) {
+    <button (click)="saveUserPlayoffPredictions()" class="save-button {{ bracketSide }}" mat-raised-button>Tallenna</button>
   }
 </div>

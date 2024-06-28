@@ -4,6 +4,7 @@ import { TournamentService } from '../tournament.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../group.service';
 import { UserService } from '../user.service';
+import { isAfter, isBefore } from 'date-fns';
 
 interface PlayoffBrackets {
   leftSide: PlayoffBracket;
@@ -156,15 +157,17 @@ export class PlayoffComponent implements OnInit {
     public userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.countries = countries;
     this.groupService.getGroupById(this.route.snapshot.params['groupId']).subscribe((group) => {
-      this.userPlayoffBracket = group.users.find(
-        (user) => user.id === this.userService.user.id,
-      )!.predictions.playoffPredictions;
+      const currentUser = group.users.find((user) => user.id === this.userService.user.id);
+      if (currentUser?.predictions.playoffPredictions) {
+        this.userPlayoffBracket = group.users.find(
+          (user) => user.id === this.userService.user.id,
+        )!.predictions.playoffPredictions;
+      }
     });
   }
 
@@ -248,5 +251,9 @@ export class PlayoffComponent implements OnInit {
     this.tournamentService
       .savePlayoffPredictions(this.userPlayoffBracket, this.route.snapshot.params['groupId'])
       .subscribe((res) => this.router.navigate(['../'], { relativeTo: this.route }));
+  }
+
+  arePredictionsLocked(): boolean {
+    return isAfter(new Date('2024-06-29T19:00:00+03:00'), new Date());
   }
 }
