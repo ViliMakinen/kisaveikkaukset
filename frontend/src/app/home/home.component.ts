@@ -191,8 +191,8 @@ export class HomeComponent implements OnDestroy {
       points += 3;
     }
     if (
-      user.predictions.extraPredictions.mostGoals === 'to_be_inserted' ||
-      user.predictions.extraPredictions.mostGoals === 'to_be_inserted'
+      user.predictions.extraPredictions.mostGoals === this.tournament!.extraPredictions.mostGoals &&
+      this.tournament!.extraPredictions.mostGoals !== ''
     ) {
       points += 3;
     }
