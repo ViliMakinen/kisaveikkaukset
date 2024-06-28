@@ -358,9 +358,9 @@ export class HomeComponent implements OnDestroy {
     return 'Voit vielä muokata veikkauksiasi!';
   }
 
-  arePlayoffPredictionsUnfinished(): boolean {
+  arePlayoffPredictionsFinished(): boolean {
     const predictions = this.group!.users.find((user) => user.id === this.userService.user!.id)!.predictions;
-    return predictions.playoffPredictions?.winner === '';
+    return !!predictions.playoffPredictions;
   }
 
   formatDate(lastUpdated: Date) {

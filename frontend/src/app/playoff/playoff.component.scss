@@ -5,9 +5,11 @@
   flex-direction: column;
 
   .finals {
-    height: 60px;
+    height: 75px;
     border-bottom: 1px solid;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
   }
 
@@ -24,7 +26,7 @@
     .change-bracket-button {
       position: absolute;
       right: 10px;
-      top: 75px;
+      top: 95px;
 
       &.right {
         left: 10px;

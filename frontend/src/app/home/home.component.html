@@ -48,33 +48,20 @@
         </div>
       </button>
     </div>
-    @if (false) {
-      @if (arePlayoffPredictionsUnfinished()) {
-        <div class="alternative-button-container">
-          <button
-            [routerLink]="['./tournament-playoffs']"
-            class="clickable secondary-container button"
-            mat-raised-button>
-            <div class="flex-container">
-              <mat-icon>arrow_left</mat-icon>
-              Tee pudotuspeliveikkaukset
-            </div>
-          </button>
+
+    <div class="alternative-button-container">
+      <button [routerLink]="['./tournament-playoffs']" class="clickable secondary-container button" mat-raised-button>
+        <div class="flex-container">
+          <mat-icon>arrow_left</mat-icon>
+          @if (arePlayoffPredictionsFinished()) {
+            Katso pudotuspeliveikkauksiasi
+          } @else {
+            Tee pudotuspeliveikkaukset
+          }
         </div>
-      } @else {
-        <div class="alternative-button-container">
-          <button
-            [routerLink]="['./tournament-playoffs']"
-            class="clickable secondary-container button"
-            mat-raised-button>
-            <div class="flex-container">
-              <mat-icon>arrow_left</mat-icon>
-              Katso pudotuspeliveikkauksiasi
-            </div>
-          </button>
-        </div>
-      }
-    }
+      </button>
+    </div>
+
     <div *ngIf="hasTournamentStarted()" class="alternative-button-container">
       <button [routerLink]="['./tournament']" class="clickable secondary-container button" mat-raised-button>
         <div class="flex-container">

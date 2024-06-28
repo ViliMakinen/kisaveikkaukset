@@ -10,7 +10,7 @@ export class GroupService {
   constructor(private http: HttpClient) {}
 
   getGroupById(id: number): Observable<PlayerGroup> {
-    return this.http.get<any>(`api/groups/${id}`).pipe(tap(console.log));
+    return this.http.get<any>(`api/groups/${id}`);
   }
 
   createNewGroup(groupName: string, tournamentId: number): Observable<PlayerGroup> {
