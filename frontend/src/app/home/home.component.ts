@@ -66,7 +66,6 @@ export class HomeComponent implements OnDestroy {
   minutes: number = 0;
   seconds: number = 0;
   isUserListExpanded = false;
-  playoffStartingDate: Date = new Date('2024-06-29T19:00:00+03:00');
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -102,6 +101,7 @@ export class HomeComponent implements OnDestroy {
         this.currentUser = this.group!.users.find((user) => user.id === this.userService.user.id)!;
         this.users = this.sortUsers(group.users);
         this.usersPreviously = this.sortUsersPreviously(group.users);
+        this.initializeUserMatchesWithResults();
       });
     });
   }
@@ -124,7 +124,7 @@ export class HomeComponent implements OnDestroy {
     if (check) {
       return check.id;
     } else {
-      return '';
+      return 'fi';
     }
   }
 
@@ -328,25 +328,9 @@ export class HomeComponent implements OnDestroy {
     return isAfter(new Date(), this.tournament!.startingDate);
   }
 
-  private initializeTodaysGames(): void {
-    this.playoffGamesToday = this.tournament!.playoffMatches.filter((match) => {
-      return isSameDay(match.date, this.placeholderDate);
-    });
-
-    this.gamesToday = [
-      ...this.tournament!.groups.flatMap((group) => group.matches).filter((match) =>
-        isSameDay(match.date, this.placeholderDate),
-      ),
-      ...this.playoffGamesToday,
-    ];
-
-    this.gamesToday.sort((a, b) => {
-      if (isBefore(a.date, b.date)) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
+  checkResultForPlayoffs(game: PlayoffMatch): string {
+    const gamesIndex = this.playoffMatches.findIndex((match) => match.home === game.home && match.away === game.away);
+    return this.userPlayoffMatches[gamesIndex].result === game.result ? 'done' : 'close';
   }
 
   copyCode(): void {
@@ -388,25 +372,47 @@ export class HomeComponent implements OnDestroy {
   }
 
   checkResult(id: number): string {
-    if (this.playoffStartingDate < new Date()) {
-      return '';
-    } else {
-      if (this.results![id].result === null) {
-        return '';
-      }
-      if (
-        this.currentUser!.predictions.matchPredictions[id].result !== null &&
-        this.currentUser!.predictions.matchPredictions[id].result === this.results![id].result
-      ) {
-        return 'done';
-      } else if (
-        this.currentUser!.predictions.matchPredictions[id].result !== null &&
-        this.currentUser!.predictions.matchPredictions[id].result !== this.results![id].result
-      ) {
-        return 'close';
-      }
+    if (this.results![id].result === null) {
       return '';
     }
+    if (
+      this.currentUser!.predictions.matchPredictions[id].result !== null &&
+      this.currentUser!.predictions.matchPredictions[id].result === this.results![id].result
+    ) {
+      return 'done';
+    } else if (
+      this.currentUser!.predictions.matchPredictions[id].result !== null &&
+      this.currentUser!.predictions.matchPredictions[id].result !== this.results![id].result
+    ) {
+      return 'close';
+    }
+    return '';
+  }
+
+  private initializeTodaysGames(): void {
+    this.playoffGamesToday = this.tournament!.playoffMatches.filter((match) => {
+      return isSameDay(match.date, this.placeholderDate);
+    });
+
+    this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) =>
+      isSameDay(match.date, this.placeholderDate),
+    );
+
+    this.gamesToday.sort((a, b) => {
+      if (isBefore(a.date, b.date)) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+
+    this.playoffGamesToday.sort((a, b) => {
+      if (isBefore(a.date, b.date)) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
   }
 
   private calculateUserPlayoffPoints(user: GroupUser) {
@@ -466,5 +472,71 @@ export class HomeComponent implements OnDestroy {
       return '1';
     }
     return '2';
+  }
+
+  private initializeUserMatchesWithResults() {
+    const { leftSide, rightSide, grandFinal } = this.currentUser!.predictions.playoffPredictions;
+
+    const newArray = [
+      ...(leftSide?.quarterFinals || []),
+      ...(leftSide?.semiFinals || []),
+      leftSide?.bracketFinal || {},
+      ...(rightSide?.quarterFinals || []),
+      ...(rightSide?.semiFinals || []),
+      rightSide?.bracketFinal || {},
+      grandFinal || {},
+    ];
+
+    this.userPlayoffMatches = newArray.map((match, index, matches) => {
+      if (index === 0 || index === 1) {
+        const homeWins = matches[4].home === match.home || matches[4].away === match.home;
+        return {
+          ...match,
+          result: homeWins ? match.home : match.away,
+        };
+      } else if (index === 2 || index === 3) {
+        const homeWins = matches[5].home === match.home || matches[5].away === match.home;
+        return {
+          ...match,
+          result: homeWins ? match.home : match.away,
+        };
+      } else if (index === 4 || index === 5) {
+        const homeWins = matches[6].home === match.home || matches[6].away === match.home;
+        return {
+          ...match,
+          result: homeWins ? match.home : match.away,
+        };
+      } else if (index === 6 || index === 13) {
+        const homeWins = matches[14].home === match.home || matches[14].away === match.home;
+        return {
+          ...match,
+          result: homeWins ? match.home : match.away,
+        };
+      } else if (index === 7 || index === 8) {
+        const homeWins = matches[11].home === match.home || matches[11].away === match.home;
+        return {
+          ...match,
+          result: homeWins ? match.home : match.away,
+        };
+      } else if (index === 9 || index === 10) {
+        const homeWins = matches[12].home === match.home || matches[12].away === match.home;
+        return {
+          ...match,
+          result: homeWins ? match.home : match.away,
+        };
+      } else if (index === 11 || index === 12) {
+        const homeWins = matches[13].home === match.home || matches[13].away === match.home;
+        return {
+          ...match,
+          result: homeWins ? match.home : match.away,
+        };
+      } else {
+        const homeWins = this.currentUser?.predictions.playoffPredictions.winner === match.home;
+        return {
+          ...match,
+          result: homeWins ? match.home : match.away,
+        };
+      }
+    });
   }
 }
