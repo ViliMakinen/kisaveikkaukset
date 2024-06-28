@@ -57,7 +57,8 @@ export class HomeComponent implements OnDestroy {
   userPlayoffMatches: Match[] = [];
 
   placeholderDate = new Date();
-  gamesToday: Match[] = [];
+  gamesToday: (Match | PlayoffMatch)[] = [];
+  playoffGamesToday: PlayoffMatch[] = [];
   countries: Country[] = [];
 
   days: number = 0;
@@ -65,6 +66,7 @@ export class HomeComponent implements OnDestroy {
   minutes: number = 0;
   seconds: number = 0;
   isUserListExpanded = false;
+  playoffStartingDate: Date = new Date('2024-06-29T19:00:00+03:00');
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -327,9 +329,17 @@ export class HomeComponent implements OnDestroy {
   }
 
   private initializeTodaysGames(): void {
-    this.gamesToday = this.tournament!.groups.flatMap((group) => group.matches).filter((match) =>
-      isSameDay(match.date, this.placeholderDate),
-    );
+    this.playoffGamesToday = this.tournament!.playoffMatches.filter((match) => {
+      return isSameDay(match.date, this.placeholderDate);
+    });
+
+    this.gamesToday = [
+      ...this.tournament!.groups.flatMap((group) => group.matches).filter((match) =>
+        isSameDay(match.date, this.placeholderDate),
+      ),
+      ...this.playoffGamesToday,
+    ];
+
     this.gamesToday.sort((a, b) => {
       if (isBefore(a.date, b.date)) {
         return -1;
@@ -378,21 +388,25 @@ export class HomeComponent implements OnDestroy {
   }
 
   checkResult(id: number): string {
-    if (this.results![id].result === null) {
+    if (this.playoffStartingDate < new Date()) {
+      return '';
+    } else {
+      if (this.results![id].result === null) {
+        return '';
+      }
+      if (
+        this.currentUser!.predictions.matchPredictions[id].result !== null &&
+        this.currentUser!.predictions.matchPredictions[id].result === this.results![id].result
+      ) {
+        return 'done';
+      } else if (
+        this.currentUser!.predictions.matchPredictions[id].result !== null &&
+        this.currentUser!.predictions.matchPredictions[id].result !== this.results![id].result
+      ) {
+        return 'close';
+      }
       return '';
     }
-    if (
-      this.currentUser!.predictions.matchPredictions[id].result !== null &&
-      this.currentUser!.predictions.matchPredictions[id].result === this.results![id].result
-    ) {
-      return 'done';
-    } else if (
-      this.currentUser!.predictions.matchPredictions[id].result !== null &&
-      this.currentUser!.predictions.matchPredictions[id].result !== this.results![id].result
-    ) {
-      return 'close';
-    }
-    return '';
   }
 
   private calculateUserPlayoffPoints(user: GroupUser) {
@@ -445,5 +459,12 @@ export class HomeComponent implements OnDestroy {
     });
 
     return points;
+  }
+
+  determineWinner(game: Match | PlayoffMatch) {
+    if (game.result === game.home) {
+      return '1';
+    }
+    return '2';
   }
 }
