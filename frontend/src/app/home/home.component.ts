@@ -54,7 +54,7 @@ export class HomeComponent implements OnDestroy {
   tournamentSubscription!: Subscription;
   groupSubscription: Subscription;
   playoffMatches: PlayoffMatch[] = [];
-  userPlayoffMatches: Match[] = [];
+  userPlayoffMatches: PlayoffMatch[] = [];
 
   placeholderDate = new Date();
   gamesToday: (Match | PlayoffMatch)[] = [];
@@ -100,8 +100,8 @@ export class HomeComponent implements OnDestroy {
         this.calculateCountdownValues();
         this.currentUser = this.group!.users.find((user) => user.id === this.userService.user.id)!;
         this.users = this.sortUsers(group.users);
+        this.userPlayoffMatches = this.initializeUserMatchesWithResults(this.currentUser!);
         this.usersPreviously = this.sortUsersPreviously(group.users);
-        this.initializeUserMatchesWithResults();
       });
     });
   }
@@ -415,26 +415,30 @@ export class HomeComponent implements OnDestroy {
     });
   }
 
+  sortedPlayoffUsers(users: GroupUserWithPoints[]) {
+    return users.sort((a, b) => {
+      return b.playoffPoints - a.playoffPoints;
+    });
+  }
+
+  determineWinner(game: Match | PlayoffMatch) {
+    if (game.result === game.home) {
+      return '1';
+    }
+    return '2';
+  }
+
   private calculateUserPlayoffPoints(user: GroupUser) {
     if (!user.predictions.playoffPredictions) {
       return 0;
     }
-    const { leftSide, rightSide, grandFinal } = this.currentUser!.predictions.playoffPredictions;
 
-    this.userPlayoffMatches = [
-      ...(leftSide?.quarterFinals || []),
-      ...(leftSide?.semiFinals || []),
-      leftSide?.bracketFinal || {},
-      ...(rightSide?.quarterFinals || []),
-      ...(rightSide?.semiFinals || []),
-      rightSide?.bracketFinal || {},
-      grandFinal || {},
-    ];
+    const usersMatches = this.initializeUserMatchesWithResults(user);
 
     let points: number = 0;
     const semis = [4, 5, 11, 12];
     const bracketFinals = [6, 13];
-    this.userPlayoffMatches.forEach((match: Match, index: number) => {
+    usersMatches.forEach((match: PlayoffMatch, index: number) => {
       if (semis.includes(index)) {
         if (match.home === this.playoffMatches[index].home || match.home === this.playoffMatches[index].away) {
           points++;
@@ -467,15 +471,8 @@ export class HomeComponent implements OnDestroy {
     return points;
   }
 
-  determineWinner(game: Match | PlayoffMatch) {
-    if (game.result === game.home) {
-      return '1';
-    }
-    return '2';
-  }
-
-  private initializeUserMatchesWithResults() {
-    const { leftSide, rightSide, grandFinal } = this.currentUser!.predictions.playoffPredictions;
+  private initializeUserMatchesWithResults(user: GroupUser): PlayoffMatch[] {
+    const { leftSide, rightSide, grandFinal } = user.predictions.playoffPredictions;
 
     const newArray = [
       ...(leftSide?.quarterFinals || []),
@@ -487,54 +484,62 @@ export class HomeComponent implements OnDestroy {
       grandFinal || {},
     ];
 
-    this.userPlayoffMatches = newArray.map((match, index, matches) => {
+    return newArray.map((match, index, matches) => {
       if (index === 0 || index === 1) {
         const homeWins = matches[4].home === match.home || matches[4].away === match.home;
+        const awayWins = matches[4].home === match.away || matches[4].away === match.away;
         return {
           ...match,
-          result: homeWins ? match.home : match.away,
+          result: homeWins ? match.home : awayWins ? match.away : null,
         };
       } else if (index === 2 || index === 3) {
         const homeWins = matches[5].home === match.home || matches[5].away === match.home;
+        const awayWins = matches[5].home === match.away || matches[5].away === match.away;
         return {
           ...match,
-          result: homeWins ? match.home : match.away,
+          result: homeWins ? match.home : awayWins ? match.away : null,
         };
       } else if (index === 4 || index === 5) {
         const homeWins = matches[6].home === match.home || matches[6].away === match.home;
+        const awayWins = matches[6].home === match.away || matches[6].away === match.away;
         return {
           ...match,
-          result: homeWins ? match.home : match.away,
+          result: homeWins ? match.home : awayWins ? match.away : null,
         };
       } else if (index === 6 || index === 13) {
         const homeWins = matches[14].home === match.home || matches[14].away === match.home;
+        const awayWins = matches[14].home === match.away || matches[14].away === match.away;
         return {
           ...match,
-          result: homeWins ? match.home : match.away,
+          result: homeWins ? match.home : awayWins ? match.away : null,
         };
       } else if (index === 7 || index === 8) {
         const homeWins = matches[11].home === match.home || matches[11].away === match.home;
+        const awayWins = matches[11].home === match.away || matches[11].away === match.away;
         return {
           ...match,
-          result: homeWins ? match.home : match.away,
+          result: homeWins ? match.home : awayWins ? match.away : null,
         };
       } else if (index === 9 || index === 10) {
         const homeWins = matches[12].home === match.home || matches[12].away === match.home;
+        const awayWins = matches[12].home === match.away || matches[12].away === match.away;
         return {
           ...match,
-          result: homeWins ? match.home : match.away,
+          result: homeWins ? match.home : awayWins ? match.away : null,
         };
       } else if (index === 11 || index === 12) {
         const homeWins = matches[13].home === match.home || matches[13].away === match.home;
+        const awayWins = matches[13].home === match.away || matches[13].away === match.away;
         return {
           ...match,
-          result: homeWins ? match.home : match.away,
+          result: homeWins ? match.home : awayWins ? match.away : null,
         };
       } else {
         const homeWins = this.currentUser?.predictions.playoffPredictions.winner === match.home;
+        const awayWins = this.currentUser?.predictions.playoffPredictions.winner === match.away;
         return {
           ...match,
-          result: homeWins ? match.home : match.away,
+          result: homeWins ? match.home : awayWins ? match.away : null,
         };
       }
     });
