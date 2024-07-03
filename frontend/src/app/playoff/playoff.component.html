@@ -8,7 +8,10 @@
           userPlayoffBracket.grandFinal.home === userPlayoffBracket.winner && userPlayoffBracket.winner !== ''
         "
         class="team clickable">
-        <div class="name">{{ userPlayoffBracket.grandFinal.home }}</div>
+        <div class="name">
+          <div>{{ userPlayoffBracket.grandFinal.home }}</div>
+          <div>{{ getPercentage(userPlayoffBracket.grandFinal.home, 14) }}</div>
+        </div>
         <div class="flag">
           @if (userPlayoffBracket.grandFinal.home !== '') {
             <img
@@ -26,7 +29,10 @@
           userPlayoffBracket.grandFinal.away === userPlayoffBracket.winner && userPlayoffBracket.winner !== ''
         "
         class="team clickable">
-        <div class="name">{{ userPlayoffBracket.grandFinal.away }}</div>
+        <div class="name">
+          <div>{{ userPlayoffBracket.grandFinal.away }}</div>
+          <div>{{ getPercentage(userPlayoffBracket.grandFinal.away, 14) }}</div>
+        </div>
         <div class="flag">
           @if (userPlayoffBracket.grandFinal.away !== '') {
             <img
@@ -48,12 +54,18 @@
         </button>
       </div>
       <div class="round">
-        <div *ngFor="let match of userPlayoffBracket.leftSide.quarterFinals; let i = index" class="match">
+        <div
+          *ngFor="let match of userPlayoffBracket.leftSide.quarterFinals; let i = index"
+          class="match"
+          [class.locked]="arePredictionsLocked()">
           <div
             (click)="chooseQFWinner(match.home, i, 'leftSide')"
             class="team clickable"
             [class.selected]="checkIfChosenForSF(match.home, 'leftSide')">
-            <div class="name">{{ match.home }}</div>
+            <div class="name">
+              <div>{{ match.home }}</div>
+              <div>{{ getPercentage(match.home, i) }}</div>
+            </div>
             <div class="flag">
               <img
                 *ngIf="match.home !== ''"
@@ -68,8 +80,10 @@
             (click)="chooseQFWinner(match.away, i, 'leftSide')"
             class="team clickable"
             [class.selected]="checkIfChosenForSF(match.away, 'leftSide')">
-            <div class="name"></div>
-            {{ match.away }}
+            <div class="name">
+              <div>{{ match.away }}</div>
+              <div>{{ getPercentage(match.away, i) }}</div>
+            </div>
             <div class="flag">
               <img
                 *ngIf="match.away !== ''"
@@ -95,7 +109,10 @@
                 userPlayoffBracket.leftSide.bracketFinal.away === match.home) &&
               match.home !== ''
             ">
-            <div class="name">{{ match.home }}</div>
+            <div class="name">
+              <div>{{ match.home }}</div>
+              <div>{{ getPercentage(match.home, i + 4) }}</div>
+            </div>
             <div class="flag">
               <img
                 *ngIf="match.home !== ''"
@@ -114,7 +131,10 @@
                 userPlayoffBracket.leftSide.bracketFinal.home === match.away) &&
               match.away !== ''
             ">
-            <div class="name">{{ match.away }}</div>
+            <div class="name">
+              <div>{{ match.away }}</div>
+              <div>{{ getPercentage(match.away, i + 4) }}</div>
+            </div>
             <div class="flag">
               @if (match.away !== '') {
                 <img
@@ -137,7 +157,10 @@
               userPlayoffBracket.grandFinal.home === userPlayoffBracket.leftSide.bracketFinal.home &&
               userPlayoffBracket.leftSide.bracketFinal.home !== ''
             ">
-            <div class="name">{{ userPlayoffBracket.leftSide.bracketFinal.home }}</div>
+            <div class="name">
+              <div>{{ userPlayoffBracket.leftSide.bracketFinal.home }}</div>
+              <div>{{ getPercentage(userPlayoffBracket.leftSide.bracketFinal.home, 6) }}</div>
+            </div>
             <div class="flag">
               <img
                 *ngIf="userPlayoffBracket.leftSide.bracketFinal.home !== ''"
@@ -155,8 +178,12 @@
               userPlayoffBracket.grandFinal.home === userPlayoffBracket.leftSide.bracketFinal.away &&
               userPlayoffBracket.leftSide.bracketFinal.away !== ''
             ">
-            <div class="name"></div>
-            {{ userPlayoffBracket.leftSide.bracketFinal.away }}
+            <div class="name">
+              <div>
+                {{ userPlayoffBracket.leftSide.bracketFinal.away }}
+              </div>
+              <div>{{ getPercentage(userPlayoffBracket.leftSide.bracketFinal.away, 6) }}</div>
+            </div>
             <div class="flag">
               <img
                 *ngIf="userPlayoffBracket.leftSide.bracketFinal.away !== ''"
@@ -178,12 +205,18 @@
         </button>
       </div>
       <div class="round">
-        <div *ngFor="let match of userPlayoffBracket.rightSide.quarterFinals; let i = index" class="match">
+        <div
+          *ngFor="let match of userPlayoffBracket.rightSide.quarterFinals; let i = index"
+          class="match"
+          [class.locked]="arePredictionsLocked()">
           <div
             (click)="chooseQFWinner(match.home, i, 'rightSide')"
             class="team clickable"
             [class.selected]="checkIfChosenForSF(match.home, 'rightSide')">
-            <div class="name">{{ match.home }}</div>
+            <div class="name">
+              <div>{{ match.home }}</div>
+              <div>{{ getPercentage(match.home, i + 7) }}</div>
+            </div>
             <div class="flag">
               <img
                 *ngIf="match.home !== ''"
@@ -198,8 +231,10 @@
             (click)="chooseQFWinner(match.away, i, 'rightSide')"
             class="team clickable"
             [class.selected]="checkIfChosenForSF(match.away, 'rightSide')">
-            <div class="name"></div>
-            {{ match.away }}
+            <div class="name">
+              <div>{{ match.away }}</div>
+              <div>{{ getPercentage(match.away, i + 7) }}</div>
+            </div>
             <div class="flag">
               <img
                 *ngIf="match.away !== ''"
@@ -225,7 +260,10 @@
                 userPlayoffBracket.rightSide.bracketFinal.away === match.home) &&
               match.home !== ''
             ">
-            <div class="name">{{ match.home }}</div>
+            <div class="name">
+              <div>{{ match.home }}</div>
+              <div>{{ getPercentage(match.home, i + 11) }}</div>
+            </div>
             <div class="flag">
               <img
                 *ngIf="match.home !== ''"
@@ -244,7 +282,14 @@
                 userPlayoffBracket.rightSide.bracketFinal.home === match.away) &&
               match.away !== ''
             ">
-            <div class="name">{{ match.away }}</div>
+            <div class="name">
+              <div>
+                {{ match.away }}
+              </div>
+              <div>
+                {{ getPercentage(match.away, i + 11) }}
+              </div>
+            </div>
             <div class="flag">
               @if (match.away !== '') {
                 <img
@@ -267,7 +312,12 @@
               userPlayoffBracket.grandFinal.away === userPlayoffBracket.rightSide.bracketFinal.home &&
               userPlayoffBracket.rightSide.bracketFinal.home !== ''
             ">
-            <div class="name">{{ userPlayoffBracket.rightSide.bracketFinal.home }}</div>
+            <div class="name">
+              <div>
+                {{ userPlayoffBracket.rightSide.bracketFinal.home }}
+              </div>
+              <div>{{ getPercentage(userPlayoffBracket.rightSide.bracketFinal.home, 13) }}</div>
+            </div>
             <div class="flag">
               <img
                 *ngIf="userPlayoffBracket.rightSide.bracketFinal.home !== ''"
@@ -285,8 +335,12 @@
               userPlayoffBracket.grandFinal.away === userPlayoffBracket.rightSide.bracketFinal.away &&
               userPlayoffBracket.rightSide.bracketFinal.away !== ''
             ">
-            <div class="name"></div>
-            {{ userPlayoffBracket.rightSide.bracketFinal.away }}
+            <div class="name">
+              <div>{{ userPlayoffBracket.rightSide.bracketFinal.away }}</div>
+              <div>
+                {{ getPercentage(userPlayoffBracket.rightSide.bracketFinal.away, 13) }}
+              </div>
+            </div>
             <div class="flag">
               <img
                 *ngIf="userPlayoffBracket.rightSide.bracketFinal.away !== ''"
@@ -301,7 +355,9 @@
       </div>
     </div>
   }
-  @if (userPlayoffBracket.winner !== '' && arePredictionsLocked()) {
-    <button (click)="saveUserPlayoffPredictions()" class="save-button {{ bracketSide }}" mat-raised-button>Tallenna</button>
+  @if (userPlayoffBracket.winner !== '' && !arePredictionsLocked()) {
+    <button (click)="saveUserPlayoffPredictions()" class="save-button {{ bracketSide }}" mat-raised-button>
+      Tallenna
+    </button>
   }
 </div>

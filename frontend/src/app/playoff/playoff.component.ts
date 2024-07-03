@@ -1,22 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { countries, Country, Match, MatchResult, PlayerGroup, Team, Tournament } from '../constants';
+import {
+  countries,
+  Country,
+  GroupUser,
+  Match,
+  MatchWithPredictions,
+  PlayerGroup,
+  PlayoffMatchWithPredictions,
+  Tournament,
+} from '../constants';
 import { TournamentService } from '../tournament.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../group.service';
 import { UserService } from '../user.service';
 import { isAfter, isBefore } from 'date-fns';
+import { initializeUserMatchesWithResults } from '../home/home.component';
 
 interface PlayoffBrackets {
   leftSide: PlayoffBracket;
   rightSide: PlayoffBracket;
-  grandFinal: Match;
+  grandFinal: PlayoffMatchWithPredictions;
   winner: string;
 }
 
 interface PlayoffBracket {
-  quarterFinals: Match[];
-  semiFinals: Match[];
-  bracketFinal: Match;
+  quarterFinals: PlayoffMatchWithPredictions[];
+  semiFinals: PlayoffMatchWithPredictions[];
+  bracketFinal: PlayoffMatchWithPredictions;
 }
 
 @Component({
@@ -38,6 +48,7 @@ export class PlayoffComponent implements OnInit {
           id: 1,
           result: null,
           date: new Date('2024-06-30T22:00:00+03:00'),
+          predictedResults: {},
         },
         {
           home: 'Saksa',
@@ -45,6 +56,7 @@ export class PlayoffComponent implements OnInit {
           id: 2,
           result: null,
           date: new Date('2024-06-29T22:00:00+03:00'),
+          predictedResults: {},
         },
         {
           home: 'Portugali',
@@ -52,6 +64,7 @@ export class PlayoffComponent implements OnInit {
           id: 3,
           result: null,
           date: new Date('2024-07-01T22:00:00+03:00'),
+          predictedResults: {},
         },
         {
           home: 'Ranska',
@@ -59,6 +72,7 @@ export class PlayoffComponent implements OnInit {
           id: 4,
           result: null,
           date: new Date('2024-07-01T19:00:00+03:00'),
+          predictedResults: {},
         },
       ],
       semiFinals: [
@@ -68,6 +82,7 @@ export class PlayoffComponent implements OnInit {
           id: 5,
           result: null,
           date: new Date('2024-07-05T19:00:00+03:00'),
+          predictedResults: {},
         },
         {
           home: '',
@@ -75,6 +90,7 @@ export class PlayoffComponent implements OnInit {
           id: 6,
           result: null,
           date: new Date('2024-07-05T22:00:00+03:00'),
+          predictedResults: {},
         },
       ],
       bracketFinal: {
@@ -83,6 +99,7 @@ export class PlayoffComponent implements OnInit {
         id: 7,
         result: null,
         date: new Date('2024-07-09T22:00:00+03:00'),
+        predictedResults: {},
       },
     },
     rightSide: {
@@ -93,6 +110,7 @@ export class PlayoffComponent implements OnInit {
           id: 1,
           result: null,
           date: new Date('2024-07-02T19:00:00+03:00'),
+          predictedResults: {},
         },
         {
           home: 'Itävalta',
@@ -100,6 +118,7 @@ export class PlayoffComponent implements OnInit {
           id: 2,
           result: null,
           date: new Date('2024-07-02T22:00:00+03:00'),
+          predictedResults: {},
         },
         {
           home: 'Englanti',
@@ -107,6 +126,7 @@ export class PlayoffComponent implements OnInit {
           id: 3,
           result: null,
           date: new Date('2024-06-30T19:00:00+03:00'),
+          predictedResults: {},
         },
         {
           home: 'Sveitsi',
@@ -114,6 +134,7 @@ export class PlayoffComponent implements OnInit {
           id: 4,
           result: null,
           date: new Date('2024-06-29T19:00:00+03:00'),
+          predictedResults: {},
         },
       ],
       semiFinals: [
@@ -123,6 +144,7 @@ export class PlayoffComponent implements OnInit {
           id: 5,
           result: null,
           date: new Date('2024-07-06T22:00:00+03:00'),
+          predictedResults: {},
         },
         {
           home: '',
@@ -130,6 +152,7 @@ export class PlayoffComponent implements OnInit {
           id: 6,
           result: null,
           date: new Date('2024-07-06T19:00:00+03:00'),
+          predictedResults: {},
         },
       ],
       bracketFinal: {
@@ -138,6 +161,7 @@ export class PlayoffComponent implements OnInit {
         id: 7,
         result: null,
         date: new Date('2024-07-10T22:00:00+03:00'),
+        predictedResults: {},
       },
     },
     grandFinal: {
@@ -146,10 +170,12 @@ export class PlayoffComponent implements OnInit {
       id: 1,
       result: null,
       date: new Date('2024-07-14T22:00:00+03:00'),
+      predictedResults: {},
     },
     winner: '',
   };
   bracketSide: 'left' | 'right' = 'left';
+  matchesWithPredictions: PlayoffMatchWithPredictions[] = [];
 
   constructor(
     private tournamentService: TournamentService,
@@ -167,6 +193,7 @@ export class PlayoffComponent implements OnInit {
         this.userPlayoffBracket = group.users.find(
           (user) => user.id === this.userService.user.id,
         )!.predictions.playoffPredictions;
+        this.calculatePercentages(group.users);
       }
     });
   }
@@ -236,15 +263,15 @@ export class PlayoffComponent implements OnInit {
   }
 
   areQuarterFinalsUnfinished(semiFinals: Match[]) {
-    return semiFinals.some((final) => final.home === '' || final.away === '');
+    return semiFinals.some((final) => final.home === '' || final.away === '') || this.arePredictionsLocked();
   }
 
   areSemiFinalsUnfinished(bracketWinners: Match) {
-    return bracketWinners.home === '' || bracketWinners.away === '';
+    return bracketWinners.home === '' || bracketWinners.away === '' || this.arePredictionsLocked();
   }
 
   areBracketsUnfinished() {
-    return this.userPlayoffBracket.grandFinal.home === '' || this.userPlayoffBracket.grandFinal.away === '';
+    return this.userPlayoffBracket.grandFinal.home === '' || this.userPlayoffBracket.grandFinal.away === '' || this.arePredictionsLocked();
   }
 
   saveUserPlayoffPredictions() {
@@ -254,6 +281,43 @@ export class PlayoffComponent implements OnInit {
   }
 
   arePredictionsLocked(): boolean {
-    return isAfter(new Date('2024-06-29T19:00:00+03:00'), new Date());
+    return isBefore(new Date('2024-06-29T19:00:00+03:00'), new Date());
+  }
+
+  getPercentage(team: string, index: number) {
+    if (this.matchesWithPredictions.length === 0) {
+      return '';
+    }
+    return this.matchesWithPredictions[index].predictedResults[team] ? this.matchesWithPredictions[index].predictedResults[team] + '%' : '0%';
+  }
+
+  private calculatePercentages(users: GroupUser[]): void {
+    const predictions = users.map((user) => initializeUserMatchesWithResults(user));
+    const numberOfMatches = predictions[0].length;
+    const results: any[] = Array.from({ length: numberOfMatches }, (_, i) => ({
+      ...predictions[0][i],
+      predictedResults: {},
+    }));
+
+    predictions.forEach((userPredictions) => {
+      userPredictions.forEach((prediction, matchIndex) => {
+        const result = prediction.result;
+        if (!results[matchIndex].predictedResults[result]) {
+          results[matchIndex].predictedResults[result] = 0;
+        }
+        results[matchIndex].predictedResults[result] += 1;
+      });
+    });
+
+    results.forEach((match) => {
+      const totalPredictions: any = Object.values(match.predictedResults).reduce(
+        (sum: any, count: any) => sum + count,
+        0,
+      );
+      for (const result in match.predictedResults) {
+        match.predictedResults[result] = (match.predictedResults[result] / totalPredictions) * 100;
+      }
+    });
+    this.matchesWithPredictions = results;
   }
 }

@@ -89,6 +89,12 @@ export interface Match {
   result: Result;
 }
 
+export interface PlayoffMatchWithPredictions extends Match {
+  predictedResults: {
+    [key: string]: any;
+  };
+}
+
 export interface MatchWithPredictions extends Match {
   predictedResults: [number, number, number];
 }

@@ -50,7 +50,7 @@
   &.locked {
     user-select: none;
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.7;
   }
 
   &.column {
@@ -75,6 +75,10 @@
     }
 
     .name {
+      > div:nth-child(2) {
+        font-size: 10px;
+        font-style: italic;
+      }
     }
 
     .flag {
