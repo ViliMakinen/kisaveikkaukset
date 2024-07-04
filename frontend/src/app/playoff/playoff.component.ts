@@ -6,6 +6,7 @@ import {
   Match,
   MatchWithPredictions,
   PlayerGroup,
+  PlayoffMatch,
   PlayoffMatchWithPredictions,
   Tournament,
 } from '../constants';
@@ -38,6 +39,7 @@ export class PlayoffComponent implements OnInit {
   group: PlayerGroup | null = null;
   tournament: Tournament | null = null;
   countries: Country[] = [];
+  results: PlayoffMatch[] = [];
 
   userPlayoffBracket: PlayoffBrackets = {
     leftSide: {
@@ -176,6 +178,7 @@ export class PlayoffComponent implements OnInit {
   };
   bracketSide: 'left' | 'right' = 'left';
   matchesWithPredictions: PlayoffMatchWithPredictions[] = [];
+  currentUserPredictions: PlayoffMatch[] = [];
 
   constructor(
     private tournamentService: TournamentService,
@@ -190,6 +193,10 @@ export class PlayoffComponent implements OnInit {
     this.groupService.getGroupById(this.route.snapshot.params['groupId']).subscribe((group) => {
       const currentUser = group.users.find((user) => user.id === this.userService.user.id);
       if (currentUser?.predictions.playoffPredictions) {
+        this.currentUserPredictions = initializeUserMatchesWithResults(currentUser);
+        this.tournamentService.getTournamentById(group.tournamentId).subscribe((tournament) => {
+          this.results = tournament.tournamentData.playoffMatches;
+        });
         this.userPlayoffBracket = group.users.find(
           (user) => user.id === this.userService.user.id,
         )!.predictions.playoffPredictions;
@@ -205,6 +212,16 @@ export class PlayoffComponent implements OnInit {
     } else {
       return '';
     }
+  }
+
+  checkIfRight(index: number) {
+    if (this.results[index].result === null) {
+      return 'lightgrey';
+    }
+    if (this.currentUserPredictions[index].result == this.results[index].result) {
+      return '#228B22';
+    }
+    return '#CE2029';
   }
 
   chooseQFWinner(winner: string, id: number, side: 'leftSide' | 'rightSide') {
@@ -271,7 +288,11 @@ export class PlayoffComponent implements OnInit {
   }
 
   areBracketsUnfinished() {
-    return this.userPlayoffBracket.grandFinal.home === '' || this.userPlayoffBracket.grandFinal.away === '' || this.arePredictionsLocked();
+    return (
+      this.userPlayoffBracket.grandFinal.home === '' ||
+      this.userPlayoffBracket.grandFinal.away === '' ||
+      this.arePredictionsLocked()
+    );
   }
 
   saveUserPlayoffPredictions() {
@@ -288,7 +309,9 @@ export class PlayoffComponent implements OnInit {
     if (this.matchesWithPredictions.length === 0) {
       return '';
     }
-    return this.matchesWithPredictions[index].predictedResults[team] ? this.matchesWithPredictions[index].predictedResults[team] + '%' : '0%';
+    return this.matchesWithPredictions[index].predictedResults[team]
+      ? this.matchesWithPredictions[index].predictedResults[team].toFixed(2) + '%'
+      : '0%';
   }
 
   private calculatePercentages(users: GroupUser[]): void {
