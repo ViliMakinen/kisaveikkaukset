@@ -46,7 +46,6 @@ export interface Predictions {
 
 export interface GroupUserWithPoints extends GroupUser {
   points: number;
-  playoffPoints: number;
 }
 
 export interface TournamentWithId {

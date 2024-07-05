@@ -83,7 +83,7 @@
                 update
               </mat-icon>
             </div>
-            <div *ngFor="let user of sortedPlayoffUsers(users).slice(0, 5)" class="standings-row-container">
+            <div *ngFor="let user of playOffUsers.slice(0, 5)" class="standings-row-container">
               <span *ngIf="user.nickName === null" class="standings-row-box">
                 {{ user.firstName }} {{ user.lastName[0] }}
               </span>
@@ -94,11 +94,11 @@
                 {{ user.nickName }}
               </span>
               <span class="standings-row-box">
-                {{ user.playoffPoints }}
+                {{ user.points }}
               </span>
             </div>
             <ng-container *ngIf="isUserListExpanded">
-              <div *ngFor="let user of sortedPlayoffUsers(users).slice(5)" class="standings-row-container">
+              <div *ngFor="let user of playOffUsers.slice(5)" class="standings-row-container">
                 <span *ngIf="user.nickName === null" class="standings-row-box">
                   {{ user.firstName }} {{ user.lastName[0] }}
                 </span>
@@ -109,7 +109,7 @@
                   {{ user.nickName }}
                 </span>
                 <span class="standings-row-box">
-                  {{ user.playoffPoints }}
+                  {{ user.points }}
                 </span>
               </div>
             </ng-container>
@@ -172,6 +172,57 @@
                   <span class="compared-points">
                     ({{ compareUserPosition(user) > 0 ? '+' + compareUserPosition(user) : compareUserPosition(user) }})
                   </span>
+                  {{ user.points }}
+                </span>
+              </div>
+            </ng-container>
+            <div
+              (click)="isUserListExpanded = !isUserListExpanded"
+              *ngIf="users.length > 5"
+              class="expand-standings-container clickable">
+              <mat-icon *ngIf="isUserListExpanded">expand_less</mat-icon>
+              <mat-icon *ngIf="!isUserListExpanded">expand_more</mat-icon>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Kokonaiskilpailu">
+          <div class="standings-container primary-container">
+            <div class="standings-title-container">
+              <mat-icon (click)="openDialog()" class="info-icon clickable">info</mat-icon>
+              Pistetilanne
+              <mat-icon
+                (click)="openCustomDialog('Otteluiden tulokset päivitetty: ' + formatDate(lastUpdated))"
+                *ngIf="lastUpdated"
+                class="clickable">
+                update
+              </mat-icon>
+            </div>
+            <div *ngFor="let user of combinedPointsUsers.slice(0, 5)" class="standings-row-container">
+              <span *ngIf="user.nickName === null" class="standings-row-box">
+                {{ user.firstName }} {{ user.lastName[0] }}
+              </span>
+              <span
+                *ngIf="user.nickName !== null"
+                [matTooltip]="user.firstName + ' ' + user.lastName"
+                class="standings-row-box">
+                {{ user.nickName }}
+              </span>
+              <span class="standings-row-box">
+                {{ user.points }}
+              </span>
+            </div>
+            <ng-container *ngIf="isUserListExpanded">
+              <div *ngFor="let user of combinedPointsUsers.slice(5)" class="standings-row-container">
+                <span *ngIf="user.nickName === null" class="standings-row-box">
+                  {{ user.firstName }} {{ user.lastName[0] }}
+                </span>
+                <span
+                  *ngIf="user.nickName !== null"
+                  [matTooltip]="user.firstName + ' ' + user.lastName"
+                  class="standings-row-box">
+                  {{ user.nickName }}
+                </span>
+                <span class="standings-row-box">
                   {{ user.points }}
                 </span>
               </div>
