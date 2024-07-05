@@ -122,19 +122,21 @@ export class HomeComponent implements OnDestroy {
   group$: Observable<PlayerGroup>;
   group: PlayerGroup | null = null;
   users: GroupUserWithPoints[] = [];
+  playOffUsers: GroupUserWithPoints[] = [];
+  combinedPointsUsers: GroupUserWithPoints[] = [];
   usersPreviously: GroupUserWithPoints[] = [];
   groupCode: string[] = [];
   lastUpdated: Date | null = null;
   tournamentSubscription!: Subscription;
   groupSubscription: Subscription;
+
   playoffMatches: PlayoffMatch[] = [];
   userPlayoffMatches: PlayoffMatch[] = [];
-
   placeholderDate = new Date();
   gamesToday: (Match | PlayoffMatch)[] = [];
+
   playoffGamesToday: PlayoffMatch[] = [];
   countries: Country[] = [];
-
   days: number = 0;
   hours: number = 0;
   minutes: number = 0;
@@ -174,6 +176,8 @@ export class HomeComponent implements OnDestroy {
         this.calculateCountdownValues();
         this.currentUser = this.group!.users.find((user) => user.id === this.userService.user.id)!;
         this.users = this.sortUsers(group.users);
+        this.playOffUsers = this.sortPlayoffUsers(group.users);
+        this.combinedPointsUsers = this.sortCombinedUsers(group.users);
         this.userPlayoffMatches = initializeUserMatchesWithResults(this.currentUser!);
         this.usersPreviously = this.sortUsersPreviously(group.users);
       });
@@ -379,7 +383,28 @@ export class HomeComponent implements OnDestroy {
       return {
         ...user,
         points: this.calculateUserPoints(user),
-        playoffPoints: this.calculateUserPlayoffPoints(user),
+      };
+    });
+    usersWithPoints.sort((a, b) => a.points - b.points).reverse();
+    return usersWithPoints;
+  }
+
+  sortPlayoffUsers(users: GroupUser[]): GroupUserWithPoints[] {
+    const usersWithPoints = users.map((user) => {
+      return {
+        ...user,
+        points: this.calculateUserPlayoffPoints(user),
+      };
+    });
+    usersWithPoints.sort((a, b) => a.points - b.points).reverse();
+    return usersWithPoints;
+  }
+
+  sortCombinedUsers(users: GroupUser[]): GroupUserWithPoints[] {
+    const usersWithPoints = users.map((user) => {
+      return {
+        ...user,
+        points: this.calculateUserPlayoffPoints(user) + this.calculateUserPoints(user),
       };
     });
     usersWithPoints.sort((a, b) => a.points - b.points).reverse();
@@ -486,12 +511,6 @@ export class HomeComponent implements OnDestroy {
       } else {
         return 1;
       }
-    });
-  }
-
-  sortedPlayoffUsers(users: GroupUserWithPoints[]) {
-    return users.sort((a, b) => {
-      return b.playoffPoints - a.playoffPoints;
     });
   }
 
