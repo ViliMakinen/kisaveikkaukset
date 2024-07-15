@@ -240,8 +240,7 @@ export class HomeComponent implements OnDestroy {
     }
     let points: number = 0;
     points += this.calculateMatchPoints(user);
-    points += this.calculateHeadToHeadAndTopFourPoints(user);
-    points += this.calculateExtraPredictionPoints(user);
+    points += this.calculateExtraPredictionsForGroupStage(user);
     return points;
   }
 
@@ -254,8 +253,25 @@ export class HomeComponent implements OnDestroy {
     return points;
   }
 
-  calculateExtraPredictionPoints(user: GroupUser): number {
+  calculateExtraPredictionPointsForWholeTournament(user: GroupUser): number {
     let points = 0;
+    user.predictions.extraPredictions.headToHead.forEach((prediction, index) => {
+      if (
+        (prediction.winner === this.tournament!.extraPredictions.headToHead[index].winner &&
+          this.tournament!.extraPredictions.headToHead[index].winner !== null) ||
+        (this.tournament!.extraPredictions.headToHead[index].winner === 'Tasapeli' && prediction.winner !== null)
+      ) {
+        points++;
+      }
+    });
+    user.predictions.extraPredictions.topFour.forEach((team) => {
+      if (
+        this.tournament!.extraPredictions.topFour.includes(team) &&
+        this.tournament!.extraPredictions.topFour.length > 0
+      ) {
+        points += 2;
+      }
+    });
     if (
       user.predictions.extraPredictions.fastestGoal === this.tournament!.extraPredictions.fastestGoal &&
       this.tournament!.extraPredictions.fastestGoal !== null
@@ -267,18 +283,6 @@ export class HomeComponent implements OnDestroy {
       this.tournament!.extraPredictions.highestScoring !== null
     ) {
       points += 2;
-    }
-    if (
-      user.predictions.extraPredictions.mostCards === this.tournament!.extraPredictions.mostCards &&
-      this.tournament!.extraPredictions.mostCards !== ''
-    ) {
-      points += 3;
-    }
-    if (
-      user.predictions.extraPredictions.mostGoals === this.tournament!.extraPredictions.mostGoals &&
-      this.tournament!.extraPredictions.mostGoals !== ''
-    ) {
-      points += 3;
     }
     return points;
   }
@@ -327,25 +331,20 @@ export class HomeComponent implements OnDestroy {
     return points;
   }
 
-  calculateHeadToHeadAndTopFourPoints(user: GroupUser): number {
+  calculateExtraPredictionsForGroupStage(user: GroupUser): number {
     let points = 0;
-    user.predictions.extraPredictions.headToHead.forEach((prediction, index) => {
-      if (
-        (prediction.winner === this.tournament!.extraPredictions.headToHead[index].winner &&
-          this.tournament!.extraPredictions.headToHead[index].winner !== null) ||
-        (this.tournament!.extraPredictions.headToHead[index].winner === 'Tasapeli' && prediction.winner !== null)
-      ) {
-        points++;
-      }
-    });
-    user.predictions.extraPredictions.topFour.forEach((team) => {
-      if (
-        this.tournament!.extraPredictions.topFour.includes(team) &&
-        this.tournament!.extraPredictions.topFour.length > 0
-      ) {
-        points += 2;
-      }
-    });
+    if (
+      user.predictions.extraPredictions.mostCards === this.tournament!.extraPredictions.mostCards &&
+      this.tournament!.extraPredictions.mostCards !== ''
+    ) {
+      points += 3;
+    }
+    if (
+      user.predictions.extraPredictions.mostGoals === this.tournament!.extraPredictions.mostGoals &&
+      this.tournament!.extraPredictions.mostGoals !== ''
+    ) {
+      points += 3;
+    }
     return points;
   }
 
@@ -404,7 +403,7 @@ export class HomeComponent implements OnDestroy {
     const usersWithPoints = users.map((user) => {
       return {
         ...user,
-        points: this.calculateUserPlayoffPoints(user) + this.calculateUserPoints(user),
+        points: this.calculateUserPlayoffPoints(user) + this.calculateUserPoints(user) + this.calculateExtraPredictionPointsForWholeTournament(user),
       };
     });
     usersWithPoints.sort((a, b) => a.points - b.points).reverse();
